@@ -69,7 +69,7 @@
     <span><span class="meta-label">lang</span>TypeScript</span>
     <span><span class="meta-label">license</span>Apache-2.0</span>
     
-    <span><span class="meta-label">updated</span>2026-04-23</span>
+    <span><span class="meta-label">updated</span>2026-04-24</span>
   </div>
 
   <div class="actions">
@@ -84,11 +84,11 @@
 <section class="project-summary">
   <div class="section-label">overview</div>
   <div>
-    <p class="summary-text">PLUR is a local-first persistent memory layer designed to synchronize agent corrections, preferences, and conventions across different tools and sessions. It stores knowledge as plain YAML &quot;engrams&quot; on disk and utilizes a hybrid retrieval system combining BM25 search and BGE embeddings without requiring external API calls. The system uses an activation model where memories strengthen with use and naturally decay over time to ensure context remains relevant. It integrates directly with MCP-compatible tools, Claude Code, and Hermes Agent to automate the capture and injection of learned information.</p>
+    <p class="summary-text">PLUR is a persistent, local-first memory layer designed to synchronize agent corrections, preferences, and conventions across different AI tools and sessions. It stores knowledge as plain YAML files called engrams, using an activation model that strengthens frequently used facts while allowing stale information to naturally decay. The system employs a hybrid search approach combining BM25 and embeddings to inject relevant context into agent prompts without cloud API calls. It integrates directly with Hermes Agent, Claude Code, and OpenClaw to automatically capture and recall learnings during active conversations.</p>
     <ul class="summary-highlights">
-      <li>Stores persistent memory locally as open-format YAML engrams</li>
-      <li>Hybrid retrieval using BM25 and embeddings with zero API costs</li>
-      <li>Automatic memory decay and strengthening based on usage frequency</li>
+      <li>Stores persistent agent memory locally in open YAML engram format</li>
+      <li>Uses hybrid BM25 and embedding search for zero-cost local retrieval</li>
+      <li>Automates memory injection and extraction for Hermes and MCP tools</li>
     </ul>
   </div>
 </section>
@@ -148,7 +148,7 @@ Next session starts     →  relevant engrams injected  →  agent remembers
 You rate the result     →  engram strengthens or decays  →  quality improves
 Unused engrams          →  activation decays  →  naturally fade from injection
 </code></pre>
-<p>Search is fully local: BM25 (with IDF weighting, TF saturation, length normalization) + BGE embeddings + Reciprocal Rank Fusion. Zero API calls. 86.7% on LongMemEval — on par with cloud-based solutions that charge per query.</p>
+<p>Search is fully local: BM25 (with IDF weighting, TF saturation, length normalization) + BGE embeddings + Reciprocal Rank Fusion. Zero API calls, zero per-query cost. <a href="https://plur.ai/benchmark.html">Benchmark methodology →</a></p>
 <p>Plugins (OpenClaw, Hermes) automatically capture learnings from agent conversations — no manual saving needed. The agent&#39;s corrections become engrams without you doing anything.</p>
 <p>See the <a href="https://plur.ai/spec.html">full engram spec</a> for schema details, activation model, and injection algorithm.</p>
 <h3>Usage</h3>
@@ -406,19 +406,19 @@ pnpm install &amp;&amp; pnpm build &amp;&amp; pnpm test
   <div>
     <div class="related-list">
       <a class="related-row" href="/projects/vectorize-io/hindsight">
-        <div class="stars">★ 10.4K</div>
+        <div class="stars">★ 10.5K</div>
         <div class="name"><span class="org">vectorize-io /</span> hindsight</div>
       </a>
       <a class="related-row" href="/projects/greyhaven-ai/autocontext">
-        <div class="stars">★ 909</div>
+        <div class="stars">★ 915</div>
         <div class="name"><span class="org">greyhaven-ai /</span> autocontext</div>
       </a>
       <a class="related-row" href="/projects/elkimek/honcho-self-hosted">
-        <div class="stars">★ 175</div>
+        <div class="stars">★ 176</div>
         <div class="name"><span class="org">elkimek /</span> honcho-self-hosted</div>
       </a>
       <a class="related-row" href="/projects/yoloshii/ClawMem">
-        <div class="stars">★ 132</div>
+        <div class="stars">★ 133</div>
         <div class="name"><span class="org">yoloshii /</span> ClawMem</div>
       </a>
       <a class="related-row" href="/projects/amanning3390/flowstate-qmd">
@@ -426,15 +426,15 @@ pnpm install &amp;&amp; pnpm build &amp;&amp; pnpm test
         <div class="name"><span class="org">amanning3390 /</span> flowstate-qmd</div>
       </a>
       <a class="related-row" href="/projects/garrytan/gbrain">
-        <div class="stars">★ 10.8K</div>
+        <div class="stars">★ 11.0K</div>
         <div class="name"><span class="org">garrytan /</span> gbrain</div>
       </a>
       <a class="related-row" href="/projects/stephenschoettler/hermes-lcm">
-        <div class="stars">★ 281</div>
+        <div class="stars">★ 290</div>
         <div class="name"><span class="org">stephenschoettler /</span> hermes-lcm</div>
       </a>
       <a class="related-row" href="/projects/AxDSan/mnemosyne">
-        <div class="stars">★ 29</div>
+        <div class="stars">★ 33</div>
         <div class="name"><span class="org">AxDSan /</span> mnemosyne</div>
       </a>
     </div>

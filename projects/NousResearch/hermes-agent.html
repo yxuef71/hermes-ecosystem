@@ -65,11 +65,11 @@
   <p class="project-desc">The agent that grows with you</p>
 
   <div class="meta-row">
-    <span class="stars">★ 113.0K</span>
+    <span class="stars">★ 113.9K</span>
     <span><span class="meta-label">lang</span>Python</span>
     <span><span class="meta-label">license</span>MIT</span>
     <span><span class="meta-label">maintainer</span>Nous Research</span>
-    <span><span class="meta-label">updated</span>2026-04-23</span>
+    <span><span class="meta-label">updated</span>2026-04-24</span>
   </div>
 
   <div class="actions">
@@ -89,11 +89,11 @@
 <section class="project-summary">
   <div class="section-label">overview</div>
   <div>
-    <p class="summary-text">Hermes Agent is an open-source AI assistant designed for persistent, cross-platform task execution and self-improvement. It utilizes a closed learning loop to autonomously create and refine skills from experience while maintaining user models and session memory. The system supports 14 messaging platforms and six execution backends, including Docker and SSH, allowing it to run on local hardware or serverless cloud infrastructure. Users can integrate over 200 models from various providers and automate workflows using a built-in natural language cron scheduler.</p>
+    <p class="summary-text">Hermes Agent is an autonomous AI system designed for persistent, cross-platform task execution and self-improvement. It utilizes a closed learning loop to autonomously generate new skills from experience and build long-term user models through periodic memory nudges and session searches. The agent operates across 14 messaging platforms and supports six execution backends, including Docker and SSH, for secure tool use. Users can switch between various LLM providers and automate recurring tasks via a built-in natural language cron scheduler.</p>
     <ul class="summary-highlights">
       <li>Autonomous skill creation and self-improvement from task experience</li>
-      <li>Supports 14 platforms including Telegram, Discord, Slack, and WhatsApp</li>
-      <li>Six execution backends including Docker, SSH, and serverless Modal</li>
+      <li>Supports 14 messaging platforms including Telegram, Discord, and Slack</li>
+      <li>Six execution backends for local, containerized, or serverless persistence</li>
     </ul>
   </div>
 </section>
@@ -194,7 +194,7 @@ hermes doctor       # Diagnose any issues
 <tr>
 <td>Browse skills</td>
 <td><code>/skills</code> or <code>/&lt;skill-name&gt;</code></td>
-<td><code>/skills</code> or <code>/&lt;skill-name&gt;</code></td>
+<td><code>/&lt;skill-name&gt;</code></td>
 </tr>
 <tr>
 <td>Interrupt current work</td>
@@ -315,13 +315,10 @@ cd hermes-agent
 uv venv venv --python 3.11
 source venv/bin/activate
 uv pip install -e &quot;.[all,dev]&quot;
-python -m pytest tests/ -q
+scripts/run_tests.sh
 </code></pre>
 <blockquote>
-<p><strong>RL Training (optional):</strong> To work on the RL/Tinker-Atropos integration:</p>
-<pre><code class="language-bash">git submodule update --init tinker-atropos
-uv pip install -e &quot;./tinker-atropos&quot;
-</code></pre>
+<p><strong>RL Training (optional):</strong> The RL/Atropos integration (<code>environments/</code>) ships via the <code>atroposlib</code> and <code>tinker</code> dependencies pulled in by <code>.[all,dev]</code> — no submodule setup required.</p>
 </blockquote>
 <hr>
 <h3>Community</h3>
@@ -359,11 +356,11 @@ uv pip install -e &quot;./tinker-atropos&quot;
         <div class="name"><span class="org">NousResearch /</span> hermes-agent-self-evolution</div>
       </a>
       <a class="related-row" href="/projects/NousResearch/hermes-paperclip-adapter">
-        <div class="stars">★ 949</div>
+        <div class="stars">★ 955</div>
         <div class="name"><span class="org">NousResearch /</span> hermes-paperclip-adapter</div>
       </a>
       <a class="related-row" href="/projects/NousResearch/autonovel">
-        <div class="stars">★ 729</div>
+        <div class="stars">★ 734</div>
         <div class="name"><span class="org">NousResearch /</span> autonovel</div>
       </a>
     </div>

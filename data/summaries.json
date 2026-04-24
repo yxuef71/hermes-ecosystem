@@ -1,13 +1,13 @@
 {
   "NousResearch/hermes-agent": {
-    "summary": "Hermes Agent is an open-source AI assistant designed for persistent, cross-platform task execution and self-improvement. It utilizes a closed learning loop to autonomously create and refine skills from experience while maintaining user models and session memory. The system supports 14 messaging platforms and six execution backends, including Docker and SSH, allowing it to run on local hardware or serverless cloud infrastructure. Users can integrate over 200 models from various providers and automate workflows using a built-in natural language cron scheduler.",
+    "summary": "Hermes Agent is an autonomous AI system designed for persistent, cross-platform task execution and self-improvement. It utilizes a closed learning loop to autonomously generate new skills from experience and build long-term user models through periodic memory nudges and session searches. The agent operates across 14 messaging platforms and supports six execution backends, including Docker and SSH, for secure tool use. Users can switch between various LLM providers and automate recurring tasks via a built-in natural language cron scheduler.",
     "highlights": [
       "Autonomous skill creation and self-improvement from task experience",
-      "Supports 14 platforms including Telegram, Discord, Slack, and WhatsApp",
-      "Six execution backends including Docker, SSH, and serverless Modal"
+      "Supports 14 messaging platforms including Telegram, Discord, and Slack",
+      "Six execution backends for local, containerized, or serverless persistence"
     ],
-    "readmeHash": "0c17089914e6d48761bdb3ae695ba97acc0b24c9575714f74dd7f1c82d193004",
-    "generatedAt": "2026-04-23T07:09:13.042Z",
+    "readmeHash": "378f2e4c26c5ce6ef75b5cb1a0354bc1f667a1550faf263ac50d9fe1a2c451f0",
+    "generatedAt": "2026-04-24T07:10:42.643Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass"
@@ -82,12 +82,12 @@
   "outsourc-e/hermes-workspace": {
     "summary": "Hermes Workspace is a native web-based command center designed to provide a unified graphical interface for the Hermes Agent ecosystem. It integrates directly with the Hermes gateway via real-time SSE streaming to manage chat, terminal access, and tool call rendering. Users can browse and edit agent memory, manage over 2,000 skills, and orchestrate complex jobs through a security-hardened dashboard. The project follows a zero-fork architecture, allowing it to run on vanilla installations of the Nous Research hermes-agent without custom patches.",
     "highlights": [
-      "Real-time SSE streaming for agent output and tool call rendering",
-      "Comprehensive management of agent memory, skills, and background jobs",
+      "Real-time SSE streaming for chat and tool call rendering",
+      "Comprehensive memory browser and skill manager for agent orchestration",
       "Security-hardened interface with execution approval prompts and auth middleware"
     ],
-    "readmeHash": "36cbe9feba594202e9771b7faade711131b365f0f01a9a6641783c3f336fe4aa",
-    "generatedAt": "2026-04-22T20:14:13.942Z",
+    "readmeHash": "aebab52ee2cc16d8cdb0100e4c267824d0dc8bbe0aa8879c8fe0b2a9ca62d478",
+    "generatedAt": "2026-04-24T07:10:47.452Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass"
@@ -374,14 +374,14 @@
     "audit": "pass"
   },
   "greyhaven-ai/autocontext": {
-    "summary": "autocontext is a recursive self-improving harness designed to help LLM agents succeed on complex tasks by turning repeated work into validated, reusable knowledge. The system utilizes a multi-agent loop—comprising roles like competitors, analysts, and coaches—to evaluate execution traces and persist successful strategies into playbooks or distilled models. It organizes work into structured scenarios, missions, and campaigns that use verifiers to gate progress and ensure stable behavior. Users can leverage the framework for evidence-driven investigations, parameter sweeps, and the creation of training datasets for local runtimes.",
+    "summary": "autocontext is a recursive self-improving harness designed to help LLM agents succeed on complex tasks by turning repeated work into validated, reusable knowledge. It operates through a structured multi-agent loop where competitors propose strategies, analysts evaluate outcomes, and coaches update playbooks to ensure agents improve across generations. The system supports various execution surfaces including simulations, evidence-driven investigations, and verifier-driven missions. Users can eventually distill stable agent behaviors into cheaper local runtimes using exported training data.",
     "highlights": [
-      "Multi-agent loop for strategy proposal, analysis, and knowledge curation",
-      "Structured execution via scenarios, missions, and verifier-driven goals",
-      "Distills validated agent traces into cheaper local model runtimes"
+      "Accumulates validated knowledge to improve agent performance across repeated runs",
+      "Multi-agent loop featuring competitor, analyst, coach, architect, and curator roles",
+      "Supports browser-integrated investigations and verifier-driven mission checkpoints"
     ],
-    "readmeHash": "40192391606ba52cad3fd40995a0ccca253fda30f2fe0bd193e1ce729f15cd68",
-    "generatedAt": "2026-04-23T21:25:57.045Z",
+    "readmeHash": "620668eca76d5e71b7ae07e509b821438e455cf2fd4d7c4647941c56187acb42",
+    "generatedAt": "2026-04-24T07:10:54.882Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass"
@@ -415,18 +415,17 @@
     "auditedAt": "2026-04-20T08:41:28.127Z"
   },
   "plur-ai/plur": {
-    "summary": "PLUR is a local-first persistent memory layer designed to synchronize agent corrections, preferences, and conventions across different tools and sessions. It stores knowledge as plain YAML \"engrams\" on disk and utilizes a hybrid retrieval system combining BM25 search and BGE embeddings without requiring external API calls. The system uses an activation model where memories strengthen with use and naturally decay over time to ensure context remains relevant. It integrates directly with MCP-compatible tools, Claude Code, and Hermes Agent to automate the capture and injection of learned information.",
+    "summary": "PLUR is a persistent, local-first memory layer designed to synchronize agent corrections, preferences, and conventions across different AI tools and sessions. It stores knowledge as plain YAML files called engrams, using an activation model that strengthens frequently used facts while allowing stale information to naturally decay. The system employs a hybrid search approach combining BM25 and embeddings to inject relevant context into agent prompts without cloud API calls. It integrates directly with Hermes Agent, Claude Code, and OpenClaw to automatically capture and recall learnings during active conversations.",
     "highlights": [
-      "Stores persistent memory locally as open-format YAML engrams",
-      "Hybrid retrieval using BM25 and embeddings with zero API costs",
-      "Automatic memory decay and strengthening based on usage frequency"
+      "Stores persistent agent memory locally in open YAML engram format",
+      "Uses hybrid BM25 and embedding search for zero-cost local retrieval",
+      "Automates memory injection and extraction for Hermes and MCP tools"
     ],
-    "readmeHash": "a107debf2ce7021d604306c746b3d539b5c73b1ce6eaeda4dee53738073c1f9d",
-    "generatedAt": "2026-04-17T18:16:48.485Z",
+    "readmeHash": "f9f304fc99773d0278ae1c3e69dc96a600002bb8f7f896375eb67eb42a5a3a15",
+    "generatedAt": "2026-04-24T07:10:59.002Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass",
-    "auditedAt": "2026-04-20T08:41:30.679Z"
+    "audit": "pass"
   },
   "amanning3390/flowstate-qmd": {
     "summary": "FlowState-QMD is a local-first memory layer designed to provide coding agents with immediate project context from markdown documentation. It utilizes a SQLite-based vector store and an anticipatory cache that prefetches relevant documents by monitoring active agent session logs. This approach allows agents to access design docs, ADRs, and changelogs before initiating a reactive search loop. The system integrates via an MCP server and supports local execution using GGUF models and node-llama-cpp.",
@@ -797,14 +796,14 @@
     "audit": "pass"
   },
   "joeynyc/hermes-skins": {
-    "summary": "Hermes Skins is a collection of community-contributed visual themes for the Hermes CLI agent. It allows users to customize the terminal interface by modifying YAML configuration files that control banner colors, ASCII art, spinner animations, and branding text. The project uses a inheritance-based engine where custom skins override the default settings while falling back to standard values for undefined keys. This enables a wide range of aesthetic transformations, from retro CRT and cyberpunk styles to minimalist monochrome layouts, without altering the underlying agent behavior.",
+    "summary": "Hermes Skins is a collection of visual themes for the Hermes CLI agent that allows users to customize the terminal's appearance. It uses YAML configuration files to modify elements like banner colors, ASCII art, spinner verbs, and branding text without altering the agent's behavior. Users can apply these skins via session commands or permanent configuration files. The project includes a wide variety of themed presets ranging from retro computing aesthetics to pop-culture references.",
     "highlights": [
-      "Customizes CLI visuals including ASCII banners, spinners, and color schemes",
-      "Uses YAML-based configuration for easy theme creation and sharing",
-      "Inherits from default skin to allow for partial theme overrides"
+      "Customizes colors, ASCII art, and spinner verbs via YAML",
+      "Supports partial skins that inherit values from the default theme",
+      "Includes numerous themed presets like Vault-Tec, Skynet, and DOS"
     ],
-    "readmeHash": "e265244c32a30f7e24322932bf32abc1f90bae41f55bd815a6180586ce756543",
-    "generatedAt": "2026-04-21T07:09:31.485Z",
+    "readmeHash": "887dc33845f487631e159642fe5d0e82bdf9c055e67b31515b3352e1500ee28e",
+    "generatedAt": "2026-04-24T07:11:10.958Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass"
@@ -1187,14 +1186,14 @@
     "audit": "pass"
   },
   "garrytan/gbrain": {
-    "summary": "GBrain is a persistent memory and knowledge graph system designed to provide AI agents with long-term context and structured information retrieval. It utilizes a self-wiring graph architecture that automatically extracts entity references and creates typed links between people, companies, and events without requiring LLM calls for every connection. The system features a hybrid search engine and 26 specialized skills that allow agents to ingest diverse data sources like emails, meetings, and tweets while maintaining a structured timeline. It integrates directly with Hermes Agent and OpenClaw, offering an MCP server for use with tools like Claude Code and Cursor.",
+    "summary": "GBrain is an opinionated memory and context layer designed to provide AI agents with a persistent, self-wiring knowledge graph. It utilizes a hybrid search architecture and automated entity extraction to link people, companies, and concepts without requiring constant LLM calls. The system ingests diverse data sources like meetings, emails, and tweets to build a structured timeline and backlink-boosted ranking system. It integrates with Hermes Agent and OpenClaw, offering over 28 specialized skills for autonomous memory maintenance and information retrieval.",
     "highlights": [
-      "Self-wiring knowledge graph with automated entity and relationship extraction",
-      "Hybrid search combining vector retrieval with backlink-boosted ranking",
-      "Ships with 26 modular skills for ingestion, enrichment, and maintenance"
+      "Self-wiring knowledge graph with automated entity and relationship extraction.",
+      "Hybrid search combining vector-only RAG with graph-based ranking.",
+      "Ships with 28 specialized skills for autonomous ingestion and enrichment."
     ],
-    "readmeHash": "49e020aede9107d3e16f37d45554d0e8435758a4c7cebd9f0214ef344bb612d1",
-    "generatedAt": "2026-04-22T07:07:26.418Z",
+    "readmeHash": "866441188b54f4d9aacba1d7b6be43e4e276970d0d783f188e4fb8773e8796ef",
+    "generatedAt": "2026-04-24T07:11:20.676Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass"

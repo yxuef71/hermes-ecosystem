@@ -69,7 +69,7 @@
     <span><span class="meta-label">lang</span>TypeScript</span>
     <span><span class="meta-label">license</span>MIT</span>
     
-    <span><span class="meta-label">updated</span>2026-04-23</span>
+    <span><span class="meta-label">updated</span>2026-04-24</span>
   </div>
 
   <div class="actions">
@@ -86,8 +86,8 @@
   <div>
     <p class="summary-text">Hermes Workspace is a native web-based command center designed to provide a unified graphical interface for the Hermes Agent ecosystem. It integrates directly with the Hermes gateway via real-time SSE streaming to manage chat, terminal access, and tool call rendering. Users can browse and edit agent memory, manage over 2,000 skills, and orchestrate complex jobs through a security-hardened dashboard. The project follows a zero-fork architecture, allowing it to run on vanilla installations of the Nous Research hermes-agent without custom patches.</p>
     <ul class="summary-highlights">
-      <li>Real-time SSE streaming for agent output and tool call rendering</li>
-      <li>Comprehensive management of agent memory, skills, and background jobs</li>
+      <li>Real-time SSE streaming for chat and tool call rendering</li>
+      <li>Comprehensive memory browser and skill manager for agent orchestration</li>
       <li>Security-hardened interface with execution approval prompts and auth middleware</li>
     </ul>
   </div>
@@ -565,10 +565,21 @@ does by default) or an existing gateway on another host.</p>
 <ul>
 <li>Auth middleware on all API routes</li>
 <li>CSP headers via meta tags</li>
-<li>Path traversal prevention on file/memory routes</li>
+<li>Path traversal prevention on file/memory routes (real-path boundary check, not string prefix)</li>
 <li>Rate limiting on endpoints</li>
+<li>Fail-closed startup guard: refuses to bind non-loopback without <code>HERMES_PASSWORD</code></li>
+<li>Session cookies: <code>HttpOnly</code> + <code>SameSite=Strict</code> + <code>Secure</code> (in production)</li>
 <li>Optional password protection for web UI</li>
 </ul>
+<p><strong>Key env vars for remote / Docker deployments:</strong></p>
+<ul>
+<li><code>HERMES_PASSWORD</code> — required whenever <code>HOST ≠ 127.0.0.1</code></li>
+<li><code>COOKIE_SECURE=1</code> — force the <code>Secure</code> cookie flag when terminating HTTPS at a proxy</li>
+<li><code>TRUST_PROXY=1</code> — trust <code>x-forwarded-for</code> / <code>x-real-ip</code> (only set behind a sanitizing reverse proxy)</li>
+<li><code>HERMES_DASHBOARD_TOKEN</code> — explicit bearer for dashboard API (preferred over the legacy HTML-scrape fallback)</li>
+<li><code>HERMES_ALLOW_INSECURE_REMOTE=1</code> — bypass the fail-closed guard (not recommended)</li>
+</ul>
+<p>See <code>.env.example</code> for the full list. Credits to <a href="https://github.com/kiosvantra">@kiosvantra</a> for the security audit surfacing #121–#125.</p>
 <hr>
 <h3>🔧 Troubleshooting</h3>
 <h4>&quot;Workspace loads but chat doesn&#39;t work&quot;</h4>
@@ -720,7 +731,7 @@ docker compose up --build
   <div>
     <div class="related-list">
       <a class="related-row" href="/projects/fathah/hermes-desktop">
-        <div class="stars">★ 368</div>
+        <div class="stars">★ 373</div>
         <div class="name"><span class="org">fathah /</span> hermes-desktop</div>
       </a>
       <a class="related-row" href="/projects/sanchomuzax/hermes-webui">
@@ -736,15 +747,15 @@ docker compose up --build
         <div class="name"><span class="org">xaspx /</span> hermes-control-interface</div>
       </a>
       <a class="related-row" href="/projects/dodo-reach/hermes-desktop">
-        <div class="stars">★ 629</div>
+        <div class="stars">★ 642</div>
         <div class="name"><span class="org">dodo-reach /</span> hermes-desktop</div>
       </a>
       <a class="related-row" href="/projects/nesquena/hermes-webui">
-        <div class="stars">★ 3.8K</div>
+        <div class="stars">★ 3.9K</div>
         <div class="name"><span class="org">nesquena /</span> hermes-webui</div>
       </a>
       <a class="related-row" href="/projects/pyrate-llama/hermes-ui">
-        <div class="stars">★ 33</div>
+        <div class="stars">★ 34</div>
         <div class="name"><span class="org">pyrate-llama /</span> hermes-ui</div>
       </a>
       <a class="related-row" href="/projects/clawvader-tech/hermes-telegram-miniapp">
