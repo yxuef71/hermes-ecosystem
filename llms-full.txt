@@ -1565,12 +1565,12 @@ Category: Memory & Context
 Stars: 8,857
 Garry's Opinionated OpenClaw/Hermes Agent Brain
 
-GBrain is a memory and context layer that provides AI agents with a persistent, self-organizing knowledge base. It utilizes a hybrid search approach combining a self-wiring knowledge graph with vector search to manage entities, typed links, and structured timelines. The system features 29 specialized skills for autonomous content ingestion, memory consolidation, and task management. It can be deployed as a standalone CLI or as an MCP server for clients like Claude Code and Cursor.
+GBrain is an opinionated memory and context layer designed to give AI agents a persistent, self-wiring knowledge base. It utilizes a hybrid search system and a self-constructing knowledge graph to extract entities and create typed links between people, companies, and events without requiring LLM calls for graph construction. The system consolidates memory through overnight autonomous jobs that fix citations and enrich data from meetings, emails, and media. It integrates with Hermes Agent and OpenClaw, offering 29 specialized skills for automated workflow execution and information retrieval.
 
 Highlights:
-- Self-wiring knowledge graph with typed entity links
-- Hybrid search combining vector and graph-based retrieval
-- 29 autonomous skills for ingestion and memory maintenance
+- Hybrid search combining vector retrieval with a self-wiring knowledge graph.
+- Automated entity extraction and typed relationship linking for structured memory.
+- Exposes 30+ MCP tools for integration with Claude Code and Cursor.
 
 ---
 
@@ -1651,12 +1651,12 @@ Category: Workspaces & GUIs
 Stars: 1,844
 Web dashboard for Hermes Agent — multi-platform AI chat, session management, scheduled jobs, usage analytics & channel configuration (Telegram, Discord, Slack, WhatsApp)
 
-Hermes Web UI is a comprehensive management dashboard for the Hermes Agent ecosystem that centralizes agent control into a single responsive interface. It provides a unified platform for configuring multi-channel integrations across eight services including Telegram, Discord, and Slack while managing AI chat sessions and tool-call details. The system includes built-in usage analytics for cost tracking, a remote file browser for various backends, and a terminal for direct system interaction. Users can also schedule cron jobs, manage multi-agent group chats with context compression, and handle complex model provider credentials.
+Hermes Web UI is a comprehensive dashboard for managing Hermes Agent, providing a centralized interface for AI interactions and system administration. It simplifies agent operations by integrating multi-session chat, usage analytics, and automated cron job scheduling into a single responsive web environment. Users can configure eight different communication platforms, manage model providers, and browse files across local or remote backends. The system also features multi-profile management, group chat rooms with @mention routing, and an integrated web terminal for direct command-line access.
 
 Highlights:
-- Unified configuration for Telegram, Discord, Slack, and WhatsApp channels
-- Real-time usage analytics with token breakdown and cost estimation
-- Multi-backend file management for local, Docker, and SSH environments
+- Unified configuration for Telegram, Discord, Slack, WhatsApp, and four other platforms
+- Real-time usage analytics tracking token consumption, costs, and model distribution
+- Multi-backend file browser supporting local, Docker, SSH, and Singularity environments
 
 ---
 
@@ -2421,12 +2421,12 @@ Category: Memory & Context
 Stars: 29
 The Zero-Dependency, Sub-Millisecond AI Memory System for Hermes Agents
 
-Mnemosyne is a local-first memory system designed for the Hermes Agent framework that provides low-latency storage for conversations and knowledge. It utilizes a SQLite backend with native vector search and full-text search to eliminate the need for external databases or cloud APIs. The system features a three-tier BEAM architecture that manages hot working memory, long-term episodic memory, and a temporary scratchpad. It automatically consolidates and summarizes aging data through a sleep cycle process while maintaining privacy by keeping all data on the local machine.
+Mnemosyne is a local-first memory system designed to provide persistent storage for Hermes Agents without relying on cloud services or external databases. It utilizes a SQLite backend with native vector search and full-text search to manage conversations, preferences, and knowledge in-process. The system implements a three-tier BEAM architecture that handles working memory, episodic memory, and temporary scratchpads while supporting automatic consolidation through sleep cycles. By operating entirely on-device, it eliminates network latency and API costs while ensuring data privacy and offline functionality.
 
 Highlights:
-- Sub-millisecond read and write latency using SQLite-backed storage
-- Hybrid search combining vector similarity, FTS5 ranking, and importance scoring
-- Automatic memory consolidation via local LLM summarization and sleep cycles
+- Sub-millisecond local retrieval using SQLite-vec and FTS5 hybrid search
+- Three-tier BEAM architecture for working, episodic, and scratchpad memory
+- Zero-dependency installation with native Hermes Agent plugin integration
 
 ---
 
@@ -2506,12 +2506,12 @@ Category: Workspaces & GUIs
 Stars: 25
 Glassmorphic web interface for Hermes Agent — your self-hosted AI assistant
 
-Hermes UI is a glassmorphic web interface designed for the self-hosted Hermes Agent ecosystem. It operates as a single-file React 18 application served via a lightweight Python proxy, requiring no complex build steps or external dependencies. The interface provides comprehensive management tools including a real-time chat with document uploads, an artifact panel for live code previews, and a file browser for local directory inspection. Users can also monitor system stats, manage scheduled cron jobs, and browse connected Model Context Protocol (MCP) tools through a unified dashboard.
+Hermes UI is a glassmorphic web interface for the self-hosted Hermes Agent, providing a visual workspace for AI interaction and system management. It operates as a single-file React application served via a lightweight Python proxy, requiring no complex build steps or external dependencies. The interface surfaces advanced agent features such as real-time log streaming, MCP tool browsing, and a dedicated artifact panel for rendering HTML, SVG, and PDF outputs. Users can manage model providers, monitor system memory, and execute shell commands through an integrated terminal environment.
 
 Highlights:
-- Single-file HTML architecture with React 18 and Python proxy server
-- Real-time artifact panel for rendering HTML, SVG, and PDF outputs
-- Integrated file browser and memory inspector for local agent data
+- Single-file React architecture with no npm dependencies required
+- Real-time artifact panel for live HTML, SVG, and PDF previews
+- Integrated management for MCP tools, cron jobs, and memory files
 
 ---
 
@@ -2744,12 +2744,12 @@ Category: Integrations & Bridges
 Stars: 10
 Hermes Companion — Android app for Hermes agent platform. Chat, terminal, and device control over WSS.
 
-Hermes-Relay is a native Android companion application designed to provide a mobile interface for the Hermes agent platform. It establishes a connection between a mobile device and a Hermes server using a Python-based plugin and WebSockets (WSS) for real-time communication. Users can engage in chat, access a terminal, and manage device controls directly from their phone. The system simplifies setup through a QR-code pairing process that configures both the chat API and the relay server simultaneously.
+Hermes-Relay is a companion suite that enables remote control and interaction with a server-deployed Hermes agent via Android and desktop interfaces. It uses a WebSocket Secure (WSS) relay and a dedicated server plugin to bridge the gap between a remote agent's brain and a user's local hardware. The Android app allows the agent to read screens and perform device actions like swiping or typing, while the desktop CLI enables the remote agent to execute local terminal commands and access files. This setup provides a unified experience where a single remote agent can act on multiple local surfaces without requiring SSH.
 
 Highlights:
-- Native Android client supporting chat and terminal interfaces
-- WebSocket-based relay for remote device control and monitoring
-- Streamlined QR-code pairing for automated server and plugin configuration
+- Native Android app for chat, voice, and remote device control
+- Desktop CLI for running remote Hermes agents as local processes
+- Bi-directional tool execution allowing remote agents to run local commands
 
 ---
 

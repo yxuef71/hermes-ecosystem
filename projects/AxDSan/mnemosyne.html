@@ -35,7 +35,7 @@
   "@type": "SoftwareApplication",
   "@id": "https://hermesatlas.com/projects/AxDSan/mnemosyne#software",
   "name": "mnemosyne",
-  "description": "Mnemosyne is a local-first memory system designed for the Hermes Agent framework that provides low-latency storage for conversations and knowledge. It utilizes a SQLite backend with native vector search and full-text search to eliminate the need for external databases or cloud APIs. The system features a three-tier BEAM architecture that manages hot working memory, long-term episodic memory, and a temporary scratchpad. It automatically consolidates and summarizes aging data through a sleep cycle",
+  "description": "Mnemosyne is a local-first memory system designed to provide persistent storage for Hermes Agents without relying on cloud services or external databases. It utilizes a SQLite backend with native vector search and full-text search to manage conversations, preferences, and knowledge in-process. The system implements a three-tier BEAM architecture that handles working memory, episodic memory, and temporary scratchpads while supporting automatic consolidation through sleep cycles. By operating enti",
   "url": "https://hermesatlas.com/projects/AxDSan/mnemosyne",
   "codeRepository": "https://github.com/AxDSan/mnemosyne",
   "applicationCategory": "UtilitiesApplication",
@@ -47,13 +47,13 @@
     "name": "AxDSan",
     "url": "https://github.com/AxDSan"
   },
-  "dateModified": "2026-04-24T16:08:43.000Z",
+  "dateModified": "2026-04-25T16:33:36.000Z",
   "interactionStatistic": {
     "@type": "InteractionCounter",
     "interactionType": {
       "@type": "LikeAction"
     },
-    "userInteractionCount": 39
+    "userInteractionCount": 42
   },
   "isPartOf": {
     "@id": "https://hermesatlas.com/#website"
@@ -99,7 +99,7 @@
   <a href="/">map</a><span class="sep">/</span><a href="/lists/best-memory-providers">memory &amp; context</a><span class="sep">/</span>mnemosyne
 </div>
 
-<article id="main">
+<main id="main">
 
 <section class="project">
   <h1 class="project-name">
@@ -108,16 +108,16 @@
   <p class="project-desc">The Zero-Dependency, Sub-Millisecond AI Memory System for Hermes Agents</p>
 
   <div class="meta-row">
-    <span class="stars">★ 39</span>
+    <span class="stars">★ 42</span>
     <span><span class="meta-label">lang</span>Python</span>
     <span><span class="meta-label">license</span>MIT</span>
     
-    <span><span class="meta-label">updated</span>2026-04-24</span>
+    <span><span class="meta-label">updated</span>2026-04-25</span>
   </div>
 
   <div class="actions">
     <a href="https://github.com/AxDSan/mnemosyne" target="_blank" rel="noopener" class="btn-primary">view on github →</a>
-    
+    <a href="https://mnemosyne.site" target="_blank" rel="noopener" class="btn-secondary">homepage</a>
   </div>
 </section>
 
@@ -127,11 +127,11 @@
 <section class="project-summary">
   <div class="section-label">overview</div>
   <div>
-    <p class="summary-text">Mnemosyne is a local-first memory system designed for the Hermes Agent framework that provides low-latency storage for conversations and knowledge. It utilizes a SQLite backend with native vector search and full-text search to eliminate the need for external databases or cloud APIs. The system features a three-tier BEAM architecture that manages hot working memory, long-term episodic memory, and a temporary scratchpad. It automatically consolidates and summarizes aging data through a sleep cycle process while maintaining privacy by keeping all data on the local machine.</p>
+    <p class="summary-text">Mnemosyne is a local-first memory system designed to provide persistent storage for Hermes Agents without relying on cloud services or external databases. It utilizes a SQLite backend with native vector search and full-text search to manage conversations, preferences, and knowledge in-process. The system implements a three-tier BEAM architecture that handles working memory, episodic memory, and temporary scratchpads while supporting automatic consolidation through sleep cycles. By operating entirely on-device, it eliminates network latency and API costs while ensuring data privacy and offline functionality.</p>
     <ul class="summary-highlights">
-      <li>Sub-millisecond read and write latency using SQLite-backed storage</li>
-      <li>Hybrid search combining vector similarity, FTS5 ranking, and importance scoring</li>
-      <li>Automatic memory consolidation via local LLM summarization and sleep cycles</li>
+      <li>Sub-millisecond local retrieval using SQLite-vec and FTS5 hybrid search</li>
+      <li>Three-tier BEAM architecture for working, episodic, and scratchpad memory</li>
+      <li>Zero-dependency installation with native Hermes Agent plugin integration</li>
     </ul>
   </div>
 </section>
@@ -196,40 +196,203 @@ hermes mnemosyne stats     # Shows working + episodic memory counts
 </blockquote>
 <hr>
 <h3>What Makes It Different</h3>
+<h4>Mnemosyne vs. Cloud Memory Providers</h4>
 <table>
 <thead>
 <tr>
-<th></th>
-<th>Mnemosyne</th>
-<th>Cloud alternatives</th>
+<th>Feature</th>
+<th><strong>Mnemosyne</strong></th>
+<th>Honcho</th>
+<th>Zep</th>
+<th>Mem0</th>
 </tr>
 </thead>
 <tbody><tr>
-<td><strong>Latency</strong></td>
-<td>&lt; 1ms</td>
-<td>10-100ms</td>
+<td><strong>Cost</strong></td>
+<td><strong>Free forever</strong></td>
+<td>$$$ Paid (credit-based)</td>
+<td>$$$ Paid (Flex/Enterprise)</td>
+<td>Freemium ($0–$249/mo)</td>
 </tr>
 <tr>
-<td><strong>Dependencies</strong></td>
-<td>Python stdlib + optional ONNX</td>
-<td>External APIs, auth, rate limits</td>
+<td><strong>Hosting</strong></td>
+<td><strong>Local — your machine</strong></td>
+<td>Cloud only</td>
+<td>Cloud / BYOC</td>
+<td>Cloud only</td>
 </tr>
 <tr>
 <td><strong>Privacy</strong></td>
-<td>100% local</td>
-<td>Data leaves your machine</td>
+<td><strong>100% local, zero data exfil</strong></td>
+<td>External API calls</td>
+<td>External API calls</td>
+<td>External API calls</td>
 </tr>
 <tr>
-<td><strong>Cost</strong></td>
-<td>Free</td>
-<td>Freemium / per-call</td>
+<td><strong>Latency (read)</strong></td>
+<td><strong>0.076 ms</strong></td>
+<td>~38 ms</td>
+<td>~62 ms</td>
+<td>~45 ms</td>
 </tr>
 <tr>
-<td><strong>Setup</strong></td>
-<td><code>pip install -e .</code></td>
-<td>API keys, accounts, config</td>
+<td><strong>Latency (write)</strong></td>
+<td><strong>0.81 ms</strong></td>
+<td>~45 ms</td>
+<td>~85 ms</td>
+<td>~50 ms</td>
+</tr>
+<tr>
+<td><strong>Latency (search)</strong></td>
+<td><strong>1.2 ms</strong></td>
+<td>~52 ms</td>
+<td>~78 ms</td>
+<td>~60 ms</td>
+</tr>
+<tr>
+<td><strong>Cold start</strong></td>
+<td><strong>0 ms (instant)</strong></td>
+<td>~500 ms</td>
+<td>~800 ms</td>
+<td>~300 ms</td>
+</tr>
+<tr>
+<td><strong>Offline capable</strong></td>
+<td><strong>Yes — airplane mode works</strong></td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr>
+<td><strong>Setup complexity</strong></td>
+<td><strong><code>pip install mnemosyne-memory</code></strong></td>
+<td>Docker + API keys + account</td>
+<td>Docker + PostgreSQL + config</td>
+<td>API key + signup</td>
+</tr>
+<tr>
+<td><strong>Vector store</strong></td>
+<td><strong>sqlite-vec (built-in)</strong></td>
+<td>pgvector (external)</td>
+<td>pgvector (external)</td>
+<td>pgvector (external)</td>
+</tr>
+<tr>
+<td><strong>Full-text search</strong></td>
+<td><strong>FTS5 (built-in)</strong></td>
+<td>Separate service</td>
+<td>Separate service</td>
+<td>Separate service</td>
+</tr>
+<tr>
+<td><strong>Auth required</strong></td>
+<td><strong>None</strong></td>
+<td>Supabase auth</td>
+<td>OAuth / API key</td>
+<td>API key</td>
+</tr>
+<tr>
+<td><strong>Rate limits</strong></td>
+<td><strong>None — unlimited</strong></td>
+<td>Yes (plan-dependent)</td>
+<td>Yes (credit-based)</td>
+<td>Yes (plan-dependent)</td>
+</tr>
+<tr>
+<td><strong>Data ownership</strong></td>
+<td><strong>You own the SQLite file</strong></td>
+<td>Vendor-hosted</td>
+<td>Vendor-hosted</td>
+<td>Vendor-hosted</td>
+</tr>
+<tr>
+<td><strong>Export / import</strong></td>
+<td><strong>One JSON file, any machine</strong></td>
+<td>Limited</td>
+<td>Limited</td>
+<td>Limited</td>
+</tr>
+<tr>
+<td><strong>Dependencies</strong></td>
+<td><strong>Python stdlib + optional ONNX</strong></td>
+<td>Docker, PostgreSQL, network</td>
+<td>Docker, PostgreSQL, network</td>
+<td>pip + API key + network</td>
+</tr>
+<tr>
+<td><strong>Integration</strong></td>
+<td><strong>Native Hermes plugin</strong></td>
+<td>REST API SDK</td>
+<td>REST API SDK</td>
+<td>REST API SDK</td>
+</tr>
+<tr>
+<td><strong>Memory architecture</strong></td>
+<td><strong>BEAM (3-tier: working + episodic + scratchpad)</strong></td>
+<td>Session + facts</td>
+<td>Graph RAG + facts</td>
+<td>Session + facts</td>
+</tr>
+<tr>
+<td><strong>Auto-consolidation</strong></td>
+<td><strong>Sleep cycles built-in</strong></td>
+<td>Manual / paid add-on</td>
+<td>Manual</td>
+<td>Manual</td>
+</tr>
+<tr>
+<td><strong>Temporal knowledge graph</strong></td>
+<td><strong>Native triples with validity</strong></td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr>
+<td><strong>Benchmark (LongMemEval)</strong></td>
+<td><strong>98.9% Recall@All@5</strong></td>
+<td>Not published</td>
+<td>Not published</td>
+<td>Not published</td>
 </tr>
 </tbody></table>
+<h4>What You Gain Switching to Mnemosyne</h4>
+<table>
+<thead>
+<tr>
+<th>From</th>
+<th>You Gain</th>
+<th>You Lose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Honcho</strong></td>
+<td>500x faster reads, zero monthly bill, 100% offline, no Docker, no credit system</td>
+<td>Cloud-hosted dashboard, managed scaling, team sharing features</td>
+</tr>
+<tr>
+<td><strong>Zep</strong></td>
+<td>43x faster search, no PostgreSQL to maintain, no deployment overhead, instant cold start</td>
+<td>Graph RAG visualization, enterprise compliance certs (SOC 2), managed BYOC</td>
+</tr>
+<tr>
+<td><strong>Mem0</strong></td>
+<td>Sub-millisecond everything, no API rate limits, no vendor lock-in, full data portability</td>
+<td>Managed platform features, 90K+ developer community, YC-backed ecosystem</td>
+</tr>
+<tr>
+<td><strong>Hindsight</strong></td>
+<td>Zero dependency, no network calls, SQLite-native, BEAM architecture</td>
+<td>Cloud sync across devices, managed inference, web dashboard</td>
+</tr>
+</tbody></table>
+<h4>The Bottom Line</h4>
+<ul>
+<li><strong>If you care about speed</strong>: Mnemosyne is 43–500x faster than any cloud alternative because it runs in-process with SQLite — no HTTP roundtrips, no network overhead.</li>
+<li><strong>If you care about privacy</strong>: Your data never leaves your machine. No API calls. No telemetry. No vendor access.</li>
+<li><strong>If you care about cost</strong>: Zero ongoing cost. No credits. No tiers. No &quot;contact sales.&quot;</li>
+<li><strong>If you care about simplicity</strong>: <code>pip install mnemosyne-memory</code> and it works. No Docker. No config files. No signup.</li>
+</ul>
+<p><strong>Trade-off</strong>: You manage your own backup/restore (one SQLite file, trivial). You don&#39;t get a web dashboard or team collaboration features — Mnemosyne is built for individual developers and local agents, not enterprise teams.</p>
 <p><strong>Key capabilities:</strong></p>
 <ul>
 <li><strong>BEAM architecture</strong> — Three tiers: hot working memory, long-term episodic memory, temporary scratchpad</li>
@@ -676,7 +839,79 @@ hermes mnemosyne import --input mnemosyne_backup.json
 <td><code>168</code></td>
 <td>Recency decay halflife in hours (1 week)</td>
 </tr>
+<tr>
+<td><code>MNEMOSYNE_SLEEP_BATCH</code></td>
+<td><code>5000</code></td>
+<td>Max working memories to fetch for consolidation</td>
+</tr>
 </tbody></table>
+<h4>Local LLM (ctransformers/GGUF)</h4>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>MNEMOSYNE_LLM_ENABLED</code></td>
+<td><code>true</code></td>
+<td>Enable LLM summarization in sleep cycle</td>
+</tr>
+<tr>
+<td><code>MNEMOSYNE_LLM_N_CTX</code></td>
+<td><code>2048</code></td>
+<td>Context window size for local model</td>
+</tr>
+<tr>
+<td><code>MNEMOSYNE_LLM_MAX_TOKENS</code></td>
+<td><code>256</code></td>
+<td>Max output tokens per summary</td>
+</tr>
+<tr>
+<td><code>MNEMOSYNE_LLM_N_THREADS</code></td>
+<td><code>4</code></td>
+<td>CPU threads for local inference</td>
+</tr>
+<tr>
+<td><code>MNEMOSYNE_LLM_REPO</code></td>
+<td><code>TheBloke/TinyLlama...</code></td>
+<td>HuggingFace repo for GGUF download</td>
+</tr>
+<tr>
+<td><code>MNEMOSYNE_LLM_FILE</code></td>
+<td><code>tinyllama...Q4_K_M.gguf</code></td>
+<td>GGUF filename</td>
+</tr>
+</tbody></table>
+<h4>Remote LLM (OpenAI-compatible)</h4>
+<p>Use a remote model (llama.cpp server, vLLM, Ollama, etc.) instead of local TinyLlama:</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>MNEMOSYNE_LLM_BASE_URL</code></td>
+<td><em>(none)</em></td>
+<td>OpenAI-compatible API base URL, e.g. <code>http://localhost:8080/v1</code></td>
+</tr>
+<tr>
+<td><code>MNEMOSYNE_LLM_API_KEY</code></td>
+<td><em>(none)</em></td>
+<td>API key for authenticated endpoints</td>
+</tr>
+<tr>
+<td><code>MNEMOSYNE_LLM_MODEL</code></td>
+<td><em>(none)</em></td>
+<td>Model identifier sent in requests</td>
+</tr>
+</tbody></table>
+<p>When <code>BASE_URL</code> is set, Mnemosyne skips local ctransformers and uses your remote model for consolidation. Falls back to local if remote is unreachable, then to aaak encoding.</p>
 <hr>
 <h3>Testing</h3>
 <pre><code class="language-bash"># Run tests locally
@@ -727,15 +962,15 @@ python tests/benchmark_beam_working_memory.py
   <div>
     <div class="related-list">
       <a class="related-row" href="/projects/vectorize-io/hindsight">
-        <div class="stars">★ 10.6K</div>
+        <div class="stars">★ 10.7K</div>
         <div class="name"><span class="org">vectorize-io /</span> hindsight</div>
       </a>
       <a class="related-row" href="/projects/greyhaven-ai/autocontext">
-        <div class="stars">★ 919</div>
+        <div class="stars">★ 923</div>
         <div class="name"><span class="org">greyhaven-ai /</span> autocontext</div>
       </a>
       <a class="related-row" href="/projects/elkimek/honcho-self-hosted">
-        <div class="stars">★ 178</div>
+        <div class="stars">★ 181</div>
         <div class="name"><span class="org">elkimek /</span> honcho-self-hosted</div>
       </a>
       <a class="related-row" href="/projects/yoloshii/ClawMem">
@@ -751,11 +986,11 @@ python tests/benchmark_beam_working_memory.py
         <div class="name"><span class="org">amanning3390 /</span> flowstate-qmd</div>
       </a>
       <a class="related-row" href="/projects/garrytan/gbrain">
-        <div class="stars">★ 11.2K</div>
+        <div class="stars">★ 11.4K</div>
         <div class="name"><span class="org">garrytan /</span> gbrain</div>
       </a>
       <a class="related-row" href="/projects/stephenschoettler/hermes-lcm">
-        <div class="stars">★ 300</div>
+        <div class="stars">★ 305</div>
         <div class="name"><span class="org">stephenschoettler /</span> hermes-lcm</div>
       </a>
     </div>
@@ -763,7 +998,7 @@ python tests/benchmark_beam_working_memory.py
   </div>
 </aside>
 
-</article>
+</main>
 
 <footer class="page-footer">
   <div class="fn-left">hermes atlas · curated by <a href="https://github.com/ksimback">ksimback</a> · <a href="https://github.com/ksimback/hermes-ecosystem/issues">suggest a repo</a> · <a href="/privacy">privacy</a></div>

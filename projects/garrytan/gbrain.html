@@ -35,7 +35,7 @@
   "@type": "SoftwareApplication",
   "@id": "https://hermesatlas.com/projects/garrytan/gbrain#software",
   "name": "gbrain",
-  "description": "GBrain is a memory and context layer that provides AI agents with a persistent, self-organizing knowledge base. It utilizes a hybrid search approach combining a self-wiring knowledge graph with vector search to manage entities, typed links, and structured timelines. The system features 29 specialized skills for autonomous content ingestion, memory consolidation, and task management. It can be deployed as a standalone CLI or as an MCP server for clients like Claude Code and Cursor.",
+  "description": "GBrain is an opinionated memory and context layer designed to give AI agents a persistent, self-wiring knowledge base. It utilizes a hybrid search system and a self-constructing knowledge graph to extract entities and create typed links between people, companies, and events without requiring LLM calls for graph construction. The system consolidates memory through overnight autonomous jobs that fix citations and enrich data from meetings, emails, and media. It integrates with Hermes Agent and Ope",
   "url": "https://hermesatlas.com/projects/garrytan/gbrain",
   "codeRepository": "https://github.com/garrytan/gbrain",
   "applicationCategory": "UtilitiesApplication",
@@ -47,13 +47,13 @@
     "name": "garrytan",
     "url": "https://github.com/garrytan"
   },
-  "dateModified": "2026-04-25T03:28:49.000Z",
+  "dateModified": "2026-04-25T19:48:13.000Z",
   "interactionStatistic": {
     "@type": "InteractionCounter",
     "interactionType": {
       "@type": "LikeAction"
     },
-    "userInteractionCount": 11238
+    "userInteractionCount": 11364
   },
   "isPartOf": {
     "@id": "https://hermesatlas.com/#website"
@@ -99,7 +99,7 @@
   <a href="/">map</a><span class="sep">/</span><a href="/lists/best-memory-providers">memory &amp; context</a><span class="sep">/</span>gbrain
 </div>
 
-<article id="main">
+<main id="main">
 
 <section class="project">
   <h1 class="project-name">
@@ -108,7 +108,7 @@
   <p class="project-desc">Garry's Opinionated OpenClaw/Hermes Agent Brain</p>
 
   <div class="meta-row">
-    <span class="stars">★ 11.2K</span>
+    <span class="stars">★ 11.4K</span>
     <span><span class="meta-label">lang</span>TypeScript</span>
     <span><span class="meta-label">license</span>MIT</span>
     
@@ -127,11 +127,11 @@
 <section class="project-summary">
   <div class="section-label">overview</div>
   <div>
-    <p class="summary-text">GBrain is a memory and context layer that provides AI agents with a persistent, self-organizing knowledge base. It utilizes a hybrid search approach combining a self-wiring knowledge graph with vector search to manage entities, typed links, and structured timelines. The system features 29 specialized skills for autonomous content ingestion, memory consolidation, and task management. It can be deployed as a standalone CLI or as an MCP server for clients like Claude Code and Cursor.</p>
+    <p class="summary-text">GBrain is an opinionated memory and context layer designed to give AI agents a persistent, self-wiring knowledge base. It utilizes a hybrid search system and a self-constructing knowledge graph to extract entities and create typed links between people, companies, and events without requiring LLM calls for graph construction. The system consolidates memory through overnight autonomous jobs that fix citations and enrich data from meetings, emails, and media. It integrates with Hermes Agent and OpenClaw, offering 29 specialized skills for automated workflow execution and information retrieval.</p>
     <ul class="summary-highlights">
-      <li>Self-wiring knowledge graph with typed entity links</li>
-      <li>Hybrid search combining vector and graph-based retrieval</li>
-      <li>29 autonomous skills for ingestion and memory maintenance</li>
+      <li>Hybrid search combining vector retrieval with a self-wiring knowledge graph.</li>
+      <li>Automated entity extraction and typed relationship linking for structured memory.</li>
+      <li>Exposes 30+ MCP tools for integration with Claude Code and Cursor.</li>
     </ul>
   </div>
 </section>
@@ -202,6 +202,16 @@ bun run src/commands/auth.ts create &quot;claude-desktop&quot;
 claude mcp add gbrain -t http https://your-brain.ngrok.app/mcp -H &quot;Authorization: Bearer TOKEN&quot;
 </code></pre>
 <p>Per-client guides: <a href="https://github.com/garrytan/gbrain/blob/main/docs/mcp/DEPLOY.md"><code>docs/mcp/</code></a>. ChatGPT requires OAuth 2.1 (not yet implemented).</p>
+<h4>Using gbrain with GStack</h4>
+<p>If your engineering agent runs on <a href="https://github.com/garrytan/gstack">GStack</a>, point it at gbrain for code lookup instead of grep+read. Cathedral II (v0.21.0) ships call-graph edges and two-pass retrieval — <code>/investigate</code>, <code>/review</code>, <code>/plan-eng-review</code>, and <code>/office-hours</code> all benefit when the agent walks the symbol graph instead of scanning files line by line.</p>
+<p>The five magical-moment commands:</p>
+<pre><code class="language-bash">gbrain code-callers searchKeyword           # who calls this symbol?
+gbrain code-callees searchKeyword           # what does this symbol call?
+gbrain code-def BrainEngine                 # where is X defined?
+gbrain code-refs BrainEngine                # all reference sites
+gbrain query &quot;how does N+1 handling work&quot; --near-symbol BrainEngine.searchKeyword --walk-depth 2
+</code></pre>
+<p>All five auto-emit JSON on non-TTY (gh-CLI convention) so a GStack subagent shelling out via bash gets a clean parseable response. Run <code>gbrain sources add &lt;repo&gt; --strategy code</code> to index a repo, then your agent&#39;s brain-first lookup covers code, not just markdown. (<a href="https://github.com/garrytan/gbrain/blob/main/CHANGELOG.md#0210---2026-04-25">Cathedral II release notes</a>)</p>
 <h3>The 29 Skills</h3>
 <p>GBrain ships 29 skills organized by <code>skills/RESOLVER.md</code> (or your OpenClaw&#39;s <code>AGENTS.md</code> — both filenames are supported as of v0.19). The resolver tells your agent which skill to read for any task.</p>
 <p><a href="https://x.com/garrytan/status/2042925773300908103">Skill files are code.</a> They&#39;re the most powerful way to get knowledge work done. A skill file is a fat markdown document that encodes an entire workflow: when to fire, what to check, how to chain with other skills, what quality bar to enforce. The agent reads the skill and executes it. Skills can also call deterministic TypeScript code bundled in GBrain (search, import, embed, sync) for the parts that shouldn&#39;t be left to LLM judgment. <a href="https://github.com/garrytan/gbrain/blob/main/docs/ethos/THIN_HARNESS_FAT_SKILLS.md">Thin harness, fat skills</a>: the intelligence lives in the skills, not the runtime.</p>
@@ -898,15 +908,15 @@ ADMIN
   <div>
     <div class="related-list">
       <a class="related-row" href="/projects/vectorize-io/hindsight">
-        <div class="stars">★ 10.6K</div>
+        <div class="stars">★ 10.7K</div>
         <div class="name"><span class="org">vectorize-io /</span> hindsight</div>
       </a>
       <a class="related-row" href="/projects/greyhaven-ai/autocontext">
-        <div class="stars">★ 919</div>
+        <div class="stars">★ 923</div>
         <div class="name"><span class="org">greyhaven-ai /</span> autocontext</div>
       </a>
       <a class="related-row" href="/projects/elkimek/honcho-self-hosted">
-        <div class="stars">★ 178</div>
+        <div class="stars">★ 181</div>
         <div class="name"><span class="org">elkimek /</span> honcho-self-hosted</div>
       </a>
       <a class="related-row" href="/projects/yoloshii/ClawMem">
@@ -922,7 +932,7 @@ ADMIN
         <div class="name"><span class="org">amanning3390 /</span> flowstate-qmd</div>
       </a>
       <a class="related-row" href="/projects/stephenschoettler/hermes-lcm">
-        <div class="stars">★ 300</div>
+        <div class="stars">★ 305</div>
         <div class="name"><span class="org">stephenschoettler /</span> hermes-lcm</div>
       </a>
       <a class="related-row" href="/projects/keepnotes-ai/keep">
@@ -934,7 +944,7 @@ ADMIN
   </div>
 </aside>
 
-</article>
+</main>
 
 <footer class="page-footer">
   <div class="fn-left">hermes atlas · curated by <a href="https://github.com/ksimback">ksimback</a> · <a href="https://github.com/ksimback/hermes-ecosystem/issues">suggest a repo</a> · <a href="/privacy">privacy</a></div>
