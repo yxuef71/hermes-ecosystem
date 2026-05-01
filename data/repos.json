@@ -980,16 +980,6 @@
     "category": "Workspaces & GUIs"
   },
   {
-    "owner": "Web3CZ",
-    "repo": "Web3Hermes",
-    "name": "Web3Hermes",
-    "description": "【Hermes WebUI】Hermes-Agent 中文版 WebUI，便于中国用户使用",
-    "stars": 140,
-    "url": "https://github.com/Web3CZ/Web3Hermes",
-    "official": false,
-    "category": "Workspaces & GUIs"
-  },
-  {
     "owner": "keepnotes-ai",
     "repo": "keep",
     "name": "keep",
