@@ -35,7 +35,7 @@
   "@type": "SoftwareApplication",
   "@id": "https://hermesatlas.com/projects/Codename-11/hermes-relay#software",
   "name": "hermes-relay",
-  "description": "Hermes-Relay is a companion suite that enables remote interaction with a server-deployed Hermes agent through a native Android app and a desktop CLI. It uses a WebSocket Secure (WSS) relay to bridge local devices with remote agents, allowing for chat, terminal access, and cross-device tool execution. The Android application provides mobile device control including screen reading and gestures, while the desktop client allows a remote agent to execute local tools like file searches and screenshots",
+  "description": "Hermes-Relay is a companion suite that enables remote interaction with a server-deployed Hermes agent via Android and desktop interfaces. It uses a WebSocket Secure (WSS) relay and a server-side plugin to facilitate communication between the remote agent and local devices. The Android app allows for mobile chat and device control, including screen reading and automated actions like swiping or typing. The desktop CLI provides a local-feeling terminal experience, allowing the remote agent to execu",
   "url": "https://hermesatlas.com/projects/Codename-11/hermes-relay",
   "codeRepository": "https://github.com/Codename-11/hermes-relay",
   "applicationCategory": "CommunicationApplication",
@@ -47,7 +47,7 @@
     "name": "Codename-11",
     "url": "https://github.com/Codename-11"
   },
-  "dateModified": "2026-05-04T14:54:51.000Z",
+  "dateModified": "2026-05-06T02:29:15.000Z",
   "interactionStatistic": {
     "@type": "InteractionCounter",
     "interactionType": {
@@ -112,7 +112,7 @@
     <span><span class="meta-label">lang</span>Kotlin</span>
     <span><span class="meta-label">license</span>MIT</span>
     
-    <span><span class="meta-label">updated</span>2026-05-04</span>
+    <span><span class="meta-label">updated</span>2026-05-06</span>
   </div>
 
   <div class="actions">
@@ -127,10 +127,10 @@
 <section class="project-summary">
   <div class="section-label">overview</div>
   <div>
-    <p class="summary-text">Hermes-Relay is a companion suite that enables remote interaction with a server-deployed Hermes agent through a native Android app and a desktop CLI. It uses a WebSocket Secure (WSS) relay to bridge local devices with remote agents, allowing for chat, terminal access, and cross-device tool execution. The Android application provides mobile device control including screen reading and gestures, while the desktop client allows a remote agent to execute local tools like file searches and screenshots. This setup eliminates the need for SSH by providing a unified interface for managing remote agent sessions across multiple surfaces.</p>
+    <p class="summary-text">Hermes-Relay is a companion suite that enables remote interaction with a server-deployed Hermes agent via Android and desktop interfaces. It uses a WebSocket Secure (WSS) relay and a server-side plugin to facilitate communication between the remote agent and local devices. The Android app allows for mobile chat and device control, including screen reading and automated actions like swiping or typing. The desktop CLI provides a local-feeling terminal experience, allowing the remote agent to execute tools, manage files, and access the clipboard on the user's machine.</p>
     <ul class="summary-highlights">
-      <li>Native Android app for chat, voice, and remote device control</li>
-      <li>Desktop CLI for running remote Hermes agents as local processes</li>
+      <li>Native Android app for remote chat and device automation control</li>
+      <li>Experimental desktop CLI for local-style terminal and TUI interaction</li>
       <li>Bidirectional tool execution allowing remote agents to access local files</li>
     </ul>
   </div>
@@ -246,7 +246,7 @@ hermes-relay update                            # self-update via GitHub Releases
 <li><strong>From a shell</strong>: <code>hermes-pair</code> (dashed) — a thin wrapper around <code>python -m plugin.pair</code> in the hermes-agent venv. Use this in scripts or when you want the raw output.</li>
 <li><strong>No camera?</strong> <code>hermes-pair --register-code ABCD12</code> — manual fallback for SSH-only / camera-less setups. For Android: read the 6-char code from the app&#39;s <strong>Settings → Connection → Manual pairing code (fallback)</strong> card, pre-register it on the host with this command, then tap <strong>Connect</strong> in the app. For the desktop CLI: just pass it as <code>hermes-relay pair ABCD12 --remote ws://&lt;host&gt;:8767</code>. Composes with <code>--ttl</code> / <code>--grants</code>.</li>
 </ul>
-<p>Scan the QR from the Android app&#39;s onboarding screen, OR paste the 6-char code into <code>hermes-relay pair --remote ws://&lt;host&gt;:8767</code> on your laptop, and you&#39;re connected. One pair configures <strong>both</strong> the direct-chat API server <strong>and</strong> the WSS relay (for terminal / bridge / desktop tools) — if a local relay is running at <code>localhost:8767</code>, the pair command pre-registers a fresh 6-char pairing code with it and embeds the relay URL + code in the same QR. If you only want direct chat from the Android app, pass <code>--no-relay</code> (or just don&#39;t start the relay). Plain-text connection details are always printed alongside the QR so you can copy values by hand if your terminal can&#39;t render QR blocks.</p>
+<p>Scan the QR from the Android app&#39;s onboarding screen, OR paste the 6-char code into <code>hermes-relay pair --remote ws://&lt;host&gt;:8767</code> on your laptop, and you&#39;re connected. One pair configures <strong>both</strong> the direct-chat API server <strong>and</strong> the relay (WSS for terminal / bridge / TUI / desktop tools, HTTP for voice routes) — if a local relay is running at <code>localhost:8767</code>, the pair command pre-registers a fresh 6-char pairing code with it and embeds the relay URL + code in the same QR. If you only want direct chat from the Android app, pass <code>--no-relay</code> (or just don&#39;t start the relay). Plain-text connection details are always printed alongside the QR so you can copy values by hand if your terminal can&#39;t render QR blocks.</p>
 <p><strong>Dashboard plugin.</strong> If your hermes-agent install has the Dashboard Plugin System (upstream <code>axiom</code> branch), Hermes-Relay ships a plugin at <code>plugin/dashboard/</code> that surfaces paired devices, bridge command activity, and active inbound-media tokens in the gateway&#39;s web UI. It auto-registers through the same <code>~/.hermes/plugins/hermes-relay</code> symlink created by <code>install.sh</code> — restart the gateway and a &quot;Relay&quot; tab appears. See <a href="https://github.com/Codename-11/hermes-relay/blob/main/docs/relay-server.md">docs/relay-server.md</a> and <code>user-docs/features/dashboard.md</code> for details.</p>
 <p><strong>Updating:</strong> <code>hermes-relay-update</code> (shortest path — installed as part of the one-liner) or re-run the same <code>curl … | bash</code> from above. Both are equivalent and fully idempotent: pulls latest main, refreshes the editable install, recreates all three shims, restarts <code>hermes-relay</code>, and prompts before restarting <code>hermes-gateway</code>. Set <code>HERMES_RELAY_RESTART_GATEWAY=1</code> to opt into the gateway restart non-interactively. For routine plugin/skill updates without restarting anything, a plain <code>cd ~/.hermes/hermes-relay &amp;&amp; git pull</code> is enough — the editable install picks up the new code on next process start.</p>
 <p><strong>Uninstalling:</strong> <code>bash ~/.hermes/hermes-relay/uninstall.sh</code> reverses every install step in the opposite order. Idempotent, never touches state shared with other Hermes tools (<code>.env</code>, sessions DB, hermes-agent venv core). Flags: <code>--dry-run</code>, <code>--keep-clone</code>, <code>--remove-secret</code>. Or pull the script via curl if you&#39;ve already removed the clone.</p>
@@ -392,10 +392,11 @@ Always confirm before running shell commands. Never restart hermes-gateway witho
 <p>For detailed setup, server configuration, and feature guides, see the <strong><a href="https://codename-11.github.io/hermes-relay/">full documentation</a></strong>.</p>
 <h3>How It Works</h3>
 <pre><code>Phone        (HTTP/SSE) --&gt; Hermes API Server (:8642)   [chat — direct]
-Phone        (WSS)      --&gt; Relay Server (:8767)         [voice, bridge, notifications]
+Phone        (HTTP)     --&gt; Relay Server (:8767)         [voice routes — API key or relay session]
+Phone        (WSS/HTTP) --&gt; Relay Server (:8767)         [terminal, bridge, media, sessions]
 Desktop CLI  (WSS)      --&gt; Relay Server (:8767)         [tui, terminal, desktop tools]
 </code></pre>
-<p>Chat from the Android app connects directly to the Hermes API Server — same pattern used by Open WebUI and other Hermes frontends. Voice and bridge use a separate WSS relay (<code>:8767</code>). The desktop CLI connects exclusively to that same relay — <code>tui</code> channel for chat / shell, <code>desktop</code> channel for client-side tool routing — so one relay process serves both surfaces, and one pair grants access to either.</p>
+<p>Chat from the Android app connects directly to the Hermes API Server with the Hermes API key — same pattern used by Open WebUI and other Hermes frontends. Voice calls the relay&#39;s <code>/voice/*</code> HTTP routes and authenticates with that Hermes API bearer when present, falling back to the relay session token for paired devices. Remote control surfaces such as terminal, bridge, TUI, media/session management, and desktop tools require relay pairing on <code>:8767</code>, so one scan can configure both the API route and the relay route without merging their auth models.</p>
 <h3>Documentation</h3>
 <table>
 <thead>
@@ -461,7 +462,7 @@ scripts/dev.bat relay      # Start relay server (dev, no TLS)
 ├── relay_server/              # WSS relay server (Python + aiohttp; thin shim → plugin/relay)
 ├── plugin/                    # Hermes agent plugin
 │   ├── relay/                 #   - canonical relay (server.py, channels/, media, voice, desktop tools)
-│   ├── tools/                 #   - 18 android_* + 9 desktop_* tool handlers
+│   ├── tools/                 #   - android_* bridge + desktop_* tool handlers
 │   └── pair.py                #   - QR pairing CLI + multi-endpoint payload builder
 ├── skills/                    # Hermes agent skills
 │   └── devops/
@@ -511,7 +512,7 @@ scripts/dev.bat relay      # Start relay server (dev, no TLS)
 <td>26 (Android 8.0) / Target SDK 35</td>
 </tr>
 </tbody></table>
-<h4>Relay Server (optional — terminal/bridge only)</h4>
+<h4>Relay Server (optional — bridge, terminal, TUI, media, and voice routes)</h4>
 <pre><code class="language-bash">hermes relay start --no-ssl          # if you installed the plugin
 # or from a repo checkout:
 python -m plugin.relay --no-ssl
@@ -559,7 +560,7 @@ ln -s &quot;$PWD/plugin&quot; ~/.hermes/plugins/hermes-relay
   <div>
     <div class="related-list">
       <a class="related-row" href="/projects/raulvidis/hermes-android">
-        <div class="stars">★ 128</div>
+        <div class="stars">★ 130</div>
         <div class="name"><span class="org">raulvidis /</span> hermes-android</div>
       </a>
       <a class="related-row" href="/projects/teknium1/hermes-miniverse">
@@ -567,7 +568,7 @@ ln -s &quot;$PWD/plugin&quot; ~/.hermes/plugins/hermes-relay
         <div class="name"><span class="org">teknium1 /</span> hermes-miniverse</div>
       </a>
       <a class="related-row" href="/projects/Ridwannurudeen/hermes-council">
-        <div class="stars">★ 18</div>
+        <div class="stars">★ 19</div>
         <div class="name"><span class="org">Ridwannurudeen /</span> hermes-council</div>
       </a>
       <a class="related-row" href="/projects/marlandoj/zouroboros-swarm-executors">
@@ -583,7 +584,7 @@ ln -s &quot;$PWD/plugin&quot; ~/.hermes/plugins/hermes-relay
         <div class="name"><span class="org">kevinmarmstrong /</span> hermes-claude-code-rc</div>
       </a>
       <a class="related-row" href="/projects/AaronWong1999/hermesclaw">
-        <div class="stars">★ 314</div>
+        <div class="stars">★ 326</div>
         <div class="name"><span class="org">AaronWong1999 /</span> hermesclaw</div>
       </a>
     </div>

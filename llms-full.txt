@@ -1,6 +1,6 @@
 # Hermes Atlas — Full Context Bundle
 
-> Complete content of hermesatlas.com as of 2026-05-05. Concatenated from guide pages, ecosystem overview, the quarterly report, and project summaries. Canonical URLs preserved throughout.
+> Complete content of hermesatlas.com as of 2026-05-06. Concatenated from guide pages, ecosystem overview, the quarterly report, and project summaries. Canonical URLs preserved throughout.
 
 This file is the companion to https://hermesatlas.com/llms.txt (the concise index).
 
@@ -1548,12 +1548,12 @@ Stars: 83,290
 Official: Yes (maintained by Nous Research)
 The self-improving AI agent that grows with you — persistent memory, auto-generated skills, 14 platforms, 6 execution backends
 
-Hermes Agent is an autonomous AI system designed for persistent, cross-platform task execution and self-improvement. It utilizes a closed learning loop to automatically generate new skills from experience and build long-term user models through Honcho-powered dialectic memory. The agent supports 14 communication platforms and six execution backends, including serverless options like Modal and Daytona for cost-efficient persistence. Users can switch between over 200 LLM providers via a unified CLI or messaging gateway without changing code.
+Hermes Agent is an autonomous AI system designed for persistent, cross-platform task execution and self-improvement. It utilizes a closed learning loop to automatically generate new skills from experience and build long-term user models through dialectic memory. The agent integrates with 14 messaging platforms and supports seven execution backends, including serverless environments like Modal and local Docker containers. Users can manage complex workflows via a terminal interface or messaging apps while leveraging built-in cron scheduling for automated background tasks.
 
 Highlights:
 - Autonomous skill creation and self-improvement from task experience
 - Multi-platform support including Telegram, Discord, Slack, and Signal
-- Six execution backends including Docker, SSH, and serverless persistence
+- Seven execution backends including SSH, Docker, and serverless Modal
 
 ---
 
@@ -1669,12 +1669,12 @@ Category: Workspaces & GUIs
 Stars: 2,479
 Hermes WebUI: The best way to use Hermes Agent from the web or from your phone!
 
-Hermes WebUI provides a browser-based graphical interface for interacting with the Hermes Agent. It is built using Python and vanilla JavaScript to offer full functional parity with the existing command-line interface without requiring complex build steps. The interface features a three-panel layout for session management, chat, and workspace file browsing, allowing users to manage their autonomous agent via web or mobile browsers. It integrates directly with existing Hermes setups, utilizing the user's current models and configurations.
+Hermes WebUI is a lightweight browser interface for the Hermes Agent that provides a graphical alternative to the terminal. It is built using Python and vanilla JavaScript without the need for a build step, framework, or bundler. The interface features a three-panel layout for managing sessions, chat, and workspace files with full parity to the CLI experience. It integrates directly with existing Hermes agent setups and models, allowing secure access via SSH tunnels.
 
 Highlights:
-- Full parity with the Hermes CLI experience
-- Three-panel layout with workspace file browsing
-- Lightweight implementation using Python and vanilla JS
+- Full feature parity with the Hermes CLI experience
+- Three-panel layout with workspace file browsing and inline preview
+- Lightweight architecture using only Python and vanilla JavaScript
 
 ---
 
@@ -1703,12 +1703,12 @@ Category: Developer Tools
 Stars: 1,690
 CLI tool for tracking token usage from Claude Code, OpenClaw, Hermes, Codex, Gemini, and more
 
-Tokscale is a monitoring tool designed to track token consumption and costs across various AI coding agents. It works by analyzing local data files and databases from supported clients to aggregate usage statistics. The tool features a native Rust TUI and a visualization dashboard for analyzing daily summaries and model-specific stats. It integrates with a wide range of agents including Hermes Agent, Claude Code, and GitHub Copilot CLI.
+Tokscale is a high-performance CLI tool and visualization dashboard designed to track token consumption and associated costs across various AI coding agents. It works by scanning local data directories, databases, and session logs from supported clients to aggregate usage metrics into a native Rust TUI or a web-based dashboard. Users can monitor daily summaries, model-specific statistics, and historical trends through a unified interface. The tool supports a wide range of integrations including Hermes Agent, Claude Code, OpenClaw, and GitHub Copilot CLI.
 
 Highlights:
-- High-performance native Rust TUI for usage tracking
-- Supports numerous AI agents including Hermes and Claude Code
-- Visualizes token consumption and costs via a dashboard
+- Tracks token usage and costs across multiple AI coding agents
+- Features a native Rust TUI and 3D contribution graph visualization
+- Supports Hermes Agent, Claude Code, Gemini, and Cursor integrations
 
 ---
 
@@ -1963,12 +1963,12 @@ Category: Workspaces & GUIs
 Stars: 313
 A native Mac workspace for Hermes: real SSH, real terminal, real session data.
 
-Hermes Desktop is a native macOS application that provides a dedicated workspace for managing Hermes Agent installations over SSH. It connects directly to a remote host to provide a unified interface for sessions, Kanban boards, workspace files, and terminal workflows without requiring a local daemon or API gateway. The app maintains the remote host as the single source of truth, allowing users to edit skills, monitor usage, and manage cron jobs across multiple profiles. It is designed for developers who prefer a native desktop experience over a browser-based dashboard while maintaining a direct connection to their agent's environment.
+Hermes Desktop is a native macOS workspace designed to provide a focused interface for managing Hermes Agent via SSH. It operates by connecting directly to remote hosts without using a gateway API, local mirrors, or additional daemon services, ensuring the remote host remains the single source of truth. Users can manage sessions, Kanban boards, workspace files, and cron jobs through a unified desktop environment. The application also includes an embedded SSH terminal and profile-aware connection handling for seamless multi-agent workflows.
 
 Highlights:
-- Native macOS interface for remote Hermes Agent management via SSH.
-- Directly edits remote files and skills with built-in conflict checks.
-- Integrated SSH terminal with profile-aware session and environment handling.
+- Direct SSH connection maintains remote host as the single source of truth
+- Integrated views for sessions, Kanban, files, usage, and skills
+- Embedded SSH terminal with tabs and theme support
 
 ---
 
@@ -1980,12 +1980,12 @@ Category: Multi-Agent & Orchestration
 Stars: 285
 Build autonomous AI agent swarms with orchestration, skills, and multiple model providers
 
-SwarmClaw is a self-hosted AI agent runtime and multi-agent framework designed to orchestrate autonomous swarms. It utilizes a centralized dashboard to manage agent heartbeats, schedules, and delegation across more than 23 LLM providers. The platform features durable agent memory and a conversation-to-skill learning system that allows agents to acquire new capabilities through reviewed interactions. It supports integration with various CLI-based agents and Model Context Protocol (MCP) tools for complex, automated workflows.
+SwarmClaw is a self-hosted AI agent runtime and multi-agent framework designed to orchestrate autonomous swarms. It operates by providing a centralized dashboard for managing agent heartbeats, schedules, and delegation across more than 23 LLM providers. The platform features durable agent memory and a conversation-to-skill learning system that allows agents to acquire new capabilities through reviewed interactions. It supports various deployment methods including a desktop application, Docker containers, and cloud-hosted environments.
 
 Highlights:
-- Orchestrates autonomous agent swarms with delegation and scheduling
-- Supports 23+ LLM providers including Hermes, Claude, and Ollama
-- Features durable memory and conversation-to-skill learning capabilities
+- Supports orchestration across 23+ LLM providers including Hermes and Ollama
+- Features durable agent memory and conversation-to-skill learning capabilities
+- Integrates with MCP tools and delegated CLI backends like Claude Code
 
 ---
 
@@ -2116,12 +2116,12 @@ Category: Skills & Skill Registries
 Stars: 131
 Generate draw.io diagrams from natural language descriptions
 
-The drawio-skill project is a multi-platform agent tool that converts natural language descriptions into professional .drawio diagrams. It utilizes the native draw.io desktop CLI to generate XML files and export them to formats like PNG, SVG, and PDF with grid-aligned layouts. The tool features six specialized presets for architecture, machine learning, and UML diagrams, including unique capabilities like tensor shape annotations and animated connectors. It supports an iterative design loop where the agent can self-check, auto-fix, and refine diagrams based on user feedback across various AI coding platforms.
+drawio-skill is a tool for generating professional diagrams from natural language descriptions using the Agent Skills format. It converts text into .drawio XML files and utilizes the native draw.io desktop CLI to export them into formats like PNG, SVG, and PDF. The skill includes six specialized presets for architecture, machine learning, and UML, featuring grid-aligned layouts and automated self-correction loops. It is designed to integrate with major AI coding agents like Claude Code and Hermes Agent to provide an iterative design workflow.
 
 Highlights:
 - Generates .drawio XML and exports to PNG, SVG, or PDF
 - Six diagram presets including ML models with tensor shape annotations
-- Self-correcting iterative loop with auto-fix for layout and style issues
+- Automated self-check loop reads and auto-fixes visual layout issues
 
 ---
 
@@ -2456,12 +2456,12 @@ Category: Developer Tools
 Stars: 44
 AI-native browser built for autonomous agent control via MCP
 
-Vessel is an open-source Chromium-based browser designed specifically for autonomous agent control and human supervision. It provides a persistent runtime environment where external agent harnesses, such as Hermes Agent, can drive web workflows while humans audit and intervene through a visible UI. The browser maintains durable state through named sessions and annotated checkpoints, allowing agents to perform long-running tasks with the ability to undo actions. It integrates with the Model Context Protocol (MCP) and includes built-in tools for page schema inference and structured content extraction.
+Vessel is an open-source, Chromium-based browser designed to provide a persistent execution environment for autonomous web agents. It functions as a visible runtime where agents drive workflows via the Model Context Protocol (MCP) while humans monitor and intervene through a supervisory UI. The browser maintains durable state through named sessions, annotated checkpoints, and action undo capabilities to support long-running tasks. It integrates with various LLM providers and agent harnesses like Hermes Agent to transform web automation from a headless process into a transparent, auditable experience.
 
 Highlights:
-- Persistent browser sessions with named state and cookie management
-- MCP-compatible control for external agent harnesses and tools
-- Human-in-the-loop supervisory interface with action undo and rollback
+- Provides a human-visible interface for auditing autonomous agent actions
+- Supports Model Context Protocol for external agent harness control
+- Features automated page schema inference for structured content extraction
 
 ---
 
@@ -2558,12 +2558,12 @@ Category: Memory & Context
 Stars: 29
 The Zero-Dependency, Sub-Millisecond AI Memory System for Hermes Agents
 
-Mnemosyne is a local-first memory system designed for the Hermes Agent framework that provides persistent storage for conversations, preferences, and knowledge. It operates entirely in-process using SQLite with native vector search and full-text search, eliminating the need for external databases or API keys. The system utilizes a three-tier BEAM architecture to manage working, episodic, and scratchpad memory while performing automatic consolidation through sleep cycles. This approach enables sub-millisecond latency for read and write operations while ensuring data remains private and offline-capable.
+Mnemosyne is a local-first memory system designed to provide private, high-speed context for Hermes Agents without relying on cloud services. It utilizes a SQLite backend with native vector search and full-text search to store conversations, preferences, and knowledge locally. The system implements a three-tier BEAM architecture that manages working, episodic, and scratchpad memory through automatic consolidation and sleep cycles. This approach enables sub-millisecond retrieval and offline operation while maintaining data ownership on the user's machine.
 
 Highlights:
 - SQLite-backed storage with native vector and full-text search
 - Three-tier BEAM architecture for working, episodic, and scratchpad memory
-- Sub-millisecond latency with zero-cloud dependencies or network calls
+- Automatic conversation consolidation via episodic compression and sleep cycles
 
 ---
 
@@ -2643,12 +2643,12 @@ Category: Workspaces & GUIs
 Stars: 25
 Glassmorphic web interface for Hermes Agent — your self-hosted AI assistant
 
-Hermes UI is a glassmorphic web interface that serves as a centralized command center for managing the Hermes Agent ecosystem. It functions as a single-file React application that communicates with the agent through a lightweight Python proxy server to provide real-time log streaming and session management. Users can steer agent behavior mid-stream, manage multiple workspaces via a folder picker, and monitor system resources like memory and token usage. The interface integrates specialized views for file browsing, MCP tool inspection, and sandboxed artifact rendering for HTML and SVG outputs.
+Hermes UI is a glassmorphic web interface that serves as a centralized command center for the self-hosted Hermes Agent. Built as a single-file React 18 application, it connects to the agent via a lightweight Python proxy server to provide real-time operational visibility. The interface features a multi-workspace environment with integrated file browsing, Kanban-style task tracking, and live log streaming. It also supports advanced interaction controls such as Mermaid diagram rendering, MCP tool management, and per-message model switching.
 
 Highlights:
-- Single-file React application with real-time SSE chat streaming
-- Workspace-aware file browser and multi-root space management
-- Integrated terminal tabs for shell access and log monitoring
+- Single-file React application with real-time log and chat streaming
+- Integrated Kanban board for automatic task detection and tracking
+- Workspace management with folder picking and context-aware file browsing
 
 ---
 
@@ -2881,11 +2881,11 @@ Category: Integrations & Bridges
 Stars: 10
 Hermes Companion — Android app for Hermes agent platform. Chat, terminal, and device control over WSS.
 
-Hermes-Relay is a companion suite that enables remote interaction with a server-deployed Hermes agent through a native Android app and a desktop CLI. It uses a WebSocket Secure (WSS) relay to bridge local devices with remote agents, allowing for chat, terminal access, and cross-device tool execution. The Android application provides mobile device control including screen reading and gestures, while the desktop client allows a remote agent to execute local tools like file searches and screenshots. This setup eliminates the need for SSH by providing a unified interface for managing remote agent sessions across multiple surfaces.
+Hermes-Relay is a companion suite that enables remote interaction with a server-deployed Hermes agent via Android and desktop interfaces. It uses a WebSocket Secure (WSS) relay and a server-side plugin to facilitate communication between the remote agent and local devices. The Android app allows for mobile chat and device control, including screen reading and automated actions like swiping or typing. The desktop CLI provides a local-feeling terminal experience, allowing the remote agent to execute tools, manage files, and access the clipboard on the user's machine.
 
 Highlights:
-- Native Android app for chat, voice, and remote device control
-- Desktop CLI for running remote Hermes agents as local processes
+- Native Android app for remote chat and device automation control
+- Experimental desktop CLI for local-style terminal and TUI interaction
 - Bidirectional tool execution allowing remote agents to access local files
 
 ---
@@ -3102,12 +3102,12 @@ Category: Integrations & Bridges
 Stars: 6
 Adversarial multi-perspective council MCP server for decision-making
 
-Hermes-council is an MCP server designed to provide adversarial, multi-perspective decision-making for the hermes-agent ecosystem. It functions by orchestrating five distinct personas—Advocate, Skeptic, Oracle, Contrarian, and Arbiter—to debate complex questions through structured deliberation. The system produces calibrated verdicts with confidence scores and evidence links, and it can be used to generate DPO preference pairs for Reinforcement Learning training.
+Hermes Council is an MCP server that provides an adversarial judgment layer for Hermes Agent to stress-test plans and risky actions before execution. It utilizes a multi-perspective deliberation process where specialized personas like the Advocate, Skeptic, and Oracle argue to produce a structured final verdict. This system helps prevent overconfident plans and unsafe commands by returning explicit fields such as allow/deny status, blocking risks, and required checks. Additionally, it can extract DPO preference pairs and normalized rewards to support reinforcement learning and evaluator workflows.
 
 Highlights:
-- Five distinct intellectual personas for adversarial deliberation
-- Generates DPO preference pairs for RL training
-- Supports custom persona configuration via YAML
+- Multi-persona adversarial deliberation using Advocate, Skeptic, and Oracle roles
+- Structured decision gating with allow, deny, and conditional verdicts
+- Generates DPO preference pairs and rewards for RL workflows
 
 ---
 

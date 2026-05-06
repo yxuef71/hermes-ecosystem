@@ -35,7 +35,7 @@
   "@type": "SoftwareApplication",
   "@id": "https://hermesatlas.com/projects/nesquena/hermes-webui#software",
   "name": "hermes-webui",
-  "description": "Hermes WebUI provides a browser-based graphical interface for interacting with the Hermes Agent. It is built using Python and vanilla JavaScript to offer full functional parity with the existing command-line interface without requiring complex build steps. The interface features a three-panel layout for session management, chat, and workspace file browsing, allowing users to manage their autonomous agent via web or mobile browsers. It integrates directly with existing Hermes setups, utilizing th",
+  "description": "Hermes WebUI is a lightweight browser interface for the Hermes Agent that provides a graphical alternative to the terminal. It is built using Python and vanilla JavaScript without the need for a build step, framework, or bundler. The interface features a three-panel layout for managing sessions, chat, and workspace files with full parity to the CLI experience. It integrates directly with existing Hermes agent setups and models, allowing secure access via SSH tunnels.",
   "url": "https://hermesatlas.com/projects/nesquena/hermes-webui",
   "codeRepository": "https://github.com/nesquena/hermes-webui",
   "applicationCategory": "DesktopEnhancementApplication",
@@ -47,13 +47,13 @@
     "name": "nesquena",
     "url": "https://github.com/nesquena"
   },
-  "dateModified": "2026-05-05T02:43:34.000Z",
+  "dateModified": "2026-05-05T22:16:26.000Z",
   "interactionStatistic": {
     "@type": "InteractionCounter",
     "interactionType": {
       "@type": "LikeAction"
     },
-    "userInteractionCount": 5688
+    "userInteractionCount": 5827
   },
   "isPartOf": {
     "@id": "https://hermesatlas.com/#website"
@@ -108,7 +108,7 @@
   <p class="project-desc">Hermes WebUI: The best way to use Hermes Agent from the web or from your phone!</p>
 
   <div class="meta-row">
-    <span class="stars">★ 5.7K</span>
+    <span class="stars">★ 5.8K</span>
     <span><span class="meta-label">lang</span>Python</span>
     <span><span class="meta-label">license</span>MIT</span>
     
@@ -127,11 +127,11 @@
 <section class="project-summary">
   <div class="section-label">overview</div>
   <div>
-    <p class="summary-text">Hermes WebUI provides a browser-based graphical interface for interacting with the Hermes Agent. It is built using Python and vanilla JavaScript to offer full functional parity with the existing command-line interface without requiring complex build steps. The interface features a three-panel layout for session management, chat, and workspace file browsing, allowing users to manage their autonomous agent via web or mobile browsers. It integrates directly with existing Hermes setups, utilizing the user's current models and configurations.</p>
+    <p class="summary-text">Hermes WebUI is a lightweight browser interface for the Hermes Agent that provides a graphical alternative to the terminal. It is built using Python and vanilla JavaScript without the need for a build step, framework, or bundler. The interface features a three-panel layout for managing sessions, chat, and workspace files with full parity to the CLI experience. It integrates directly with existing Hermes agent setups and models, allowing secure access via SSH tunnels.</p>
     <ul class="summary-highlights">
-      <li>Full parity with the Hermes CLI experience</li>
-      <li>Three-panel layout with workspace file browsing</li>
-      <li>Lightweight implementation using Python and vanilla JS</li>
+      <li>Full feature parity with the Hermes CLI experience</li>
+      <li>Three-panel layout with workspace file browsing and inline preview</li>
+      <li>Lightweight architecture using only Python and vanilla JavaScript</li>
     </ul>
   </div>
 </section>
@@ -760,6 +760,7 @@ docker-compose.yml      Compose with named volume and optional auth
 <li><code>CHANGELOG.md</code> -- release notes per sprint</li>
 <li><code>SPRINTS.md</code> -- forward sprint plan with CLI + Claude parity targets</li>
 <li><code>THEMES.md</code> -- theme system documentation, custom theme guide</li>
+<li><code>docs/troubleshooting.md</code> -- diagnostic flows for common failures (e.g. &quot;AIAgent not available&quot;)</li>
 </ul>
 <h3>Contributors</h3>
 <p>Hermes WebUI is built with help from the open-source community. Every PR — whether merged directly or incorporated via batch release — shapes the project, and we&#39;re grateful to everyone who has taken the time to contribute.</p>
@@ -922,11 +923,11 @@ Added a streaming token buffer and post-run message scrub to <code>streaming.py<
   <div>
     <div class="related-list">
       <a class="related-row" href="/projects/outsourc-e/hermes-workspace">
-        <div class="stars">★ 3.3K</div>
+        <div class="stars">★ 3.4K</div>
         <div class="name"><span class="org">outsourc-e /</span> hermes-workspace</div>
       </a>
       <a class="related-row" href="/projects/fathah/hermes-desktop">
-        <div class="stars">★ 1.1K</div>
+        <div class="stars">★ 1.2K</div>
         <div class="name"><span class="org">fathah /</span> hermes-desktop</div>
       </a>
       <a class="related-row" href="/projects/sanchomuzax/hermes-webui">
@@ -934,23 +935,23 @@ Added a streaming token buffer and post-run message scrub to <code>streaming.py<
         <div class="name"><span class="org">sanchomuzax /</span> hermes-webui</div>
       </a>
       <a class="related-row" href="/projects/Euraika-Labs/pan-ui">
-        <div class="stars">★ 59</div>
+        <div class="stars">★ 61</div>
         <div class="name"><span class="org">Euraika-Labs /</span> pan-ui</div>
       </a>
       <a class="related-row" href="/projects/xaspx/hermes-control-interface">
-        <div class="stars">★ 574</div>
+        <div class="stars">★ 587</div>
         <div class="name"><span class="org">xaspx /</span> hermes-control-interface</div>
       </a>
       <a class="related-row" href="/projects/dodo-reach/hermes-desktop">
-        <div class="stars">★ 890</div>
+        <div class="stars">★ 1.0K</div>
         <div class="name"><span class="org">dodo-reach /</span> hermes-desktop</div>
       </a>
       <a class="related-row" href="/projects/pyrate-llama/hermes-ui">
-        <div class="stars">★ 96</div>
+        <div class="stars">★ 100</div>
         <div class="name"><span class="org">pyrate-llama /</span> hermes-ui</div>
       </a>
       <a class="related-row" href="/projects/clawvader-tech/hermes-telegram-miniapp">
-        <div class="stars">★ 212</div>
+        <div class="stars">★ 214</div>
         <div class="name"><span class="org">clawvader-tech /</span> hermes-telegram-miniapp</div>
       </a>
     </div>
