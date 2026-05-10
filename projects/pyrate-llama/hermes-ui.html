@@ -35,7 +35,7 @@
   "@type": "SoftwareApplication",
   "@id": "https://hermesatlas.com/projects/pyrate-llama/hermes-ui#software",
   "name": "hermes-ui",
-  "description": "Hermes UI is a glassmorphic web-based command center designed to provide a visual interface for managing the self-hosted Hermes Agent. It operates as a single-file React 18 application served via a lightweight Python proxy, enabling users to interact with their AI assistant through a browser. The interface consolidates chat, real-time log streaming, file browsing, and memory inspection into a unified workspace. It also includes dedicated modules for managing MCP tools, scheduling cron jobs, and ",
+  "description": "Hermes UI is a glassmorphic web-based command center designed for managing and monitoring the Hermes Agent ecosystem. Built as a single-file React 18 application, it connects to a lightweight Python proxy to provide a unified interface for chat, file browsing, and skill management. The interface features real-time log streaming, a task board for tracking active tool work, and integrated support for Model Context Protocol (MCP) servers. It also includes specialized tools for scheduling cron jobs,",
   "url": "https://hermesatlas.com/projects/pyrate-llama/hermes-ui",
   "codeRepository": "https://github.com/pyrate-llama/hermes-ui",
   "applicationCategory": "DesktopEnhancementApplication",
@@ -47,13 +47,13 @@
     "name": "pyrate-llama",
     "url": "https://github.com/pyrate-llama"
   },
-  "dateModified": "2026-05-09T06:39:57.000Z",
+  "dateModified": "2026-05-10T02:27:23.000Z",
   "interactionStatistic": {
     "@type": "InteractionCounter",
     "interactionType": {
       "@type": "LikeAction"
     },
-    "userInteractionCount": 107
+    "userInteractionCount": 109
   },
   "isPartOf": {
     "@id": "https://hermesatlas.com/#website"
@@ -112,11 +112,11 @@
   <p class="project-desc">The command center for Hermes Agent — chat, steer, browse files, manage skills, and monitor everything from a single glassmorphic HTML app.</p>
 
   <div class="meta-row">
-    <span class="stars">★ 107</span>
+    <span class="stars">★ 109</span>
     <span><span class="meta-label">lang</span>HTML</span>
     <span><span class="meta-label">license</span>MIT</span>
     
-    <span><span class="meta-label">updated</span>2026-05-09</span>
+    <span><span class="meta-label">updated</span>2026-05-10</span>
   </div>
 
   <div class="actions">
@@ -131,11 +131,11 @@
 <section class="project-summary">
   <div class="section-label">overview</div>
   <div>
-    <p class="summary-text">Hermes UI is a glassmorphic web-based command center designed to provide a visual interface for managing the self-hosted Hermes Agent. It operates as a single-file React 18 application served via a lightweight Python proxy, enabling users to interact with their AI assistant through a browser. The interface consolidates chat, real-time log streaming, file browsing, and memory inspection into a unified workspace. It also includes dedicated modules for managing MCP tools, scheduling cron jobs, and monitoring background task progress.</p>
+    <p class="summary-text">Hermes UI is a glassmorphic web-based command center designed for managing and monitoring the Hermes Agent ecosystem. Built as a single-file React 18 application, it connects to a lightweight Python proxy to provide a unified interface for chat, file browsing, and skill management. The interface features real-time log streaming, a task board for tracking active tool work, and integrated support for Model Context Protocol (MCP) servers. It also includes specialized tools for scheduling cron jobs, inspecting memory, and uploading video files for compatible model workflows.</p>
     <ul class="summary-highlights">
       <li>Single-file React 18 application with a lightweight Python proxy server</li>
-      <li>Real-time log streaming and live workspace file browser with previews</li>
-      <li>Integrated management for MCP tools, cron jobs, and skill libraries</li>
+      <li>Real-time log streaming and live task tracking for agent activities</li>
+      <li>Integrated file browser, terminal, and MCP tool management interface</li>
     </ul>
   </div>
 </section>
@@ -147,7 +147,7 @@
 <p><strong>English</strong> · <a href="https://github.com/pyrate-llama/hermes-ui/blob/main/README.zh-CN.md">简体中文</a></p>
 <p>The command center for <a href="https://github.com/pyrate-llama/hermes-agent">Hermes Agent</a> — chat, steer, browse files, manage skills, and monitor everything from a single glassmorphic HTML app.</p>
 <p>Built as a single-file HTML application with React 18, Hermes UI provides a full-featured chat interface, real-time log streaming, file browsing, memory inspection, and more — all through a lightweight Python proxy server.</p>
-<p><img src="https://img.shields.io/badge/version-3.3.7-ef4444?style=for-the-badge" alt="v3.3.7">
+<p><img src="https://img.shields.io/badge/version-3.3.11-ef4444?style=for-the-badge" alt="v3.3.11">
 <img src="https://img.shields.io/badge/architecture-single_file-44d88a?style=for-the-badge" alt="Single file HTML">
 <img src="https://img.shields.io/badge/react-18.2-61dafb?style=for-the-badge" alt="React 18"></p>
 <h4>Chat</h4>
@@ -168,6 +168,38 @@
 <h4>Terminal</h4>
 <p><img src="https://raw.githubusercontent.com/pyrate-llama/hermes-ui/main/screenshots/terminal.png" alt="Built-in terminal area with Hermes and Claude Code tabs"></p>
 <hr>
+<h3>What&#39;s new in v3.3.11</h3>
+<p>Hermes UI 3.3.11 fixes stale compact context that could make an active chat look reset.</p>
+<p><strong>Session continuity</strong></p>
+<ul>
+<li><strong>Stale context repair</strong> — if <code>context_messages</code> has fewer user turns than the saved transcript and no real compression marker exists, Hermes rebuilds from the full transcript</li>
+<li><strong>No false reset</strong> — chats with dozens of visible prompts no longer start the next turn from a two-prompt backend tail</li>
+<li><strong>Health counts fixed</strong> — session health now reports context from the repaired source instead of stale compact state</li>
+</ul>
+<h3>What&#39;s new in v3.3.10</h3>
+<p>Hermes UI 3.3.10 aligns normal chat context handling with the reference UI.</p>
+<p><strong>Context continuity</strong></p>
+<ul>
+<li><strong>No invisible tail-trim</strong> — normal turns no longer narrow model history to a small local window before Hermes Agent sees it</li>
+<li><strong>Agent-owned compression</strong> — real context compression is left to Hermes Agent, which emits the visible compression event</li>
+<li><strong>Repair keeps substance</strong> — browser/server transcript repair rebuilds provider-safe history without dropping older visible turns</li>
+</ul>
+<h3>What&#39;s new in v3.3.9</h3>
+<p>Hermes UI 3.3.9 adds video uploads for local/video-capable model workflows such as Kimi.</p>
+<p><strong>Video uploads</strong></p>
+<ul>
+<li><strong>Composer video attach</strong> — the file attachment button and drag/drop now accept common video formats</li>
+<li><strong>Workspace upload path</strong> — videos are saved into the active workspace&#39;s <code>uploads/</code> folder and attached to the prompt by local path</li>
+<li><strong>Binary-safe prompts</strong> — video bytes are not inlined into chat history; Hermes receives the saved file path, MIME type, and size</li>
+</ul>
+<h3>What&#39;s new in v3.3.8</h3>
+<p>Hermes UI 3.3.8 fixes silent context narrowing in short chats with large tool receipts.</p>
+<p><strong>Reference-aligned context selection</strong></p>
+<ul>
+<li><strong>Full transcript first</strong> — chats under 40 user prompts rebuild model context from the full backend transcript instead of stale <code>context_messages</code></li>
+<li><strong>No silent compaction</strong> — bulky tool/output blobs are truncated for provider safety, but user/project turns stay in context unless real compaction happens</li>
+<li><strong>Detour recovery</strong> — after side quests like skill edits, Hermes keeps the original project prompts in model context</li>
+</ul>
 <h3>What&#39;s new in v3.3.7</h3>
 <p>Hermes UI 3.3.7 makes recovered UI tool receipts visible to model context without pretending they are provider-native tool calls.</p>
 <p><strong>Recovered tool receipt context</strong></p>
@@ -182,7 +214,7 @@
 <ul>
 <li><strong>UI tool receipts restored</strong> — <code>/api/session/health</code> can now recover browser-persisted <code>toolCalls</code> from <code>~/.hermes/ui-conversations.json</code> when the server session is missing them</li>
 <li><strong>Equal-count repair</strong> — repair now runs when the browser has tool evidence missing from the server, even if both sides have the same number of user prompts</li>
-<li><strong>Nesquena-aligned authority split</strong> — browser text can repair missing visible transcript text, but it no longer replaces richer backend tool history</li>
+<li><strong>Reference-aligned authority split</strong> — browser text can repair missing visible transcript text, but it no longer replaces richer backend tool history</li>
 </ul>
 <h3>What&#39;s new in v3.3.5</h3>
 <p>Hermes UI 3.3.5 fixes a follow-up memory bug where Hermes could see a prior &quot;work completed&quot; transcript but reject it because tool evidence was missing from the repaired context.</p>
@@ -197,7 +229,7 @@
 <p><strong>Session context repair</strong></p>
 <ul>
 <li><strong>Latest-turn memory repair</strong> — browser-ahead transcript repair now refreshes the model-facing context tail too, preventing stale compact context from making Hermes forget the previous prompt/work</li>
-<li><strong>Nesquena-aligned merge guards</strong> — workspace-prefixed agent echoes and checkpointed current-user turns are deduped when compacted context is merged back into the visible transcript</li>
+<li><strong>Reference-aligned merge guards</strong> — workspace-prefixed agent echoes and checkpointed current-user turns are deduped when compacted context is merged back into the visible transcript</li>
 <li><strong>Server health endpoint</strong> — <code>/api/session/health</code> reports server, browser, and compacted-context message counts for easier debugging</li>
 <li><strong>Cleaner Tasks board</strong> — Done receipts now age out after 2 hours, Needs You/blocked receipts after 12 hours, and the Tasks copy clarifies that it is current/recent work</li>
 <li><strong>Privacy check</strong> — release diff was checked for obvious token/API-key/personal-path leaks before shipping</li>
@@ -219,7 +251,7 @@
 <li><strong>Tasks screenshot</strong> — README now shows the Tasks board and live work tracking flow</li>
 </ul>
 <h3>What&#39;s new in v3.3.1</h3>
-<p>Hermes UI 3.3.1 is a session-memory hotfix. It aligns the chat stream lifecycle more closely with Nesquena/Hermes WebUI so context compression and session rotation do not leave the visible UI chat attached to a stale shorter backend session.</p>
+<p>Hermes UI 3.3.1 is a session-memory hotfix. It aligns the chat stream lifecycle more closely with the reference UI so context compression and session rotation do not leave the visible UI chat attached to a stale shorter backend session.</p>
 <p><strong>Session durability hotfix</strong></p>
 <ul>
 <li><strong>Compression session aliases</strong> — when Hermes rotates a session after context compression, the UI proxy now remembers the old ID points to the new canonical ID, even across proxy restarts</li>
@@ -672,23 +704,23 @@ tailscale up
         <div class="name"><span class="org">sanchomuzax /</span> hermes-webui</div>
       </a>
       <a class="related-row" href="/projects/Euraika-Labs/pan-ui">
-        <div class="stars">★ 63</div>
+        <div class="stars">★ 65</div>
         <div class="name"><span class="org">Euraika-Labs /</span> pan-ui</div>
       </a>
       <a class="related-row" href="/projects/xaspx/hermes-control-interface">
-        <div class="stars">★ 618</div>
+        <div class="stars">★ 625</div>
         <div class="name"><span class="org">xaspx /</span> hermes-control-interface</div>
       </a>
       <a class="related-row" href="/projects/dodo-reach/hermes-desktop">
-        <div class="stars">★ 1.1K</div>
+        <div class="stars">★ 1.2K</div>
         <div class="name"><span class="org">dodo-reach /</span> hermes-desktop</div>
       </a>
       <a class="related-row" href="/projects/nesquena/hermes-webui">
-        <div class="stars">★ 6.3K</div>
+        <div class="stars">★ 6.5K</div>
         <div class="name"><span class="org">nesquena /</span> hermes-webui</div>
       </a>
       <a class="related-row" href="/projects/clawvader-tech/hermes-telegram-miniapp">
-        <div class="stars">★ 217</div>
+        <div class="stars">★ 219</div>
         <div class="name"><span class="org">clawvader-tech /</span> hermes-telegram-miniapp</div>
       </a>
     </div>

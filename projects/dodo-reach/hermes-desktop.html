@@ -35,7 +35,7 @@
   "@type": "SoftwareApplication",
   "@id": "https://hermesatlas.com/projects/dodo-reach/hermes-desktop#software",
   "name": "hermes-desktop",
-  "description": "Hermes Desktop is a native macOS workspace designed to provide a focused interface for managing Hermes Agent via SSH. It functions by connecting directly to remote hosts without using a gateway API, local mirrors, or additional daemon services on the host. This approach ensures the remote machine remains the single source of truth for all session data, files, and configurations. Users can manage Kanban boards, edit remote files, and interact with a built-in terminal within a single, profile-awar",
+  "description": "Hermes Desktop is a native macOS application that provides a centralized workspace for managing Hermes Agents running on remote hosts. It connects directly via SSH to provide a unified interface for sessions, Kanban boards, file editing, and terminal workflows without requiring a browser or remote daemon. The app maintains the remote host as the single source of truth, allowing users to manage multiple Hermes profiles and cron jobs while keeping files and state on the original machine. It includ",
   "url": "https://hermesatlas.com/projects/dodo-reach/hermes-desktop",
   "codeRepository": "https://github.com/dodo-reach/hermes-desktop",
   "applicationCategory": "DesktopEnhancementApplication",
@@ -47,13 +47,13 @@
     "name": "dodo-reach",
     "url": "https://github.com/dodo-reach"
   },
-  "dateModified": "2026-05-08T22:36:58.000Z",
+  "dateModified": "2026-05-09T22:42:28.000Z",
   "interactionStatistic": {
     "@type": "InteractionCounter",
     "interactionType": {
       "@type": "LikeAction"
     },
-    "userInteractionCount": 1127
+    "userInteractionCount": 1160
   },
   "isPartOf": {
     "@id": "https://hermesatlas.com/#website"
@@ -112,11 +112,11 @@
   <p class="project-desc">The safest, simplest way to manage Hermes from your Mac. Pure SSH. No gateways, no exposed ports, no browser layer.</p>
 
   <div class="meta-row">
-    <span class="stars">★ 1.1K</span>
+    <span class="stars">★ 1.2K</span>
     <span><span class="meta-label">lang</span>Swift</span>
     <span><span class="meta-label">license</span>MIT</span>
     
-    <span><span class="meta-label">updated</span>2026-05-08</span>
+    <span><span class="meta-label">updated</span>2026-05-09</span>
   </div>
 
   <div class="actions">
@@ -131,11 +131,11 @@
 <section class="project-summary">
   <div class="section-label">overview</div>
   <div>
-    <p class="summary-text">Hermes Desktop is a native macOS workspace designed to provide a focused interface for managing Hermes Agent via SSH. It functions by connecting directly to remote hosts without using a gateway API, local mirrors, or additional daemon services on the host. This approach ensures the remote machine remains the single source of truth for all session data, files, and configurations. Users can manage Kanban boards, edit remote files, and interact with a built-in terminal within a single, profile-aware application.</p>
+    <p class="summary-text">Hermes Desktop is a native macOS application that provides a centralized workspace for managing Hermes Agents running on remote hosts. It connects directly via SSH to provide a unified interface for sessions, Kanban boards, file editing, and terminal workflows without requiring a browser or remote daemon. The app maintains the remote host as the single source of truth, allowing users to manage multiple Hermes profiles and cron jobs while keeping files and state on the original machine. It includes a session workbench for searching transcripts and an embedded terminal for direct multi-agent interaction.</p>
     <ul class="summary-highlights">
-      <li>Direct SSH connection maintains remote host as the single source of truth</li>
-      <li>Integrated views for sessions, Kanban, files, usage, skills, and cron jobs</li>
-      <li>Native macOS workspace with embedded terminal and profile-aware handling</li>
+      <li>Connects directly via SSH with no remote helper service required</li>
+      <li>Native macOS interface for sessions, Kanban, and remote file editing</li>
+      <li>Supports profile-aware management for default and named Hermes environments</li>
     </ul>
   </div>
 </section>
@@ -387,31 +387,36 @@ Reads the real remote session store from <code>~/.hermes/state.db</code>, with
 full-text search across names, IDs, previews, and message content, match
 snippets, pinned sessions, cleaner metadata, readable transcripts, compact
 tool-output summaries, in-app chat continuation, safer non-interactive
-approval handling, terminal resume, refresh-on-entry behavior, and remote
-deletion.</li>
+approval handling, preserved transcript scroll position when moving between
+Sessions and Terminal, terminal resume, refresh-on-entry behavior, and
+remote deletion.</li>
 <li><code>Cron Jobs</code>
 Browses the real Hermes cron definitions on the host, with create, edit,
 pause, resume, run-now, and delete actions, including agent jobs and
 script-only jobs that run host scripts without creating an agent turn. It
 shows the details that matter when you are actually running them: schedule,
-model, skills, script, workdir, delivery target, and recent status.</li>
+model, skills, script, workdir, delivery target, and recent status,
+including the newer all-connected-channels delivery option when the host
+supports it.</li>
 <li><code>Kanban</code>
 Opens the upstream Hermes Kanban workspace from the host-wide Kanban home:
 the default board at <code>~/.hermes/kanban.db</code>, plus additional boards under
 <code>~/.hermes/kanban/boards/</code> when supported. It includes board selection,
 board creation and archive, task creation, search, filters, assignment,
-dependency links, editable task metadata, comments, block, unblock, complete,
-archive, delete, run and event history, worker log tailing, and dispatcher
-nudging when the host supports it.</li>
+dependency links, editable task metadata, triage-to-todo specify flows,
+per-task retry limits, comments, block, unblock, complete, archive, delete,
+run and event history, worker log tailing, and dispatcher nudging when the
+host supports it.</li>
 <li><code>Usage</code>
 Shows aggregate input and output token totals, top sessions, top models,
 recent session trends, and when available, a host-wide profile breakdown.</li>
 <li><code>Skills</code>
 Discovers and reads remote <code>SKILL.md</code> files from the local Hermes skills
 store plus configured <code>skills.external_dirs</code>, while keeping skill creation
-and editing anchored to <code>~/.hermes/skills/</code>, with quick filtering,
-companion folder awareness, optional folder scaffolding, and remote
-conflict checks before save.</li>
+and editing anchored to <code>~/.hermes/skills/</code>, with quick filtering across
+names, categories, tags, related skills, and platform metadata, companion
+folder awareness, optional folder scaffolding, and remote conflict checks
+before save.</li>
 <li><code>Terminal</code>
 Opens the real SSH shell inside the app, with multiple tabs, named theme
 presets, live background and text color tuning, and room for a genuinely
@@ -521,7 +526,8 @@ message-content search, match snippets, deletion, and refresh-on-entry
 behavior</li>
 <li><input checked="" disabled="" type="checkbox"> a session workbench with pinned sessions, readable transcripts, compact
 tool-output summaries, in-app chat continuation, safer non-interactive
-approval handling, and terminal resume</li>
+approval handling, preserved transcript position across section switches,
+and terminal resume</li>
 <li><input checked="" disabled="" type="checkbox"> a native Kanban workspace for upstream Hermes boards, including board
 selection, board creation and archive, task creation, status actions,
 assignment, dependency links, editable task metadata, comments, run/event
@@ -565,7 +571,7 @@ bundle directly:</p>
 <pre><code class="language-bash">./scripts/package-github-release.sh
 </code></pre>
 <p>For release-candidate packaging, you can stamp an explicit version:</p>
-<pre><code class="language-bash">HERMES_VERSION=0.7.1 ./scripts/package-github-release.sh
+<pre><code class="language-bash">HERMES_VERSION=0.7.2 ./scripts/package-github-release.sh
 </code></pre>
 <p>Release artifacts:</p>
 <ul>
@@ -597,23 +603,23 @@ and Intel Macs</li>
         <div class="name"><span class="org">sanchomuzax /</span> hermes-webui</div>
       </a>
       <a class="related-row" href="/projects/Euraika-Labs/pan-ui">
-        <div class="stars">★ 63</div>
+        <div class="stars">★ 65</div>
         <div class="name"><span class="org">Euraika-Labs /</span> pan-ui</div>
       </a>
       <a class="related-row" href="/projects/xaspx/hermes-control-interface">
-        <div class="stars">★ 618</div>
+        <div class="stars">★ 625</div>
         <div class="name"><span class="org">xaspx /</span> hermes-control-interface</div>
       </a>
       <a class="related-row" href="/projects/nesquena/hermes-webui">
-        <div class="stars">★ 6.3K</div>
+        <div class="stars">★ 6.5K</div>
         <div class="name"><span class="org">nesquena /</span> hermes-webui</div>
       </a>
       <a class="related-row" href="/projects/pyrate-llama/hermes-ui">
-        <div class="stars">★ 107</div>
+        <div class="stars">★ 109</div>
         <div class="name"><span class="org">pyrate-llama /</span> hermes-ui</div>
       </a>
       <a class="related-row" href="/projects/clawvader-tech/hermes-telegram-miniapp">
-        <div class="stars">★ 217</div>
+        <div class="stars">★ 219</div>
         <div class="name"><span class="org">clawvader-tech /</span> hermes-telegram-miniapp</div>
       </a>
     </div>

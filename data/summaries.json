@@ -349,14 +349,14 @@
     "auditedAt": "2026-05-04T08:47:13.896Z"
   },
   "PederHP/skillsdotnet": {
-    "summary": "SkillsDotNet is a C# and .NET implementation of the agentskills.io specification that enables agents to discover and load skills via the Model Context Protocol (MCP). It uses a skill:// URI convention to provide progressive disclosure, allowing clients to load lightweight frontmatter for discovery and full SKILL.md files on demand. The library integrates with Microsoft.Extensions.AI to provide context blocks for system prompts and a load_skill tool for dynamic content retrieval. It also supports automatic skill registration from common agent directories like Claude, Cursor, and Copilot.",
+    "summary": "SkillsDotNet is a C#/.NET implementation of the agentskills.io standard designed to integrate agent skills into the Model Context Protocol (MCP). It uses a skill:// URI convention to implement progressive disclosure, allowing clients to discover lightweight skill metadata before loading full documentation or supporting files. The library provides seamless integration with Microsoft.Extensions.AI and supports automatic discovery of skills from various agent directories like Claude, Cursor, and Copilot.",
     "highlights": [
-      "MCP integration for distributing skills as resources",
-      "Progressive disclosure via SKILL.md and YAML frontmatter",
-      "Built-in support for common agent skill directory shortcuts"
+      "Implements progressive disclosure via SKILL.md files",
+      "Integrates with Microsoft.Extensions.AI for tool-based skill loading",
+      "Supports automatic registration of common agent skill directories"
     ],
-    "readmeHash": "0bd81f9f42b204421bd37f54634b8095e3f5b86323db35c82333a24c3e20a448",
-    "generatedAt": "2026-05-04T11:33:12.410Z",
+    "readmeHash": "33b9ac31521386ecd1c35e8b54c624518129069059c39e4e23ac672a590aacde",
+    "generatedAt": "2026-05-10T07:19:07.898Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass"
@@ -455,14 +455,14 @@
     "auditedAt": "2026-05-04T08:47:43.010Z"
   },
   "robbyczgw-cla/hermes-web-search-plus": {
-    "summary": "This plugin provides a multi-provider web search and content extraction interface for the Hermes Agent ecosystem. It utilizes an intelligent auto-routing system that selects the most appropriate search engine, such as Brave, Serper, or Exa, based on the specific intent of the user's query. The tool includes an opt-in research mode for multi-source synthesis and an adaptive fallback mechanism that bypasses providers on cooldown. Users can also perform URL extraction through specialized backends like Firecrawl and Linkup to retrieve clean markdown content.",
+    "summary": "Web-search-plus is a capability-based search and extraction plugin for the Hermes Agent ecosystem that prevents provider lock-in. It utilizes a routed multi-provider architecture to automatically select from ten supported backends like Serper, Tavily, and Linkup based on available API keys and query needs. The plugin features explicit fallbacks, a dedicated extraction tool for clean URL content, and an optional synthesis layer for generating cited answers.",
     "highlights": [
-      "Supports 10 search providers with intelligent intent-based auto-routing",
-      "Features deep research modes for multi-source synthesis and analysis",
-      "Includes URL extraction via Firecrawl, Linkup, and Tavily backends"
+      "Supports 10 providers including Serper, Tavily, Exa, and Linkup",
+      "Auto-routing with explicit provider cooldowns and quality diagnostics",
+      "Capability-based design functions with any single configured search provider"
     ],
-    "readmeHash": "0f0d77d5b23271e935576f360d52162db2c18a5ec03b76db7ce7fbffa35a4e18",
-    "generatedAt": "2026-05-05T07:16:49.923Z",
+    "readmeHash": "3dfe7d51d6b403bc8477a428b228da949ec5fddd1a06a5728848893b5a321b16",
+    "generatedAt": "2026-05-10T07:19:14.924Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass"
@@ -799,14 +799,14 @@
     "auditedAt": "2026-05-04T08:49:02.850Z"
   },
   "junhoyeo/tokscale": {
-    "summary": "Tokscale is a high-performance CLI tool and visualization dashboard designed to track token consumption and associated costs across various AI coding agents. It works by scanning local data directories, databases, and session logs from supported clients to aggregate usage metrics into a native Rust TUI or a web-based dashboard. Users can monitor daily summaries, model-specific statistics, and historical trends through a unified interface. The tool supports a wide range of integrations including Hermes Agent, Claude Code, OpenClaw, and GitHub Copilot CLI.",
+    "summary": "Tokscale is a CLI tool and visualization dashboard designed to track token consumption and costs across various AI coding agents. It works by scanning local databases and session files from supported clients to aggregate usage data into a native Rust terminal user interface (TUI). Users can monitor daily summaries, model-specific statistics, and submit data to a public leaderboard for visualization. The tool supports a wide range of integrations including Hermes Agent, Claude Code, GitHub Copilot CLI, and Cursor.",
     "highlights": [
       "Tracks token usage and costs across multiple AI coding agents",
-      "Features a native Rust TUI and 3D contribution graph visualization",
-      "Supports Hermes Agent, Claude Code, Gemini, and Cursor integrations"
+      "Features a native Rust TUI for cross-platform performance",
+      "Integrates with Hermes Agent, Claude Code, and Gemini CLI"
     ],
-    "readmeHash": "bc1a886e92655afb738fc2ba7e659c3278150412629db86a3cdc70195ac543bd",
-    "generatedAt": "2026-05-06T07:23:55.630Z",
+    "readmeHash": "43196a82450919c5dc8bb1903e00b3752c72d3d876c560df67009b8c5e6dc18f",
+    "generatedAt": "2026-05-10T07:19:25.644Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass"
@@ -1163,14 +1163,14 @@
     "auditedAt": "2026-05-04T08:50:31.437Z"
   },
   "dodo-reach/hermes-desktop": {
-    "summary": "Hermes Desktop is a native macOS workspace designed to provide a focused interface for managing Hermes Agent via SSH. It functions by connecting directly to remote hosts without using a gateway API, local mirrors, or additional daemon services on the host. This approach ensures the remote machine remains the single source of truth for all session data, files, and configurations. Users can manage Kanban boards, edit remote files, and interact with a built-in terminal within a single, profile-aware application.",
+    "summary": "Hermes Desktop is a native macOS application that provides a centralized workspace for managing Hermes Agents running on remote hosts. It connects directly via SSH to provide a unified interface for sessions, Kanban boards, file editing, and terminal workflows without requiring a browser or remote daemon. The app maintains the remote host as the single source of truth, allowing users to manage multiple Hermes profiles and cron jobs while keeping files and state on the original machine. It includes a session workbench for searching transcripts and an embedded terminal for direct multi-agent interaction.",
     "highlights": [
-      "Direct SSH connection maintains remote host as the single source of truth",
-      "Integrated views for sessions, Kanban, files, usage, skills, and cron jobs",
-      "Native macOS workspace with embedded terminal and profile-aware handling"
+      "Connects directly via SSH with no remote helper service required",
+      "Native macOS interface for sessions, Kanban, and remote file editing",
+      "Supports profile-aware management for default and named Hermes environments"
     ],
-    "readmeHash": "ae6c13dafabc29b4961b732fb0290b9a67ec486c4957ffc51a2a367b8540cf3c",
-    "generatedAt": "2026-05-07T07:29:14.409Z",
+    "readmeHash": "dc7d9cfff114419c5616c2109bd00f46d15d714d0ee2a724e876d25953134d43",
+    "generatedAt": "2026-05-10T07:19:36.594Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass"
@@ -1203,27 +1203,27 @@
     "audit": "pass"
   },
   "garrytan/gbrain": {
-    "summary": "GBrain is a persistent memory and context layer designed to prevent AI agents from losing information over time. It utilizes a self-wiring knowledge graph and hybrid search to automatically extract entity relationships like investments and professional roles without requiring additional LLM calls. The system consolidates data from meetings, emails, and tweets into a structured timeline with backlink-boosted ranking for improved retrieval. It integrates with Hermes Agent and OpenClaw via MCP or a standalone CLI, providing 34 specialized skills for autonomous memory management.",
+    "summary": "GBrain is a persistent memory and knowledge graph system designed to prevent AI agents from losing context over time. It utilizes a hybrid search architecture that combines vector retrieval with a self-wiring knowledge graph to extract entity relationships like investments and professional roles without additional LLM calls. The system automates memory consolidation by ingesting diverse data sources such as emails, meetings, and tweets while performing overnight citation fixing. It integrates with agent platforms like Hermes and OpenClaw via MCP and OAuth 2.1, providing 34 specialized skills for structured information retrieval.",
     "highlights": [
-      "Self-wiring knowledge graph extracts typed entity links automatically",
-      "Hybrid search combining vector retrieval with graph-based ranking",
+      "Self-wiring knowledge graph extracts typed entity links without LLM calls",
+      "Hybrid search combining vector, graph, and backlink-boosted ranking",
       "Exposes 30+ MCP tools for Claude Code, Cursor, and Windsurf"
     ],
-    "readmeHash": "2f249748bcb2e0db0630336fdf14fa6dd4eb9e44c4e39e9ae4821fdc9adea27b",
-    "generatedAt": "2026-05-09T07:15:34.161Z",
+    "readmeHash": "6b950ee35c136573f40d26766c3c70678a64d6f9bfa20153dfe93516c76984ed",
+    "generatedAt": "2026-05-10T07:19:41.414Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass"
   },
   "pyrate-llama/hermes-ui": {
-    "summary": "Hermes UI is a glassmorphic web-based command center designed to provide a visual interface for managing the self-hosted Hermes Agent. It operates as a single-file React 18 application served via a lightweight Python proxy, enabling users to interact with their AI assistant through a browser. The interface consolidates chat, real-time log streaming, file browsing, and memory inspection into a unified workspace. It also includes dedicated modules for managing MCP tools, scheduling cron jobs, and monitoring background task progress.",
+    "summary": "Hermes UI is a glassmorphic web-based command center designed for managing and monitoring the Hermes Agent ecosystem. Built as a single-file React 18 application, it connects to a lightweight Python proxy to provide a unified interface for chat, file browsing, and skill management. The interface features real-time log streaming, a task board for tracking active tool work, and integrated support for Model Context Protocol (MCP) servers. It also includes specialized tools for scheduling cron jobs, inspecting memory, and uploading video files for compatible model workflows.",
     "highlights": [
       "Single-file React 18 application with a lightweight Python proxy server",
-      "Real-time log streaming and live workspace file browser with previews",
-      "Integrated management for MCP tools, cron jobs, and skill libraries"
+      "Real-time log streaming and live task tracking for agent activities",
+      "Integrated file browser, terminal, and MCP tool management interface"
     ],
-    "readmeHash": "05862ae87263e4aacc99ce6deb8a721dab565ab983b894c80c98e8cfb3e76fc8",
-    "generatedAt": "2026-05-09T07:15:38.169Z",
+    "readmeHash": "b00a0077dc3fd472921ee499b2a5b4fe1a5c4f286b322a8044cee279e8814b95",
+    "generatedAt": "2026-05-10T07:19:45.922Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass"
@@ -1256,14 +1256,14 @@
     "audit": "pass"
   },
   "stephenschoettler/hermes-lcm": {
-    "summary": "Hermes-LCM is a context management plugin for the Hermes Agent that prevents information loss during long-running conversations. It replaces standard flat summarization with a hierarchical Directed Acyclic Graph (DAG) that compacts older messages into depth-aware summary nodes while persisting raw data in a local SQLite store. This architecture allows the agent to maintain a bounded active context window without permanently discarding details. Agents can use specialized tools to drill back into specific compacted material, ensuring precise retrieval of historical data through source-aware lineage filtering.",
+    "summary": "Hermes-LCM is a context management plugin for the Hermes Agent that prevents information loss during long-running conversations. It replaces standard lossy compression with a hierarchical Directed Acyclic Graph (DAG) that stores raw messages in a local SQLite database while maintaining depth-aware summaries in the active context. This architecture allows the agent to use specialized tools like grep and expand to retrieve specific historical details without flooding the primary context window. The system includes configurable controls for externalizing large payloads and filtering sessions to maintain performance across high-volume interactions.",
     "highlights": [
-      "Hierarchical DAG structure for depth-aware context compaction",
-      "SQLite message store for persistent raw conversation history",
-      "Agent tools for grepping, describing, and expanding compacted context"
+      "Hierarchical DAG structure for depth-aware conversation summarization",
+      "SQLite-backed message store for persistent raw history recovery",
+      "Agent tools for targeted searching and expanding compacted context"
     ],
-    "readmeHash": "3a60e8ceac53189f446c5830a52d9d5907c57ca4a9ace914abe8a3bc8beae15c",
-    "generatedAt": "2026-05-08T20:34:33.524Z",
+    "readmeHash": "2ca315915d145eaf2a3eeac439188da4649be70b317f22a5f64ff32294154a15",
+    "generatedAt": "2026-05-10T07:19:50.952Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass"
@@ -1308,18 +1308,17 @@
     "audit": "pass"
   },
   "EKKOLearnAI/hermes-web-ui": {
-    "summary": "Hermes Web UI is a comprehensive management dashboard for the Hermes Agent ecosystem that provides a graphical interface for AI interaction and system administration. It centralizes multi-platform channel configuration, session management, and usage analytics into a single responsive web environment. Users can monitor token costs, schedule cron jobs, and manage files across local or remote backends like Docker and SSH. The interface also includes specialized tools for group chat orchestration, model provider management, and real-time log monitoring.",
+    "summary": "Hermes Web UI is a comprehensive dashboard for managing Hermes Agent through a responsive web interface. It centralizes AI chat sessions, usage analytics, and multi-platform channel configurations into a single management hub. Users can monitor token costs, schedule cron jobs, and manage remote files across local, Docker, and SSH backends. The system integrates directly with eight communication platforms, including Telegram, Discord, and Slack, while providing built-in tools for model provider management and log monitoring.",
     "highlights": [
-      "Unified configuration for eight platforms including Telegram, Discord, and WhatsApp",
-      "Real-time AI chat with session persistence and tool call expansion",
-      "Comprehensive usage analytics for token tracking and cost estimation"
+      "Unified configuration for Telegram, Discord, Slack, WhatsApp, and WeChat channels",
+      "Real-time usage analytics for token consumption, costs, and model distribution",
+      "Integrated file browser and web terminal for remote backend management"
     ],
-    "readmeHash": "27ec16f6463256b14b515ce18a0e9d717c717733997aeb5ce076fd16c94e9701",
-    "generatedAt": "2026-05-01T16:47:17.818Z",
+    "readmeHash": "61a92fb5db8a97d6ed89cbe65a24baf279c6701e94c18e643fcd43b0a25a4d39",
+    "generatedAt": "2026-05-10T07:19:55.916Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass",
-    "auditedAt": "2026-05-04T08:51:28.789Z"
+    "audit": "pass"
   },
   "Web3CZ/Web3Hermes": {
     "summary": "Web3Hermes is a lightweight WebUI for Hermes Agent specifically localized for Chinese-speaking users. It provides a desktop-optimized interface that simplifies interaction with the agent through a localized workflow and full Chinese language support. The platform integrates a built-in workspace file browser, session management tools, and support for multiple AI models including OpenAI, Anthropic, and DeepSeek. Users can manage tasks, edit code with syntax highlighting, and visualize tool calls within a responsive dark or light themed environment.",

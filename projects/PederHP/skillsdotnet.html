@@ -35,7 +35,7 @@
   "@type": "SoftwareApplication",
   "@id": "https://hermesatlas.com/projects/PederHP/skillsdotnet#software",
   "name": "skillsdotnet",
-  "description": "SkillsDotNet is a C# and .NET implementation of the agentskills.io specification that enables agents to discover and load skills via the Model Context Protocol (MCP). It uses a skill:// URI convention to provide progressive disclosure, allowing clients to load lightweight frontmatter for discovery and full SKILL.md files on demand. The library integrates with Microsoft.Extensions.AI to provide context blocks for system prompts and a load_skill tool for dynamic content retrieval. It also supports",
+  "description": "SkillsDotNet is a C#/.NET implementation of the agentskills.io standard designed to integrate agent skills into the Model Context Protocol (MCP). It uses a skill:// URI convention to implement progressive disclosure, allowing clients to discover lightweight skill metadata before loading full documentation or supporting files. The library provides seamless integration with Microsoft.Extensions.AI and supports automatic discovery of skills from various agent directories like Claude, Cursor, and Co",
   "url": "https://hermesatlas.com/projects/PederHP/skillsdotnet",
   "codeRepository": "https://github.com/PederHP/skillsdotnet",
   "applicationCategory": "DeveloperApplication",
@@ -46,7 +46,7 @@
     "name": "PederHP",
     "url": "https://github.com/PederHP"
   },
-  "dateModified": "2026-03-08T10:49:01.000Z",
+  "dateModified": "2026-05-09T15:06:10.000Z",
   "interactionStatistic": {
     "@type": "InteractionCounter",
     "interactionType": {
@@ -115,7 +115,7 @@
     <span><span class="meta-label">lang</span>C#</span>
     
     
-    <span><span class="meta-label">updated</span>2026-03-08</span>
+    <span><span class="meta-label">updated</span>2026-05-09</span>
   </div>
 
   <div class="actions">
@@ -130,11 +130,11 @@
 <section class="project-summary">
   <div class="section-label">overview</div>
   <div>
-    <p class="summary-text">SkillsDotNet is a C# and .NET implementation of the agentskills.io specification that enables agents to discover and load skills via the Model Context Protocol (MCP). It uses a skill:// URI convention to provide progressive disclosure, allowing clients to load lightweight frontmatter for discovery and full SKILL.md files on demand. The library integrates with Microsoft.Extensions.AI to provide context blocks for system prompts and a load_skill tool for dynamic content retrieval. It also supports automatic skill registration from common agent directories like Claude, Cursor, and Copilot.</p>
+    <p class="summary-text">SkillsDotNet is a C#/.NET implementation of the agentskills.io standard designed to integrate agent skills into the Model Context Protocol (MCP). It uses a skill:// URI convention to implement progressive disclosure, allowing clients to discover lightweight skill metadata before loading full documentation or supporting files. The library provides seamless integration with Microsoft.Extensions.AI and supports automatic discovery of skills from various agent directories like Claude, Cursor, and Copilot.</p>
     <ul class="summary-highlights">
-      <li>MCP integration for distributing skills as resources</li>
-      <li>Progressive disclosure via SKILL.md and YAML frontmatter</li>
-      <li>Built-in support for common agent skill directory shortcuts</li>
+      <li>Implements progressive disclosure via SKILL.md files</li>
+      <li>Integrates with Microsoft.Extensions.AI for tool-based skill loading</li>
+      <li>Supports automatic registration of common agent skill directories</li>
     </ul>
   </div>
 </section>
@@ -234,11 +234,11 @@ var messages = new List&lt;ChatMessage&gt;
     new(ChatRole.User, &quot;Help me review this pull request&quot;),
 };
 
-// Get the load_skill tool — add to ChatOptions.Tools so the model
-// can load a skill&#39;s full SKILL.md content when it decides to use one
+// Add catalog.Tools to ChatOptions.Tools — this is load_skill plus, once any skill
+// has been loaded, unload_skill (so the model can free context when finished).
 var options = new ChatOptions
 {
-    Tools = [catalog.LoadSkillTool],
+    Tools = [.. catalog.Tools],
 };
 
 var response = await chatClient.GetResponseAsync(messages, options);
@@ -272,6 +272,30 @@ dependencies: [everything-server]
 </code></pre>
 <p>The callback receives a <code>SkillDependencyRequest</code> with the skill name and the list of required server names. Return <code>true</code> when all servers are connected, or <code>false</code> to abort (which causes <code>LoadSkillAsync</code> to throw <code>InvalidOperationException</code>). If the callback is not set, skills with dependencies load silently without notification.</p>
 <p>See the <a href="samples/DynamicMcpServers/">DynamicMcpServers sample</a> for a complete example.</p>
+<h4>Unloading skills</h4>
+<p>Progressive disclosure shouldn&#39;t become progressive accumulation. Once at least one skill is loaded, <code>SkillCatalog.UnloadSkillTool</code> becomes available alongside <code>load_skill</code> — the model is told about it via a short postscript appended to each <code>load_skill</code> response, and can call it to free a skill&#39;s context when finished. The <code>unload_skill</code> AIFunction and its accompanying guidance only appear while at least one skill is currently loaded.</p>
+<p>The <code>OnSkillUnloaded</code> callback fires every time a skill is unloaded. The host wires it to do two things:</p>
+<ol>
+<li><strong>Disconnect any released MCP servers.</strong> The catalog passes only the servers no longer needed by any other still-loaded skill, so there&#39;s no ref-counting to do.</li>
+<li><strong>Scrub the prior <code>load_skill</code> call/result pair from chat history</strong> — that&#39;s where the SKILL.md content actually lives. The library doesn&#39;t touch your message list; the host is in charge.</li>
+</ol>
+<p>Mutating the chat history while <code>FunctionInvokingChatClient</code> is iterating is unsafe, so queue scrub work during the callback and process it after <code>GetStreamingResponseAsync</code> returns:</p>
+<pre><code class="language-csharp">var pendingScrubs = new List&lt;string&gt;();
+
+catalog.OnSkillUnloaded = async (result, ct) =&gt;
+{
+    foreach (var serverName in result.ReleasedServers)
+        await DisconnectAsync(serverName, ct);
+
+    pendingScrubs.Add(result.SkillName);
+};
+
+// ... after each streaming turn:
+foreach (var skillName in pendingScrubs)
+    ScrubLoadCallsForSkill(messages, skillName);
+pendingScrubs.Clear();
+</code></pre>
+<p>The scrub itself is a simple predicate over the messages list — match <code>FunctionCallContent</code> whose <code>Name == &quot;load_skill&quot;</code> and <code>Arguments[&quot;skillName&quot;]</code> equals the unloaded skill, then drop those calls and the matching <code>FunctionResultContent</code>. See <a href="samples/DynamicMcpServers/Program.cs">DynamicMcpServers/Program.cs</a> for the complete implementation.</p>
 <h3>URI Convention</h3>
 <p>Each skill exposes three resources following the <a href="https://github.com/jlowin/fastmcp">FastMCP</a> convention:</p>
 <table>
@@ -428,7 +452,7 @@ Instructions for the agent go here.
         <div class="name"><span class="org">conorbronsdon /</span> avoid-ai-writing</div>
       </a>
       <a class="related-row" href="/projects/wondelai/skills">
-        <div class="stars">★ 900</div>
+        <div class="stars">★ 910</div>
         <div class="name"><span class="org">wondelai /</span> skills</div>
       </a>
       <a class="related-row" href="/projects/DougTrajano/pydantic-ai-skills">
@@ -436,7 +460,7 @@ Instructions for the agent go here.
         <div class="name"><span class="org">DougTrajano /</span> pydantic-ai-skills</div>
       </a>
       <a class="related-row" href="/projects/Agents365-ai/drawio-skill">
-        <div class="stars">★ 1.3K</div>
+        <div class="stars">★ 1.4K</div>
         <div class="name"><span class="org">Agents365-ai /</span> drawio-skill</div>
       </a>
       <a class="related-row" href="/projects/smartcontractkit/chainlink-agent-skills">
@@ -444,11 +468,11 @@ Instructions for the agent go here.
         <div class="name"><span class="org">smartcontractkit /</span> chainlink-agent-skills</div>
       </a>
       <a class="related-row" href="/projects/tlehman/litprog-skill">
-        <div class="stars">★ 129</div>
+        <div class="stars">★ 130</div>
         <div class="name"><span class="org">tlehman /</span> litprog-skill</div>
       </a>
       <a class="related-row" href="/projects/esaradev/icarus-plugin">
-        <div class="stars">★ 112</div>
+        <div class="stars">★ 114</div>
         <div class="name"><span class="org">esaradev /</span> icarus-plugin</div>
       </a>
     </div>
