@@ -35,7 +35,7 @@
   "@type": "SoftwareApplication",
   "@id": "https://hermesatlas.com/projects/AxDSan/mnemosyne#software",
   "name": "mnemosyne",
-  "description": "Mnemosyne is a local-first memory system designed to provide AI agents with persistent storage for conversations, preferences, and knowledge without relying on cloud services. It utilizes a SQLite backend featuring native vector search via sqlite-vec and full-text search through FTS5 to ensure data remains private and accessible offline. The system achieves sub-millisecond latency by running in-process, eliminating the need for external databases or API calls. It integrates natively as a Hermes ",
+  "description": "Mnemosyne is a local-first memory system designed for the Hermes Agent framework to provide private, zero-dependency context management. It utilizes SQLite with native vector search and full-text search to store conversations and knowledge without requiring external databases or API keys. The system operates entirely in-process to eliminate network latency and supports offline use cases. It features a three-tier architecture consisting of working, episodic, and scratchpad memory for long-term in",
   "url": "https://hermesatlas.com/projects/AxDSan/mnemosyne",
   "codeRepository": "https://github.com/AxDSan/mnemosyne",
   "applicationCategory": "UtilitiesApplication",
@@ -47,13 +47,13 @@
     "name": "AxDSan",
     "url": "https://github.com/AxDSan"
   },
-  "dateModified": "2026-05-13T22:43:25.000Z",
+  "dateModified": "2026-05-14T21:41:46.000Z",
   "interactionStatistic": {
     "@type": "InteractionCounter",
     "interactionType": {
       "@type": "LikeAction"
     },
-    "userInteractionCount": 228
+    "userInteractionCount": 240
   },
   "isPartOf": {
     "@id": "https://hermesatlas.com/#website"
@@ -112,11 +112,11 @@
   <p class="project-desc">The Zero-Dependency, Sub-Millisecond AI Memory System for Hermes Agents</p>
 
   <div class="meta-row">
-    <span class="stars">★ 228</span>
+    <span class="stars">★ 240</span>
     <span><span class="meta-label">lang</span>Python</span>
     <span><span class="meta-label">license</span>MIT</span>
     
-    <span><span class="meta-label">updated</span>2026-05-13</span>
+    <span><span class="meta-label">updated</span>2026-05-14</span>
   </div>
 
   <div class="actions">
@@ -131,11 +131,11 @@
 <section class="project-summary">
   <div class="section-label">overview</div>
   <div>
-    <p class="summary-text">Mnemosyne is a local-first memory system designed to provide AI agents with persistent storage for conversations, preferences, and knowledge without relying on cloud services. It utilizes a SQLite backend featuring native vector search via sqlite-vec and full-text search through FTS5 to ensure data remains private and accessible offline. The system achieves sub-millisecond latency by running in-process, eliminating the need for external databases or API calls. It integrates natively as a Hermes Agent plugin and includes a three-tier architecture for working, episodic, and scratchpad memory.</p>
+    <p class="summary-text">Mnemosyne is a local-first memory system designed for the Hermes Agent framework to provide private, zero-dependency context management. It utilizes SQLite with native vector search and full-text search to store conversations and knowledge without requiring external databases or API keys. The system operates entirely in-process to eliminate network latency and supports offline use cases. It features a three-tier architecture consisting of working, episodic, and scratchpad memory for long-term information retention.</p>
     <ul class="summary-highlights">
-      <li>Zero-dependency SQLite backend with native vector and full-text search</li>
-      <li>Sub-millisecond read, write, and search latency for local performance</li>
-      <li>Native Hermes Agent plugin with built-in episodic consolidation cycles</li>
+      <li>Local-first storage using SQLite with native vector and full-text search</li>
+      <li>Sub-millisecond latency for read, write, and search operations</li>
+      <li>Native integration as a Hermes Agent memory provider plugin</li>
     </ul>
   </div>
 </section>
@@ -149,12 +149,12 @@
 <p>Native, zero-cloud memory for AI agents. SQLite-backed. Sub-millisecond. Fully private.</p>
 </blockquote>
 <p><a href="https://python.org"><img src="https://img.shields.io/badge/Python-3.9+-blue.svg" alt="Python"></a>
-<a href="https://pypi.org/project/mnemosyne-memory/"><img src="https://img.shields.io/pypi/v/mnemosyne-memory.svg?v=2.7" alt="PyPI"></a>
+<a href="https://pypi.org/project/mnemosyne-memory/"><img src="https://img.shields.io/pypi/v/mnemosyne-memory.svg?v=2.8.0" alt="PyPI"></a>
 <a href="https://sqlite.org/codeofethics.html"><img src="https://img.shields.io/badge/SQLite-3.35+-green.svg" alt="SQLite"></a>
 <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License"></a>
 <a href="https://github.com/AxDSan/mnemosyne/actions/workflows/ci.yml"><img src="https://github.com/AxDSan/mnemosyne/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
 <a href="https://beam-benchmark.github.io/"><img src="https://img.shields.io/badge/BEAM-ICLR%202026-purple.svg" alt="BEAM"></a>
-<a href="https://discord.gg/Cgzpw9x3R"><img src="https://img.shields.io/discord/1501969470191702227?color=5865F2&amp;label=Discord&amp;logo=discord&amp;logoColor=white" alt="Discord"></a></p>
+<a href="https://discord.gg/Cgzpw9x3R"><img src="https://badgen.net/discord/online-members/29ZszXTgY3" alt="Discord"></a></p>
 <p>Mnemosyne is a local-first memory system for the <a href="https://github.com/NousResearch/hermes-agent">Hermes Agent</a> framework. It stores conversations, preferences, and knowledge in SQLite with native vector search (sqlite-vec) and full-text search (FTS5) -- no external databases, no API keys, no network calls.</p>
 <h3>BEAM Benchmark (ICLR 2026)</h3>
 <p>Mnemosyne is evaluated on the <a href="https://github.com/mohammadtavakoli78/BEAM">BEAM</a> long-context memory benchmark (Tavakoli et al., ICLR 2026) using the official end-to-end protocol: retrieved memories feed into an LLM, answers are scored by an LLM-as-judge against pre-written rubrics.</p>
@@ -1150,6 +1150,36 @@ hermes mnemosyne import --from zep --agentic
 <td><code>5000</code></td>
 <td>Max working memories to fetch for consolidation</td>
 </tr>
+<tr>
+<td><code>MNEMOSYNE_PREFETCH_CONTENT_CHARS</code></td>
+<td><code>0</code></td>
+<td>Per-memory character limit for Hermes provider prefetch injection; <code>0</code> disables truncation</td>
+</tr>
+</tbody></table>
+<h4>Timeout &amp; Timing</h4>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>MNEMOSYNE_SESSION_END_TIMEOUT</code></td>
+<td><code>15</code></td>
+<td>Seconds <code>on_session_end</code> waits for consolidation before giving up</td>
+</tr>
+<tr>
+<td><code>MNEMOSYNE_AUTO_SLEEP_TIMEOUT</code></td>
+<td><code>5</code></td>
+<td>Seconds to wait for auto-sleep thread to finish</td>
+</tr>
+<tr>
+<td><code>MNEMOSYNE_SHUTDOWN_DRAIN_TIMEOUT</code></td>
+<td><code>2</code></td>
+<td>Seconds to wait for session-end thread on provider shutdown</td>
+</tr>
 </tbody></table>
 <h4>Local LLM (ctransformers/GGUF)</h4>
 <table>
@@ -1457,7 +1487,7 @@ python tests/benchmark_beam_working_memory.py
   <div>
     <div class="related-list">
       <a class="related-row" href="/projects/mem0ai/mem0">
-        <div class="stars">★ 55.6K</div>
+        <div class="stars">★ 55.8K</div>
         <div class="name"><span class="org">mem0ai /</span> mem0</div>
       </a>
       <a class="related-row" href="/projects/vectorize-io/hindsight">
@@ -1469,15 +1499,15 @@ python tests/benchmark_beam_working_memory.py
         <div class="name"><span class="org">greyhaven-ai /</span> autocontext</div>
       </a>
       <a class="related-row" href="/projects/elkimek/honcho-self-hosted">
-        <div class="stars">★ 226</div>
+        <div class="stars">★ 228</div>
         <div class="name"><span class="org">elkimek /</span> honcho-self-hosted</div>
       </a>
       <a class="related-row" href="/projects/yoloshii/ClawMem">
-        <div class="stars">★ 164</div>
+        <div class="stars">★ 165</div>
         <div class="name"><span class="org">yoloshii /</span> ClawMem</div>
       </a>
       <a class="related-row" href="/projects/plur-ai/plur">
-        <div class="stars">★ 106</div>
+        <div class="stars">★ 115</div>
         <div class="name"><span class="org">plur-ai /</span> plur</div>
       </a>
       <a class="related-row" href="/projects/amanning3390/flowstate-qmd">
@@ -1485,7 +1515,7 @@ python tests/benchmark_beam_working_memory.py
         <div class="name"><span class="org">amanning3390 /</span> flowstate-qmd</div>
       </a>
       <a class="related-row" href="/projects/garrytan/gbrain">
-        <div class="stars">★ 15.5K</div>
+        <div class="stars">★ 15.7K</div>
         <div class="name"><span class="org">garrytan /</span> gbrain</div>
       </a>
     </div>

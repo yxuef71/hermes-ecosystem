@@ -35,7 +35,7 @@
   "@type": "SoftwareApplication",
   "@id": "https://hermesatlas.com/projects/robbyczgw-cla/hermes-web-search-plus#software",
   "name": "hermes-web-search-plus",
-  "description": "Hermes Web Search Plus is a multi-provider search and extraction plugin for the Hermes Agent ecosystem that prevents vendor lock-in by supporting ten different search backends. The tool uses a capability-based routing system that automatically selects providers based on available API keys and specific task requirements like raw search or URL extraction. It introduces three core tools for routed web searches, clean content extraction via backends like Firecrawl, and a beta synthesis layer for gen",
+  "description": "Hermes Web Search Plus is a multi-provider search and extraction plugin designed to give Hermes Agent flexible access to live web data. It uses a capability-based routing system that automatically selects the best available tool based on the user's configured API keys, such as Tavily, Brave, or Firecrawl. The plugin provides three distinct tools for broad web searching, URL content extraction, and synthesized answers with citations. This modular approach ensures the agent remains functional with",
   "url": "https://hermesatlas.com/projects/robbyczgw-cla/hermes-web-search-plus",
   "codeRepository": "https://github.com/robbyczgw-cla/hermes-web-search-plus",
   "applicationCategory": "BrowserApplication",
@@ -47,13 +47,13 @@
     "name": "robbyczgw-cla",
     "url": "https://github.com/robbyczgw-cla"
   },
-  "dateModified": "2026-05-10T18:59:25.000Z",
+  "dateModified": "2026-05-14T12:14:26.000Z",
   "interactionStatistic": {
     "@type": "InteractionCounter",
     "interactionType": {
       "@type": "LikeAction"
     },
-    "userInteractionCount": 174
+    "userInteractionCount": 177
   },
   "isPartOf": {
     "@id": "https://hermesatlas.com/#website"
@@ -112,11 +112,11 @@
   <p class="project-desc">Hermes Agent flagship plugin for multi-provider web search and extraction with intelligent routing, quality reports, and research mode.</p>
 
   <div class="meta-row">
-    <span class="stars">★ 174</span>
+    <span class="stars">★ 177</span>
     <span><span class="meta-label">lang</span>Python</span>
     <span><span class="meta-label">license</span>MIT</span>
     
-    <span><span class="meta-label">updated</span>2026-05-10</span>
+    <span><span class="meta-label">updated</span>2026-05-14</span>
   </div>
 
   <div class="actions">
@@ -131,11 +131,11 @@
 <section class="project-summary">
   <div class="section-label">overview</div>
   <div>
-    <p class="summary-text">Hermes Web Search Plus is a multi-provider search and extraction plugin for the Hermes Agent ecosystem that prevents vendor lock-in by supporting ten different search backends. The tool uses a capability-based routing system that automatically selects providers based on available API keys and specific task requirements like raw search or URL extraction. It introduces three core tools for routed web searches, clean content extraction via backends like Firecrawl, and a beta synthesis layer for generating cited answers. The plugin includes a dedicated CLI setup wizard to manage provider priorities, cooldowns, and fallback configurations without manual environment file editing.</p>
+    <p class="summary-text">Hermes Web Search Plus is a multi-provider search and extraction plugin designed to give Hermes Agent flexible access to live web data. It uses a capability-based routing system that automatically selects the best available tool based on the user's configured API keys, such as Tavily, Brave, or Firecrawl. The plugin provides three distinct tools for broad web searching, URL content extraction, and synthesized answers with citations. This modular approach ensures the agent remains functional with any single provider while scaling its capabilities as more keys are added.</p>
     <ul class="summary-highlights">
-      <li>Supports 10 providers including Serper, Tavily, Exa, and Firecrawl</li>
-      <li>Automated routing with explicit provider cooldowns and fallback logic</li>
-      <li>Three specialized tools for search, extraction, and cited answer synthesis</li>
+      <li>Supports 10 providers including Serper, Tavily, Exa, and Linkup</li>
+      <li>Auto-routing logic selects providers based on query and key availability</li>
+      <li>Provides dedicated tools for search, extraction, and cited answer synthesis</li>
     </ul>
   </div>
 </section>
@@ -427,7 +427,7 @@ web_search_plus(query=&quot;best bookshelf speakers under 1000&quot;, quality_re
 <td><code>provider</code></td>
 <td>string</td>
 <td><code>&quot;auto&quot;</code></td>
-<td><code>auto</code>, <code>serper</code>, <code>brave</code>, <code>tavily</code>, <code>exa</code>, <code>querit</code>, <code>linkup</code>, <code>firecrawl</code>, <code>perplexity</code>, <code>you</code>, <code>searxng</code></td>
+<td><code>auto</code>, <code>serper</code>, <code>brave</code>, <code>tavily</code>, <code>exa</code>, <code>querit</code>, <code>linkup</code>, <code>firecrawl</code>, <code>perplexity</code>, <code>kilo-perplexity</code>, <code>you</code>, <code>searxng</code></td>
 </tr>
 <tr>
 <td><code>depth</code></td>
@@ -591,7 +591,13 @@ web_extract_plus(urls=[&quot;https://docs.linkup.so&quot;], provider=&quot;linku
 <td>Perplexity</td>
 <td align="right">✅</td>
 <td align="right">—</td>
-<td>Direct answer-style search</td>
+<td>Native Perplexity direct answer-style search</td>
+</tr>
+<tr>
+<td>Kilo Perplexity</td>
+<td align="right">✅</td>
+<td align="right">—</td>
+<td>Perplexity through Kilo gateway (<code>kilo-perplexity</code>)</td>
 </tr>
 <tr>
 <td>You.com</td>
@@ -622,7 +628,7 @@ PERPLEXITY_API_KEY=***    # https://perplexity.ai/settings/api
 YOU_API_KEY=***           # https://api.you.com — search + extraction
 SEARXNG_INSTANCE_URL=https://your-instance.example.com
 
-# Advanced alternate credential path for the perplexity provider via Kilo Gateway
+# Kilo gateway alternate provider (`provider=&quot;kilo-perplexity&quot;`)
 KILOCODE_API_KEY=***
 </code></pre>
 <hr>
@@ -678,7 +684,7 @@ LICENSE          MIT license
   <div>
     <div class="related-list">
       <a class="related-row" href="/projects/42-evey/hermes-plugins">
-        <div class="stars">★ 106</div>
+        <div class="stars">★ 110</div>
         <div class="name"><span class="org">42-evey /</span> hermes-plugins</div>
       </a>
       <a class="related-row" href="/projects/FahrenheitResearch/hermes-weather-plugin">
@@ -698,7 +704,7 @@ LICENSE          MIT license
         <div class="name"><span class="org">raulvidis /</span> hermes-cloudflare</div>
       </a>
       <a class="related-row" href="/projects/clawshell/clawshell">
-        <div class="stars">★ 282</div>
+        <div class="stars">★ 277</div>
         <div class="name"><span class="org">clawshell /</span> clawshell</div>
       </a>
       <a class="related-row" href="/projects/briancaffey/hermes-otel">
@@ -706,7 +712,7 @@ LICENSE          MIT license
         <div class="name"><span class="org">briancaffey /</span> hermes-otel</div>
       </a>
       <a class="related-row" href="/projects/335234131/agent-browser-mcp">
-        <div class="stars">★ 203</div>
+        <div class="stars">★ 204</div>
         <div class="name"><span class="org">335234131 /</span> agent-browser-mcp</div>
       </a>
     </div>

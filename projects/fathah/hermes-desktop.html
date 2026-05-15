@@ -35,7 +35,7 @@
   "@type": "SoftwareApplication",
   "@id": "https://hermesatlas.com/projects/fathah/hermes-desktop#software",
   "name": "hermes-desktop",
-  "description": "Hermes Desktop is a native companion application that provides a graphical interface for installing and managing Hermes Agent. It automates the setup process using official scripts and allows users to toggle between local execution and remote API connections. The app features a comprehensive suite for managing agent personas, memory systems, and scheduled tasks through a unified dashboard. It also integrates with 16 messaging gateways and 14 toolsets, enabling the agent to interact across platfo",
+  "description": "Hermes Desktop is a native cross-platform GUI designed to simplify the installation, configuration, and operation of the Hermes Agent. It automates the setup process using official scripts and provides a visual interface for managing local or remote backends without manual CLI intervention. Users can interact with the agent through a streaming chat UI that supports 22 slash commands, session history search, and real-time token usage tracking. The application integrates comprehensive management t",
   "url": "https://hermesatlas.com/projects/fathah/hermes-desktop",
   "codeRepository": "https://github.com/fathah/hermes-desktop",
   "applicationCategory": "DesktopEnhancementApplication",
@@ -47,13 +47,13 @@
     "name": "fathah",
     "url": "https://github.com/fathah"
   },
-  "dateModified": "2026-05-13T13:24:28.000Z",
+  "dateModified": "2026-05-15T07:26:34.000Z",
   "interactionStatistic": {
     "@type": "InteractionCounter",
     "interactionType": {
       "@type": "LikeAction"
     },
-    "userInteractionCount": 4740
+    "userInteractionCount": 5055
   },
   "isPartOf": {
     "@id": "https://hermesatlas.com/#website"
@@ -112,11 +112,11 @@
   <p class="project-desc">Desktop Companion for Hermes Agent</p>
 
   <div class="meta-row">
-    <span class="stars">★ 4.7K</span>
+    <span class="stars">★ 5.1K</span>
     <span><span class="meta-label">lang</span>TypeScript</span>
     <span><span class="meta-label">license</span>MIT</span>
     
-    <span><span class="meta-label">updated</span>2026-05-13</span>
+    <span><span class="meta-label">updated</span>2026-05-15</span>
   </div>
 
   <div class="actions">
@@ -131,11 +131,11 @@
 <section class="project-summary">
   <div class="section-label">overview</div>
   <div>
-    <p class="summary-text">Hermes Desktop is a native companion application that provides a graphical interface for installing and managing Hermes Agent. It automates the setup process using official scripts and allows users to toggle between local execution and remote API connections. The app features a comprehensive suite for managing agent personas, memory systems, and scheduled tasks through a unified dashboard. It also integrates with 16 messaging gateways and 14 toolsets, enabling the agent to interact across platforms like Discord, Slack, and Telegram.</p>
+    <p class="summary-text">Hermes Desktop is a native cross-platform GUI designed to simplify the installation, configuration, and operation of the Hermes Agent. It automates the setup process using official scripts and provides a visual interface for managing local or remote backends without manual CLI intervention. Users can interact with the agent through a streaming chat UI that supports 22 slash commands, session history search, and real-time token usage tracking. The application integrates comprehensive management tools for memory systems, persona editing, scheduled cron tasks, and 16 different messaging gateways.</p>
     <ul class="summary-highlights">
-      <li>Guided installation with automated dependency resolution and progress tracking</li>
-      <li>Support for 16 messaging gateways including Telegram, Slack, and WhatsApp</li>
-      <li>Integrated management for memory providers, personas, and scheduled cron tasks</li>
+      <li>Guided installation and dependency resolution for local or remote backends</li>
+      <li>Supports 14 toolsets including web browsing, code execution, and vision</li>
+      <li>Integrated gateway management for Telegram, Discord, Slack, and other platforms</li>
     </ul>
   </div>
 </section>
@@ -228,6 +228,22 @@ sudo rm /etc/sudoers.d/hermes-install
 </code></pre>
 <p>Or right-click the app → <strong>Open</strong> → click <strong>Open</strong> in the confirmation dialog.</p>
 </blockquote>
+<h3>Preview</h3>
+<table>
+<tr>
+<td width="50%" align="center"><b>Office</b><br/><img width="100%" alt="Office" src="https://github.com/user-attachments/assets/214bfa60-48ec-4449-be40-370628205147" /></td>
+<td width="50%" align="center"><b>Chat</b><br/><img width="100%" alt="Chat" src="https://github.com/user-attachments/assets/ca84a56c-4d14-4775-96bb-c725069988be" /></td>
+</tr>
+<tr>
+<td width="50%" align="center"><b>Profiles</b><br/><img width="100%" alt="Profiles" src="https://github.com/user-attachments/assets/bd812e4a-bbdc-4141-b3a8-1ab5b0e561d4" /></td>
+<td width="50%" align="center"><b>Tools</b><br/><img width="100%" alt="Tools" src="https://github.com/user-attachments/assets/ad051fbe-055d-40d2-b6dd-959c522412d2" /></td>
+</tr>
+<tr>
+<td width="50%" align="center"><b>Settings</b><br/><img width="100%" alt="Settings" src="https://github.com/user-attachments/assets/b3f7e0d8-b087-4935-b57c-f8db30491f2e" /></td>
+<td width="50%" align="center"><b>Skills</b><br/><img width="100%" alt="Skills" src="https://github.com/user-attachments/assets/508c3501-52eb-419d-8cfd-06268875ff62" /></td>
+</tr>
+</table>
+
 <h3>Features</h3>
 <ul>
 <li><strong>Guided first-run install</strong> for Hermes Agent with progress tracking and dependency resolution</li>
@@ -251,22 +267,6 @@ sudo rm /etc/sudoers.d/hermes-install
 <li><strong>i18n ready</strong> — internationalization framework with English locale covering all screens, ready for community translations</li>
 <li><strong>Test suite</strong> — SSE parser, IPC handlers, preload API surface, installer utilities, and constants validation with Vitest</li>
 </ul>
-<h3>Preview</h3>
-<table>
-<tr>
-<td width="50%" align="center"><b>Office</b><br/><img width="100%" alt="Office" src="https://github.com/user-attachments/assets/214bfa60-48ec-4449-be40-370628205147" /></td>
-<td width="50%" align="center"><b>Chat</b><br/><img width="100%" alt="Chat" src="https://github.com/user-attachments/assets/ca84a56c-4d14-4775-96bb-c725069988be" /></td>
-</tr>
-<tr>
-<td width="50%" align="center"><b>Profiles</b><br/><img width="100%" alt="Profiles" src="https://github.com/user-attachments/assets/bd812e4a-bbdc-4141-b3a8-1ab5b0e561d4" /></td>
-<td width="50%" align="center"><b>Tools</b><br/><img width="100%" alt="Tools" src="https://github.com/user-attachments/assets/ad051fbe-055d-40d2-b6dd-959c522412d2" /></td>
-</tr>
-<tr>
-<td width="50%" align="center"><b>Settings</b><br/><img width="100%" alt="Settings" src="https://github.com/user-attachments/assets/b3f7e0d8-b087-4935-b57c-f8db30491f2e" /></td>
-<td width="50%" align="center"><b>Skills</b><br/><img width="100%" alt="Skills" src="https://github.com/user-attachments/assets/508c3501-52eb-419d-8cfd-06268875ff62" /></td>
-</tr>
-</table>
-
 <h3>How It Works</h3>
 <p>On first launch, the app:</p>
 <ol>
@@ -487,11 +487,11 @@ npm run build:rpm    # Fedora/RHEL .rpm only
   <div>
     <div class="related-list">
       <a class="related-row" href="/projects/outsourc-e/hermes-workspace">
-        <div class="stars">★ 4.1K</div>
+        <div class="stars">★ 4.2K</div>
         <div class="name"><span class="org">outsourc-e /</span> hermes-workspace</div>
       </a>
       <a class="related-row" href="/projects/sanchomuzax/hermes-webui">
-        <div class="stars">★ 95</div>
+        <div class="stars">★ 96</div>
         <div class="name"><span class="org">sanchomuzax /</span> hermes-webui</div>
       </a>
       <a class="related-row" href="/projects/Euraika-Labs/pan-ui">
@@ -499,7 +499,7 @@ npm run build:rpm    # Fedora/RHEL .rpm only
         <div class="name"><span class="org">Euraika-Labs /</span> pan-ui</div>
       </a>
       <a class="related-row" href="/projects/xaspx/hermes-control-interface">
-        <div class="stars">★ 644</div>
+        <div class="stars">★ 649</div>
         <div class="name"><span class="org">xaspx /</span> hermes-control-interface</div>
       </a>
       <a class="related-row" href="/projects/dodo-reach/hermes-desktop">
@@ -507,11 +507,11 @@ npm run build:rpm    # Fedora/RHEL .rpm only
         <div class="name"><span class="org">dodo-reach /</span> hermes-desktop</div>
       </a>
       <a class="related-row" href="/projects/nesquena/hermes-webui">
-        <div class="stars">★ 7.1K</div>
+        <div class="stars">★ 7.3K</div>
         <div class="name"><span class="org">nesquena /</span> hermes-webui</div>
       </a>
       <a class="related-row" href="/projects/pyrate-llama/hermes-ui">
-        <div class="stars">★ 121</div>
+        <div class="stars">★ 122</div>
         <div class="name"><span class="org">pyrate-llama /</span> hermes-ui</div>
       </a>
       <a class="related-row" href="/projects/clawvader-tech/hermes-telegram-miniapp">

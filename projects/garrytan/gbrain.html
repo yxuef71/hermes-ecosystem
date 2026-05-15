@@ -35,7 +35,7 @@
   "@type": "SoftwareApplication",
   "@id": "https://hermesatlas.com/projects/garrytan/gbrain#software",
   "name": "gbrain",
-  "description": "GBrain is a persistent memory and knowledge graph system designed to prevent AI agents from losing context over time. It utilizes a self-wiring graph layer that extracts entity relationships like investments and employment without requiring additional LLM calls, alongside hybrid vector and keyword search. The system consolidates meetings, emails, and notes into a structured timeline while fixing its own citations and memory overnight. It supports 14 embedding providers and includes built-in benc",
+  "description": "GBrain is a persistent memory and knowledge graph system designed to prevent AI agents from losing context over time. It utilizes a self-wiring graph layer and hybrid search to extract entity relationships like investments and affiliations without requiring additional LLM calls. The system consolidates data from meetings, emails, and tweets into a structured timeline with backlink-boosted ranking for improved retrieval accuracy. It supports 14 embedding providers and includes built-in benchmarki",
   "url": "https://hermesatlas.com/projects/garrytan/gbrain",
   "codeRepository": "https://github.com/garrytan/gbrain",
   "applicationCategory": "UtilitiesApplication",
@@ -47,13 +47,13 @@
     "name": "garrytan",
     "url": "https://github.com/garrytan"
   },
-  "dateModified": "2026-05-14T04:59:22.000Z",
+  "dateModified": "2026-05-15T04:59:22.000Z",
   "interactionStatistic": {
     "@type": "InteractionCounter",
     "interactionType": {
       "@type": "LikeAction"
     },
-    "userInteractionCount": 15547
+    "userInteractionCount": 15714
   },
   "isPartOf": {
     "@id": "https://hermesatlas.com/#website"
@@ -112,11 +112,11 @@
   <p class="project-desc">Garry's Opinionated OpenClaw/Hermes Agent Brain</p>
 
   <div class="meta-row">
-    <span class="stars">★ 15.5K</span>
+    <span class="stars">★ 15.7K</span>
     <span><span class="meta-label">lang</span>TypeScript</span>
     <span><span class="meta-label">license</span>MIT</span>
     
-    <span><span class="meta-label">updated</span>2026-05-14</span>
+    <span><span class="meta-label">updated</span>2026-05-15</span>
   </div>
 
   <div class="actions">
@@ -131,11 +131,11 @@
 <section class="project-summary">
   <div class="section-label">overview</div>
   <div>
-    <p class="summary-text">GBrain is a persistent memory and knowledge graph system designed to prevent AI agents from losing context over time. It utilizes a self-wiring graph layer that extracts entity relationships like investments and employment without requiring additional LLM calls, alongside hybrid vector and keyword search. The system consolidates meetings, emails, and notes into a structured timeline while fixing its own citations and memory overnight. It supports 14 embedding providers and includes built-in benchmarking tools to evaluate retrieval accuracy and latency.</p>
+    <p class="summary-text">GBrain is a persistent memory and knowledge graph system designed to prevent AI agents from losing context over time. It utilizes a self-wiring graph layer and hybrid search to extract entity relationships like investments and affiliations without requiring additional LLM calls. The system consolidates data from meetings, emails, and tweets into a structured timeline with backlink-boosted ranking for improved retrieval accuracy. It supports 14 embedding providers and includes built-in benchmarking tools to evaluate retrieval performance against standard datasets.</p>
     <ul class="summary-highlights">
       <li>Self-wiring knowledge graph extracts entity relationships without LLM calls.</li>
-      <li>Hybrid search combining vector embeddings, BM25, and backlink-boosted ranking.</li>
-      <li>Local-first architecture using PGLite for zero-server database deployment.</li>
+      <li>Hybrid search combines vector retrieval with backlink-boosted graph ranking.</li>
+      <li>Supports 14 embedding providers including OpenAI, Anthropic, and local Ollama.</li>
     </ul>
   </div>
 </section>
@@ -277,7 +277,9 @@ pick scopes, save the credentials shown once in the reveal modal. Programmatic
 registration via <code>oauthProvider.registerClientManual(...)</code> and the
 <code>gbrain auth register-client</code> CLI are also available.</p>
 <ul>
-<li><strong>OAuth 2.1 via the MCP SDK</strong> — client credentials (machine-to-machine: Perplexity, Claude), authorization code + PKCE (browser-based: ChatGPT), refresh token rotation, revocation, protected resource metadata. Optional Dynamic Client Registration behind <code>--enable-dcr</code> (DCR redirect_uris must be <code>https://</code> or loopback per RFC 6749 §3.1.2.1).</li>
+<li><strong>OAuth 2.1 via the MCP SDK</strong> — client credentials (machine-to-machine: Perplexity, Claude), authorization code + PKCE (browser-based: ChatGPT), refresh token rotation, revocation, protected resource metadata. PKCE-only public clients (<code>token_endpoint_auth_method: &quot;none&quot;</code>) register without a secret per RFC 7591 §3.2.1 (v0.34). Optional Dynamic Client Registration behind <code>--enable-dcr</code> (DCR redirect_uris must be <code>https://</code> or loopback per RFC 6749 §3.1.2.1).</li>
+<li><strong>Source-scoped OAuth clients (v0.34)</strong> — <code>gbrain auth register-client my-agent --source dept-x</code> ties the client&#39;s write authority to one source; read paths only return rows matching that source. <code>--federated-read S1,S2,S3</code> adds an orthogonal read-scope axis for shared brains (departments writing to one canon while reading the union). Pre-v0.34 clients are backfilled to <code>source_id=&#39;default&#39;</code> on upgrade.</li>
+<li><strong>Loopback default for <code>serve --http</code> (v0.34)</strong> — listens on <code>127.0.0.1</code> unless <code>--bind 0.0.0.0</code> (or a specific interface IP). Personal-laptop installs no longer publish the brain to the LAN by accident. A stderr WARN fires when <code>--public-url</code> is set without <code>--bind</code> so the operator sees the binding before the first request.</li>
 <li><strong>Scoped operations</strong> — 30 operations tagged <code>read | write | admin</code>. <code>sync_brain</code> and <code>file_upload</code> are <code>localOnly</code>, rejected over HTTP.</li>
 <li><strong>React admin dashboard</strong> — 7 screens baked into the binary (~65KB gzip). Live SSE activity feed, agents table, credential reveal, filterable request log, per-client config export.</li>
 <li><strong>Legacy bearer tokens still work</strong> — pre-v0.26 <code>gbrain auth create</code> tokens continue to authenticate as <code>read+write+admin</code>. v0.22.7&#39;s simpler <code>src/mcp/http-transport.ts</code> path stays compiled in for backward compat callers; v0.26+ deployments use the OAuth-aware <code>serve-http.ts</code>.</li>
@@ -1018,18 +1020,7 @@ EVAL
 ADMIN
   gbrain doctor [--json] [--fast]       Health checks (resolver, skills, DB, embeddings)
   gbrain doctor --fix [--dry-run]       Auto-fix DRY violations (delegate inlined rules to conventions)
-  gbrain doctor --locks                 List idle-in-tx backends (57014 diagnostic, Postgres only)
-  gbrain stats                          Brain statistics
-  gbrain models                         Show live model routing (tier defaults,
-                                        per-task overrides, alias map, source-of-truth).
-                                        v0.31.12: tier system + recipe-models merge.
-                                        Power-user override:
-                                          gbrain config set models.default opus
-                                          gbrain config set models.tier.deep opus
-  gbrain models doctor                  1-token reachability probe for each configured
-                                        chat/expansion model + a zero-token embedding_config
-                                        probe (catches Voyage flexible-dim misconfigs before
-                      
+  gbrain doctor --locks                 List idle-in-tx backends (57014
 
 ---
 
@@ -1047,7 +1038,7 @@ ADMIN
   <div>
     <div class="related-list">
       <a class="related-row" href="/projects/mem0ai/mem0">
-        <div class="stars">★ 55.6K</div>
+        <div class="stars">★ 55.8K</div>
         <div class="name"><span class="org">mem0ai /</span> mem0</div>
       </a>
       <a class="related-row" href="/projects/vectorize-io/hindsight">
@@ -1059,15 +1050,15 @@ ADMIN
         <div class="name"><span class="org">greyhaven-ai /</span> autocontext</div>
       </a>
       <a class="related-row" href="/projects/elkimek/honcho-self-hosted">
-        <div class="stars">★ 226</div>
+        <div class="stars">★ 228</div>
         <div class="name"><span class="org">elkimek /</span> honcho-self-hosted</div>
       </a>
       <a class="related-row" href="/projects/yoloshii/ClawMem">
-        <div class="stars">★ 164</div>
+        <div class="stars">★ 165</div>
         <div class="name"><span class="org">yoloshii /</span> ClawMem</div>
       </a>
       <a class="related-row" href="/projects/plur-ai/plur">
-        <div class="stars">★ 106</div>
+        <div class="stars">★ 115</div>
         <div class="name"><span class="org">plur-ai /</span> plur</div>
       </a>
       <a class="related-row" href="/projects/amanning3390/flowstate-qmd">
@@ -1075,7 +1066,7 @@ ADMIN
         <div class="name"><span class="org">amanning3390 /</span> flowstate-qmd</div>
       </a>
       <a class="related-row" href="/projects/stephenschoettler/hermes-lcm">
-        <div class="stars">★ 498</div>
+        <div class="stars">★ 505</div>
         <div class="name"><span class="org">stephenschoettler /</span> hermes-lcm</div>
       </a>
     </div>

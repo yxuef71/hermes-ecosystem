@@ -35,7 +35,7 @@
   "@type": "SoftwareApplication",
   "@id": "https://hermesatlas.com/projects/vectorize-io/hindsight#software",
   "name": "hindsight",
-  "description": "Hindsight is an agent memory system designed to help AI agents learn and adapt over time rather than just recalling conversation history. It utilizes a workflow of retain, recall, and reflect operations to manage long-term memory and build mental models of user interactions. The system can be integrated via a two-line LLM wrapper or a direct API, supporting both conversational personalization and autonomous task execution. It is compatible with major LLM providers including OpenAI, Anthropic, an",
+  "description": "Hindsight is an agent memory system designed to enable long-term learning and information retention for AI agents. It utilizes a workflow of retain, recall, and reflect operations to move beyond simple conversation history into persistent mental models. The system can be integrated via a two-line LLM wrapper or a direct API to automate memory storage and retrieval during LLM calls. It supports multi-user personalization through metadata filtering and is compatible with major providers like OpenA",
   "url": "https://hermesatlas.com/projects/vectorize-io/hindsight",
   "codeRepository": "https://github.com/vectorize-io/hindsight",
   "applicationCategory": "UtilitiesApplication",
@@ -47,13 +47,13 @@
     "name": "vectorize-io",
     "url": "https://github.com/vectorize-io"
   },
-  "dateModified": "2026-05-14T00:28:47.000Z",
+  "dateModified": "2026-05-14T21:07:13.000Z",
   "interactionStatistic": {
     "@type": "InteractionCounter",
     "interactionType": {
       "@type": "LikeAction"
     },
-    "userInteractionCount": 13268
+    "userInteractionCount": 13349
   },
   "isPartOf": {
     "@id": "https://hermesatlas.com/#website"
@@ -136,11 +136,11 @@
 <section class="project-summary">
   <div class="section-label">overview</div>
   <div>
-    <p class="summary-text">Hindsight is an agent memory system designed to help AI agents learn and adapt over time rather than just recalling conversation history. It utilizes a workflow of retain, recall, and reflect operations to manage long-term memory and build mental models of user interactions. The system can be integrated via a two-line LLM wrapper or a direct API, supporting both conversational personalization and autonomous task execution. It is compatible with major LLM providers including OpenAI, Anthropic, and Ollama, and supports storage backends like PostgreSQL and Oracle AI Database.</p>
+    <p class="summary-text">Hindsight is an agent memory system designed to enable long-term learning and information retention for AI agents. It utilizes a workflow of retain, recall, and reflect operations to move beyond simple conversation history into persistent mental models. The system can be integrated via a two-line LLM wrapper or a direct API to automate memory storage and retrieval during LLM calls. It supports multi-user personalization through metadata filtering and is compatible with major providers like OpenAI, Anthropic, and Ollama.</p>
     <ul class="summary-highlights">
       <li>Implements retain, recall, and reflect workflows for long-term agent learning</li>
       <li>Offers a two-line LLM wrapper for automatic memory management</li>
-      <li>Supports OpenAI, Anthropic, Gemini, Groq, and local models via Ollama</li>
+      <li>Supports PostgreSQL and Oracle AI Database for enterprise-grade storage</li>
     </ul>
   </div>
 </section>
@@ -169,7 +169,7 @@
 <p>It eliminates the shortcomings of alternative techniques such as RAG and knowledge graph and delivers state-of-the-art performance on long term memory tasks.</p>
 <h3>Memory Performance &amp; Accuracy</h3>
 <p>Hindsight is the most accurate agent memory system ever tested according to benchmark performance. It has achieved state-of-the-art performance on the LongMemEval benchmark, widely used to assess memory system performance across a variety of conversational AI scenarios. The current reported performance of Hindsight and other agent memory solutions as of January 2026 is shown here:</p>
-<p><img src="https://raw.githubusercontent.com/vectorize-io/hindsight/main/hindsight-docs/static/img/hindsight-bench.jpg" alt="Overview"></p>
+<p><img src="https://raw.githubusercontent.com/vectorize-io/hindsight/main/hindsight-docs/static/img/hindsight-benchmarks.png" alt="Overview"></p>
 <p>The benchmark performance data for Hindsight has been independently reproduced by research collaborators at the Virginia Tech <a href="https://sanghani.cs.vt.edu/">Sanghani Center for Artificial Intelligence and Data Analytics</a> and The Washington Post. Other scores are self-reported by software vendors.</p>
 <p>Hindsight is being used in production at Fortune 500 enterprises and by a growing number of AI startups. </p>
 <h3>Adding Hindsight to Your AI Agents</h3>
@@ -387,7 +387,7 @@ client.reflect(bank_id=&quot;my-bank&quot;, query=&quot;What should I know about
   <div>
     <div class="related-list">
       <a class="related-row" href="/projects/mem0ai/mem0">
-        <div class="stars">★ 55.6K</div>
+        <div class="stars">★ 55.8K</div>
         <div class="name"><span class="org">mem0ai /</span> mem0</div>
       </a>
       <a class="related-row" href="/projects/greyhaven-ai/autocontext">
@@ -395,15 +395,15 @@ client.reflect(bank_id=&quot;my-bank&quot;, query=&quot;What should I know about
         <div class="name"><span class="org">greyhaven-ai /</span> autocontext</div>
       </a>
       <a class="related-row" href="/projects/elkimek/honcho-self-hosted">
-        <div class="stars">★ 226</div>
+        <div class="stars">★ 228</div>
         <div class="name"><span class="org">elkimek /</span> honcho-self-hosted</div>
       </a>
       <a class="related-row" href="/projects/yoloshii/ClawMem">
-        <div class="stars">★ 164</div>
+        <div class="stars">★ 165</div>
         <div class="name"><span class="org">yoloshii /</span> ClawMem</div>
       </a>
       <a class="related-row" href="/projects/plur-ai/plur">
-        <div class="stars">★ 106</div>
+        <div class="stars">★ 115</div>
         <div class="name"><span class="org">plur-ai /</span> plur</div>
       </a>
       <a class="related-row" href="/projects/amanning3390/flowstate-qmd">
@@ -411,11 +411,11 @@ client.reflect(bank_id=&quot;my-bank&quot;, query=&quot;What should I know about
         <div class="name"><span class="org">amanning3390 /</span> flowstate-qmd</div>
       </a>
       <a class="related-row" href="/projects/garrytan/gbrain">
-        <div class="stars">★ 15.5K</div>
+        <div class="stars">★ 15.7K</div>
         <div class="name"><span class="org">garrytan /</span> gbrain</div>
       </a>
       <a class="related-row" href="/projects/stephenschoettler/hermes-lcm">
-        <div class="stars">★ 498</div>
+        <div class="stars">★ 505</div>
         <div class="name"><span class="org">stephenschoettler /</span> hermes-lcm</div>
       </a>
     </div>
