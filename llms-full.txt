@@ -1,6 +1,6 @@
 # Hermes Atlas — Full Context Bundle
 
-> Complete content of hermesatlas.com as of 2026-05-23. Concatenated from guide pages, ecosystem overview, the quarterly report, and project summaries. Canonical URLs preserved throughout.
+> Complete content of hermesatlas.com as of 2026-05-24. Concatenated from guide pages, ecosystem overview, the quarterly report, and project summaries. Canonical URLs preserved throughout.
 
 This file is the companion to https://hermesatlas.com/llms.txt (the concise index).
 
@@ -1576,12 +1576,12 @@ Stars: 83,290
 Official: Yes (maintained by Nous Research)
 The self-improving AI agent that grows with you — persistent memory, auto-generated skills, 14 platforms, 6 execution backends
 
-Hermes Agent is an autonomous AI system designed for persistent, cross-platform task execution and self-improvement. It utilizes a closed learning loop to create and refine skills from experience while maintaining user models and long-term memory via FTS5 session search. The agent integrates with 14 messaging platforms and supports six execution backends, including serverless environments like Modal and Daytona that hibernate when idle. Users can switch between over 200 models from various providers without code changes, enabling flexible deployment from local CLI to cloud-based gateways.
+Hermes Agent is an autonomous, self-improving AI assistant designed for persistent cross-platform interaction and task automation. It utilizes a closed learning loop to curate long-term memory, autonomously generate new skills from experience, and build user models through the Honcho dialectic framework. The system supports 14 communication platforms including Telegram and Slack, and can be deployed across six execution backends ranging from local Docker containers to serverless environments like Modal and Daytona. Users can swap between over 200 LLM providers via a unified CLI while leveraging built-in tools for web search, scheduling, and parallel subagent delegation.
 
 Highlights:
-- Autonomous skill creation and self-improvement from task experience
-- Multi-platform support including Telegram, Discord, Slack, and CLI
-- Flexible execution backends including Docker, SSH, and serverless environments
+- Autonomous skill creation and self-improvement based on task experience
+- Multi-platform support including Telegram, Discord, Slack, and WhatsApp
+- Flexible execution across local, SSH, Docker, and serverless backends
 
 ---
 
@@ -1610,12 +1610,12 @@ Category: Memory & Context
 Stars: 8,857
 Garry's Opinionated OpenClaw/Hermes Agent Brain
 
-GBrain is a persistent memory and knowledge graph system designed to provide AI agents with long-term context and structured data storage. It automatically extracts entities and typed relationships from ingested content like emails and meetings to build a self-wiring graph without requiring LLM calls for every link. The system utilizes hybrid search, backlink-boosted ranking, and a temporal trajectory timeline to ground agent responses in factual, chronological data. It integrates directly with Hermes and OpenClaw via MCP or a CLI, featuring an autonomous 'doctor' mode for self-remediation and memory consolidation.
+GBrain is an autonomous memory and synthesis layer designed to serve as the institutional or personal knowledge base for AI agents. It combines a self-wiring knowledge graph that extracts entity relationships without LLM calls with a synthesis engine that provides cited answers and gap analysis. The system automates data ingestion from meetings, emails, and notes while performing overnight memory consolidation and enrichment. It supports multi-user environments with scoped data access and integrates directly with Hermes and OpenClaw via the Model Context Protocol.
 
 Highlights:
-- Builds self-wiring knowledge graphs with typed entity relationships
-- Hybrid search combining vector embeddings, reranking, and graph-based queries
-- Temporal trajectory tracking for chronological metric and event grounding
+- Synthesizes cited answers across people, companies, and meeting notes
+- Self-wiring knowledge graph extracts typed entity relationships automatically
+- Supports multi-tenant company brain deployments with scoped data access
 
 ---
 
@@ -1697,12 +1697,12 @@ Category: Workspaces & GUIs
 Stars: 2,479
 Hermes WebUI: The best way to use Hermes Agent from the web or from your phone!
 
-Hermes WebUI is a lightweight, browser-based interface for the Hermes Agent, providing a graphical alternative to the standard command-line environment. It utilizes a Python and vanilla JavaScript architecture to offer 1:1 functional parity with the CLI without requiring complex build steps or frameworks. The interface features a three-panel layout for managing chat sessions, workspace files, and agent settings through a centralized control center. Users can access persistent memory, automated skill creation, and self-hosted scheduling features across various model providers.
+Hermes WebUI is a lightweight, browser-based interface for the Hermes Agent that provides a graphical alternative to the standard command-line environment. Built using Python and vanilla JavaScript without heavy frameworks, it maintains 1:1 parity with the CLI while offering a three-panel layout for chat, session management, and workspace file browsing. The interface includes a circular context ring for real-time token monitoring and a dedicated control center for managing agent settings and profiles. It allows users to access their self-hosted agent's persistent memory and automated skills through a secure web or mobile-friendly portal.
 
 Highlights:
-- Three-panel layout for chat, file browsing, and session management
-- Zero-build architecture using Python and vanilla JavaScript
-- Full parity with Hermes Agent CLI features and persistent memory
+- Three-panel layout for chat, sessions, and workspace file browsing
+- Zero-build architecture using only Python and vanilla JavaScript
+- Visual token usage tracking via a circular context ring
 
 ---
 
@@ -1714,12 +1714,12 @@ Category: Workspaces & GUIs
 Stars: 1,844
 Web dashboard for Hermes Agent — multi-platform AI chat, session management, scheduled jobs, usage analytics & channel configuration (Telegram, Discord, Slack, WhatsApp)
 
-Hermes Web UI is a comprehensive dashboard for managing the Hermes Agent ecosystem through a responsive web interface. It centralizes agent interactions by providing a multi-session chat environment, a file browser for remote backends, and an integrated web terminal. The platform automates the configuration of eight communication channels, including Telegram, Discord, and WhatsApp, while tracking detailed usage analytics and costs. Users can also manage scheduled cron jobs, browse installed skills, and switch between isolated profiles for distinct project environments.
+Hermes Web UI is a comprehensive management dashboard for the Hermes Agent ecosystem that centralizes AI interactions and system administration into a single interface. It provides a real-time chat environment with multi-session support, markdown rendering, and tool-call visualization while managing local SQLite session storage. The platform enables unified configuration for eight communication channels, including Telegram, Discord, and WhatsApp, alongside detailed usage analytics and cost tracking. Users can also manage scheduled cron jobs, browse remote files, and configure multi-profile environments for granular access control.
 
 Highlights:
-- Unified configuration for Telegram, Discord, Slack, and five other platforms
-- Real-time chat streaming with multi-session management and Markdown support
-- Comprehensive usage analytics for token consumption, costs, and model distribution
+- Unified configuration for eight platforms including Discord, Slack, and WhatsApp
+- Real-time AI chat with multi-session management and tool-call details
+- Comprehensive usage analytics for token consumption and cost tracking
 
 ---
 
@@ -1852,12 +1852,12 @@ Category: Workspaces & GUIs
 Stars: 830
 Native web workspace — chat, terminal, memory browser, skills manager, and inspector panel
 
-Hermes Workspace is a native web-based command center designed to provide a unified interface for managing Hermes Agents. It integrates chat, a cross-platform terminal, and a file browser with a memory editor and skills manager to streamline agent orchestration. The platform features a Swarm Mode for role-based dispatching and persistent tmux-backed workers, allowing users to monitor multi-agent operations through a centralized dashboard. It maintains zero-fork parity with the official Nous Research Hermes Agent, connecting via API to existing gateway and dashboard services.
+Hermes Workspace is a native web-based command center designed to provide a unified graphical interface for the Hermes Agent ecosystem. It integrates real-time chat, a cross-platform terminal, and a memory browser to manage agent sessions and file systems from a single dashboard. The platform features a Swarm Mode for orchestrating multiple persistent agents via tmux-backed workers and role-based dispatching. It operates as a zero-fork extension that connects directly to existing Hermes Agent gateway and dashboard APIs.
 
 Highlights:
-- Unified interface for chat, terminal, memory browsing, and skill management
-- Swarm Mode for autonomous multi-agent orchestration and role-based dispatching
-- Zero-fork integration with vanilla Nous Research Hermes Agent installations
+- Unified interface for chat, terminal, memory, and skill management
+- Swarm Mode for multi-agent orchestration and role-based task dispatch
+- Integrated Kanban board for tracking autonomous agent missions and jobs
 
 ---
 
@@ -2127,12 +2127,12 @@ Category: Memory & Context
 Stars: 178
 Lossless Context Management plugin for Hermes Agent — DAG-based context engine that never loses a message
 
-hermes-lcm is a context management plugin for Hermes Agent designed to prevent information loss during prompt compression. It replaces flat summaries with a hierarchical summary DAG and a SQLite message store to preserve raw conversation history. The agent can use specialized tools to drill back into compacted material without flooding the active context. This approach enables bounded recovery of raw messages and child summaries based on source lineage.
+Hermes-LCM is a context management plugin for the Hermes Agent that prevents information loss during long-running conversations. It replaces standard lossy compression with a hierarchical Directed Acyclic Graph (DAG) that compacts older messages into depth-aware summary nodes stored in a local SQLite database. The agent can use specialized tools like grep and expand to drill back into raw message data or specific summary branches without flooding the active context window. This approach ensures that while the active prompt remains bounded, the agent retains autonomous access to the entire session history and externalized large payloads.
 
 Highlights:
-- Hierarchical summary DAG for depth-aware context compaction
-- SQLite store for preserving raw messages and externalized payloads
-- Dedicated tools for grepping, describing, and expanding archived context
+- Hierarchical DAG structure for depth-aware context compaction
+- SQLite-backed message store for lossless raw history preservation
+- Agent tools for targeted retrieval and summary expansion
 
 ---
 
@@ -2365,12 +2365,12 @@ Category: Workspaces & GUIs
 Stars: 65
 Desktop companion app for installing, configuring, and chatting with Hermes Agent
 
-Hermes Desktop is a native GUI application for managing the installation, configuration, and operation of Hermes Agent. It automates the setup of local dependencies like Python and uv or connects to remote API servers to provide a streamlined alternative to CLI management. The app features a streaming chat interface, session history with full-text search, and a visual editor for personas and scheduled tasks. It integrates with 16 messaging gateways and 14 toolsets, including web browsing, code execution, and memory systems.
+Hermes Desktop is a native companion application that provides a graphical interface for installing, configuring, and interacting with the Hermes Agent. It automates the setup process by managing dependencies like Git and Python and allows users to toggle between local execution or remote API connections. The workspace includes a streaming chat UI, a cron-based task scheduler, and management tools for agent personas, memory systems, and 16 different messaging gateways. It simplifies complex CLI workflows into a unified dashboard for model configuration, tool orchestration, and session history search.
 
 Highlights:
-- Guided installer for local Hermes Agent or remote API connection
-- Supports 16 messaging gateways including Telegram, Discord, and Slack
-- Built-in management for 14 toolsets, memory systems, and personas
+- Guided installer for local or remote Hermes Agent backends
+- Supports 14 toolsets including web browsing, terminal, and code execution
+- Configures 16 messaging gateways like Telegram, Discord, and Slack
 
 ---
 
@@ -2467,11 +2467,11 @@ Category: Multi-Agent & Orchestration
 Stars: 46
 Meta-harness for Hermes Agent — meta-optimization with arxiv paper reference
 
-Hermes Agent Meta-Harness is a standalone outer-loop optimization framework designed to improve the performance of Hermes agents on verifiable coding benchmarks. It treats the agent as an execution backend and searches for optimal harness configurations—the code governing context collection and retrieval—rather than modifying model weights. The system automates benchmark orchestration, archive analysis, and frontier tracking to identify high-performing harness candidates. It currently supports TBLite and TB2 benchmarks, providing structured mutation and search capabilities to refine agentic workflows.
+Hermes Agent Meta-Harness is a standalone outer-loop optimization framework designed to improve the performance of Hermes agents on verifiable coding benchmarks. It treats the agent as an execution backend and searches for optimal harness configurations—the code governing context collection and retrieval—rather than modifying model weights. The system orchestrates benchmark evaluations, tracks performance frontiers, and performs structured candidate mutations to find superior harness variants. It currently supports TBLite and TB2 benchmarks through a research-safe workflow that emphasizes archive analysis and deterministic search.
 
 Highlights:
-- Optimizes harness code through an automated outer-loop search process
-- Orchestrates TBLite and TB2 benchmark evaluation via Hermes Agent
+- Optimizes agent harness code through automated outer-loop search
+- Orchestrates TBLite and TB2 benchmark evaluations via Hermes
 - Tracks performance frontiers with structured candidate mutation and comparison
 
 ---
@@ -2943,12 +2943,12 @@ Category: Integrations & Bridges
 Stars: 10
 Hermes Companion — Android app for Hermes agent platform. Chat, terminal, and device control over WSS.
 
-Hermes-Relay is a multi-platform companion suite that enables remote interaction with a server-deployed Hermes agent from Android and desktop environments. It uses a WebSocket Secure (WSS) relay and a dedicated server plugin to bridge local devices with remote agent instances. The Android application provides native phone control including screen reading and automated actions, while the desktop CLI and tray app allow for terminal-based interaction and local file system access. This setup allows users to utilize a powerful remote agent as if it were running locally on their personal hardware.
+Hermes-Relay is a dual-surface companion suite that enables remote interaction with a server-deployed Hermes agent from Android and desktop environments. It uses a WebSocket Secure (WSS) relay and a server-side plugin to facilitate real-time communication, terminal access, and device control without requiring SSH. The Android app allows the agent to read screens and perform actions like tapping or swiping, while the desktop CLI and tray app provide local file access, terminal execution, and clipboard integration for the remote agent. This setup allows users to leverage powerful remote compute while maintaining the experience of a locally running agent on their personal devices.
 
 Highlights:
-- Native Android app for chat, voice, and automated device control
-- Desktop CLI and Windows tray app for remote agent interaction
-- Bidirectional tool use for local terminal and file system access
+- Native Android app for remote chat, voice, and screen-based device control.
+- Desktop CLI and Windows tray app for local-style terminal interaction.
+- WSS relay enables agent access to local files and system clipboards.
 
 ---
 

@@ -35,7 +35,7 @@
   "@type": "SoftwareApplication",
   "@id": "https://hermesatlas.com/projects/outsourc-e/hermes-workspace#software",
   "name": "hermes-workspace",
-  "description": "Hermes Workspace is a native web-based command center designed to provide a unified interface for managing Hermes Agents. It integrates chat, a cross-platform terminal, and a file browser with a memory editor and skills manager to streamline agent orchestration. The platform features a Swarm Mode for role-based dispatching and persistent tmux-backed workers, allowing users to monitor multi-agent operations through a centralized dashboard. It maintains zero-fork parity with the official Nous Rese",
+  "description": "Hermes Workspace is a native web-based command center designed to provide a unified graphical interface for the Hermes Agent ecosystem. It integrates real-time chat, a cross-platform terminal, and a memory browser to manage agent sessions and file systems from a single dashboard. The platform features a Swarm Mode for orchestrating multiple persistent agents via tmux-backed workers and role-based dispatching. It operates as a zero-fork extension that connects directly to existing Hermes Agent ga",
   "url": "https://hermesatlas.com/projects/outsourc-e/hermes-workspace",
   "codeRepository": "https://github.com/outsourc-e/hermes-workspace",
   "applicationCategory": "DesktopEnhancementApplication",
@@ -47,13 +47,13 @@
     "name": "outsourc-e",
     "url": "https://github.com/outsourc-e"
   },
-  "dateModified": "2026-05-21T23:30:50.000Z",
+  "dateModified": "2026-05-24T05:56:51.000Z",
   "interactionStatistic": {
     "@type": "InteractionCounter",
     "interactionType": {
       "@type": "LikeAction"
     },
-    "userInteractionCount": 4712
+    "userInteractionCount": 4769
   },
   "isPartOf": {
     "@id": "https://hermesatlas.com/#website"
@@ -112,11 +112,11 @@
   <p class="project-desc">Native web workspace for Hermes Agent — chat, terminal, memory, skills, inspector.</p>
 
   <div class="meta-row">
-    <span class="stars">★ 4.7K</span>
+    <span class="stars">★ 4.8K</span>
     <span><span class="meta-label">lang</span>JavaScript</span>
     <span><span class="meta-label">license</span>MIT</span>
     
-    <span><span class="meta-label">updated</span>2026-05-21</span>
+    <span><span class="meta-label">updated</span>2026-05-24</span>
   </div>
 
   <div class="actions">
@@ -131,11 +131,11 @@
 <section class="project-summary">
   <div class="section-label">overview</div>
   <div>
-    <p class="summary-text">Hermes Workspace is a native web-based command center designed to provide a unified interface for managing Hermes Agents. It integrates chat, a cross-platform terminal, and a file browser with a memory editor and skills manager to streamline agent orchestration. The platform features a Swarm Mode for role-based dispatching and persistent tmux-backed workers, allowing users to monitor multi-agent operations through a centralized dashboard. It maintains zero-fork parity with the official Nous Research Hermes Agent, connecting via API to existing gateway and dashboard services.</p>
+    <p class="summary-text">Hermes Workspace is a native web-based command center designed to provide a unified graphical interface for the Hermes Agent ecosystem. It integrates real-time chat, a cross-platform terminal, and a memory browser to manage agent sessions and file systems from a single dashboard. The platform features a Swarm Mode for orchestrating multiple persistent agents via tmux-backed workers and role-based dispatching. It operates as a zero-fork extension that connects directly to existing Hermes Agent gateway and dashboard APIs.</p>
     <ul class="summary-highlights">
-      <li>Unified interface for chat, terminal, memory browsing, and skill management</li>
-      <li>Swarm Mode for autonomous multi-agent orchestration and role-based dispatching</li>
-      <li>Zero-fork integration with vanilla Nous Research Hermes Agent installations</li>
+      <li>Unified interface for chat, terminal, memory, and skill management</li>
+      <li>Swarm Mode for multi-agent orchestration and role-based task dispatch</li>
+      <li>Integrated Kanban board for tracking autonomous agent missions and jobs</li>
     </ul>
   </div>
 </section>
@@ -552,6 +552,69 @@ legacy-named <code>claude-data</code> Docker volume, so containers can be recrea
 <blockquote>
 <p><strong>Verify:</strong> Check the Docker logs for <code>[gateway] Connected to Hermes Agent</code> — this confirms the workspace successfully connected to the agent.</p>
 </blockquote>
+<h4>Remote Access (LAN / Tailscale / VPN)</h4>
+<p>The default compose file binds ports to <code>127.0.0.1</code> (localhost only). To access the workspace from other devices on your network, you need to:</p>
+<p><strong>1. Publish ports without the loopback restriction.</strong> Create a <code>docker-compose.override.yml</code>:</p>
+<pre><code class="language-yaml">services:
+  hermes-agent:
+    ports:
+      - &#39;8642:8642&#39;
+  hermes-workspace:
+    ports:
+      - &#39;3000:3000&#39;
+</code></pre>
+<p><strong>2. Add these env vars to <code>.env</code>:</strong></p>
+<pre><code class="language-env"># Required: workspace session password (the workspace refuses to start on 0.0.0.0 without it)
+HERMES_PASSWORD=your-strong-secret-here
+
+# Required for plain-HTTP LAN access (browsers drop Secure cookies over http://)
+COOKIE_SECURE=0
+
+# Recommended: gateway auth token (prevents unauthenticated API access on your LAN)
+API_SERVER_KEY=***
+
+# If the gateway refuses to start with &quot;No user allowlists configured&quot;:
+GATEWAY_ALLOW_ALL_USERS=true
+</code></pre>
+<p><strong>3. Restart the stack:</strong></p>
+<pre><code class="language-bash">docker compose down &amp;&amp; docker compose up -d
+</code></pre>
+<blockquote>
+<p><strong>HTTPS behind a reverse proxy?</strong> If you terminate TLS at a reverse proxy (Traefik, Nginx, Caddy, Tailscale Funnel), set <code>COOKIE_SECURE=1</code> instead and add <code>TRUST_PROXY=1</code> so IP classification works correctly.</p>
+</blockquote>
+<h4>Troubleshooting Docker</h4>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>[workspace] refusing to start — HERMES_PASSWORD is unset</code></td>
+<td>Add <code>HERMES_PASSWORD=&lt;secret&gt;</code> to <code>.env</code></td>
+</tr>
+<tr>
+<td>Login silently fails (no error, page reloads)</td>
+<td>Add <code>COOKIE_SECURE=0</code> for HTTP, or <code>COOKIE_SECURE=1</code> + HTTPS</td>
+</tr>
+<tr>
+<td><code>[Api_Server] Refusing to start: binding to 0.0.0.0 requires API_SERVER_KEY</code></td>
+<td>Add <code>API_SERVER_KEY=*** to </code>.env`</td>
+</tr>
+<tr>
+<td><code>No user allowlists configured. All unauthorized users will be denied.</code></td>
+<td>Add <code>GATEWAY_ALLOW_ALL_USERS=true</code> to <code>.env</code></td>
+</tr>
+<tr>
+<td><code>CLAUDE_DASHBOARD_TOKEN is not set</code> warning</td>
+<td>Set <code>CLAUDE_DASHBOARD_TOKEN</code> to the same value as <code>API_SERVER_KEY</code></td>
+</tr>
+<tr>
+<td>500 Internal Server Error on login after setting all the above</td>
+<td>Clear browser cookies for the workspace domain, then retry</td>
+</tr>
+</tbody></table>
 <h4>Building from source</h4>
 <p>Want to hack on the workspace and have local changes hot-built into the
 container? Use the dev overlay:</p>
@@ -903,7 +966,7 @@ hermes dashboard      # dashboard plugin on :9119 (sessions/skills/jobs/config)
   <div>
     <div class="related-list">
       <a class="related-row" href="/projects/fathah/hermes-desktop">
-        <div class="stars">★ 6.5K</div>
+        <div class="stars">★ 6.7K</div>
         <div class="name"><span class="org">fathah /</span> hermes-desktop</div>
       </a>
       <a class="related-row" href="/projects/sanchomuzax/hermes-webui">
@@ -915,7 +978,7 @@ hermes dashboard      # dashboard plugin on :9119 (sessions/skills/jobs/config)
         <div class="name"><span class="org">Euraika-Labs /</span> pan-ui</div>
       </a>
       <a class="related-row" href="/projects/xaspx/hermes-control-interface">
-        <div class="stars">★ 690</div>
+        <div class="stars">★ 692</div>
         <div class="name"><span class="org">xaspx /</span> hermes-control-interface</div>
       </a>
       <a class="related-row" href="/projects/dodo-reach/hermes-desktop">
@@ -923,7 +986,7 @@ hermes dashboard      # dashboard plugin on :9119 (sessions/skills/jobs/config)
         <div class="name"><span class="org">dodo-reach /</span> hermes-desktop</div>
       </a>
       <a class="related-row" href="/projects/nesquena/hermes-webui">
-        <div class="stars">★ 8.3K</div>
+        <div class="stars">★ 8.4K</div>
         <div class="name"><span class="org">nesquena /</span> hermes-webui</div>
       </a>
       <a class="related-row" href="/projects/pyrate-llama/hermes-ui">
@@ -931,7 +994,7 @@ hermes dashboard      # dashboard plugin on :9119 (sessions/skills/jobs/config)
         <div class="name"><span class="org">pyrate-llama /</span> hermes-ui</div>
       </a>
       <a class="related-row" href="/projects/clawvader-tech/hermes-telegram-miniapp">
-        <div class="stars">★ 225</div>
+        <div class="stars">★ 224</div>
         <div class="name"><span class="org">clawvader-tech /</span> hermes-telegram-miniapp</div>
       </a>
     </div>

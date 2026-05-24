@@ -35,7 +35,7 @@
   "@type": "SoftwareApplication",
   "@id": "https://hermesatlas.com/projects/stephenschoettler/hermes-lcm#software",
   "name": "hermes-lcm",
-  "description": "hermes-lcm is a context management plugin for Hermes Agent designed to prevent information loss during prompt compression. It replaces flat summaries with a hierarchical summary DAG and a SQLite message store to preserve raw conversation history. The agent can use specialized tools to drill back into compacted material without flooding the active context. This approach enables bounded recovery of raw messages and child summaries based on source lineage.",
+  "description": "Hermes-LCM is a context management plugin for the Hermes Agent that prevents information loss during long-running conversations. It replaces standard lossy compression with a hierarchical Directed Acyclic Graph (DAG) that compacts older messages into depth-aware summary nodes stored in a local SQLite database. The agent can use specialized tools like grep and expand to drill back into raw message data or specific summary branches without flooding the active context window. This approach ensures ",
   "url": "https://hermesatlas.com/projects/stephenschoettler/hermes-lcm",
   "codeRepository": "https://github.com/stephenschoettler/hermes-lcm",
   "applicationCategory": "UtilitiesApplication",
@@ -46,13 +46,13 @@
     "name": "stephenschoettler",
     "url": "https://github.com/stephenschoettler"
   },
-  "dateModified": "2026-05-23T00:48:57.000Z",
+  "dateModified": "2026-05-24T05:29:30.000Z",
   "interactionStatistic": {
     "@type": "InteractionCounter",
     "interactionType": {
       "@type": "LikeAction"
     },
-    "userInteractionCount": 568
+    "userInteractionCount": 573
   },
   "isPartOf": {
     "@id": "https://hermesatlas.com/#website"
@@ -111,11 +111,11 @@
   <p class="project-desc">Lossless Context Management plugin for Hermes Agent — DAG-based context engine that never loses a message</p>
 
   <div class="meta-row">
-    <span class="stars">★ 568</span>
+    <span class="stars">★ 573</span>
     <span><span class="meta-label">lang</span>Python</span>
     
     
-    <span><span class="meta-label">updated</span>2026-05-23</span>
+    <span><span class="meta-label">updated</span>2026-05-24</span>
   </div>
 
   <div class="actions">
@@ -130,11 +130,11 @@
 <section class="project-summary">
   <div class="section-label">overview</div>
   <div>
-    <p class="summary-text">hermes-lcm is a context management plugin for Hermes Agent designed to prevent information loss during prompt compression. It replaces flat summaries with a hierarchical summary DAG and a SQLite message store to preserve raw conversation history. The agent can use specialized tools to drill back into compacted material without flooding the active context. This approach enables bounded recovery of raw messages and child summaries based on source lineage.</p>
+    <p class="summary-text">Hermes-LCM is a context management plugin for the Hermes Agent that prevents information loss during long-running conversations. It replaces standard lossy compression with a hierarchical Directed Acyclic Graph (DAG) that compacts older messages into depth-aware summary nodes stored in a local SQLite database. The agent can use specialized tools like grep and expand to drill back into raw message data or specific summary branches without flooding the active context window. This approach ensures that while the active prompt remains bounded, the agent retains autonomous access to the entire session history and externalized large payloads.</p>
     <ul class="summary-highlights">
-      <li>Hierarchical summary DAG for depth-aware context compaction</li>
-      <li>SQLite store for preserving raw messages and externalized payloads</li>
-      <li>Dedicated tools for grepping, describing, and expanding archived context</li>
+      <li>Hierarchical DAG structure for depth-aware context compaction</li>
+      <li>SQLite-backed message store for lossless raw history preservation</li>
+      <li>Agent tools for targeted retrieval and summary expansion</li>
     </ul>
   </div>
 </section>
@@ -184,6 +184,7 @@ compacted.</p>
 <li><strong>Source-aware retrieval</strong> - filters raw rows and summaries by descendant source lineage</li>
 <li><strong>Session controls</strong> - ignore noisy sessions or keep sessions read-only with glob patterns</li>
 <li><strong>Large payload controls</strong> - optional ingest-time externalization for oversized tool/media/raw payloads, plus transcript GC for already-externalized tool results</li>
+<li><strong>Sensitive-pattern controls</strong> - optional named redaction of API keys, bearer tokens, passwords, and private keys before LCM stores or summarizes them</li>
 <li><strong>Storage-boundary payload guard</strong> - media-ish <code>data:*;base64</code> and long base64-looking strings are externalized before LCM writes them to SQLite</li>
 <li><strong>Diagnostics</strong> - <code>lcm_status</code>, <code>lcm_doctor</code>, and optional <code>/lcm</code> slash commands</li>
 </ul>
@@ -258,7 +259,7 @@ context:
 </ul>
 <p>Typical output:</p>
 <pre><code class="language-text">Plugins (1):
-  ✓ hermes-lcm v0.11.1 (7 tools)
+  ✓ hermes-lcm v0.12.0 (7 tools)
 
 Provider Plugins:
   Context Engine: lcm
@@ -332,6 +333,16 @@ environment variables:</p>
 <td>Comma-separated regex patterns; matching message content (plain text, extracted text parts for structured/multimodal content, or normalized JSON fallback when no text parts exist) is excluded from LCM storage</td>
 </tr>
 <tr>
+<td><code>LCM_SENSITIVE_PATTERNS_ENABLED</code></td>
+<td><code>false</code></td>
+<td>Opt in to deterministic redaction before LCM storage, FTS indexing, summarization, active replay, and externalized ingest payloads</td>
+</tr>
+<tr>
+<td><code>LCM_SENSITIVE_PATTERNS</code></td>
+<td><code>api_key,bearer_token,password_assignment,private_key</code></td>
+<td>Comma-separated named sensitive pattern catalog entries to apply when redaction is enabled</td>
+</tr>
+<tr>
 <td><code>LCM_LARGE_OUTPUT_EXTERNALIZATION_ENABLED</code></td>
 <td><code>false</code></td>
 <td>Store oversized ingest payloads, including tool results, media blocks, and generic raw content, in plugin-managed JSON files</td>
@@ -393,6 +404,28 @@ environment variables:</p>
 </tr>
 </tbody></table>
 <p>Advanced compaction, assembly, and extraction knobs are defined in <code>config.py</code>.</p>
+<p>Sensitive-pattern handling is disabled by default so ordinary LCM storage and
+<code>lcm_expand</code> remain lossless. When <code>LCM_SENSITIVE_PATTERNS_ENABLED=true</code>, matched
+secret values are replaced with metadata-only placeholders before SQLite, FTS,
+summaries, active replay, and externalized payload JSON receive the content. This
+is intentionally not lossless for matching values: the raw matched secret is
+unrecoverable after redaction.</p>
+<p>Supported named catalog entries are:</p>
+<ul>
+<li><code>api_key</code>: <code>api_key</code>, <code>api_token</code>, <code>access_token</code>, <code>secret_key</code>, and
+<code>client_secret</code> assignments or JSON keys.</li>
+<li><code>bearer_token</code>: <code>Bearer ...</code> strings and token-like JSON keys.</li>
+<li><code>password_assignment</code>: <code>password</code>, <code>passwd</code>, <code>pwd</code>, and <code>passphrase</code>
+assignments or JSON keys, including quoted values with spaces.</li>
+<li><code>private_key</code>: PEM private-key blocks.</li>
+</ul>
+<p>Redaction is forward-only. Enabling it does not rewrite existing SQLite rows,
+FTS shadow tables, DAG summaries, or externalized payload JSON that were written
+before the setting was enabled. Non-password placeholders include a short
+truncated SHA-256 digest for correlation. <code>password_assignment</code> placeholders omit
+the digest to avoid making password-like values easier to dictionary-check.
+<code>lcm_status</code> and <code>lcm_doctor</code> expose the enabled state, configured pattern names,
+unknown names, source, and placeholder format without exposing raw secret values.</p>
 <h4>Cache policy boundary</h4>
 <p>LCM is <strong>cache-friendly</strong>, not fully cache-aware. It may avoid some follow-on
 condensation churn, but current cache usage counters are retrospective status
@@ -852,11 +885,11 @@ See the <a href="https://github.com/stephenschoettler/hermes-lcm/releases">relea
   <div>
     <div class="related-list">
       <a class="related-row" href="/projects/mem0ai/mem0">
-        <div class="stars">★ 56.5K</div>
+        <div class="stars">★ 56.6K</div>
         <div class="name"><span class="org">mem0ai /</span> mem0</div>
       </a>
       <a class="related-row" href="/projects/vectorize-io/hindsight">
-        <div class="stars">★ 14.2K</div>
+        <div class="stars">★ 14.3K</div>
         <div class="name"><span class="org">vectorize-io /</span> hindsight</div>
       </a>
       <a class="related-row" href="/projects/greyhaven-ai/autocontext">
@@ -864,11 +897,11 @@ See the <a href="https://github.com/stephenschoettler/hermes-lcm/releases">relea
         <div class="name"><span class="org">greyhaven-ai /</span> autocontext</div>
       </a>
       <a class="related-row" href="/projects/elkimek/honcho-self-hosted">
-        <div class="stars">★ 255</div>
+        <div class="stars">★ 257</div>
         <div class="name"><span class="org">elkimek /</span> honcho-self-hosted</div>
       </a>
       <a class="related-row" href="/projects/yoloshii/ClawMem">
-        <div class="stars">★ 172</div>
+        <div class="stars">★ 173</div>
         <div class="name"><span class="org">yoloshii /</span> ClawMem</div>
       </a>
       <a class="related-row" href="/projects/plur-ai/plur">
@@ -876,11 +909,11 @@ See the <a href="https://github.com/stephenschoettler/hermes-lcm/releases">relea
         <div class="name"><span class="org">plur-ai /</span> plur</div>
       </a>
       <a class="related-row" href="/projects/amanning3390/flowstate-qmd">
-        <div class="stars">★ 25</div>
+        <div class="stars">★ 26</div>
         <div class="name"><span class="org">amanning3390 /</span> flowstate-qmd</div>
       </a>
       <a class="related-row" href="/projects/garrytan/gbrain">
-        <div class="stars">★ 18.3K</div>
+        <div class="stars">★ 18.6K</div>
         <div class="name"><span class="org">garrytan /</span> gbrain</div>
       </a>
     </div>

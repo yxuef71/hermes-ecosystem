@@ -35,7 +35,7 @@
   "@type": "SoftwareApplication",
   "@id": "https://hermesatlas.com/projects/nesquena/hermes-webui#software",
   "name": "hermes-webui",
-  "description": "Hermes WebUI is a lightweight, browser-based interface for the Hermes Agent, providing a graphical alternative to the standard command-line environment. It utilizes a Python and vanilla JavaScript architecture to offer 1:1 functional parity with the CLI without requiring complex build steps or frameworks. The interface features a three-panel layout for managing chat sessions, workspace files, and agent settings through a centralized control center. Users can access persistent memory, automated s",
+  "description": "Hermes WebUI is a lightweight, browser-based interface for the Hermes Agent that provides a graphical alternative to the standard command-line environment. Built using Python and vanilla JavaScript without heavy frameworks, it maintains 1:1 parity with the CLI while offering a three-panel layout for chat, session management, and workspace file browsing. The interface includes a circular context ring for real-time token monitoring and a dedicated control center for managing agent settings and pro",
   "url": "https://hermesatlas.com/projects/nesquena/hermes-webui",
   "codeRepository": "https://github.com/nesquena/hermes-webui",
   "applicationCategory": "DesktopEnhancementApplication",
@@ -47,13 +47,13 @@
     "name": "nesquena",
     "url": "https://github.com/nesquena"
   },
-  "dateModified": "2026-05-22T23:28:47.000Z",
+  "dateModified": "2026-05-24T04:53:53.000Z",
   "interactionStatistic": {
     "@type": "InteractionCounter",
     "interactionType": {
       "@type": "LikeAction"
     },
-    "userInteractionCount": 8340
+    "userInteractionCount": 8442
   },
   "isPartOf": {
     "@id": "https://hermesatlas.com/#website"
@@ -112,11 +112,11 @@
   <p class="project-desc">Hermes WebUI: The best way to use Hermes Agent from the web or from your phone!</p>
 
   <div class="meta-row">
-    <span class="stars">★ 8.3K</span>
+    <span class="stars">★ 8.4K</span>
     <span><span class="meta-label">lang</span>Python</span>
     <span><span class="meta-label">license</span>MIT</span>
     
-    <span><span class="meta-label">updated</span>2026-05-22</span>
+    <span><span class="meta-label">updated</span>2026-05-24</span>
   </div>
 
   <div class="actions">
@@ -131,11 +131,11 @@
 <section class="project-summary">
   <div class="section-label">overview</div>
   <div>
-    <p class="summary-text">Hermes WebUI is a lightweight, browser-based interface for the Hermes Agent, providing a graphical alternative to the standard command-line environment. It utilizes a Python and vanilla JavaScript architecture to offer 1:1 functional parity with the CLI without requiring complex build steps or frameworks. The interface features a three-panel layout for managing chat sessions, workspace files, and agent settings through a centralized control center. Users can access persistent memory, automated skill creation, and self-hosted scheduling features across various model providers.</p>
+    <p class="summary-text">Hermes WebUI is a lightweight, browser-based interface for the Hermes Agent that provides a graphical alternative to the standard command-line environment. Built using Python and vanilla JavaScript without heavy frameworks, it maintains 1:1 parity with the CLI while offering a three-panel layout for chat, session management, and workspace file browsing. The interface includes a circular context ring for real-time token monitoring and a dedicated control center for managing agent settings and profiles. It allows users to access their self-hosted agent's persistent memory and automated skills through a secure web or mobile-friendly portal.</p>
     <ul class="summary-highlights">
-      <li>Three-panel layout for chat, file browsing, and session management</li>
-      <li>Zero-build architecture using Python and vanilla JavaScript</li>
-      <li>Full parity with Hermes Agent CLI features and persistent memory</li>
+      <li>Three-panel layout for chat, sessions, and workspace file browsing</li>
+      <li>Zero-build architecture using only Python and vanilla JavaScript</li>
+      <li>Visual token usage tracking via a circular context ring</li>
     </ul>
   </div>
 </section>
@@ -316,9 +316,16 @@ python3 bootstrap.py
 </ol>
 <blockquote>
 <p>Native Windows is not supported for this bootstrap yet. Use Linux, macOS, or WSL2.
-For Windows / WSL auto-start at login, see <a href="https://github.com/nesquena/hermes-webui/blob/main/docs/wsl-autostart.md"><code>docs/wsl-autostart.md</code></a>.
-A community-maintained native Windows guide is tracked in <a href="https://github.com/nesquena/hermes-webui/issues/1952">#1952</a>.</p>
+For Windows / WSL auto-start at login, see <a href="https://github.com/nesquena/hermes-webui/blob/main/docs/wsl-autostart.md"><code>docs/wsl-autostart.md</code></a>.</p>
 </blockquote>
+<p>A community-maintained native Windows setup is documented at <a href="https://github.com/markwang2658/hermes-windows-native-guide">@markwang2658/hermes-windows-native-guide</a> (companion setup repo: <a href="https://github.com/markwang2658/hermes-windows-native">@markwang2658/hermes-windows-native</a>). Notes from the community report in <a href="https://github.com/nesquena/hermes-webui/issues/1952">#1952</a>:</p>
+<ul>
+<li><strong>Memory:</strong> community-measured ~330 MB native vs ~1080 MB with WSL2+Docker (varies by configuration).</li>
+<li><strong>What works:</strong> chat, workspace browser, session management, all themes.</li>
+<li><strong>Known limitations:</strong> some POSIX-style file paths surface in the workspace browser; bash-assuming agent tools may not work natively.</li>
+<li><strong>Native Windows setup:</strong> install Python 3.11+, then from the hermes-agent root in PowerShell: <code>python -m venv venv</code> → <code>pip install -r requirements.txt</code> → <code>pwsh .\start.ps1</code> (it auto-discovers <code>venv\Scripts\python.exe</code>).</li>
+<li><strong>WSL2 relationship:</strong> not a prerequisite — a WSL2-built venv (<code>venv/bin/python</code>, ELF) isn&#39;t invokable by native Windows Python, so use the native setup above. WSL2 stays useful as a parallel install if you want the full <code>bootstrap.py</code> + Linux runtime.</li>
+</ul>
 <p>If provider setup is still incomplete after install, the onboarding wizard will point you to finish it with <code>hermes model</code> instead of trying to replicate the full CLI setup in-browser.
 For a step-by-step walkthrough of the wizard, provider choices, local model server Base URLs, and safe re-runs, see <a href="https://github.com/nesquena/hermes-webui/blob/main/docs/onboarding.md"><code>docs/onboarding.md</code></a>.
 If an AI assistant is helping with install, reinstall, bootstrap, provider setup, or first-run support, have it read <a href="https://github.com/nesquena/hermes-webui/blob/main/docs/onboarding-agent-checklist.md"><code>docs/onboarding-agent-checklist.md</code></a> before running commands or inspecting logs.</p>
@@ -950,11 +957,11 @@ Configurable assistant display name, thinking/reasoning block display, and a log
   <div>
     <div class="related-list">
       <a class="related-row" href="/projects/outsourc-e/hermes-workspace">
-        <div class="stars">★ 4.7K</div>
+        <div class="stars">★ 4.8K</div>
         <div class="name"><span class="org">outsourc-e /</span> hermes-workspace</div>
       </a>
       <a class="related-row" href="/projects/fathah/hermes-desktop">
-        <div class="stars">★ 6.5K</div>
+        <div class="stars">★ 6.7K</div>
         <div class="name"><span class="org">fathah /</span> hermes-desktop</div>
       </a>
       <a class="related-row" href="/projects/sanchomuzax/hermes-webui">
@@ -966,7 +973,7 @@ Configurable assistant display name, thinking/reasoning block display, and a log
         <div class="name"><span class="org">Euraika-Labs /</span> pan-ui</div>
       </a>
       <a class="related-row" href="/projects/xaspx/hermes-control-interface">
-        <div class="stars">★ 690</div>
+        <div class="stars">★ 692</div>
         <div class="name"><span class="org">xaspx /</span> hermes-control-interface</div>
       </a>
       <a class="related-row" href="/projects/dodo-reach/hermes-desktop">
@@ -978,7 +985,7 @@ Configurable assistant display name, thinking/reasoning block display, and a log
         <div class="name"><span class="org">pyrate-llama /</span> hermes-ui</div>
       </a>
       <a class="related-row" href="/projects/clawvader-tech/hermes-telegram-miniapp">
-        <div class="stars">★ 225</div>
+        <div class="stars">★ 224</div>
         <div class="name"><span class="org">clawvader-tech /</span> hermes-telegram-miniapp</div>
       </a>
     </div>

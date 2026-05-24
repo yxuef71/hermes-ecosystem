@@ -35,7 +35,7 @@
   "@type": "SoftwareApplication",
   "@id": "https://hermesatlas.com/projects/howdymary/hermes-agent-metaharness#software",
   "name": "hermes-agent-metaharness",
-  "description": "Hermes Agent Meta-Harness is a standalone outer-loop optimization framework designed to improve the performance of Hermes agents on verifiable coding benchmarks. It treats the agent as an execution backend and searches for optimal harness configurations—the code governing context collection and retrieval—rather than modifying model weights. The system automates benchmark orchestration, archive analysis, and frontier tracking to identify high-performing harness candidates. It currently supports T",
+  "description": "Hermes Agent Meta-Harness is a standalone outer-loop optimization framework designed to improve the performance of Hermes agents on verifiable coding benchmarks. It treats the agent as an execution backend and searches for optimal harness configurations—the code governing context collection and retrieval—rather than modifying model weights. The system orchestrates benchmark evaluations, tracks performance frontiers, and performs structured candidate mutations to find superior harness variants. I",
   "url": "https://hermesatlas.com/projects/howdymary/hermes-agent-metaharness",
   "codeRepository": "https://github.com/howdymary/hermes-agent-metaharness",
   "applicationCategory": "DeveloperApplication",
@@ -47,7 +47,7 @@
     "name": "howdymary",
     "url": "https://github.com/howdymary"
   },
-  "dateModified": "2026-04-07T20:33:46.000Z",
+  "dateModified": "2026-05-23T17:32:57.000Z",
   "interactionStatistic": {
     "@type": "InteractionCounter",
     "interactionType": {
@@ -116,7 +116,7 @@
     <span><span class="meta-label">lang</span>Python</span>
     <span><span class="meta-label">license</span>MIT</span>
     
-    <span><span class="meta-label">updated</span>2026-04-07</span>
+    <span><span class="meta-label">updated</span>2026-05-23</span>
   </div>
 
   <div class="actions">
@@ -131,10 +131,10 @@
 <section class="project-summary">
   <div class="section-label">overview</div>
   <div>
-    <p class="summary-text">Hermes Agent Meta-Harness is a standalone outer-loop optimization framework designed to improve the performance of Hermes agents on verifiable coding benchmarks. It treats the agent as an execution backend and searches for optimal harness configurations—the code governing context collection and retrieval—rather than modifying model weights. The system automates benchmark orchestration, archive analysis, and frontier tracking to identify high-performing harness candidates. It currently supports TBLite and TB2 benchmarks, providing structured mutation and search capabilities to refine agentic workflows.</p>
+    <p class="summary-text">Hermes Agent Meta-Harness is a standalone outer-loop optimization framework designed to improve the performance of Hermes agents on verifiable coding benchmarks. It treats the agent as an execution backend and searches for optimal harness configurations—the code governing context collection and retrieval—rather than modifying model weights. The system orchestrates benchmark evaluations, tracks performance frontiers, and performs structured candidate mutations to find superior harness variants. It currently supports TBLite and TB2 benchmarks through a research-safe workflow that emphasizes archive analysis and deterministic search.</p>
     <ul class="summary-highlights">
-      <li>Optimizes harness code through an automated outer-loop search process</li>
-      <li>Orchestrates TBLite and TB2 benchmark evaluation via Hermes Agent</li>
+      <li>Optimizes agent harness code through automated outer-loop search</li>
+      <li>Orchestrates TBLite and TB2 benchmark evaluations via Hermes</li>
       <li>Tracks performance frontiers with structured candidate mutation and comparison</li>
     </ul>
   </div>
@@ -192,6 +192,8 @@
 <li>paired baseline-vs-candidate evaluation and reporting</li>
 <li>baseline reuse from an existing run or the current frontier-best entry</li>
 <li>task-selection comparability metadata for reused baselines</li>
+<li>outer-loop provenance metadata with candidate/config hashes and launcher details</li>
+<li>explicit task-set comparability checks for baseline-vs-candidate reports</li>
 <li>a simple JSON-backed frontier with cross-platform locking</li>
 <li>deterministic wrapper-mutation search over generated candidate variants</li>
 </ul>
@@ -206,6 +208,22 @@ pip install -e &quot;.[dev]&quot;
 <li>a sibling checkout at <code>../hermes-agent</code></li>
 <li>or <code>~/.hermes/hermes-agent</code></li>
 </ul>
+<p>Check that the Hermes checkout exposes the Meta-Harness benchmark/runtime
+surface before running evaluations:</p>
+<pre><code class="language-bash">python -m meta_harness check-hermes --hermes-repo /path/to/hermes-agent
+</code></pre>
+<p>This repo currently targets the legacy Hermes Meta-Harness surface:</p>
+<ul>
+<li><code>environments/benchmarks/tblite/tblite_env.py</code></li>
+<li><code>environments/benchmarks/terminalbench_2/terminalbench2_env.py</code></li>
+<li><code>environments/meta_harness/{candidate.py,loader.py,types.py}</code></li>
+</ul>
+<p>As of 2026-05-23, the latest published upstream release
+<code>NousResearch/hermes-agent</code> v0.14.0 (<code>v2026.5.16</code>) and current <code>main</code> no longer
+ship that legacy surface. Use <code>check-hermes</code> against the exact Hermes checkout
+you intend to run; if it reports missing benchmark/runtime files, a Hermes-side
+port or restoration of that inner runtime is required before TBLite/TB2
+evaluations can execute.</p>
 <p>If Hermes needs to run inside a managed environment, Meta-Harness can launch it
 through a shell-style prefix such as:</p>
 <ul>
@@ -282,6 +300,7 @@ defines a stronger coding model:</p>
 ├── comparison.py
 ├── config.py
 ├── frontier.py
+├── hermes_compat.py
 ├── models.py
 ├── mutation.py
 ├── search.py
@@ -290,6 +309,10 @@ defines a stronger coding model:</p>
 <p>Candidate files can live in <code>candidates/</code>, with an example in <code>candidates/template_candidate.py</code>.</p>
 <p>Two local benchmark configs are also included in <code>configs/</code> for smoke-testing
 against an Ollama OpenAI-compatible endpoint on <code>http://localhost:11434/v1</code>.</p>
+<h3>Best Practices Notes</h3>
+<p>See <a href="https://github.com/howdymary/hermes-agent-metaharness/blob/main/docs/META_HARNESS_BEST_PRACTICES.md"><code>docs/META_HARNESS_BEST_PRACTICES.md</code></a>
+for a May 2026 scan of recent Meta-Harness and agent-benchmarking developments
+and how they map onto this repo&#39;s next steps.</p>
 <h3>Release Notes</h3>
 <p>This repo is intentionally research-oriented:</p>
 <ul>
@@ -338,7 +361,7 @@ against an Ollama OpenAI-compatible endpoint on <code>http://localhost:11434/v1<
         <div class="name"><span class="org">supermodeltools /</span> bigiron</div>
       </a>
       <a class="related-row" href="/projects/Rainhoole/hermes-agent-acp-skill">
-        <div class="stars">★ 34</div>
+        <div class="stars">★ 33</div>
         <div class="name"><span class="org">Rainhoole /</span> hermes-agent-acp-skill</div>
       </a>
     </div>

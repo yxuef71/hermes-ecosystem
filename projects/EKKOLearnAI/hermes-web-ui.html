@@ -35,7 +35,7 @@
   "@type": "SoftwareApplication",
   "@id": "https://hermesatlas.com/projects/EKKOLearnAI/hermes-web-ui#software",
   "name": "hermes-web-ui",
-  "description": "Hermes Web UI is a comprehensive dashboard for managing the Hermes Agent ecosystem through a responsive web interface. It centralizes agent interactions by providing a multi-session chat environment, a file browser for remote backends, and an integrated web terminal. The platform automates the configuration of eight communication channels, including Telegram, Discord, and WhatsApp, while tracking detailed usage analytics and costs. Users can also manage scheduled cron jobs, browse installed skil",
+  "description": "Hermes Web UI is a comprehensive management dashboard for the Hermes Agent ecosystem that centralizes AI interactions and system administration into a single interface. It provides a real-time chat environment with multi-session support, markdown rendering, and tool-call visualization while managing local SQLite session storage. The platform enables unified configuration for eight communication channels, including Telegram, Discord, and WhatsApp, alongside detailed usage analytics and cost track",
   "url": "https://hermesatlas.com/projects/EKKOLearnAI/hermes-web-ui",
   "codeRepository": "https://github.com/EKKOLearnAI/hermes-web-ui",
   "applicationCategory": "DesktopEnhancementApplication",
@@ -46,13 +46,13 @@
     "name": "EKKOLearnAI",
     "url": "https://github.com/EKKOLearnAI"
   },
-  "dateModified": "2026-05-23T02:48:43.000Z",
+  "dateModified": "2026-05-24T06:37:50.000Z",
   "interactionStatistic": {
     "@type": "InteractionCounter",
     "interactionType": {
       "@type": "LikeAction"
     },
-    "userInteractionCount": 5789
+    "userInteractionCount": 5856
   },
   "isPartOf": {
     "@id": "https://hermesatlas.com/#website"
@@ -111,11 +111,11 @@
   <p class="project-desc">Web dashboard for Hermes Agent — multi-platform AI chat, session management, scheduled jobs, usage analytics </p>
 
   <div class="meta-row">
-    <span class="stars">★ 5.8K</span>
+    <span class="stars">★ 5.9K</span>
     <span><span class="meta-label">lang</span>TypeScript</span>
     
     
-    <span><span class="meta-label">updated</span>2026-05-23</span>
+    <span><span class="meta-label">updated</span>2026-05-24</span>
   </div>
 
   <div class="actions">
@@ -130,11 +130,11 @@
 <section class="project-summary">
   <div class="section-label">overview</div>
   <div>
-    <p class="summary-text">Hermes Web UI is a comprehensive dashboard for managing the Hermes Agent ecosystem through a responsive web interface. It centralizes agent interactions by providing a multi-session chat environment, a file browser for remote backends, and an integrated web terminal. The platform automates the configuration of eight communication channels, including Telegram, Discord, and WhatsApp, while tracking detailed usage analytics and costs. Users can also manage scheduled cron jobs, browse installed skills, and switch between isolated profiles for distinct project environments.</p>
+    <p class="summary-text">Hermes Web UI is a comprehensive management dashboard for the Hermes Agent ecosystem that centralizes AI interactions and system administration into a single interface. It provides a real-time chat environment with multi-session support, markdown rendering, and tool-call visualization while managing local SQLite session storage. The platform enables unified configuration for eight communication channels, including Telegram, Discord, and WhatsApp, alongside detailed usage analytics and cost tracking. Users can also manage scheduled cron jobs, browse remote files, and configure multi-profile environments for granular access control.</p>
     <ul class="summary-highlights">
-      <li>Unified configuration for Telegram, Discord, Slack, and five other platforms</li>
-      <li>Real-time chat streaming with multi-session management and Markdown support</li>
-      <li>Comprehensive usage analytics for token consumption, costs, and model distribution</li>
+      <li>Unified configuration for eight platforms including Discord, Slack, and WhatsApp</li>
+      <li>Real-time AI chat with multi-session management and tool-call details</li>
+      <li>Comprehensive usage analytics for token consumption and cost tracking</li>
     </ul>
   </div>
 </section>
@@ -183,10 +183,10 @@
 <li>Sessions sorted by latest message time</li>
 <li>Markdown rendering with syntax highlighting and code copy</li>
 <li>Tool call detail expansion (arguments / result)</li>
-<li>File upload support</li>
-<li>File download support — download user-uploaded files and agent-generated files across local, Docker, SSH, and Singularity backends</li>
+<li>Profile-scoped file uploads</li>
+<li>File download support — download uploaded files and agent-generated files by resolved path across local, Docker, SSH, and Singularity backends</li>
 <li>Session search — Ctrl+K search across the Web UI local session database; read-only Hermes history sessions are not included</li>
-<li>Global model selector — discovers models from <code>~/.hermes/auth.json</code> credential pool</li>
+<li>Profile-aware model selector — discovers models available to the signed-in account through authorized Hermes profiles</li>
 <li>Per-session model display badge and context token usage</li>
 </ul>
 <h4>Platform Channels</h4>
@@ -264,12 +264,14 @@
 <li>Create, rename, delete, and switch between Hermes profiles</li>
 <li>Clone existing profile or import from archive (<code>.tar.gz</code>)</li>
 <li>Export profile for backup or sharing</li>
-<li>Profile-scoped configuration and cache isolation</li>
+<li>Profile-scoped configuration, cache, uploads, sessions, jobs, usage, memory, skills, plugins, providers, and model visibility</li>
+<li>Account-bound profile access: super administrators can manage every profile; regular administrators only see and use profiles assigned to their account</li>
 </ul>
 <h4>File Browser</h4>
 <ul>
 <li>Browse files on remote backends (local, Docker, SSH, Singularity)</li>
 <li>Upload, download, rename, copy, move, and delete files</li>
+<li>Store uploaded files under the selected/requested Hermes profile while keeping downloads path-based for agent-generated artifacts outside the upload directory</li>
 <li>Create directories</li>
 <li>View file content with syntax highlighting</li>
 </ul>
@@ -299,9 +301,22 @@
 <h4>Authentication</h4>
 <ul>
 <li>Token-based auth (auto-generated on first run or set via <code>AUTH_TOKEN</code> env var)</li>
-<li>Optional username/password login — set via settings page after initial token auth</li>
+<li>Username/password login with account management in Settings</li>
+<li>Default bootstrap credentials are <code>admin</code> / <code>123456</code>; users are prompted after login to change the default username and password</li>
+<li>Super administrators can manage users and profile bindings; regular administrators can manage their own account details</li>
 <li>Auth can be disabled with <code>AUTH_DISABLED=1</code></li>
 </ul>
+<p>CLI maintenance commands:</p>
+<pre><code class="language-bash"># Delete persisted login IP lock records
+hermes-web-ui clear-login-locks
+
+# Delete login locks and restart the running Web UI process
+hermes-web-ui clear-login-locks --restart
+
+# Create or reset the default super administrator login to admin / 123456
+hermes-web-ui reset-default-login
+</code></pre>
+<p><code>clear-login-locks</code> removes <code>${HERMES_WEB_UI_HOME:-~/.hermes-web-ui}/.login-lock.json</code>. If the server is running, restart it to clear in-memory lock state. <code>reset-default-login</code> updates the Web UI account database; if an <code>admin</code> user already exists, its password is reset to <code>123456</code> and the account is enabled as a super administrator.</p>
 <h4>Settings</h4>
 <ul>
 <li>Display (streaming, compact mode, reasoning, cost display)</li>
@@ -389,7 +404,7 @@ and package installs such as <code>pip install hermes-agent</code>.</p>
 <tr>
 <td><code>UPLOAD_DIR</code></td>
 <td><code>$HERMES_WEB_UI_HOME/upload</code></td>
-<td>Upload directory override.</td>
+<td>Upload root override. Files are stored below profile-scoped subdirectories.</td>
 </tr>
 <tr>
 <td><code>CORS_ORIGINS</code></td>
@@ -409,7 +424,7 @@ and package installs such as <code>pip install hermes-agent</code>.</p>
 <tr>
 <td><code>PROFILE</code></td>
 <td><code>default</code></td>
-<td>Initial Hermes profile name.</td>
+<td>Startup/default Hermes profile. Runtime requests use the profile selected by the frontend and authorized for the current account.</td>
 </tr>
 <tr>
 <td><code>LOG_LEVEL</code></td>
@@ -510,12 +525,12 @@ npm run dev
         Hermes agent bridge → Hermes Agent runtime
                 ↓
            Hermes CLI / profiles
-           ~/.hermes/config.yaml  (channel behavior)
-           ~/.hermes/auth.json    (credential pool)
+           profile config.yaml    (channel/provider behavior)
+           profile auth.json      (credential pool)
            Tencent iLink API      (WeChat QR login)
 </code></pre>
 <p>The frontend is designed with <strong>multi-agent extensibility</strong> — all Hermes-specific code is namespaced under <code>hermes/</code> directories (API, components, views, stores), making it straightforward to add new agent integrations alongside.</p>
-<p>The BFF layer handles Socket.IO chat streaming, the Hermes agent bridge, file upload and download (multi-backend: local/Docker/SSH/Singularity), session CRUD, config/credential management, WeChat QR login, model discovery, skills/memory management, log reading, and static file serving.</p>
+<p>The BFF layer handles Socket.IO chat streaming, the Hermes agent bridge, profile-aware file upload and path-based download (multi-backend: local/Docker/SSH/Singularity), session CRUD, account- and profile-scoped management, config/credential management, WeChat QR login, model discovery, skills/memory management, log reading, and static file serving.</p>
 <h3>Tech Stack</h3>
 <p><strong>Frontend:</strong> Vue 3 + TypeScript + Vite + Naive UI + Pinia + Vue Router + vue-i18n + SCSS + markdown-it + highlight.js</p>
 <p><strong>Backend:</strong> Koa 2 (BFF server) + node-pty (web terminal)</p>
@@ -537,11 +552,11 @@ npm run dev
   <div>
     <div class="related-list">
       <a class="related-row" href="/projects/outsourc-e/hermes-workspace">
-        <div class="stars">★ 4.7K</div>
+        <div class="stars">★ 4.8K</div>
         <div class="name"><span class="org">outsourc-e /</span> hermes-workspace</div>
       </a>
       <a class="related-row" href="/projects/fathah/hermes-desktop">
-        <div class="stars">★ 6.5K</div>
+        <div class="stars">★ 6.7K</div>
         <div class="name"><span class="org">fathah /</span> hermes-desktop</div>
       </a>
       <a class="related-row" href="/projects/sanchomuzax/hermes-webui">
@@ -553,7 +568,7 @@ npm run dev
         <div class="name"><span class="org">Euraika-Labs /</span> pan-ui</div>
       </a>
       <a class="related-row" href="/projects/xaspx/hermes-control-interface">
-        <div class="stars">★ 690</div>
+        <div class="stars">★ 692</div>
         <div class="name"><span class="org">xaspx /</span> hermes-control-interface</div>
       </a>
       <a class="related-row" href="/projects/dodo-reach/hermes-desktop">
@@ -561,7 +576,7 @@ npm run dev
         <div class="name"><span class="org">dodo-reach /</span> hermes-desktop</div>
       </a>
       <a class="related-row" href="/projects/nesquena/hermes-webui">
-        <div class="stars">★ 8.3K</div>
+        <div class="stars">★ 8.4K</div>
         <div class="name"><span class="org">nesquena /</span> hermes-webui</div>
       </a>
       <a class="related-row" href="/projects/pyrate-llama/hermes-ui">
