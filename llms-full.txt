@@ -1,6 +1,6 @@
 # Hermes Atlas — Full Context Bundle
 
-> Complete content of hermesatlas.com as of 2026-05-24. Concatenated from guide pages, ecosystem overview, the quarterly report, and project summaries. Canonical URLs preserved throughout.
+> Complete content of hermesatlas.com as of 2026-05-25. Concatenated from guide pages, ecosystem overview, the quarterly report, and project summaries. Canonical URLs preserved throughout.
 
 This file is the companion to https://hermesatlas.com/llms.txt (the concise index).
 
@@ -1610,12 +1610,12 @@ Category: Memory & Context
 Stars: 24,584
 Open-source context database for AI agents — official Hermes Agent memory provider using viking:// URIs and tiered L0/L1/L2 loading; 91% token reduction and 43-49% task-completion gain over baseline on LoCoMo10. AGPL-3.0.
 
-OpenViking is an open-source context database designed to manage the fragmented memory, resources, and skills required by AI agents. It utilizes a file system paradigm to organize data, replacing traditional flat vector storage with a structured directory-based architecture. This approach enables tiered L0/L1/L2 context loading and recursive retrieval to provide agents with precise, on-demand information. By automating session management and visualizing retrieval trajectories, it reduces token consumption and improves the observability of an agent's reasoning process.
+OpenViking is an open-source context database designed to solve fragmented memory and high token costs in AI agents. It utilizes a file system paradigm to unify memories, resources, and skills into a structured hierarchy accessible via viking:// URIs. The system employs a tiered L0/L1/L2 loading mechanism and recursive directory retrieval to provide precise context while reducing data overhead. As the official memory provider for Hermes Agent, it enables observable context trajectories and automatic session management for long-term memory iteration.
 
 Highlights:
-- Unifies agent memory and resources using a filesystem management paradigm.
-- Implements tiered L0/L1/L2 loading to significantly reduce token consumption.
-- Combines directory positioning with semantic search for precise recursive retrieval.
+- Unified context management using a filesystem-based storage paradigm
+- Tiered L0/L1/L2 loading to significantly reduce token consumption
+- Recursive directory retrieval combining semantic search with structural positioning
 
 ---
 
@@ -1748,12 +1748,12 @@ Category: Workspaces & GUIs
 Stars: 2,479
 Hermes WebUI: The best way to use Hermes Agent from the web or from your phone!
 
-Hermes WebUI is a lightweight, browser-based interface for the Hermes Agent that provides a graphical alternative to the standard command-line environment. Built using Python and vanilla JavaScript without heavy frameworks, it maintains 1:1 parity with the CLI while offering a three-panel layout for chat, session management, and workspace file browsing. The interface includes a circular context ring for real-time token monitoring and a dedicated control center for managing agent settings and profiles. It allows users to access their self-hosted agent's persistent memory and automated skills through a secure web or mobile-friendly portal.
+Hermes WebUI provides a lightweight web-based interface for the Hermes Agent, offering a graphical alternative to the standard command-line environment. Built with Python and vanilla JavaScript, the application requires no build steps or frameworks and maintains full feature parity with the CLI. The interface features a three-panel layout for session management, chat, and workspace file browsing, including a visual context ring for monitoring token usage. It allows users to manage persistent memory, scheduled jobs, and agent skills through a secure browser-based dashboard.
 
 Highlights:
+- Full feature parity with the Hermes Agent command-line interface
 - Three-panel layout for chat, sessions, and workspace file browsing
-- Zero-build architecture using only Python and vanilla JavaScript
-- Visual token usage tracking via a circular context ring
+- Zero-dependency frontend using vanilla JavaScript and no build step
 
 ---
 
@@ -1765,12 +1765,12 @@ Category: Workspaces & GUIs
 Stars: 1,844
 Web dashboard for Hermes Agent — multi-platform AI chat, session management, scheduled jobs, usage analytics & channel configuration (Telegram, Discord, Slack, WhatsApp)
 
-Hermes Web UI is a comprehensive management dashboard for the Hermes Agent ecosystem that centralizes AI interactions and system administration into a single interface. It provides a real-time chat environment with multi-session support, markdown rendering, and tool-call visualization while managing local SQLite session storage. The platform enables unified configuration for eight communication channels, including Telegram, Discord, and WhatsApp, alongside detailed usage analytics and cost tracking. Users can also manage scheduled cron jobs, browse remote files, and configure multi-profile environments for granular access control.
+Hermes Web UI is a full-featured dashboard designed to manage and monitor Hermes Agent instances through a responsive web interface. It connects to the Hermes agent bridge via Socket.IO to provide real-time chat streaming, multi-session management, and a local SQLite database for session persistence. Users can configure eight different communication channels, including Telegram, Discord, and WhatsApp, while tracking token usage and costs through an integrated analytics suite. The platform also features a multi-profile system, a remote file browser, and a built-in web terminal for direct system interaction.
 
 Highlights:
-- Unified configuration for eight platforms including Discord, Slack, and WhatsApp
-- Real-time AI chat with multi-session management and tool-call details
-- Comprehensive usage analytics for token consumption and cost tracking
+- Unified configuration for Telegram, Discord, Slack, and WhatsApp channels
+- Real-time AI chat with multi-session management and Markdown support
+- Usage analytics for tracking token consumption, costs, and model trends
 
 ---
 
@@ -1782,12 +1782,12 @@ Category: Developer Tools
 Stars: 1,690
 CLI tool for tracking token usage from Claude Code, OpenClaw, Hermes, Codex, Gemini, and more
 
-Tokscale is a CLI tool and visualization dashboard designed to track token consumption and costs across various AI coding agents. It works by scanning local databases and session files from supported clients to aggregate usage data into a native Rust TUI or a web-based dashboard. Users can monitor daily summaries, model-specific statistics, and historical trends through a 3D contribution graph. The tool supports a wide range of integrations including Hermes Agent, Claude Code, GitHub Copilot CLI, and Cursor.
+Tokscale is a high-performance CLI tool and visualization dashboard designed to track token consumption and costs across various AI coding agents. It works by scanning local data directories, databases, and session files from supported clients to aggregate usage statistics into a native Rust TUI or a web-based dashboard. The tool provides detailed daily summaries, model-specific breakdowns, and a 3D contribution graph for visualizing activity. It supports a wide range of integrations including Hermes Agent, Claude Code, OpenClaw, and GitHub Copilot CLI.
 
 Highlights:
 - Tracks token usage and costs across multiple AI coding agents
-- Features a native Rust TUI for high-performance local monitoring
-- Supports Hermes Agent, Claude Code, Gemini, and Cursor integrations
+- Native Rust TUI for high-performance local data visualization
+- Supports Hermes Agent, Claude Code, Gemini, and Cursor IDE
 
 ---
 
