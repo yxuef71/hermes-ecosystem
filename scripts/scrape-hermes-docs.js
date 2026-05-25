@@ -25,6 +25,7 @@ const BASE = "https://hermes-agent.nousresearch.com";
 const START_PATHS = ["/docs"];
 const SKIP_PREFIXES = [
   "/docs/zh-Hans", // Chinese mirror — same content, redundant for KB
+  "/docs/ko",      // Korean mirror — same reason; left unfiltered until 2026-05-25 when it pushed chunks.json past GitHub's 100MB limit
   "/docs/assets/", // Docusaurus static assets (images, generated llms.txt, etc.)
 ];
 const USER_AGENT = "HermesAtlasBot/1.0 (+https://hermesatlas.com)";
