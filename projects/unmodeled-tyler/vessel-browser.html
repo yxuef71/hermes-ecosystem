@@ -35,7 +35,7 @@
   "@type": "SoftwareApplication",
   "@id": "https://hermesatlas.com/projects/unmodeled-tyler/vessel-browser#software",
   "name": "vessel-browser",
-  "description": "Vessel is an open-source, Chromium-based browser designed specifically for autonomous agent control rather than traditional human-centric browsing. It provides a persistent runtime environment where agents drive workflows via the Model Context Protocol (MCP) while humans supervise through a visible UI. The browser maintains durable state across sessions, including annotated checkpoints, action undo capabilities, and agent-readable bookmarks with structured metadata. This setup eliminates the \"bl",
+  "description": "Vessel is an open-source, Chromium-based browser designed specifically for autonomous agent control rather than traditional human-centric browsing. It provides a persistent runtime with durable state and a visible interface that allows humans to audit, intervene, and redirect long-running agent workflows. The browser integrates with external agent harnesses via the Model Context Protocol (MCP) and includes built-in tools for page schema inference, action undo/rollback, and agent-meaningful bookm",
   "url": "https://hermesatlas.com/projects/unmodeled-tyler/vessel-browser",
   "codeRepository": "https://github.com/unmodeled-tyler/vessel-browser",
   "applicationCategory": "DeveloperApplication",
@@ -131,11 +131,11 @@
 <section class="project-summary">
   <div class="section-label">overview</div>
   <div>
-    <p class="summary-text">Vessel is an open-source, Chromium-based browser designed specifically for autonomous agent control rather than traditional human-centric browsing. It provides a persistent runtime environment where agents drive workflows via the Model Context Protocol (MCP) while humans supervise through a visible UI. The browser maintains durable state across sessions, including annotated checkpoints, action undo capabilities, and agent-readable bookmarks with structured metadata. This setup eliminates the &quot;black box&quot; nature of headless automation by allowing users to audit, intervene, and redirect long-running agent tasks in real-time.</p>
+    <p class="summary-text">Vessel is an open-source, Chromium-based browser designed specifically for autonomous agent control rather than traditional human-centric browsing. It provides a persistent runtime with durable state and a visible interface that allows humans to audit, intervene, and redirect long-running agent workflows. The browser integrates with external agent harnesses via the Model Context Protocol (MCP) and includes built-in tools for page schema inference, action undo/rollback, and agent-meaningful bookmarks. It is optimized for persistent web agents that require a real browser environment instead of a headless, stateless execution model.</p>
     <ul class="summary-highlights">
-      <li>Native MCP control for external agent harnesses like Hermes Agent</li>
-      <li>Human-in-the-loop supervisory UI with live approvals and runtime controls</li>
-      <li>Automated page schema inference for structured entity and form detection</li>
+      <li>Provides a human-visible UI for auditing and supervising autonomous agents</li>
+      <li>Integrates with MCP clients like Hermes Agent for external control</li>
+      <li>Maintains durable state with named sessions, checkpoints, and action rollback</li>
     </ul>
   </div>
 </section>
@@ -739,7 +739,7 @@ vessel-browser-launch --dry-run
         <div class="name"><span class="org">Abruptive /</span> Ankh.md</div>
       </a>
       <a class="related-row" href="/projects/roli-lpci/lintlang">
-        <div class="stars">★ 37</div>
+        <div class="stars">★ 38</div>
         <div class="name"><span class="org">roli-lpci /</span> lintlang</div>
       </a>
       <a class="related-row" href="/projects/0xNyk/openclaw-to-hermes">

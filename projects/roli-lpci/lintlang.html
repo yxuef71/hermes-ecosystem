@@ -35,7 +35,7 @@
   "@type": "SoftwareApplication",
   "@id": "https://hermesatlas.com/projects/roli-lpci/lintlang#software",
   "name": "lintlang",
-  "description": "lintlang is a static analysis tool designed to identify structural and linguistic failures in AI agent configurations, system prompts, and tool definitions. It utilizes regex and AST-based heuristics rather than LLM calls to detect issues like vague tool descriptions, missing termination conditions, and schema mismatches. This approach ensures deterministic, zero-cost scans that run in approximately 2ms per file. The tool is intended for use in CI/CD pipelines to prevent agent looping and incorr",
+  "description": "lintlang is a static analysis tool designed to identify structural and linguistic failures in AI agent configurations, system prompts, and tool definitions. It utilizes regex and AST-based heuristics rather than LLM calls to detect issues like vague tool descriptions and missing termination conditions. This approach ensures deterministic, zero-cost scans that run in approximately 2ms per file. The tool is intended for use in CI/CD pipelines to prevent prompt drift and logic errors before runtime",
   "url": "https://hermesatlas.com/projects/roli-lpci/lintlang",
   "codeRepository": "https://github.com/roli-lpci/lintlang",
   "applicationCategory": "DeveloperApplication",
@@ -53,7 +53,7 @@
     "interactionType": {
       "@type": "LikeAction"
     },
-    "userInteractionCount": 37
+    "userInteractionCount": 38
   },
   "isPartOf": {
     "@id": "https://hermesatlas.com/#website"
@@ -112,7 +112,7 @@
   <p class="project-desc">Static linter for AI agent configs, tool descriptions, and system prompts with zero-LLM CI gating</p>
 
   <div class="meta-row">
-    <span class="stars">★ 37</span>
+    <span class="stars">★ 38</span>
     <span><span class="meta-label">lang</span>Python</span>
     <span><span class="meta-label">license</span>Apache-2.0</span>
     
@@ -131,10 +131,10 @@
 <section class="project-summary">
   <div class="section-label">overview</div>
   <div>
-    <p class="summary-text">lintlang is a static analysis tool designed to identify structural and linguistic failures in AI agent configurations, system prompts, and tool definitions. It utilizes regex and AST-based heuristics rather than LLM calls to detect issues like vague tool descriptions, missing termination conditions, and schema mismatches. This approach ensures deterministic, zero-cost scans that run in approximately 2ms per file. The tool is intended for use in CI/CD pipelines to prevent agent looping and incorrect tool selection before runtime.</p>
+    <p class="summary-text">lintlang is a static analysis tool designed to identify structural and linguistic failures in AI agent configurations, system prompts, and tool definitions. It utilizes regex and AST-based heuristics rather than LLM calls to detect issues like vague tool descriptions and missing termination conditions. This approach ensures deterministic, zero-cost scans that run in approximately 2ms per file. The tool is intended for use in CI/CD pipelines to prevent prompt drift and logic errors before runtime.</p>
     <ul class="summary-highlights">
-      <li>Deterministic structural analysis using regex and AST without LLM calls</li>
-      <li>Detects seven specific failure modes including ambiguity and missing constraints</li>
+      <li>Deterministic structural analysis using 7 specific detector patterns (H1–H7)</li>
+      <li>Zero LLM calls for cost-effective and offline CI integration</li>
       <li>Supports YAML, JSON, plain text, and .prompt file formats</li>
     </ul>
   </div>

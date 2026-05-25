@@ -35,7 +35,7 @@
   "@type": "SoftwareApplication",
   "@id": "https://hermesatlas.com/projects/stephenschoettler/hermes-lcm#software",
   "name": "hermes-lcm",
-  "description": "Hermes-LCM is a context management plugin for the Hermes Agent that prevents information loss during long-running conversations. It replaces standard lossy compression with a hierarchical Directed Acyclic Graph (DAG) that compacts older messages into depth-aware summary nodes stored in a local SQLite database. The agent can use specialized tools like grep and expand to drill back into raw message data or specific summary branches without flooding the active context window. This approach ensures ",
+  "description": "Hermes-LCM is a context management plugin for the Hermes Agent that prevents information loss during long-running conversations. It replaces standard lossy compression with a hierarchical Directed Acyclic Graph (DAG) that compacts older messages into depth-aware summary nodes. The system persists raw message history in a local SQLite store and provides the agent with specialized tools to drill back into specific compacted details. This approach allows the agent to maintain a bounded active conte",
   "url": "https://hermesatlas.com/projects/stephenschoettler/hermes-lcm",
   "codeRepository": "https://github.com/stephenschoettler/hermes-lcm",
   "applicationCategory": "UtilitiesApplication",
@@ -130,11 +130,11 @@
 <section class="project-summary">
   <div class="section-label">overview</div>
   <div>
-    <p class="summary-text">Hermes-LCM is a context management plugin for the Hermes Agent that prevents information loss during long-running conversations. It replaces standard lossy compression with a hierarchical Directed Acyclic Graph (DAG) that compacts older messages into depth-aware summary nodes stored in a local SQLite database. The agent can use specialized tools like grep and expand to drill back into raw message data or specific summary branches without flooding the active context window. This approach ensures that while the active prompt remains bounded, the agent retains autonomous access to the entire session history and externalized large payloads.</p>
+    <p class="summary-text">Hermes-LCM is a context management plugin for the Hermes Agent that prevents information loss during long-running conversations. It replaces standard lossy compression with a hierarchical Directed Acyclic Graph (DAG) that compacts older messages into depth-aware summary nodes. The system persists raw message history in a local SQLite store and provides the agent with specialized tools to drill back into specific compacted details. This approach allows the agent to maintain a bounded active context window while retaining the ability to retrieve exact historical data through source-aware lineage tracking.</p>
     <ul class="summary-highlights">
-      <li>Hierarchical DAG structure for depth-aware context compaction</li>
-      <li>SQLite-backed message store for lossless raw history preservation</li>
-      <li>Agent tools for targeted retrieval and summary expansion</li>
+      <li>Uses a hierarchical DAG to compact context without losing data</li>
+      <li>Provides agent tools for grepping and expanding summarized history</li>
+      <li>Preserves raw messages in a local SQLite database for retrieval</li>
     </ul>
   </div>
 </section>
@@ -885,7 +885,7 @@ See the <a href="https://github.com/stephenschoettler/hermes-lcm/releases">relea
   <div>
     <div class="related-list">
       <a class="related-row" href="/projects/mem0ai/mem0">
-        <div class="stars">★ 56.6K</div>
+        <div class="stars">★ 56.7K</div>
         <div class="name"><span class="org">mem0ai /</span> mem0</div>
       </a>
       <a class="related-row" href="/projects/vectorize-io/hindsight">
@@ -901,7 +901,7 @@ See the <a href="https://github.com/stephenschoettler/hermes-lcm/releases">relea
         <div class="name"><span class="org">elkimek /</span> honcho-self-hosted</div>
       </a>
       <a class="related-row" href="/projects/yoloshii/ClawMem">
-        <div class="stars">★ 172</div>
+        <div class="stars">★ 173</div>
         <div class="name"><span class="org">yoloshii /</span> ClawMem</div>
       </a>
       <a class="related-row" href="/projects/plur-ai/plur">

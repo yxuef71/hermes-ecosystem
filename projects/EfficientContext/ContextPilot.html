@@ -35,7 +35,7 @@
   "@type": "SoftwareApplication",
   "@id": "https://hermesatlas.com/projects/EfficientContext/ContextPilot#software",
   "name": "ContextPilot",
-  "description": "ContextPilot is an inference optimization layer designed to accelerate long-context LLM workloads by maximizing prefix cache reuse. It maintains a context index to reorder and deduplicate overlapping content blocks before they reach the inference engine, effectively reducing redundant KV cache computation. The system provides significant token savings and faster prefill speeds for RAG, multi-turn memory chat, and agentic workflows. It integrates as a native plugin or proxy for various backends i",
+  "description": "ContextPilot is a context optimization engine designed to accelerate long-context LLM inference by maximizing KV cache reuse. It functions by maintaining a context index that reorders and deduplicates overlapping context blocks into shared prefixes before they reach the inference server. This approach reduces redundant token computation and prefill latency without compromising model reasoning quality. The project provides native integrations for Hermes Agent, OpenClaw, vLLM, and SGLang, supporti",
   "url": "https://hermesatlas.com/projects/EfficientContext/ContextPilot",
   "codeRepository": "https://github.com/EfficientContext/ContextPilot",
   "applicationCategory": "UtilitiesApplication",
@@ -131,10 +131,10 @@
 <section class="project-summary">
   <div class="section-label">overview</div>
   <div>
-    <p class="summary-text">ContextPilot is an inference optimization layer designed to accelerate long-context LLM workloads by maximizing prefix cache reuse. It maintains a context index to reorder and deduplicate overlapping content blocks before they reach the inference engine, effectively reducing redundant KV cache computation. The system provides significant token savings and faster prefill speeds for RAG, multi-turn memory chat, and agentic workflows. It integrates as a native plugin or proxy for various backends including vLLM, SGLang, llama.cpp, and Hermes Agent.</p>
+    <p class="summary-text">ContextPilot is a context optimization engine designed to accelerate long-context LLM inference by maximizing KV cache reuse. It functions by maintaining a context index that reorders and deduplicates overlapping context blocks into shared prefixes before they reach the inference server. This approach reduces redundant token computation and prefill latency without compromising model reasoning quality. The project provides native integrations for Hermes Agent, OpenClaw, vLLM, and SGLang, supporting both local deployments and cloud APIs.</p>
     <ul class="summary-highlights">
-      <li>Reduces input tokens by reordering and deduplicating shared context blocks</li>
-      <li>Boosts prefill throughput with 1.5–3× faster processing speeds</li>
+      <li>Increases cache hits by 4–12× through prefix reordering and deduplication</li>
+      <li>Reduces prefill latency by 1.5–3× across RAG and agentic workloads</li>
       <li>Native plugin support for Hermes Agent and OpenClaw ecosystems</li>
     </ul>
   </div>
@@ -467,7 +467,7 @@ for resp, idx in zip(asyncio.run(generate_all()), order):
   <div>
     <div class="related-list">
       <a class="related-row" href="/projects/mem0ai/mem0">
-        <div class="stars">★ 56.6K</div>
+        <div class="stars">★ 56.7K</div>
         <div class="name"><span class="org">mem0ai /</span> mem0</div>
       </a>
       <a class="related-row" href="/projects/vectorize-io/hindsight">
@@ -483,7 +483,7 @@ for resp, idx in zip(asyncio.run(generate_all()), order):
         <div class="name"><span class="org">elkimek /</span> honcho-self-hosted</div>
       </a>
       <a class="related-row" href="/projects/yoloshii/ClawMem">
-        <div class="stars">★ 172</div>
+        <div class="stars">★ 173</div>
         <div class="name"><span class="org">yoloshii /</span> ClawMem</div>
       </a>
       <a class="related-row" href="/projects/plur-ai/plur">
