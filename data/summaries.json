@@ -6,11 +6,13 @@
       "Multi-platform support including Telegram, Discord, Slack, and WhatsApp",
       "Flexible execution across local, SSH, Docker, and serverless backends"
     ],
-    "readmeHash": "d6864ce8a5afbf402d8d7767a00570c0659b49361106f836f8684974a1b413aa",
+    "readmeHash": "",
     "generatedAt": "2026-05-24T07:33:50.304Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:13:34.966Z",
+    "auditNotes": "The following claims in the summary are **NOT supported** by the provided README:\n\n1.  **\"supports 14 communication platforms\"**: The README lists 6 specific platforms (Telegram, Discord, Slack, WhatsApp, Signal, and CLI) and mentions a \"single gateway process,\" but it never specifies a total count of 14.\n2.  **\"deployed across six execution backends\"**: The README explicitly lists **seven** terminal backends (local, Docker, SSH, Singularity, Modal, Daytona, and Vercel Sandbox).\n3.  **\"swap betw"
   },
   "NousResearch/Hermes-Function-Calling": {
     "summary": "This repository provides the implementation and training data for enabling function calling and structured JSON output in Hermes LLMs, specifically optimized for the Hermes 2 Pro series. It utilizes a recursive inference loop to parse user queries, execute tools via the yfinance library, and return validated data within a ChatML-formatted dialogue. Users can define custom tools using Python decorators or generate structured data objects by integrating Pydantic schemas. The project serves as a reference for building agentic workflows that require reliable financial data retrieval and strict schema adherence.",
@@ -19,11 +21,13 @@
       "Supports structured data generation via Pydantic-based JSON mode",
       "Includes pre-configured tools for retrieving real-time financial and stock data"
     ],
-    "readmeHash": "0bcf440317d1fe4fff8fc4c9c69aa6972591adb80dbc48486b0f456d1ad569da",
+    "readmeHash": "",
     "generatedAt": "2026-05-18T09:09:36.048Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:13:38.898Z",
+    "auditNotes": "The following claims in the summary are **NOT supported** by the provided README:\n\n1.  **\"provides the... training data\"**: The README describes code for inference, installation, and usage, but it does not mention or provide the training datasets used to train the model.\n2.  **\"specifically optimized for the Hermes 2 Pro series\"**: While the default model path is `Hermes-2-Pro-Llama-3-8B`, the README does not explicitly state that the repository code is \"specifically optimized\" for that entire s"
   },
   "NousResearch/atropos": {
     "summary": "Atropos is an environment microservice framework designed for asynchronous reinforcement learning (RL) with large language models. It operates by setting up environments as services and utilizing a trajectory API to manage data flow between the environment, trainer, and inference engine. The system supports a wide range of interactive settings, including code execution, multi-turn tool calling, and multimodal tasks. By standardizing how models interact with external tools and datasets, it enables the training of specialized models for complex reasoning and functional tasks.",
@@ -32,11 +36,13 @@
       "Trajectory API for scalable data collection and evaluation",
       "Supports tool calling, code execution, and multimodal environments"
     ],
-    "readmeHash": "7a1ebea939183d8eccc61e8e2503f97e2edabf2286251f3271181efd8bd08f21",
+    "readmeHash": "",
     "generatedAt": "2026-05-18T09:09:39.485Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:13:42.684Z",
+    "auditNotes": "The following claims in the summary are **NOT supported** by the provided README:\n\n1.  **\"Supports... code execution\"**: The README mentions \"internal tool calling\" and \"text-based games,\" but does not explicitly list code execution as a supported environment or feature.\n2.  **\"Supports... multimodal tasks/environments\"**: There is no mention of multimodal capabilities, images, or non-text data in the README.\n3.  **\"Enables the training of specialized models for complex reasoning and functional "
   },
   "NousResearch/hermes-agent-self-evolution": {
     "summary": "Hermes Agent Self-Evolution is an automated optimization framework designed to improve the performance of Hermes Agent without requiring GPU training. It utilizes DSPy and Genetic-Pareto Prompt Evolution (GEPA) to analyze execution traces and mutate skill files, tool descriptions, and system prompts based on reflective feedback. The system validates candidate variants through constraint gates, including size limits and full test suite passes, before proposing improvements via pull requests. It supports evaluation using both synthetic data and real session history from tools like Claude Code and Copilot.",
@@ -50,7 +56,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:03:07.298Z"
+    "auditedAt": "2026-05-25T09:13:48.747Z"
   },
   "NousResearch/hermes-paperclip-adapter": {
     "summary": "The hermes-paperclip-adapter is a bridge that allows Hermes Agent to function as a managed employee within the Paperclip company ecosystem. It works by wrapping the Hermes CLI to parse raw terminal output into structured transcript entries, enabling Paperclip to render interactive tool cards and status icons. The adapter manages session persistence across heartbeats, allowing agents to maintain context while responding to task assignments or issue comments. It also synchronizes skills between local directories and the Paperclip interface while reclassifying system logs to ensure a clean user experience.",
@@ -64,7 +70,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:03:10.050Z"
+    "auditedAt": "2026-05-25T09:13:53.406Z"
   },
   "NousResearch/autonovel": {
     "summary": "Autonovel is an autonomous agent pipeline designed to transform a seed concept into a complete, publishable novel. It utilizes a multi-phase workflow that includes world-building, sequential drafting, and an adversarial revision loop involving dual-persona LLM reviewers. The system integrates mechanical slop detection and voice fingerprinting to ensure prose quality and narrative consistency across tens of thousands of words. Beyond text generation, the project automates typesetting in LaTeX, cover art creation via fal.ai, and multi-voice audiobook production using ElevenLabs.",
@@ -78,7 +84,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:03:13.622Z"
+    "auditedAt": "2026-05-25T09:13:56.125Z"
   },
   "outsourc-e/hermes-workspace": {
     "summary": "Hermes Workspace is a native web-based command center designed to provide a unified graphical interface for the Hermes Agent ecosystem. It integrates real-time chat, a cross-platform terminal, and a memory browser to manage agent sessions and file systems from a single dashboard. The platform features a Swarm Mode for orchestrating multiple persistent agents via tmux-backed workers and role-based dispatching. It operates as a zero-fork extension that connects directly to existing Hermes Agent gateway and dashboard APIs.",
@@ -87,11 +93,13 @@
       "Swarm Mode for multi-agent orchestration and role-based task dispatch",
       "Integrated Kanban board for tracking autonomous agent missions and jobs"
     ],
-    "readmeHash": "79162f6021c6494bcfada14488320225b2e72904abadd220e434b8ce3756b52f",
+    "readmeHash": "",
     "generatedAt": "2026-05-24T07:33:55.881Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:13:59.892Z",
+    "auditNotes": "I have reviewed the summary against the provided README. Here are the claims that are **NOT** supported by the source text:\n\n*   **\"native web-based command center\"**: While the README mentions it can be installed as a PWA, it does not explicitly describe the application itself as \"native web-based.\"\n*   **\"connects directly to existing... dashboard APIs\"**: The README states that the Conductor feature uses the dashboard mission API *when available* and falls back to native Swarm dispatch when t"
   },
   "fathah/hermes-desktop": {
     "summary": "Hermes Desktop is a native GUI companion for the Hermes Agent that simplifies the installation and management of the AI assistant. It automates the setup of dependencies like Git and Python, providing a visual interface for configuring model providers and messaging gateways. Users can manage complex agent features such as long-term memory, scheduled cron tasks, and toolsets through a streaming chat interface. The application supports both local execution via the official install script and connection to remote Hermes API servers.",
@@ -100,11 +108,13 @@
       "Supports 16 messaging gateways including Telegram, Discord, and Slack",
       "Integrated management for 14 toolsets, memory systems, and personas"
     ],
-    "readmeHash": "c9cc6d3981aba033660392892d142f02cc379916a9648c9ecffeee10b3ab4c18",
+    "readmeHash": "",
     "generatedAt": "2026-05-24T11:48:14.289Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:14:06.799Z",
+    "auditNotes": "The following claims are NOT supported by the README:\n\n**From the Summary:**\n- **\"automates the setup of dependencies like Git and Python\"**: The README mentions \"dependency resolution\" and a \"guided first-run install,\" but it does not specifically name Git or Python.\n- **\"scheduled cron tasks\"**: The README mentions \"scheduling\" and \"Schedules,\" but does not specify that these are \"cron tasks.\"\n\n**From the Highlights:**\n- **\"Supports 16 messaging gateways including Telegram, Discord, and Slack\""
   },
   "sanchomuzax/hermes-webui": {
     "summary": "Hermes WebUI is a dedicated process monitoring and configuration dashboard for the Hermes Agent ecosystem. It functions as a non-intrusive polling bridge that reads from the agent's SQLite database and YAML files to provide real-time updates without requiring modifications to the core agent code. Users can track session histories, monitor platform health and costs, and manage scheduled cron jobs through a responsive, themeable interface. The system also includes a secure, read-only configuration viewer and a skill browser for inspecting built-in and custom agent capabilities.",
@@ -113,11 +123,13 @@
       "Full conversation history inspection with FTS5-powered search functionality",
       "Read-only management of config.yaml, environment variables, and cron jobs"
     ],
-    "readmeHash": "083245c60a81c8cd3f8bcdeedf7369691efa4389f86788d3da8854582f9e06c9",
+    "readmeHash": "",
     "generatedAt": "2026-05-18T09:09:51.604Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:14:10.964Z",
+    "auditNotes": "The following claims in the summary/highlights are **NOT** supported by the README:\n\n1.  **\"Claude Opus 4.6\"**: The README mentions \"Claude Opus 4.6\" in the \"Built With\" section, but this is a factual hallucination within the source text itself (as Opus 4.6 does not exist). While it is in the source, it is worth noting as an impossibility.\n2.  **\"Read-only management of... cron jobs\"**: The summary/highlights claim \"read-only management\" of cron jobs. However, the README explicitly states under "
   },
   "Euraika-Labs/pan-ui": {
     "summary": "Pan is a self-hosted web dashboard and workspace designed specifically for the Hermes Agent runtime. It provides a centralized interface to manage agent interactions through a chat-first environment that supports SSE streaming and tool timelines. Users can discover and install skills from skills.sh, manage MCP integrations, and organize work into isolated profiles with unique memory and sessions. The system includes a setup wizard that automatically detects Hermes configurations and can run as a background daemon or system service.",
@@ -131,7 +143,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:03:27.029Z"
+    "auditedAt": "2026-05-25T09:14:13.633Z"
   },
   "mukul975/Anthropic-Cybersecurity-Skills": {
     "summary": "Anthropic Cybersecurity Skills is an open-source library of 754 structured skills designed to provide AI agents with the domain-specific workflows of a senior security analyst. Each skill follows the agentskills.io standard, utilizing YAML frontmatter and structured Markdown to guide agents through step-by-step execution and verification. The repository maps every skill across five major frameworks, including MITRE ATT&CK, NIST CSF 2.0, and the NIST AI RMF. It supports over 26 security domains such as cloud security and threat hunting, integrating directly with platforms like Claude Code and Hermes Agent.",
@@ -140,11 +152,13 @@
       "Unified mapping to MITRE ATT&CK, ATLAS, D3FEND, and NIST frameworks",
       "Compatible with agentskills.io standard for sub-second AI skill discovery"
     ],
-    "readmeHash": "8d6e953896a64a3dbffa9bca876238c4c60c0a109d6b9815d68fb49d2e67e788",
+    "readmeHash": "",
     "generatedAt": "2026-05-18T09:09:55.609Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:14:16.787Z",
+    "auditNotes": "The following claims in the summary are **NOT supported** by the provided README:\n\n*   **\"utilizing YAML frontmatter and structured Markdown\"**: The README mentions the skills are \"structured\" and follow the agentskills.io standard, but it never specifies the file formats (YAML or Markdown).\n*   **\"sub-second AI skill discovery\"**: While the README claims the library provides \"expert-level guidance in seconds,\" it does not specifically mention \"sub-second\" discovery speeds."
   },
   "conorbronsdon/avoid-ai-writing": {
     "summary": "Avoid-ai-writing is a portable skill for AI agents designed to audit and rewrite text to eliminate detectable machine-generated patterns. It utilizes a structured two-pass process that identifies 42 specific pattern categories and applies a 109-entry word replacement table across three severity tiers. Users can choose between a full rewrite mode that fixes issues or a detection-only mode for auditing content without altering the source. The project is compatible with Hermes, Claude Code, and OpenClaw, providing a standardized way to improve text naturalness across different agentic platforms.",
@@ -157,7 +171,8 @@
     "generatedAt": "2026-05-21T07:47:25.302Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "pass",
+    "auditedAt": "2026-05-25T09:14:19.228Z"
   },
   "wondelai/skills": {
     "summary": "Wondel.ai Skills is a cross-platform library of agent capabilities designed for Claude Code and agentskills.io-compatible environments. It provides pre-configured skill collections based on established industry frameworks, such as Jobs to Be Done, Clean Code, and Lean Startup methodology. Users can install these skills via the Claude Code marketplace or a dedicated CLI to equip AI agents with specialized knowledge in software architecture, UX design, and product strategy. The project bridges the gap between raw LLM capabilities and structured professional methodologies through modular, installable plugins.",
@@ -171,7 +186,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:03:36.902Z"
+    "auditedAt": "2026-05-25T09:14:21.705Z"
   },
   "DougTrajano/pydantic-ai-skills": {
     "summary": "pydantic-ai-skills is a standardized framework for managing modular agent capabilities within the Pydantic AI ecosystem. It implements the Agent Skills open specification by providing a tool-calling mechanism that allows agents to discover and execute specialized scripts or instructions. The library uses a progressive disclosure approach, loading skill details only when relevant to minimize token consumption. Developers can define these skills through local filesystem directories or programmatically using Python decorators and dataclasses.",
@@ -185,7 +200,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:03:39.509Z"
+    "auditedAt": "2026-05-25T09:14:24.265Z"
   },
   "Agents365-ai/drawio-skill": {
     "summary": "This project is a diagramming skill that converts natural-language descriptions into professional .drawio XML files and high-resolution image exports. It utilizes the native draw.io desktop CLI to render diagrams and features an automated self-check mechanism that reads its own output to fix layout issues like overlapping labels or stacked edges. The tool includes six specialized presets for architecture, UML, and machine learning diagrams while supporting iterative refinement through a multi-round feedback loop. It integrates directly with agent environments such as Claude Code, Cursor, and Hermes without requiring a background daemon.",
@@ -194,11 +209,13 @@
       "Auto-fixes layout issues using a self-check visual feedback loop",
       "Includes six diagram presets for architecture, UML, and ML models"
     ],
-    "readmeHash": "53afadfea952706844fef945472ec1463f70527dc868a4e6778cf3687b45ebc6",
+    "readmeHash": "",
     "generatedAt": "2026-05-18T09:10:00.284Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:14:27.786Z",
+    "auditNotes": "The following claims in the summary are **NOT supported** by the provided README:\n\n*   **\"high-resolution image exports\"**: While the README mentions exports to various formats (PNG, SVG, PDF, JPG), it does not explicitly state that these are \"high-resolution.\"\n*   **\"specialized presets for... UML\"**: The README lists \"UML Class\" and \"Sequence\" as presets, but does not group them under a general \"UML\" preset category (though they are UML types).\n*   **\"ML models\" (in the highlights section)**: "
   },
   "smartcontractkit/chainlink-agent-skills": {
     "summary": "This repository provides a collection of standardized coding skills for AI agents to interact with the Chainlink oracle network and smart contract ecosystem. Built on the agentskills.io specification, these tools allow agents to perform tasks like cross-chain transfers, data feed integration, and verifiable randomness configuration. Developers can install specific skills via the Vercel open skills CLI to enable agents to generate workflows, manage subscriptions, and monitor on-chain operations. The project supports complex use cases such as building tokenized funds that require real-time asset verification and multi-chain settlement.",
@@ -207,11 +224,13 @@
       "Enables agent-led workflow generation and smart contract runtime operations",
       "Supports cross-chain identity management and automated proof of reserve verification"
     ],
-    "readmeHash": "a53c6b6d0f7f0a2cb52638d62713681f0d2b30beb03c328a2a5f2b93a25ad0e6",
+    "readmeHash": "",
     "generatedAt": "2026-05-20T07:46:15.655Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:14:31.960Z",
+    "auditNotes": "The following claims in the summary and highlights are **NOT supported** by the provided README:\n\n1.  **\"Automated proof of reserve verification\"**: While the README mentions \"Chainlink Proof of Reserve\" in a sample user prompt, the actual skill descriptions in the \"Available Skills\" table do not list Proof of Reserve (PoR) as a feature or capability of the repository.\n2.  **\"Real-time asset verification\"**: Similar to the above, this is mentioned in a sample prompt for the agent to *build*, but"
   },
   "tlehman/litprog-skill": {
     "summary": "The litprog-skill is a Claude Code extension that implements Donald Knuth's literate programming paradigm by transforming codebases into human-readable narratives. It works by generating a .lit.md file that weaves together prose, Mermaid diagrams, and LaTeX math with the original source code. The tool includes a tangler to extract runnable files and a reverse-sync engine to ensure the documentation stays updated when source files are edited. This approach helps developers document architectural decisions and facilitates easier onboarding through structured, essay-like code explanations.",
@@ -225,7 +244,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:03:50.592Z"
+    "auditedAt": "2026-05-25T09:14:38.441Z"
   },
   "esaradev/icarus-plugin": {
     "summary": "Icarus is a Hermes plugin designed to create self-improving agents through shared memory and automated model fine-tuning. It captures agent decisions, session outcomes, and structured notes into a markdown-based \"fabric\" directory that can be optionally managed via Obsidian. This data is then used to extract high-quality training pairs for fine-tuning cheaper replacement models via Together AI. The system includes a full pipeline for evaluating candidate models against base versions and switching to them once performance thresholds are met.",
@@ -239,7 +258,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:03:53.115Z"
+    "auditedAt": "2026-05-25T09:14:40.929Z"
   },
   "chigwell/skilldock.io": {
     "summary": "SkillDock is a registry and SDK for managing reusable AI skills based on the AgentSkills specification. It provides a Python client and CLI that interact with an OpenAPI-driven backend to discover, install, and version agent capabilities. The platform supports a commerce layer for buying and selling skills using Stripe or TON blockchain payments. Developers can package local skill folders, manage dependencies, and publish immutable releases with metadata defined in Markdown frontmatter.",
@@ -248,11 +267,13 @@
       "Supports skill monetization via Stripe and TON blockchain integration",
       "Automated dependency resolution and local installation of agent skills"
     ],
-    "readmeHash": "d694e34915bc933613574fe093a5feeadaf572fac99fc1b059a263b6ddf79348",
+    "readmeHash": "",
     "generatedAt": "2026-05-18T09:10:10.784Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:14:45.030Z",
+    "auditNotes": "The following claims in the summary are **NOT supported** by the provided README:\n\n1.  **\"based on the AgentSkills specification\"**: The README mentions \"OpenAPI-driven\" and \"SkillDock API,\" but there is no mention of an \"AgentSkills specification.\"\n2.  **\"managing reusable AI skills\"**: While the tool manages \"skills,\" the README never explicitly identifies them as \"AI\" skills.\n3.  **\"agent capabilities\"**: The term \"agent\" does not appear in the README; it refers only to \"skills.\"\n4.  **\"publi"
   },
   "black-forest-labs/skills": {
     "summary": "This project provides official image generation skills for FLUX models, offering standardized prompting guidelines and API integration patterns following the agentskills.io specification. It functions as a technical resource for developers to implement text-to-image and image-to-image workflows through structured JSON prompting, hex color specification, and multi-reference editing. The repository includes a model selection guide for FLUX.1 and FLUX.2 variants and can be integrated directly into Claude Code as a plugin. Users can access documented API patterns for asynchronous polling, webhook verification, and rate limit management.",
@@ -266,7 +287,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:03:59.941Z"
+    "auditedAt": "2026-05-25T09:14:47.487Z"
   },
   "Romanescu11/hermes-skill-factory": {
     "summary": "Skill Factory is a meta-skill for Hermes Agent that automates the creation of reusable skills by monitoring user workflows. It functions by tracking session patterns in the background and proposing structured skill definitions when it detects repeatable sequences. Users can generate both SKILL.md documentation and Python plugin scaffolds directly from these proposals via slash commands or natural language. This tool streamlines the expansion of the Hermes ecosystem by turning manual environment setups and development tasks into permanent, executable assets.",
@@ -280,7 +301,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:04:02.318Z"
+    "auditedAt": "2026-05-25T09:14:50.228Z"
   },
   "ReinaMacCredy/maestro": {
     "summary": "Maestro is a local-first agent harness that provides a structured state layer for the software development lifecycle. It uses a CLI and on-disk state model in a .maestro/ directory to manage specs, tasks, and handoffs without requiring a database or background daemon. By persisting continuation records and evidence rows locally, it allows separate agent sessions to collaborate and resume work exactly where the previous one finished. The system enforces discipline through machine-checked contracts and a plan-approve-execute workflow that gates task completion on witnessed evidence.",
@@ -289,11 +310,13 @@
       "Structured spec-to-ship workflow with auditable evidence and witness levels",
       "Passive handoff envelopes for seamless task resumption between different agents"
     ],
-    "readmeHash": "d56c897558196da55c714873d4d53321a7e01c3d2acd667f228ce5df922b22c1",
+    "readmeHash": "",
     "generatedAt": "2026-05-18T09:10:15.159Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:14:53.365Z",
+    "auditNotes": "The following claim in the summary is **NOT supported** by the README:\n\n*   **\"plan-approve-execute workflow\"**: While the README mentions a `maestro plan` command and a \"spec-to-ship\" loop, it never mentions an \"approve\" step or a \"plan-approve-execute\" workflow. The documented vocabulary is `spec -> task -> verify -> ship`.\n\nAll other claims, including the highlights, are supported by the source text."
   },
   "tiann/execplan-skill": {
     "summary": "ExecPlan is an Agent Skill designed to help AI coding agents autonomously manage complex, long-running implementation tasks. It utilizes a structured execution plan that allows users to review and approve the approach before implementation starts. The system tracks progress in real-time and provides rollback procedures for safe recovery. It is compatible with tools such as Claude Code, Cursor, and Goose.",
@@ -307,7 +330,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:04:07.397Z"
+    "auditedAt": "2026-05-25T09:14:56.849Z"
   },
   "cablate/Agentic-MCP-Skill": {
     "summary": "Agentic-MCP-Skill is an experimental MCP client and daemon designed to optimize token consumption through a three-layer lazy loading architecture. It implements the AgentSkills.io pattern by progressively disclosing server metadata, tool lists, and specific schemas only when requested by the agent. This approach reduces context window overhead by up to 86% compared to loading full tool definitions upfront. The project includes a socket-based daemon for persistent server connections and a CLI for managing tools like Playwright and filesystem access.",
@@ -316,11 +339,13 @@
       "Socket-based daemon maintains persistent MCP server connections",
       "Hot-reload support for dynamic configuration without daemon restarts"
     ],
-    "readmeHash": "f560b32f0477897c25ed2422c5e5e20b0785016e3f5d780725780164f300bdc2",
+    "readmeHash": "",
     "generatedAt": "2026-05-18T09:10:19.173Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:15:00.203Z",
+    "auditNotes": "The following claims in the summary are **NOT supported** by the provided README:\n\n*   **\"filesystem access\"**: While the README mentions Playwright as an example in the configuration section, it never mentions a filesystem tool or access capability.\n*   **\"Hot-reload support for dynamic configuration without daemon restarts\"**: The README does not mention hot-reloading or the ability to update configurations without restarting the daemon.\n*   **\"persistent MCP server connections\"**: While the R"
   },
   "armelhbobdad/bmad-module-skill-forge": {
     "summary": "Skill Forge is a development tool that converts source code, documentation, and developer discourse into verified instruction files for AI agents. It uses Abstract Syntax Tree (AST) analysis to extract precise function signatures and types, ensuring agents use libraries correctly without hallucinating API calls. Every generated instruction includes a provenance map linking back to specific file lines at pinned commits or documentation URLs. The tool follows the agentskills.io specification, making the resulting skills compatible with platforms like Cursor, Copilot, and Claude.",
@@ -329,11 +354,13 @@
       "Provides verifiable audit trails with file-and-line level provenance",
       "Automates skill creation through Brief, Create, and Test workflows"
     ],
-    "readmeHash": "ce4e5a30981833eaff18e61bbd9872d5ce2d54f3386823d61c99311de0219390",
+    "readmeHash": "",
     "generatedAt": "2026-05-19T07:46:36.261Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:15:06.145Z",
+    "auditNotes": "The following claims in the summary are NOT supported by the README:\n\n*   **\"It uses Abstract Syntax Tree (AST) analysis\"**: While the README shows an example containing the text `[AST:cognee/...]`, it never explicitly states that the tool uses AST analysis to extract signatures and types.\n*   **\"The tool follows the agentskills.io specification\"**: There is no mention of \"agentskills.io\" in the README.\n*   **\"making the resulting skills compatible with platforms like Cursor, Copilot, and Claude"
   },
   "amanning3390/hermeshub": {
     "summary": "HermesHub is a curated skills registry for Hermes Agent that provides a secure way to browse, install, and share AI agent capabilities. It utilizes the agentskills.io open standard and an automated security scanner that checks for threats like prompt injection and data exfiltration. The platform includes a creator marketplace supporting x402 and Micropayment protocols for premium skills, as well as an agent-to-agent feedback system for trust scoring.",
@@ -347,7 +374,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:04:18.421Z"
+    "auditedAt": "2026-05-25T09:15:09.104Z"
   },
   "PederHP/skillsdotnet": {
     "summary": "SkillsDotNet is a C#/.NET implementation of the agentskills.io standard designed to integrate agent skills into the Model Context Protocol (MCP). It uses a skill:// URI convention to implement progressive disclosure, allowing clients to discover lightweight skill metadata before loading full documentation or supporting files. The library provides seamless integration with Microsoft.Extensions.AI and supports automatic discovery of skills from various agent directories like Claude, Cursor, and Copilot.",
@@ -361,7 +388,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:04:21.328Z"
+    "auditedAt": "2026-05-25T09:15:11.762Z"
   },
   "mem0ai/mem0": {
     "summary": "Mem0 is a universal memory layer designed to provide AI agents and assistants with long-term context and personalization. It utilizes a multi-signal retrieval algorithm that fuses semantic search, BM25 keyword matching, and entity linking to recall user preferences and past interactions. The system supports temporal reasoning to distinguish between past events and current states while maintaining separate memory tiers for users, sessions, and agents. It is available as an Apache-2.0 self-hosted package, a Python/Node.js library, or a managed cloud service.",
@@ -370,11 +397,13 @@
       "Hybrid retrieval combining semantic, keyword, and entity-linked signals",
       "Temporal reasoning for time-aware ranking of past and future events"
     ],
-    "readmeHash": "8b838eec100a4ba0403b85d0f2712ed2a3bbeed014d5d782d844d446eb3c6802",
+    "readmeHash": "",
     "generatedAt": "2026-05-18T09:10:34.869Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:15:15.511Z",
+    "auditNotes": "The following claims in the summary are **NOT supported** by the provided README:\n\n*   **\"Apache-2.0\"**: The README does not mention the specific license type (Apache-2.0).\n*   **\"autonomous agent states\"**: While the README mentions \"Agent state\" and \"autonomous systems,\" it does not explicitly use the phrase \"autonomous agent states\" as a specific feature name or tier in the \"Multi-level memory\" section (which lists \"User, Session, and Agent state\").\n\nAll other claims, including the multi-sign"
   },
   "vectorize-io/hindsight": {
     "summary": "Hindsight is an agent memory system designed to enable long-term learning and information retention for AI agents. It utilizes a workflow of retain, recall, and reflect operations to move beyond simple conversation history into persistent mental models. The system can be integrated via an LLM wrapper for automatic memory management or through a direct API for granular control over storage and retrieval. It supports multi-user isolation through metadata filtering and is compatible with major providers including OpenAI, Anthropic, and Ollama.",
@@ -383,11 +412,13 @@
       "Provides an LLM wrapper for two-line code integration.",
       "Supports PostgreSQL and Oracle AI Database for enterprise storage."
     ],
-    "readmeHash": "e8ef03531859d484375ce04670b8503db95ba6ed2f79af4bdf7a572a192395c1",
+    "readmeHash": "",
     "generatedAt": "2026-05-18T09:10:38.539Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:15:20.461Z",
+    "auditNotes": "The following claims in the summary and highlights are **NOT supported** by the provided README:\n\n*   **\"Supports multi-user isolation through metadata filtering\"**: The README does not mention \"multi-user isolation\" or \"metadata filtering.\" While it uses a `bank_id` in code examples, it does not explicitly define its purpose as multi-user isolation or describe a filtering mechanism.\n*   **\"Persistent mental models\"**: The README describes the system as helping agents \"learn\" and \"retain\" inform"
   },
   "greyhaven-ai/autocontext": {
     "summary": "Autocontext is a recursive self-improving harness that enables agents to succeed on complex tasks through iterative refinement. It operates by executing a goal against real-world evaluations, retaining successful strategies while discarding failures to produce structured playbooks and artifacts. The system uses five specialized roles—competitor, analyst, coach, architect, and curator—to manage knowledge persistence and tool generation. It integrates with various providers including Anthropic, OpenAI, and local runtimes like Pi, exporting structured traces and playbooks for future agent iterations.",
@@ -396,11 +427,13 @@
       "Five-role architecture manages strategy, analysis, coaching, and curation",
       "Produces reusable playbooks, datasets, and detailed execution traces"
     ],
-    "readmeHash": "8b54b49faaef9a5d5656e25fb334ed39e77b9618b2ffc3b303a13a6c8709d102",
+    "readmeHash": "",
     "generatedAt": "2026-05-18T09:10:42.238Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:15:24.399Z",
+    "auditNotes": "The following claims in the summary are **NOT supported** by the provided README:\n\n*   **\"Five specialized roles—competitor, analyst, coach, architect, and curator\"**: The README mentions \"competitor\" and \"analyst\" (within the file structure section) and \"Hermes Curator\" (in the Hermes Agent section), but it does not list or define a five-role architecture involving an \"architect\" or \"coach.\"\n*   **\"Five-role architecture manages strategy, analysis, coaching, and curation\"**: As above, the speci"
   },
   "elkimek/honcho-self-hosted": {
     "summary": "This project provides a configuration layer for self-hosting Plastic Labs' Honcho memory backend, enabling cross-session persistence for Hermes Agent without relying on third-party cloud storage. It deploys the full Honcho stack—including the API, PostgreSQL with pgvector, and Redis—on local hardware using Docker Compose. Users can route memory extraction and reasoning tasks through any OpenAI-compatible API or local inference servers like Ollama to maintain data sovereignty. This setup allows Hermes to build long-term user profiles and logical observations while keeping conversation data on the user's own infrastructure.",
@@ -414,7 +447,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:04:35.537Z"
+    "auditedAt": "2026-05-25T09:15:26.942Z"
   },
   "yoloshii/ClawMem": {
     "summary": "ClawMem is a local-first memory and context engine that provides AI agents with persistent, on-device knowledge. It utilizes a hybrid architecture combining multi-signal retrieval, intent classification, and multi-graph traversal to surface relevant context from markdown notes and session transcripts. The system integrates with Claude Code, OpenClaw, and Hermes agents via a shared SQLite vault. It enables agents to capture decisions, generate session handoffs, and maintain a self-evolving memory layer without cloud dependencies.",
@@ -428,7 +461,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:04:38.142Z"
+    "auditedAt": "2026-05-25T09:15:29.478Z"
   },
   "plur-ai/plur": {
     "summary": "PLUR is a persistent, local-first memory layer designed to synchronize agent corrections, preferences, and conventions across different tools and sessions. It stores knowledge as plain YAML \"engrams\" on disk and uses a hybrid BM25 and embedding-based retrieval system to inject relevant context into agent prompts. The system employs an ACT-R activation model where facts strengthen with use and naturally decay over time to prevent context clutter. It integrates directly with MCP-compatible tools, Claude Code, and Hermes Agent to automate the capture and recall of project-specific knowledge.",
@@ -442,7 +475,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:04:40.728Z"
+    "auditedAt": "2026-05-25T09:15:31.952Z"
   },
   "amanning3390/flowstate-qmd": {
     "summary": "FlowState-QMD is a local-first memory layer designed to provide coding agents with immediate project context from markdown documentation. It utilizes a SQLite-based vector store and an anticipatory cache that prefetches relevant documents by monitoring active agent session logs. This approach allows agents to access design docs, ADRs, and changelogs before initiating a reactive search loop. The system integrates via an MCP server and supports local execution using GGUF models and node-llama-cpp.",
@@ -456,7 +489,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:04:43.385Z"
+    "auditedAt": "2026-05-25T09:15:34.612Z"
   },
   "robbyczgw-cla/hermes-web-search-plus": {
     "summary": "Web-search-plus is a multi-provider search and URL extraction plugin designed for the Hermes Agent ecosystem. It utilizes a capability-based routing engine that automatically selects the best available search provider based on the user's configured API keys. The tool supports a wide range of backends including Serper, Tavily, Exa, and You.com, ensuring search functionality remains active even if specific keys are missing. It features a dedicated setup wizard for managing provider priorities, cost controls, and extraction preferences.",
@@ -465,11 +498,13 @@
       "Auto-routes queries across multiple providers based on available API keys",
       "Supports clean URL extraction via Tavily, Firecrawl, and Linkup backends"
     ],
-    "readmeHash": "8df81a257128ed11bb504f76b2f8163597918a7c9d1e373ff4dbb02f45c3cc3c",
+    "readmeHash": "",
     "generatedAt": "2026-05-20T07:46:23.459Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:15:38.613Z",
+    "auditNotes": "The following claims in the summary are **NOT supported** by the provided README:\n\n*   **\"automatically selects the best available search provider\"**: The README describes the routing as \"class-aware auto-routing\" and \"conservative,\" but it does not explicitly claim to select the \"best\" provider (which implies a performance or accuracy ranking). It focuses on routing across providers the user's keys \"actually support.\"\n*   **\"managing... cost controls\"**: While the README mentions that \"Costs st"
   },
   "42-evey/hermes-plugins": {
     "summary": "Evey's Hermes Plugins is a collection of 23 custom extensions designed to enhance the autonomy, observability, and cost-efficiency of the Hermes Agent framework. The suite implements specialized logic for multi-model decision debates, smart task routing with fallback chains, and structured telemetry logging. These tools enable agents to manage their own goals, perform self-correction loops, and consolidate long-term memory into vector storage. Additionally, the project includes a bidirectional bridge for Claude Code and budget enforcement via Langfuse integration.",
@@ -483,7 +518,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:04:48.911Z"
+    "auditedAt": "2026-05-25T09:15:41.014Z"
   },
   "FahrenheitResearch/hermes-weather-plugin": {
     "summary": "The Hermes Weather Plugin provides a suite of 13 meteorological tools for the Hermes Agent ecosystem, enabling real-time access to observations, forecasts, and high-fidelity model imagery. It utilizes a Python-first architecture that offloads heavy computational tasks, such as NEXRAD radar rendering and ECAPE calculations, to high-performance Rust backends. The plugin features an automated bootstrap process that compiles necessary Rust binaries on first use, ensuring a streamlined setup for complex weather analysis. Users can retrieve verified model soundings, severe weather outlooks from the SPC, and global data via Open-Meteo integration.",
@@ -497,7 +532,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:04:51.732Z"
+    "auditedAt": "2026-05-25T09:15:43.611Z"
   },
   "42-evey/evey-bridge-plugin": {
     "summary": "The Evey Bridge Plugin is a technical integration that connects Claude Code with the Evey hermes-agent stack. It functions by automatically checking for messages or tasks from the bridge and injecting them as context into every prompt submission. The plugin includes specialized commands for running a 'Mother Mode' improvement loop and monitoring system health, including wallet and cron status. It is designed specifically for users running the Evey stack at a designated local directory.",
@@ -511,7 +546,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:04:54.178Z"
+    "auditedAt": "2026-05-25T09:15:45.947Z"
   },
   "nativ3ai/hermes-payguard": {
     "summary": "Hermes PayGuard is a security-focused plugin that enables Hermes Agents to handle USDC and x402 payments through a gated execution model. It separates payment preparation from execution by requiring an out-of-band human approval stamp for transfers exceeding user-defined policy limits. The system supports Circle developer-controlled wallets, cross-chain CCTP transfers, and automated x402 micropayments for paid HTTP fetches. This architecture ensures that while agents can stage financial intents, they cannot unilaterally move significant funds without explicit operator consent.",
@@ -525,7 +560,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:04:56.664Z"
+    "auditedAt": "2026-05-25T09:15:48.400Z"
   },
   "raulvidis/hermes-cloudflare": {
     "summary": "This plugin integrates Cloudflare's Browser Rendering API into the Hermes Agent ecosystem to enable web crawling and content extraction from JavaScript-heavy websites. It utilizes Cloudflare's headless browser infrastructure to perform tasks like CSS-selector scraping, PDF generation, and full-page screenshot capture. The tool also features AI-powered structured data extraction using Llama 3.3 70B via Workers AI. Users can automate complex web workflows including sitemap discovery and Markdown conversion directly through agent commands.",
@@ -539,7 +574,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:04:59.272Z"
+    "auditedAt": "2026-05-25T09:15:50.876Z"
   },
   "builderz-labs/mission-control": {
     "summary": "Mission Control is a self-hosted dashboard designed to orchestrate and monitor fleets of AI agents. It utilizes a local-first architecture powered by SQLite and Next.js to coordinate multi-agent workflows, dispatch tasks, and track operational costs without external database dependencies. The platform features built-in quality gates for task approval, real-time telemetry via WebSockets, and a security framework that includes secret detection and trust scoring. It integrates with various agent frameworks like CrewAI and LangGraph, and provides a bridge for CLI tools such as Claude Code.",
@@ -553,7 +588,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:05:01.720Z"
+    "auditedAt": "2026-05-25T09:15:53.428Z"
   },
   "swarmclawai/swarmclaw": {
     "summary": "SwarmClaw is an open-source, self-hosted runtime and framework designed for orchestrating autonomous AI agent swarms. It provides a centralized dashboard for managing multi-agent workflows through features like durable memory, task delegation, and scheduled heartbeats. The system supports over 23 LLM providers and integrates with various CLI-based agents to act as a unified command center. Users can also implement conversation-to-skill learning to expand agent capabilities based on reviewed interactions.",
@@ -562,11 +597,13 @@
       "Features durable agent memory and runtime skill learning",
       "Orchestrates multi-agent teams with visual org charts and delegation"
     ],
-    "readmeHash": "2c3b5304023004296b9e735adf67071a957b44909d23b20841945531d89eb345",
+    "readmeHash": "",
     "generatedAt": "2026-05-21T07:47:35.685Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:15:57.092Z",
+    "auditNotes": "The following claims in the summary are **NOT supported** by the provided README:\n\n*   **\"integrates with various CLI-based agents to act as a unified command center\"**: While the README lists \"Optional provider CLIs\" and \"delegated CLI backends,\" it does not explicitly use the phrase or claim the capability of being a \"unified command center.\"\n*   **\"Users can also implement conversation-to-skill learning\"**: The README mentions \"reviewed conversation-to-skill learning\" as a feature, but it doe"
   },
   "howdymary/hermes-agent-metaharness": {
     "summary": "Hermes Agent Meta-Harness is a standalone outer-loop optimization framework designed to improve the performance of Hermes agents on verifiable coding benchmarks. It treats the agent as an execution backend and searches for optimal harness configurations—the code governing context collection and retrieval—rather than modifying model weights. The system orchestrates benchmark evaluations, tracks performance frontiers, and performs structured candidate mutations to find superior harness variants. It currently supports TBLite and TB2 benchmarks through a research-safe workflow that emphasizes archive analysis and deterministic search.",
@@ -579,7 +616,8 @@
     "generatedAt": "2026-05-24T07:34:11.147Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "pass",
+    "auditedAt": "2026-05-25T09:15:59.720Z"
   },
   "runtimenoteslabs/gladiator": {
     "summary": "Gladiator is an autonomous agent arena that pits two AI companies against each other to compete for GitHub stars on identical repositories. The system uses Paperclip for orchestration and Hermes Agent workers to execute tasks according to distinct corporate strategies: growth-focused Blitz versus quality-focused Craft. A real-time dashboard visualizes the competition through scoreboards, task boards, and audit trails. Upon completion, the project demonstrates cross-company skill transfer by merging the rival entities and their learned memories.",
@@ -593,7 +631,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:05:11.169Z"
+    "auditedAt": "2026-05-25T09:16:02.162Z"
   },
   "1ilkhamov/opencode-hermes-multiagent": {
     "summary": "Hermes is a multi-agent orchestration system for OpenCode AI designed to automate the full software development lifecycle. It utilizes a master orchestrator to route tasks through specialized pipelines involving 17 distinct agents focused on research, planning, implementation, quality, and infrastructure. The system enforces mandatory quality gates and security audits while managing context flow between models like GPT-5.2, Gemini, and Claude. It supports complex workflows such as security-sensitive feature development, automated bug investigation, and performance optimization.",
@@ -602,11 +640,13 @@
       "Enforces mandatory reviewer and tester gates for all code changes",
       "Integrates with MCP servers for external documentation and web fetching"
     ],
-    "readmeHash": "b32708f1fdf20bbf066766e0d21ce94c9e792db0221c76e44c14f4cf1f5b9595",
+    "readmeHash": "",
     "generatedAt": "2026-05-18T09:10:53.145Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:16:06.295Z",
+    "auditNotes": "The following claims in the summary and highlights are **NOT supported** by the provided README:\n\n1.  **\"Enforces mandatory reviewer and tester gates for all code changes\"**: While the README shows pipelines that include `@reviewer` and `@tester`, it never explicitly states these gates are \"mandatory\" for *all* code changes. In fact, the \"Refactoring\" pipeline listed at the end of the README is incomplete/cut off, showing only `@finder`, which contradicts the claim that all changes must pass thr"
   },
   "supermodeltools/bigiron": {
     "summary": "Big Iron is an experimental AI-native software development system that automates the full development lifecycle through a graph-gated workflow. It integrates Hermes Agent with the Supermodel Code Graph API to replace traditional file-loading context with structural intelligence, including call graphs and dependency maps. The system executes an eight-phase process—from planning to autonomous health checks—using specific skills and quality gates to ensure architectural alignment. While now deprecated in favor of the Supermodel CLI, it serves as a prototype for autonomous, graph-grounded code generation and refactoring.",
@@ -620,7 +660,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:05:18.268Z"
+    "auditedAt": "2026-05-25T09:16:08.961Z"
   },
   "Rainhoole/hermes-agent-acp-skill": {
     "summary": "The hermes-acp-orchestrator is a skill designed to standardize multi-agent delegation within engineering workflows. It functions by routing specific goals to specialized agents including Hermes subagents, Codex, and Claude Code while maintaining strict context isolation. The system ensures operational stability through configurable safety controls such as execution timeouts and output character limits. This tool is primarily intended for complex tasks requiring distinct phases like implementation, risk analysis, and final synthesis.",
@@ -634,7 +674,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:05:20.772Z"
+    "auditedAt": "2026-05-25T09:16:11.338Z"
   },
   "numtide/llm-agents.nix": {
     "summary": "llm-agents.nix is a collection of Nix packages designed to simplify the deployment and management of AI coding agents and development tools. The project provides a centralized repository of Nix expressions that are automatically updated daily to ensure compatibility with the latest agent releases. Users can instantly run or install a wide variety of tools, including multi-agent orchestrators, terminal-based coding assistants, and unified API proxies, without manual environment configuration. The repository supports a diverse range of agents such as Goose, Claude Code, and Bernstein, catering to both open-source and proprietary workflows.",
@@ -643,11 +683,13 @@
       "Supports multi-agent orchestrators and terminal-based development tools",
       "Enables instant execution of agents via Nix Flakes"
     ],
-    "readmeHash": "d7a4d3d0f8ea2410dab8e176017f9eb5b5b3603e94c4ed93026788bd3446a31b",
+    "readmeHash": "",
     "generatedAt": "2026-05-20T07:46:33.205Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:16:15.518Z",
+    "auditNotes": "The following claims in the summary are **NOT supported** by the provided README:\n\n1.  **\"Supports... Goose\"**: The tool \"Goose\" is not listed in the provided README content.\n2.  **\"Simplify the deployment and management\"**: While implied by the nature of Nix, the README does not explicitly state \"deployment and management\" as a project goal; it describes the repository as \"Nix packages for AI coding agents and development tools.\"\n3.  **\"Ensure compatibility with the latest agent releases\"**: Th"
   },
   "TheAiSingularity/hermesclaw": {
     "summary": "HermesClaw is a deployment framework that runs the Hermes Agent within NVIDIA’s OpenShell sandbox to provide hardware-level security enforcement. It utilizes kernel-level mechanisms like Landlock LSM and Seccomp BPF to restrict the agent's filesystem access, network egress, and system calls. Users can toggle between strict and permissive security policies to enable features like web searching or messaging integrations while maintaining an isolated environment. The project includes a library of over 40 built-in tools and skills for tasks such as automated research, code review, and multi-agent delegation.",
@@ -656,11 +698,13 @@
       "Multi-layer protection blocking unauthorized network egress and filesystem writes",
       "Pre-configured policy presets for strict, gateway, or permissive access"
     ],
-    "readmeHash": "0a892ee229ccdb852dcebfa8fe0b0327615f72db3e40cae535ad085ebf603cf9",
+    "readmeHash": "",
     "generatedAt": "2026-05-18T09:11:01.246Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:16:18.864Z",
+    "auditNotes": "The following claims in the summary are **NOT supported** by the provided README:\n\n*   **\"library of over 40 built-in tools and skills\"**: The README mentions a \"Skills Library\" in the Table of Contents and a \"Self-improving skill\" feature, but it never specifies a count of \"40\" or any specific number of tools.\n*   **\"automated research, code review, and multi-agent delegation\"**: While the README mentions \"web search\" and \"GitHub skills\" in the policy presets, it does not explicitly list automa"
   },
   "0xrsydn/nix-hermes-agent": {
     "summary": "nix-hermes-agent provides a Nix package and NixOS module for the declarative deployment of Hermes Agent. It allows users to manage the entire agent lifecycle—including configuration, workspace documents, and systemd services—through a single Nix configuration file. The module ensures reproducibility by rendering settings into a structured CLI configuration while keeping sensitive API keys secure via external environment files. It supports both Nix-managed declarative skills and native Hermes CLI interactive skills, providing a stable foundation for production-ready agent infrastructure.",
@@ -674,7 +718,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:05:30.663Z"
+    "auditedAt": "2026-05-25T09:16:21.474Z"
   },
   "rookiemann/portable-hermes-agent": {
     "summary": "Portable Hermes Agent is a Windows-native desktop application that provides a user-friendly interface for the Hermes Agent framework without requiring Docker or administrative rights. It operates through a Tkinter-based GUI or CLI, utilizing an embedded Python environment to connect with local models via LM Studio or cloud providers like OpenRouter. The agent features a library of 100 tools for tasks including music generation, text-to-speech, and ComfyUI image creation. Users can also build custom automation pipelines through a built-in workflow engine and a dynamic tool maker for wrapping REST APIs.",
@@ -688,7 +732,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:05:33.299Z"
+    "auditedAt": "2026-05-25T09:16:24.183Z"
   },
   "xmbshwll/hermes-agent-docker": {
     "summary": "This project provides a minimal Docker sandbox image designed to package and deploy Hermes Agent. It utilizes the official upstream installation script to set up the agent and includes mini-swe-agent within the container. The image supports multi-arch publishing and allows for persistent state management by mounting the agent's home directory. Users can easily build specific versions using build arguments to target different Hermes branches or tags.",
@@ -702,7 +746,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:05:36.092Z"
+    "auditedAt": "2026-05-25T09:16:26.641Z"
   },
   "JackTheGit/hermes-autonomous-server": {
     "summary": "This project provides a deployment framework for running Hermes Agent as a persistent, headless Linux service. It utilizes systemd to manage the Hermes Gateway, ensuring the agent remains active across reboots without requiring an open terminal session. The setup integrates with the Nous Portal for model access and leverages the native Hermes cron scheduler to automate recurring AI tasks. This approach offers a stable, self-hosted alternative to manual shell loops or third-party hosting for autonomous server operations.",
@@ -716,7 +760,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:05:38.777Z"
+    "auditedAt": "2026-05-25T09:16:29.125Z"
   },
   "ellickjohnson/portainer-stack-hermes": {
     "summary": "This project provides a Docker Compose configuration for deploying the Hermes agent alongside a ttyd web terminal. It utilizes a pre-built image from the GitHub Container Registry to facilitate browser-based terminal access to the agent. Users can manage the deployment as a Git-based stack within the Portainer UI for simplified container orchestration. The setup includes an automated GitHub Action workflow for building and updating the underlying container image.",
@@ -730,7 +774,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:05:41.333Z"
+    "auditedAt": "2026-05-25T09:16:31.630Z"
   },
   "raulvidis/hermes-android": {
     "summary": "Hermes-android is a remote device control bridge that enables AI agents to interact with Android hardware and software. It establishes a WebSocket connection between a Kotlin-based mobile app and a Python toolset on the server, allowing commands to bypass NAT and firewalls without port forwarding. The system provides 38 specialized tools for UI manipulation, media control, and system functions like SMS or GPS. It is also compatible with Android Automotive OS, extending agent capabilities to vehicle head units.",
@@ -743,7 +787,8 @@
     "generatedAt": "2026-05-20T07:46:38.424Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "pass",
+    "auditedAt": "2026-05-25T09:16:34.187Z"
   },
   "teknium1/hermes-miniverse": {
     "summary": "Hermes-miniverse is a bridge that enables Hermes Agents to inhabit and interact within Miniverse pixel worlds. It functions through a three-part architecture consisting of a standalone bridge daemon, a gateway hook for state broadcasting, and a specific skill that allows the agent to consciously navigate the environment. This integration allows agents to maintain a visual presence, update their status in real-time, and engage in bidirectional communication with other AI entities. Users can deploy multiple bridges simultaneously to populate a virtual world with specialized Hermes instances.",
@@ -757,7 +802,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:05:47.890Z"
+    "auditedAt": "2026-05-25T09:16:36.847Z"
   },
   "Ridwannurudeen/hermes-council": {
     "summary": "Hermes Council is an MCP server that provides an adversarial judgment layer for Hermes Agent to stress-test plans and actions before execution. It utilizes a multi-perspective deliberation process involving personas like Advocate, Skeptic, and Arbiter to generate structured verdicts on code diffs, claims, and risky commands. This approach helps prevent overconfident agent failures by producing explicit signals such as blocking risks, required checks, and DPO preference pairs for reinforcement learning workflows.",
@@ -771,7 +816,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:05:50.582Z"
+    "auditedAt": "2026-05-25T09:16:39.547Z"
   },
   "marlandoj/zouroboros-swarm-executors": {
     "summary": "Zouroboros Swarm Executors is a bridge system that integrates local CLI-based AI tools into the Zo Computer swarm orchestration ecosystem. It functions by using bash bridge scripts to wrap tools like Hermes, Claude Code, and Gemini, allowing them to receive tasks via standard input and return results via standard output. This approach enables local execution of complex tasks such as security audits and web research while maintaining a shared identity and memory system across all personas. The project includes a health-check system to validate environment configurations and a registry for adding custom CLI tools as swarm members.",
@@ -785,7 +830,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:05:53.124Z"
+    "auditedAt": "2026-05-25T09:16:42.127Z"
   },
   "gizdusum/hermes-blockchain-oracle": {
     "summary": "Hermes Blockchain Oracle is a Model Context Protocol (MCP) server that provides Hermes Agent with real-time access to the Solana blockchain. It functions as a bridge between natural language queries and on-chain data by exposing specialized tools for wallet, token, and transaction analysis. The server enables users to monitor network health, track whale movements, and manage NFT portfolios through conversational interactions. By integrating directly with Solana RPC nodes, it eliminates the need for manual block explorer searches.",
@@ -799,7 +844,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:05:55.658Z"
+    "auditedAt": "2026-05-25T09:16:44.746Z"
   },
   "junhoyeo/tokscale": {
     "summary": "Tokscale is a high-performance CLI tool and visualization dashboard designed to track token consumption and costs across various AI coding agents. It works by scanning local data directories, databases, and session files from supported clients to aggregate usage statistics into a native Rust TUI or a web-based dashboard. The tool provides detailed daily summaries, model-specific breakdowns, and a 3D contribution graph for visualizing activity. It supports a wide range of integrations including Hermes Agent, Claude Code, OpenClaw, and GitHub Copilot CLI.",
@@ -812,7 +857,8 @@
     "generatedAt": "2026-05-25T08:03:22.653Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "pass",
+    "auditedAt": "2026-05-25T09:16:47.228Z"
   },
   "joeynyc/hermes-skins": {
     "summary": "Hermes Skins is a collection of community-contributed visual themes for the Hermes CLI agent. It allows users to customize the terminal interface by modifying YAML configuration files that control banner colors, ASCII art, spinner animations, and branding text. The project separates visual presentation from agent logic, enabling aesthetic transformations ranging from retro CRT styles to modern pastel palettes. Users can apply these themes globally or for specific sessions without altering the underlying AI behavior.",
@@ -821,11 +867,13 @@
       "Uses YAML-based configuration for easy theme creation and sharing",
       "Inherits from default settings to support partial skin definitions"
     ],
-    "readmeHash": "1792f014fd6cc4f51218067d6e48b98bd3de42f30bf649618876978a9a3be25b",
+    "readmeHash": "",
     "generatedAt": "2026-05-18T09:11:14.632Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:16:50.614Z",
+    "auditNotes": "The following claim is **NOT** supported by the README:\n\n*   **\"spinner animations\"**: The README specifies that skins control \"spinner faces/verbs\" and \"kaomoji spinners,\" but it does not state that the actual animations (the motion logic or frame sequences) can be modified, only the characters and text used within the spinner.\n\nAll other claims, including the highlights, are supported by the source text."
   },
   "AlexAI-MCP/hermes-CCC": {
     "summary": "hermes-CCC is a port of the Hermes Agent framework specifically designed for the Claude Code native skill system. It integrates the Hermes brain architecture directly into the Claude Code execution context, eliminating the need for external processes or OAuth authentication. The project implements 46 core skills across categories such as MLOps, software development, and research, including specialized tools for RL training and vector database management. This allows developers to utilize Hermes-style memory, personas, and task routing while remaining within a unified terminal environment.",
@@ -839,7 +887,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:06:04.789Z"
+    "auditedAt": "2026-05-25T09:16:53.130Z"
   },
   "unmodeled-tyler/vessel-browser": {
     "summary": "Vessel is an open-source, Chromium-based browser designed specifically for autonomous agent control rather than traditional human-centric browsing. It provides a persistent runtime environment where agents drive workflows via the Model Context Protocol (MCP) while humans supervise through a visible UI. The browser maintains durable state across sessions, including annotated checkpoints, action undo capabilities, and agent-readable bookmarks with structured metadata. This setup eliminates the \"black box\" nature of headless automation by allowing users to audit, intervene, and redirect long-running agent tasks in real-time.",
@@ -848,11 +896,13 @@
       "Human-in-the-loop supervisory UI with live approvals and runtime controls",
       "Automated page schema inference for structured entity and form detection"
     ],
-    "readmeHash": "1a295e147508e1e4c89f35ca61d2bf33a9555b06b034dd3487f5bd6d96197d96",
+    "readmeHash": "",
     "generatedAt": "2026-05-18T09:11:18.831Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:16:56.275Z",
+    "auditNotes": "The following claims are **NOT supported** by the provided README:\n\n*   **\"Agent-readable bookmarks with structured metadata\"**: While the README mentions \"editable/exportable bookmarks\" and \"agent-readable\" can be inferred from the agent-first design, it never explicitly mentions \"structured metadata\" for bookmarks.\n*   **\"Automated page schema inference for structured entity and form detection\"**: This feature is not mentioned anywhere in the README. The text mentions \"structured page visibili"
   },
   "Abruptive/Ankh.md": {
     "summary": "Ankh.md is an open-source framework designed to transform a single Hermes Agent into multiple specialized, project-specific instances. It works by detecting a local `.agent/` directory and dynamically overriding the default `hermes` command with a scoped agent configuration. This allows developers to maintain unique instructions, skills, and memories for different codebases or workflows without cross-project interference.",
@@ -866,7 +916,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:06:11.644Z"
+    "auditedAt": "2026-05-25T09:16:58.877Z"
   },
   "roli-lpci/lintlang": {
     "summary": "lintlang is a static analysis tool designed to identify structural and linguistic failures in AI agent configurations, system prompts, and tool definitions. It utilizes regex and AST-based heuristics rather than LLM calls to detect issues like vague tool descriptions, missing termination conditions, and schema mismatches. This approach ensures deterministic, zero-cost scans that run in approximately 2ms per file. The tool is intended for use in CI/CD pipelines to prevent agent looping and incorrect tool selection before runtime.",
@@ -875,11 +925,13 @@
       "Detects seven specific failure modes including ambiguity and missing constraints",
       "Supports YAML, JSON, plain text, and .prompt file formats"
     ],
-    "readmeHash": "1cc9489385abd19271b77f56303125a8303d8e0b8a5f911887494a98cf1eb86c",
+    "readmeHash": "",
     "generatedAt": "2026-05-18T09:11:22.882Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:17:03.367Z",
+    "auditNotes": "- \"schema mismatches\" (The README mentions \"schema fields that say nothing useful\" and \"Schema mismatches break structured output\" as reasons *why* agents fail, but it does not explicitly list \"schema mismatches\" as a feature the tool detects; it specifically highlights H1: Tool Description Ambiguity and H2: Missing Constraint Scaffolding)."
   },
   "0xNyk/openclaw-to-hermes": {
     "summary": "openclaw-to-hermes is a migration utility designed to transition users from OpenClaw to Hermes Agent. It automates the transfer of agent personas, workspace files, model configurations, and credentials between the two ecosystems. The tool addresses specific limitations found in earlier migration methods, such as incorrect authentication formatting and incomplete workspace detection. It provides a safe migration path through dry-run modes and automated backup creation.",
@@ -893,7 +945,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:06:18.624Z"
+    "auditedAt": "2026-05-25T09:17:05.906Z"
   },
   "42-evey/evey-setup": {
     "summary": "Evey Setup is a deployment toolkit designed to bootstrap a complete autonomous AI agent environment based on the Hermes Agent framework. It uses a multi-phase shell script to orchestrate a containerized stack including model routing via LiteLLM, local GPU inference through Ollama, and vector memory with Qdrant. The installer provides three service tiers—Base, Services, and Full—allowing users to scale from a minimal agent to a production-ready system with monitoring and workflow automation. It integrates 29 community plugins and pre-configures free model routing to enable zero-cost operation.",
@@ -907,7 +959,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:06:21.180Z"
+    "auditedAt": "2026-05-25T09:17:08.442Z"
   },
   "ucsandman/DashClaw": {
     "summary": "DashClaw is a governance and decision infrastructure layer designed to secure AI agents interacting with real-world systems. It intercepts risky agent actions to evaluate them against declarative policies, routing high-risk tasks for human approval via a dashboard or mobile interface. The system records verifiable evidence for every decision and tracks terminal outcomes to prevent double-execution during agent retries. It integrates with various runtimes including Hermes Agent, Claude Code, and LangChain through MCP servers, SDKs, or lifecycle hooks.",
@@ -921,7 +973,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:06:23.909Z"
+    "auditedAt": "2026-05-25T09:17:10.941Z"
   },
   "Lethe044/hermes-incident-commander": {
     "summary": "Hermes Incident Commander is an autonomous SRE agent designed to automate the detection, diagnosis, and remediation of production infrastructure failures. It utilizes the Hermes Agent framework to monitor system vitals, classify incident severity, and apply fixes across CPU, memory, disk, and service layers. Following resolution, the agent generates structured post-mortem reports and automatically creates new prevention skills to handle similar future incidents more efficiently. The system integrates with Telegram and Discord for real-time alerting and uses cron scheduling for continuous health audits.",
@@ -935,7 +987,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:06:26.387Z"
+    "auditedAt": "2026-05-25T09:17:13.566Z"
   },
   "Christabel337/job-scout-agent": {
     "summary": "Job Scout Agent is an automated job search tool designed to streamline the discovery and tracking of employment opportunities. The agent utilizes Hermes Agent capabilities to fetch live listings from job board APIs, score them against user-defined profiles, and perform company research. It organizes findings into structured local directories and maintains a CSV tracker for easy integration with Google Sheets. This system eliminates manual searching by providing a daily summary of relevant roles with direct application links.",
@@ -949,7 +1001,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:06:29.654Z"
+    "auditedAt": "2026-05-25T09:17:16.390Z"
   },
   "rodmarkun/anihermes": {
     "summary": "AniHermes is a natural language anime media server and tracker built on the Hermes Agent framework. It leverages LLM orchestration to manage downloads via qBittorrent, track series progress, and organize local libraries through conversational interfaces like Telegram, Discord, or CLI. The system utilizes agentic capabilities such as vision analysis for identifying anime from screenshots and automated CRON jobs for scheduling weekly episode downloads. It integrates directly with Anilist for watchlist synchronization and provides parallel search functionality across multiple sources like SubsPlease and Nyaa.",
@@ -963,7 +1015,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:06:32.160Z"
+    "auditedAt": "2026-05-25T09:17:18.884Z"
   },
   "JackTheGit/hermes-ai-infrastructure-monitoring-toolkit": {
     "summary": "This project is a reference implementation for building autonomous, long-running monitoring systems using Hermes Agent. It utilizes cron-based workflows to ingest AI research from arXiv and track infrastructure repositories on GitHub. The system automatically generates structured markdown reports covering compute risk analysis, cost projections, and trend dashboards. It serves as a template for developers to deploy headless, scheduled agents that transform raw research data into actionable infrastructure intelligence.",
@@ -977,7 +1029,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:06:35.192Z"
+    "auditedAt": "2026-05-25T09:17:21.343Z"
   },
   "bigph00t/hermescraft": {
     "summary": "HermesCraft is an embodied AI framework that integrates Hermes agents into Minecraft as persistent, interactive players. It connects the Hermes agent stack to a Mineflayer bot body through a custom Minecraft CLI and HTTP API, allowing agents to perceive and interact with the game world. Agents can function as individual companions or as part of multi-agent civilizations with private messaging and social memory. The system emphasizes fair-play perception by restricting agent knowledge to line-of-sight visuals and directional audio rather than using privileged game data.",
@@ -991,7 +1043,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:06:37.973Z"
+    "auditedAt": "2026-05-25T09:17:24.092Z"
   },
   "hxsteric/mercury": {
     "summary": "Mercury is a blockchain cash flow analyzer and Hermes Agent skill designed to provide transparency into wallet activities across Ethereum, Base, and Solana. It utilizes parallel subagents to fetch transaction data, identify six specific fraud patterns, and generate AI-driven trading strategies based on wallet behavior. The project features a multi-layer WebGL and Canvas dashboard for real-time visualization of inflows, outflows, and risk metrics. It operates as a standalone tool or an integrated Hermes skill for automated multi-chain investigations.",
@@ -1005,7 +1057,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:06:40.635Z"
+    "auditedAt": "2026-05-25T09:17:26.569Z"
   },
   "bryercowan/hermes-embodied": {
     "summary": "Hermes Embodied is a robotics extension for Hermes Agent that enables autonomous fine-tuning of Vision-Language-Action (VLA) models through natural language. The system orchestrates a self-improvement loop by collecting robot trajectories in simulation or hardware, provisioning cloud GPUs via Vast.ai, and retraining models when performance thresholds are met. It integrates with the LeRobot framework and MuJoCo simulation to automate the transition from data collection to model promotion. This allows users to manage complex robotics training pipelines without manual machine learning expertise.",
@@ -1019,7 +1071,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:06:43.468Z"
+    "auditedAt": "2026-05-25T09:17:29.253Z"
   },
   "0xNyk/awesome-hermes-agent": {
     "summary": "Awesome Hermes Agent is a curated repository of resources designed to support the ecosystem of the self-improving Hermes Agent by Nous Research. It centralizes documentation, deployment tools, and a library of community-developed skills that extend the agent's procedural memory and task capabilities. The collection includes integrations for 18 messaging platforms, various terminal backends, and specialized plugins for goal management and cost control. Users can find structured paths for getting started, ranging from basic installation to advanced multi-agent orchestration.",
@@ -1028,11 +1080,13 @@
       "Guides for 18 messaging integrations including Discord and Telegram",
       "Categorized resources for deployment across seven different terminal backends"
     ],
-    "readmeHash": "a946b47bebb59f4c10e0a5fff663d57243dc2b6ac33ca8ed7392f1a020f2158c",
+    "readmeHash": "",
     "generatedAt": "2026-05-18T09:11:29.276Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:17:33.119Z",
+    "auditNotes": "The following claims in the summary are **NOT supported** by the provided README:\n\n1.  **\"specialized plugins for goal management\"**: The README mentions plugins for Microsoft Teams and task management (via Paperclip), but does not mention a specific plugin for \"goal management.\"\n2.  **\"extending agent procedural memory\"**: While the README mentions \"skills,\" \"learning loops,\" and \"past conversations,\" the specific technical term \"procedural memory\" is never used in the source text.\n3.  **\"Categ"
   },
   "alchaincyf/hermes-agent-orange-book": {
     "summary": "The Hermes Agent Orange Book is a practical guide designed to help users master the Hermes Agent open-source AI framework. It explains the framework's technical architecture, including its three-layer memory system, self-improving learning loop, and automatic skill evolution. The guide provides 17 chapters of content covering installation, customization, and real-world applications such as development automation and knowledge assistants.",
@@ -1046,7 +1100,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:06:50.109Z"
+    "auditedAt": "2026-05-25T09:17:35.538Z"
   },
   "OnlyTerp/hermes-optimization-guide": {
     "summary": "The Hermes Optimization Guide is a comprehensive documentation suite and artifact repository designed to streamline the deployment and scaling of Hermes Agent. It provides 24 instructional parts alongside runnable scripts, including a one-command VPS bootstrap and 13 installable skills. The guide covers advanced configurations for production environments, such as multi-platform integrations, cost-optimized model routing, and secure remote sandboxing. Users can leverage provided templates for systemd, Caddy, and Langfuse to establish observable and hardened agent architectures.",
@@ -1055,11 +1109,13 @@
       "Thirteen installable skills and five opinionated configuration templates",
       "Detailed blueprints for security hardening, observability, and cost-optimized routing"
     ],
-    "readmeHash": "dd85039b01b1aa66e255a6df6e770575e9dab757210a248a17eaf582ef94aa44",
+    "readmeHash": "",
     "generatedAt": "2026-05-18T09:11:33.375Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:17:51.040Z",
+    "auditNotes": "The following claims in the summary are **NOT supported** by the provided README:\n\n*   **\"Detailed blueprints for security hardening\"**: While the README mentions a \"security-hardened\" config template and \"hardened systemd units,\" it does not explicitly list a \"detailed blueprint\" for security hardening. The four specific blueprints (reference architectures) listed in the README are: *Homelab, Solo Dev, Small Agency, and Road Warrior*.\n*   **\"Detailed blueprints for... cost-optimized routing\"**:"
   },
   "metantonio/hermes-wsl-ubuntu": {
     "summary": "This project provides a comprehensive setup guide and automation scripts for running Hermes Agent locally on Windows via WSL2 or natively on macOS. It streamlines the integration of llama.cpp, the Qwen3.5 model family, and the Camofox browser server to enable local agentic workflows with GPU acceleration. The repository includes an automated installation script that configures the environment, builds necessary backends like CUDA or Metal, and sets up the Hermes HUDUI web interface. By focusing on local execution, it allows users to maintain data privacy while utilizing browser-automation and LLM capabilities.",
@@ -1068,11 +1124,13 @@
       "Supports CUDA and Metal acceleration for local LLM inference",
       "Integrates Camofox browser server for agentic web-browsing tasks"
     ],
-    "readmeHash": "1a8a5893c46daa39adbf212f4189d3c9c007157deb2367e25cb9e40ee8242f04",
+    "readmeHash": "",
     "generatedAt": "2026-05-18T09:11:37.401Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:17:55.381Z",
+    "auditNotes": "The following claims in the summary are **NOT supported** by the provided README:\n\n1.  **\"Qwen3.5 model family\"**: The README specifically references the **Qwen3.5-9B-Q5_K_M** model. It does not mention support for a \"family\" of models (e.g., different sizes like 7B, 14B, or 72B).\n2.  **\"maintain data privacy\"**: While local execution often implies privacy, the README never explicitly claims \"data privacy\" as a feature or goal of the project.\n3.  **\"Python 3.11+\"**: The summary mentions this req"
   },
   "mudrii/hermes-agent-docs": {
     "summary": "Hermes Agent is an autonomous AI system designed for persistent learning and multi-platform task execution. It utilizes a closed learning loop that creates and patches reusable skills while maintaining long-term memory through SQLite and FTS5 session search. The agent operates across diverse interfaces including a messaging gateway for over 20 platforms, an Ink-based TUI, and an OpenAI-compatible API server. It supports a wide range of model providers and features a plugin architecture for extending tools, transports, and backend capabilities.",
@@ -1081,11 +1139,13 @@
       "Unified messaging gateway supporting Telegram, Discord, Slack, and WhatsApp",
       "Pluggable transport layer for native integration with 20+ model providers"
     ],
-    "readmeHash": "fc0130614bd2a1b64c189bf3727f5753bb8ac77d29552f958cffa50b361533f3",
+    "readmeHash": "",
     "generatedAt": "2026-05-18T09:11:42.340Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:17:58.774Z",
+    "auditNotes": "The following claim is **NOT supported** by the provided README:\n\n*   **\"Pluggable transport layer for native integration with 20+ model providers\"**: While the README mentions a \"Pluggable Transport Layer\" and lists several providers (Nous Portal, OpenRouter, Anthropic, OpenAI, AWS Bedrock), it does not state that there are \"20+\" model providers integrated via the transport layer. The \"20+\" figure in the README refers specifically to the number of supported **messaging gateway platforms**, not "
   },
   "martymcenroe/HermesWiki": {
     "summary": "HermesWiki serves as the central documentation hub for the Hermes autonomous AI email agent. It provides a structured repository of information to help users understand and implement the agent's core functionalities. The resource focuses on delivering practical deployment patterns and configuration recipes for various environments. By centralizing these guides, it assists developers in navigating the setup process and optimizing their email automation workflows.",
@@ -1094,11 +1154,13 @@
       "Provides specific deployment patterns for various environments",
       "Contains practical configuration recipes for user implementation"
     ],
-    "readmeHash": "076cffad671972adf6ce77e2b36cf6072e86e8b4afb8b3d68d511b2df3b97dad",
+    "readmeHash": "",
     "generatedAt": "2026-05-18T09:11:46.258Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:18:02.676Z",
+    "auditNotes": "- \"Provides specific deployment patterns for various environments\"\n- \"Contains practical configuration recipes for user implementation\"\n- \"provides a structured repository of information to help users understand and implement the agent's core functionalities\"\n- \"assists developers in navigating the setup process and optimizing their email automation workflows\""
   },
   "nativ3ai/hermes-agent-camel": {
     "summary": "This project is a version of the Hermes Agent that integrates CaMeL-style trust boundaries to protect against indirect prompt injection. It implements an opt-in runtime guard that monitors or enforces security policies by gating sensitive tool side effects against verified user intent. The system maintains the core Hermes features, including a self-improving learning loop, autonomous skill creation, and cross-platform accessibility via Telegram, Discord, and Slack. Users can toggle between monitoring modes to record policy decisions or enforcement modes to block unauthorized actions during autonomous execution.",
@@ -1112,7 +1174,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:07:09.028Z"
+    "auditedAt": "2026-05-25T09:18:05.096Z"
   },
   "kaminocorp/hermes-alpha": {
     "summary": "Hermes Alpha is an experimental framework designed to test if a stock AI agent can autonomously bootstrap and manage a bug bounty system from first principles. The architecture utilizes a two-agent loop where a persistent 'Overseer' agent builds, deploys, and refines an ephemeral 'Hunter' agent tasked with finding software vulnerabilities. By providing the agent with only a Linux terminal and an identity document rather than custom tools, the project evaluates the self-improvement capabilities of the Hermes model. The system integrates with Fly.io for managed infrastructure and uses Elephantasm for long-term memory streams.",
@@ -1126,7 +1188,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:07:11.495Z"
+    "auditedAt": "2026-05-25T09:18:07.904Z"
   },
   "beardthelion/hermes-skill-distillation": {
     "summary": "This project provides a skill distillation pipeline designed to fine-tune Hermes 4 models using real-world agentic trajectories. It captures tool-use sessions from a diverse 30-task battery and converts them into SFT-ready data or live RL signals for the Atropos training framework. The system uses a multi-dimensional reward function to score trajectories based on task completion, efficiency, and error recovery. This approach enables a closed learning loop where production-style agent interactions serve as the primary training data for future model iterations.",
@@ -1139,7 +1201,8 @@
     "generatedAt": "2026-05-18T09:11:50.136Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "pass",
+    "auditedAt": "2026-05-25T09:18:10.389Z"
   },
   "xaspx/hermes-control-interface": {
     "summary": "The Hermes Control Interface is a self-hosted web dashboard designed to manage the Hermes AI agent stack through a centralized graphical interface. It utilizes a Node.js and Express backend with WebSockets to provide real-time terminal access, multi-agent gateway management, and live log streaming. Users can configure over 80 agent settings, monitor token analytics and costs, and manage scheduled cron jobs across multiple profiles. The platform also includes a secure file explorer, a revamped chat interface with tool-call visualization, and robust role-based access control.",
@@ -1148,11 +1211,13 @@
       "Real-time chat interface with collapsible tool-call cards and session history.",
       "Comprehensive token analytics tracking usage, costs, and model performance."
     ],
-    "readmeHash": "a5b901b35424f9dbb26c71567570df5eb7868d49bb63c259e3d8f9dca05f4f51",
+    "readmeHash": "",
     "generatedAt": "2026-05-18T09:11:53.723Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:18:13.924Z",
+    "auditNotes": "The following claims in the summary are **NOT** supported by the provided README:\n\n1.  **\"Real-time terminal access\"**: While the README mentions \"Manage terminals\" and the use of `xterm.js` in the stack, it does not explicitly state that the dashboard provides real-time terminal access (only real-time logs and chat).\n2.  **\"Secure file explorer\"**: The README mentions a \"File Explorer\" page and \"Files\" in the navigation, but it does not describe it as \"secure\" or detail any specific security fe"
   },
   "ksimback/hermes-ecosystem": {
     "summary": "Hermes Atlas is a community-curated directory and ecosystem map for the Hermes Agent by Nous Research. It aggregates over 80 quality-filtered repositories, including skills, plugins, and deployment templates, using a vanilla JavaScript frontend and Vercel serverless functions. The platform features a RAG-powered chatbot that answers technical questions grounded in 27 research files using hybrid retrieval and OpenRouter LLMs. Users can search and filter the ecosystem while viewing live GitHub star counts and growth trends cached via Redis.",
@@ -1166,7 +1231,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:07:22.078Z"
+    "auditedAt": "2026-05-25T09:18:16.585Z"
   },
   "dodo-reach/hermes-desktop": {
     "summary": "Hermes Desktop is a native macOS application that provides a focused workbench for managing Hermes Agent hosts. It establishes a direct connection over SSH to interact with remote sessions, files, and workflows without requiring a browser or additional daemon. The app maintains the remote host as the single source of truth, allowing users to manage multiple agent profiles, edit skills, and monitor usage. It also features an embedded terminal and local workflow presets to streamline agent interactions on Apple Silicon and Intel Macs.",
@@ -1179,7 +1244,8 @@
     "generatedAt": "2026-05-21T07:47:49.585Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "pass",
+    "auditedAt": "2026-05-25T09:18:19.013Z"
   },
   "clawshell/clawshell": {
     "summary": "ClawShell is a security-privileged process that acts as a safety harness for the Hermes Agent ecosystem by protecting sensitive credentials and PII. It functions as a proxy between the agent and upstream LLM providers, swapping virtual keys for real ones stored in a restricted directory to ensure the agent never has direct access to credentials. The system performs Data Loss Prevention (DLP) scanning to redact or block sensitive information in request and response bodies. Additionally, it provides secure email isolation through IMAP sender filtering and supports OAuth-based authentication for providers like OpenAI.",
@@ -1193,7 +1259,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:07:27.234Z"
+    "auditedAt": "2026-05-25T09:18:33.485Z"
   },
   "nesquena/hermes-webui": {
     "summary": "Hermes WebUI provides a lightweight web-based interface for the Hermes Agent, offering a graphical alternative to the standard command-line environment. Built with Python and vanilla JavaScript, the application requires no build steps or frameworks and maintains full feature parity with the CLI. The interface features a three-panel layout for session management, chat, and workspace file browsing, including a visual context ring for monitoring token usage. It allows users to manage persistent memory, scheduled jobs, and agent skills through a secure browser-based dashboard.",
@@ -1202,11 +1268,13 @@
       "Three-panel layout for chat, sessions, and workspace file browsing",
       "Zero-dependency frontend using vanilla JavaScript and no build step"
     ],
-    "readmeHash": "66c812f1242bfff477aa32f3354f3dafc8c43475ed857f698eb35fc7cf8e33c2",
+    "readmeHash": "",
     "generatedAt": "2026-05-25T08:03:36.852Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:18:36.705Z",
+    "auditNotes": "The following claim is **NOT** supported by the provided README:\n\n*   **\"Zero-dependency frontend\"**: While the README states there is \"no build step, no framework, no bundler\" and uses \"vanilla JS,\" it does not explicitly claim the frontend has \"zero dependencies\" (e.g., it could still load external libraries via CDN or use the mentioned Python backend dependencies).\n\nAll other claims in the summary and highlights are supported by the text."
   },
   "garrytan/gbrain": {
     "summary": "GBrain is an autonomous memory and synthesis layer designed to serve as the institutional or personal knowledge base for AI agents. It combines a self-wiring knowledge graph that extracts entity relationships without LLM calls with a synthesis engine that provides cited answers and gap analysis. The system automates data ingestion from meetings, emails, and notes while performing overnight memory consolidation and enrichment. It supports multi-user environments with scoped data access and integrates directly with Hermes and OpenClaw via the Model Context Protocol.",
@@ -1215,11 +1283,13 @@
       "Self-wiring knowledge graph extracts typed entity relationships automatically",
       "Supports multi-tenant company brain deployments with scoped data access"
     ],
-    "readmeHash": "292f1078cb615b76f03ae2964bd94e247724de30f86c9cad2c4780e68403c5d5",
+    "readmeHash": "",
     "generatedAt": "2026-05-24T07:34:36.760Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:18:40.465Z",
+    "auditNotes": "The following claims in the summary are **NOT supported** by the provided README:\n\n1.  **\"integrates directly with Hermes and OpenClaw via the Model Context Protocol\"**: While the README mentions Hermes and OpenClaw as deployments and mentions an \"MCP path,\" it never explicitly states that the integration with those specific platforms is performed via the Model Context Protocol.\n2.  **\"Synthesizes cited answers across... meeting notes\"**: The README states it synthesizes prose across \"people, co"
   },
   "pyrate-llama/hermes-ui": {
     "summary": "Hermes UI is a glassmorphic web-based command center designed to provide a visual interface for managing the self-hosted Hermes Agent. It operates as a single-file React 18 application that communicates with the agent via a lightweight Python proxy server. The interface centralizes chat interactions, real-time log streaming, file browsing, and memory inspection into a single dashboard. Users can also manage MCP tools, schedule cron jobs, and monitor active task boards through the integrated workspace.",
@@ -1228,11 +1298,13 @@
       "Integrated file browser with inline previews and terminal access",
       "Real-time monitoring of logs, task boards, and MCP tools"
     ],
-    "readmeHash": "3122dbb590d19bd0ec0655dd1fa620378642693e3859e0940826d1d197057693",
+    "readmeHash": "",
     "generatedAt": "2026-05-23T07:21:58.615Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:18:44.140Z",
+    "auditNotes": "The following claims in the summary are **NOT** supported by the provided README:\n\n*   **\"self-hosted\"**: While the README mentions a \"lightweight Python proxy server\" and \"local/video-capable model workflows,\" it never explicitly uses the term \"self-hosted\" to describe the Hermes Agent or the UI.\n*   **\"integrated workspace\"**: The README mentions an \"active workspace\" and a \"built-in terminal area,\" but it does not use the specific phrase \"integrated workspace\" to describe the dashboard or the"
   },
   "kevinmarmstrong/hermes-claude-code-rc": {
     "summary": "This Hermes Agent plugin enables remote management of Claude Code sessions through a Telegram interface. It bridges the gap between mobile devices and local filesystems by allowing users to initiate authenticated remote control sessions on their host machine via slash commands. The plugin captures the resulting session URL and returns it to the user, enabling full access to local tools and databases from the Claude mobile app. Beyond session management, it supports headless command execution and direct shell access with built-in safety filters for dangerous operations.",
@@ -1246,7 +1318,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:07:37.718Z"
+    "auditedAt": "2026-05-25T09:18:46.609Z"
   },
   "AaronWong1999/hermesclaw": {
     "summary": "HermesClaw is an integration bridge that allows Hermes Agent, OpenClaw, and OpenCode to operate simultaneously on a single WeChat account. It functions as a centralized iLink poller and proxy server, routing messages to each agent's gateway to prevent the 403 errors and token conflicts caused by multiple simultaneous connections. Users can switch between agents or activate multiple brains at once using commands like /hermes, /openclaw, or /three. The tool also enables voice-based coding via an OpenCode ACP bridge, supporting free models like MiniMax M2.5.",
@@ -1255,11 +1327,13 @@
       "Prevents iLink token conflicts via centralized message proxying",
       "Supports agent switching with /hermes, /openclaw, and /opencode commands"
     ],
-    "readmeHash": "6a2b9f64e40787e958220aac3aeeee5c5c662991f2e8df81379a95f9c315d64d",
+    "readmeHash": "",
     "generatedAt": "2026-05-18T09:11:59.340Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:18:50.795Z",
+    "auditNotes": "The following claim in the summary is **NOT** supported by the README:\n\n*   **\"Supports agent switching with... /opencode commands\"**: While the README mentions `/hermes`, `/openclaw`, `/both`, and `/three`, the specific command `/opencode` is listed in the text and architecture diagram, but the summary's specific list of \"agent switching\" commands omits `/both` and `/three` while the README's text explicitly lists `/opencode` as a switching command. **Correction:** Upon stricter review, the REA"
   },
   "stephenschoettler/hermes-lcm": {
     "summary": "Hermes-LCM is a context management plugin for the Hermes Agent that prevents information loss during long-running conversations. It replaces standard lossy compression with a hierarchical Directed Acyclic Graph (DAG) that compacts older messages into depth-aware summary nodes stored in a local SQLite database. The agent can use specialized tools like grep and expand to drill back into raw message data or specific summary branches without flooding the active context window. This approach ensures that while the active prompt remains bounded, the agent retains autonomous access to the entire session history and externalized large payloads.",
@@ -1268,11 +1342,13 @@
       "SQLite-backed message store for lossless raw history preservation",
       "Agent tools for targeted retrieval and summary expansion"
     ],
-    "readmeHash": "4fecf8f58e1104ad67c48de66042cb3aebdaecc59d9976dec4cc498b05cb6e2e",
+    "readmeHash": "",
     "generatedAt": "2026-05-24T07:34:41.483Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:18:54.019Z",
+    "auditNotes": "The following claim in the summary is **NOT supported** by the provided README:\n\n*   **\"The agent can use specialized tools like... `expand`...\"**\n    *   **Reason:** While the README lists `lcm_expand` as an available tool, it does not list a tool simply named `expand`. The README specifically lists the tools as: `lcm_grep`, `lcm_describe`, `lcm_expand`, `lcm_expand_query`, `lcm_status`, `lcm_doctor`, and `lcm_load_session`.\n\nAll other claims, including the highlights, are supported by the READ"
   },
   "Codename-11/hermes-relay": {
     "summary": "Hermes-Relay is a dual-surface companion suite that enables remote interaction with a server-deployed Hermes agent from Android and desktop environments. It uses a WebSocket Secure (WSS) relay and a server-side plugin to facilitate real-time communication, terminal access, and device control without requiring SSH. The Android app allows the agent to read screens and perform actions like tapping or swiping, while the desktop CLI and tray app provide local file access, terminal execution, and clipboard integration for the remote agent. This setup allows users to leverage powerful remote compute while maintaining the experience of a locally running agent on their personal devices.",
@@ -1285,7 +1361,8 @@
     "generatedAt": "2026-05-24T07:34:45.641Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "pass",
+    "auditedAt": "2026-05-25T09:18:56.494Z"
   },
   "clawvader-tech/hermes-telegram-miniapp": {
     "summary": "Hermes Telegram Mini App is a terminal-style web interface that allows users to interact with their Hermes agent directly within Telegram. It functions as a React SPA that connects to the Hermes Agent via a secure gateway, utilizing dual HMAC-SHA256 and Ed25519 validation for authentication. The interface provides a mobile-first dashboard for managing agent instances, monitoring system health, and handling scheduled cron jobs. It also supports file attachments with automatic vision analysis and OCR capabilities.",
@@ -1294,11 +1371,13 @@
       "Background agent spawning with live output monitoring",
       "System health gauges and scheduled cron job management"
     ],
-    "readmeHash": "c5787ca063daa34c89be1aca78e8d211eb0efb9ab27d09e5757bcbf486dfc8b8",
+    "readmeHash": "",
     "generatedAt": "2026-05-18T09:12:06.423Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:19:00.737Z",
+    "auditNotes": "The following claims in the summary are **NOT supported** by the provided README:\n\n1.  **\"React SPA\"**: While the README mentions a frontend built with `npm` and a `web/src/` directory, it never explicitly identifies the framework as **React**.\n2.  **\"Mobile-first dashboard\"**: The README describes the interface as \"terminal-style,\" a \"dark-mode TUI,\" and a \"web interface,\" but it does not use the specific term **\"mobile-first.\"**\n3.  **\"Connects... via a secure gateway\"**: While the README ment"
   },
   "briancaffey/hermes-otel": {
     "summary": "hermes-otel is an OpenTelemetry plugin designed to provide observability for the Hermes Agent ecosystem. It automatically captures and exports LLM tool calls, model invocations, and API requests as OTel spans to compatible backends. The plugin supports single or multi-backend configurations, allowing users to stream telemetry to various tracing and monitoring platforms simultaneously.",
@@ -1307,11 +1386,13 @@
       "Supports multiple backends like Phoenix, Langfuse, and SigNoz",
       "Enables parallel telemetry streaming via config.yaml"
     ],
-    "readmeHash": "4099d9a96f5a5895f9f8ed178507ce7ce6c73033fadae9f818a465a09d72f4b2",
+    "readmeHash": "",
     "generatedAt": "2026-05-18T09:12:12.645Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:19:05.049Z",
+    "auditNotes": "- \"The plugin supports single or multi-backend configurations, allowing users to stream telemetry to various tracing and monitoring platforms simultaneously.\" (The README lists supported backends but does not mention multi-backend configurations or simultaneous streaming).\n- \"Enables parallel telemetry streaming via config.yaml\" (The README does not mention parallel streaming or a `config.yaml` file)."
   },
   "EKKOLearnAI/hermes-web-ui": {
     "summary": "Hermes Web UI is a full-featured dashboard designed to manage and monitor Hermes Agent instances through a responsive web interface. It connects to the Hermes agent bridge via Socket.IO to provide real-time chat streaming, multi-session management, and a local SQLite database for session persistence. Users can configure eight different communication channels, including Telegram, Discord, and WhatsApp, while tracking token usage and costs through an integrated analytics suite. The platform also features a multi-profile system, a remote file browser, and a built-in web terminal for direct system interaction.",
@@ -1320,11 +1401,13 @@
       "Real-time AI chat with multi-session management and Markdown support",
       "Usage analytics for tracking token consumption, costs, and model trends"
     ],
-    "readmeHash": "0440873c2342aef5e302c1dd33b3060e0539d32134dd3317138c6a4e33365e19",
+    "readmeHash": "",
     "generatedAt": "2026-05-25T08:03:46.019Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:19:08.582Z",
+    "auditNotes": "The following claim in the summary is **NOT supported** by the README:\n\n*   **\"built-in web terminal for direct system interaction\"**: The README mentions a \"File Browser\" for remote backends (Docker, SSH, etc.) and a \"Logs\" viewer, but it does not list a web terminal or direct system interaction capability.\n\nAll other claims, including the highlights, are supported by the source text."
   },
   "Web3CZ/Web3Hermes": {
     "summary": "Web3Hermes is a lightweight WebUI for Hermes Agent specifically localized for Chinese-speaking users. It provides a desktop-optimized interface that simplifies interaction with the agent through a localized workflow and full Chinese language support. The platform integrates a built-in workspace file browser, session management tools, and support for multiple AI models including OpenAI, Anthropic, and DeepSeek. Users can manage tasks, edit code with syntax highlighting, and visualize tool calls within a responsive dark or light themed environment.",
@@ -1347,11 +1430,13 @@
       "Sub-millisecond latency for memory reads, writes, and searches",
       "MEMORIA engine for structured fact extraction and recursive gap analysis"
     ],
-    "readmeHash": "bf8e7d236fd01f7c069b67a80492327b2b646e5ea3bb707a44954dbd5eee0d49",
+    "readmeHash": "",
     "generatedAt": "2026-05-22T07:46:51.768Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:19:24.407Z",
+    "auditNotes": "The following claims in the summary are **NOT supported** by the provided README:\n\n1.  **\"zero-dependency storage\"**: The README explicitly mentions several dependencies, including `sqlite-vec`, `fastembed`, `NumPy`, and `mnemosyne-memory[all]` optional features.\n2.  **\"can import data from seven other memory providers\"**: The README does not mention the ability to import data from other providers; it only provides a feature comparison table against three other providers (Honcho, Zep, and Mem0)."
   },
   "keepnotes-ai/keep": {
     "summary": "Keep is a reflective memory system for AI agents that facilitates long-term learning and contextual awareness. It processes diverse inputs—including URLs, codebases, and media—by summarizing, embedding, and indexing them into a searchable graph. The system uses 'edge tags' to create navigable relationships between notes, such as linking authors to their specific contributions. It integrates with various agent frameworks via MCP and provides structured prompts to help agents reflect on past actions and current intentions.",
@@ -1364,7 +1449,8 @@
     "generatedAt": "2026-05-20T07:47:09.756Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "pass",
+    "auditedAt": "2026-05-25T09:19:27.341Z"
   },
   "AMAP-ML/SkillClaw": {
     "summary": "SkillClaw is an agentic evolution framework that manages and improves AI agent skill libraries through real-world interaction data. It operates a background loop that automatically deduplicates, merges, and refines skills across different sessions, devices, and users. The system enables a unified skill repository where experience gained by one agent instance—such as a frontend task—can be cross-pollinated to benefit other instances like backend or ML agents. It natively integrates with Hermes, OpenClaw, and various OpenAI-compatible APIs to provide continuous skill growth without manual intervention.",
@@ -1373,11 +1459,13 @@
       "Unifies skill libraries across multiple agents, devices, and user groups",
       "Natively supports Hermes, Codex, Claude Code, and OpenClaw integrations"
     ],
-    "readmeHash": "f03c532dd36c56f8badf37fd85454e7d544345d9eebf60f534a234198a98306c",
+    "readmeHash": "",
     "generatedAt": "2026-05-18T09:12:25.917Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:19:31.506Z",
+    "auditNotes": "The following claims in the summary are **NOT** supported by the provided README:\n\n*   **\"Codex\"**: While listed in the compatibility table, the README links to `github.com/openai/codex`, which is a legacy model/API, not a specific agent framework like the others listed.\n*   **\"Claude Code\"**: While listed in the compatibility table, the README links to Anthropic's documentation for Claude Code, but does not explicitly detail a \"native integration\" beyond its inclusion in the broad compatibility"
   },
   "aivrar/portable-hermes-agent": {
     "summary": "Portable Hermes Agent is a standalone Windows desktop application that provides a graphical interface for the Hermes Agent framework without requiring system-wide installations or administrative rights. It operates by bundling an embedded Python environment and connecting to local models via LM Studio or cloud providers through an OpenAI-compatible API. The platform features over 100 tools for tasks such as music generation, text-to-speech, and ComfyUI image creation, alongside a workflow engine for multi-step automation. Users can also extend the agent's capabilities at runtime using a built-in dynamic tool maker for API wrapping and Python scripting.",
@@ -1390,7 +1478,8 @@
     "generatedAt": "2026-05-18T09:12:30.122Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "pass",
+    "auditedAt": "2026-05-25T09:19:34.128Z"
   },
   "iamagenius00/hermes-a2a": {
     "summary": "hermes-a2a is a plugin for Hermes Agent that implements Google's A2A protocol to enable direct peer-to-peer communication between autonomous agents. It works by injecting external messages into an agent's active session via HMAC-signed webhooks, allowing for instant responses without polling or session cloning. This architecture ensures agents maintain a single shared memory with their user while collaborating on tasks like debugging, status reporting, or peer consultation. The system includes built-in security features such as prompt injection filtering, outbound redaction, and independent conversation storage to prevent data loss during context compaction.",
@@ -1417,7 +1506,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:08:18.651Z"
+    "auditedAt": "2026-05-25T09:19:37.169Z"
   },
   "EfficientContext/ContextPilot": {
     "summary": "ContextPilot is an inference optimization layer designed to accelerate long-context LLM workloads by maximizing prefix cache reuse. It maintains a context index to reorder and deduplicate overlapping content blocks before they reach the inference engine, effectively reducing redundant KV cache computation. The system provides significant token savings and faster prefill speeds for RAG, multi-turn memory chat, and agentic workflows. It integrates as a native plugin or proxy for various backends including vLLM, SGLang, llama.cpp, and Hermes Agent.",
@@ -1426,11 +1515,13 @@
       "Boosts prefill throughput with 1.5–3× faster processing speeds",
       "Native plugin support for Hermes Agent and OpenClaw ecosystems"
     ],
-    "readmeHash": "0c3c84f80a370efd586280d1ce3896b0e85a7731337c8774445c9d4d57456126",
+    "readmeHash": "",
     "generatedAt": "2026-05-18T09:12:35.756Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:19:42.054Z",
+    "auditNotes": "The following claims in the summary are **NOT** supported by the provided README:\n\n*   **\"Reduces input tokens by reordering... shared context blocks\"**: The README states that **Deduplicate** replaces repeats with reference hints to save tokens, but it describes **Reorder** as a method to \"align shared blocks into a common prefix\" to increase cache hits, not to reduce the number of input tokens.\n*   **\"DeepSeek-R1-671B\"**: While the summary mentions production MoE inference, the README lists th"
   },
   "335234131/agent-browser-mcp": {
     "summary": "Agent-browser-mcp is a Model Context Protocol server that enables AI agents to interact directly with a user's active Chrome browser session rather than a sandboxed environment. It works through a local bridge and a Chrome extension to maintain existing login states, cookies, and open tabs while providing low-level control. The project allows agents to perform page scanning, execute JavaScript, and issue Chrome DevTools Protocol (CDP) commands. It also supports physical hardware interaction, including real mouse movements, keyboard inputs, and desktop screenshots.",
@@ -1444,7 +1535,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:08:25.432Z"
+    "auditedAt": "2026-05-25T09:19:44.390Z"
   },
   "jwangkun/hermes-agent-guide": {
     "summary": "The Hermes Agent Guide is a comprehensive Chinese-language documentation project designed to bridge the gap between fragmented information and practical implementation of the Hermes Agent framework. It provides a structured 16-book knowledge map covering the system's five-layer architecture, three-tier memory systems, and the integration of over 47 built-in tools. The guide details technical workflows for local and cloud deployment, MCP protocol automation, and multi-platform connectivity with services like WeChat and Discord. Users can follow specialized learning paths for development, commercial monetization, or migrating from the OpenClaw framework.",
@@ -1453,12 +1544,13 @@
       "Detailed analysis of five-layer architecture and three-tier memory systems",
       "Step-by-step integration for 15+ platforms including Feishu and Slack"
     ],
-    "readmeHash": "7aefe614cf495f7eccee237a57731ffe6443ede45cdf6c1dbb37a9f05664bac1",
+    "readmeHash": "",
     "generatedAt": "2026-05-04T11:35:37.259Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass",
-    "auditedAt": "2026-05-18T09:08:28.647Z"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:19:48.625Z",
+    "auditNotes": "The following claims in the summary are **NOT** supported by the README:\n\n*   **\"Cloud deployment\"**: The README specifically lists \"本地/Docker/VPS\" (Local/Docker/VPS) as the three deployment methods in Chapter 05; it does not explicitly mention \"cloud\" (though VPS is a form of cloud, the specific term is not used in the source).\n*   **\"15+ platforms including Feishu and Slack\"**: While Chapter 10 mentions \"15+ 平台接入\" (15+ platform access) and lists Feishu, WeChat, Discord, and Slack, the summary'"
   },
   "longyunfeigu/learn-hermes-agent": {
     "summary": "Learn Hermes Agent is a 27-chapter hands-on tutorial for building production-grade autonomous AI agents from scratch using Python. The curriculum guides developers through implementing a core agent loop, tool registration, session persistence with SQLite, and context compression. It covers advanced infrastructure including multi-platform gateways for Telegram and Discord, Model Context Protocol (MCP) integration, and RL-based self-evolution. The project provides runnable reference implementations for each stage to help users understand the design backbone of autonomous systems.",
@@ -1472,7 +1564,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:08:31.308Z"
+    "auditedAt": "2026-05-25T09:19:51.090Z"
   },
   "jpalmae/hermeshq": {
     "summary": "HermesHQ is a Docker-first control plane designed to orchestrate and manage multiple Hermes Agent instances from a single web application. It functions as an operational layer that wraps the Hermes execution engine, providing centralized task dispatching, scheduling, and a runtime ledger. The platform enables multi-agent delegation, RBAC-controlled user access, and per-agent communication channels for Telegram and WhatsApp. It also features an enterprise MCP bridge to expose specific agents to external AI clients like Claude Code and Codex.",
@@ -1486,7 +1578,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:08:34.569Z"
+    "auditedAt": "2026-05-25T09:19:53.568Z"
   },
   "plastic-labs/honcho": {
     "summary": "Honcho is a memory infrastructure library designed to help developers build stateful agents that maintain context over time. It functions by storing conversations and events as messages, which are then processed asynchronously to extract reasoning-based conclusions and update peer representations. This approach allows agents to query natural-language insights, session context, and hybrid search results across users, groups, and projects. The system supports both a managed cloud service and a self-hosted FastAPI server with SDKs for Python and TypeScript.",
@@ -1495,11 +1587,13 @@
       "Tracks evolving entities including users, agents, groups, and projects",
       "Provides hybrid BM25 and vector search for retrieving session context"
     ],
-    "readmeHash": "31e885b252aa8a3eeba96e97cfbd83745c425d769dd82570a2fcaa51662c2059",
+    "readmeHash": "",
     "generatedAt": "2026-05-22T07:46:58.102Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:19:56.985Z",
+    "auditNotes": "The following claims are **NOT supported** by the provided README:\n\n*   **\"Provides hybrid BM25 and vector search for retrieving session context\"**: While the README mentions \"search results\" and \"querying,\" it never specifies the use of **BM25** or **vector search** (or a hybrid of the two).\n*   **\"Extracts reasoning-based conclusions from conversations instead of simple vector matching\"**: The README does state it \"Extracts conclusions from conversations... not just matching chunks,\" but it ne"
   },
   "adnw-vinc/hermes-nextcloud": {
     "summary": "This project is a Hermes Agent skill that enables direct interaction with self-hosted Nextcloud instances for personal data management. It interfaces with Nextcloud using WebDAV, CalDAV, CardDAV, and the Notes API to perform operations without requiring a browser or third-party sync services. Users can manage files, edit notes, schedule calendar events, track tasks, and search contacts through a command-line interface. The skill prioritizes security by utilizing Nextcloud App Passwords and storing credentials in a restricted local environment file.",
@@ -1513,7 +1607,7 @@
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass",
-    "auditedAt": "2026-05-18T09:08:40.521Z"
+    "auditedAt": "2026-05-25T09:19:59.756Z"
   },
   "Xquik-dev/hermes-tweet": {
     "summary": "Hermes Tweet is a native plugin for the Hermes Agent ecosystem that enables automated interaction with X (formerly Twitter) via the Xquik API. It integrates 99 OpenAPI-generated endpoints into the agent's environment, allowing for structured social media tasks like searching, posting, and trend monitoring. The plugin utilizes a tiered security model that separates read-only operations from account actions, requiring explicit environment configuration to enable write-access tools. It includes a bundled Hermes skill to provide agents with contextual guidance on how to navigate the available toolset.",
@@ -1526,7 +1620,8 @@
     "generatedAt": "2026-05-21T07:48:07.021Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "pass",
+    "auditedAt": "2026-05-25T09:20:02.375Z"
   },
   "Context4GPTs/klodi-plugin": {
     "summary": "Klodi is an agent-to-agent marketplace plugin that enables AI agents to autonomously list, search for, and negotiate the sale of goods on behalf of their users. The system functions by deploying host-specific adapters that load a standardized skill tree, allowing agents to manage structured offers and private negotiation channels while adhering to local markdown policy files. This architecture ensures that sensitive data like floor prices and walk-away rules remain on the user's local disk rather than being shared with the marketplace or the counterparty. It supports multiple agent environments including Hermes, OpenClaw, and Moltis, maintaining a consistent user identity and rating across all platforms.",
@@ -1535,11 +1630,13 @@
       "Keeps floor prices and private strategies on local disk only",
       "Cross-platform compatibility with Hermes, OpenClaw, and Rust-based agent hosts"
     ],
-    "readmeHash": "b7740b0930fff7a5b02dc0950cf8aed679fe91eaa28643a8edc81156bbd2601b",
+    "readmeHash": "",
     "generatedAt": "2026-05-18T09:12:44.999Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:20:10.403Z",
+    "auditNotes": "The following claims in the summary are NOT supported by the README:\n\n*   **\"...adhering to local markdown policy files\"**: The README mentions \"your policies\" and \"ground rules,\" but it never specifies that these are \"markdown policy files.\"\n*   **\"...ensures that sensitive data like floor prices and walk-away rules remain on the user's local disk rather than being shared with the marketplace or the counterparty\"**: While the README mentions that \"on-disk strategy follow you\" and that the agent"
   },
   "yepyhun/Brainstack": {
     "summary": "Brainstack is a local-first memory kernel designed to provide Hermes agents with a structured memory model rather than a flat data blob. It integrates three distinct memory lines—Hindsight, Graphiti, and MemPalace—to manage session continuity, temporal graph relations, and large-corpus retrieval through a single memory owner. The system processes queries by routing them to specific \"shelves\" such as profile, graph, or corpus, ensuring Hermes receives a compact, purpose-built evidence packet. This approach prevents prompt stuffing and maintains clear distinctions between historical facts, user preferences, and external knowledge.",
@@ -1548,11 +1645,13 @@
       "Uses a five-shelf architecture to prevent flat memory blob issues",
       "Provides a native Hermes-Agent MemoryProvider plugin with SQLite and Kuzu"
     ],
-    "readmeHash": "706f629d18d3a11c13c6d26732d7fea947e755252052bf44dcc2dcd993d7495e",
+    "readmeHash": "",
     "generatedAt": "2026-05-18T09:12:48.886Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:20:13.913Z",
+    "auditNotes": "The following claims in the summary and highlights are **NOT** supported by the provided README:\n\n*   **\"Uses a five-shelf architecture\"**: While the README describes a query flow with five specific recall types (profile, continuity, graph, corpus, and transcript fallback), it never uses the specific term \"five-shelf architecture\" to describe the system's design.\n*   **\"Provides a native Hermes-Agent MemoryProvider plugin with SQLite and Kuzu\"**: While the README mentions it runs as a `MemoryPro"
   },
   "kfa-ai/hermes-timetree-sync": {
     "summary": "hermes-timetree-sync is a Python-based CLI and library designed to enable Hermes Agents to manage TimeTree calendar events programmatically. Since TimeTree discontinued its official API, this bridge utilizes authenticated web endpoints to perform non-interactive calendar writes and synchronizations. It allows agents to create all-day or timed events using stored session cookies without requiring manual user intervention or browser interaction during chat sessions. The tool also supports batch event creation and local label mapping via YAML policies to streamline calendar organization.",
@@ -1561,11 +1660,13 @@
       "Uses web session cookies to bypass discontinued official APIs",
       "Supports batch all-day event writes for improved performance"
     ],
-    "readmeHash": "66d2bd57bf6d8ed723705ddee94a59f1b066e9b6edf7390dd76921e2c16810c3",
+    "readmeHash": "",
     "generatedAt": "2026-05-23T07:22:15.875Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:20:17.255Z",
+    "auditNotes": "The following claim in the summary is **NOT supported** by the README:\n\n*   **\"without requiring... browser interaction during chat sessions\"**: The README explicitly states that for **timed events**, the tool uses a `create-timed` command which \"requires Safari to already be logged into TimeTree,\" \"opens the target TimeTree calendar,\" and \"posts a timed event... through Safari's authenticated TimeTree page context.\" The README further notes that the \"UI is not opened\" specifically for **all-day"
   },
   "jau123/MeiGen-AI-Design-MCP": {
     "summary": "MeiGen AI Design MCP is an open-source Model Context Protocol server that integrates professional image and video generation into AI coding environments. It connects to various backends including MeiGen Cloud, OpenAI-compatible APIs, and local ComfyUI instances to execute design tasks directly within a developer's workflow. The system features a library of over 1,400 curated prompt templates and supports parallel sub-agent orchestration for batch processing. It is compatible with major MCP hosts such as Claude Code, Cursor, and Hermes Agent, and includes a standalone CLI for automation.",
@@ -1574,11 +1675,13 @@
       "Built-in library of 1,446 curated prompt templates for design tasks",
       "Orchestrates parallel batch generation via sub-agents to maintain context"
     ],
-    "readmeHash": "64be4612f820ff208eaadfe7b6ca91fa445c2dbf297f336c4a4e6d15cfd37450",
+    "readmeHash": "",
     "generatedAt": "2026-05-19T07:47:18.434Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:20:21.128Z",
+    "auditNotes": "The following claims in the summary are **NOT** supported by the provided README:\n\n*   **\"Supports 9 models including Midjourney, Flux, and local ComfyUI backends\"**: While the README mentions \"9 leading models\" and \"local ComfyUI,\" the specific model names listed in the README are **\"Midjourney V8.1\"** and **\"Flux 2 Klein.\"** The summary omits the specific version/variant names provided in the source.\n*   **\"Includes a standalone CLI for automation\"**: The README mentions a \"standalone CLI mode"
   },
   "alias8818/hermes-tool-slimmer": {
     "summary": "Hermes Tool Slimmer is a context optimization plugin that reduces prompt overhead by dynamically selecting the most relevant tools for each agent turn. It builds an index of available tool schemas and uses BM25 ranking with keyword boosts to filter large toolsets down to a concise, relevant subset. This approach significantly lowers token consumption in environments with dozens of native or MCP tools while maintaining access to essential safety and file-system utilities. The project includes a dashboard for monitoring estimated token savings and provides a fail-safe mechanism that reverts to the full schema list if selection errors occur.",
@@ -1587,11 +1690,13 @@
       "Supports native Hermes tools and Model Context Protocol (MCP) integrations",
       "Includes a dashboard plugin for real-time token savings and diagnostics"
     ],
-    "readmeHash": "dc5c1ec3c717b83bc36df95162628938b38b0404a59faca7ac7110b97a010a2d",
+    "readmeHash": "",
     "generatedAt": "2026-05-20T07:47:24.119Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:20:24.498Z",
+    "auditNotes": "The following claims in the summary are **NOT** supported by the provided README:\n\n*   **\"keyword selection\"**: The README mentions \"explicit boosts\" and \"BM25 ranking,\" but does not use the specific term \"keyword selection\" as a mechanism.\n*   **\"file-system utilities\"**: While the README mentions \"repository-search\" and \"safety tools,\" it never explicitly mentions \"file-system utilities.\"\n*   **\"real-time token savings\"**: The README describes a dashboard that reports savings based on \"session"
   },
   "BORT-AGENTS/hermes-bort": {
     "summary": "hermes-bort is a plugin for Hermes Agent that enables interaction with BORT (BAP-578) agent NFTs on the BSC mainnet. It allows Hermes processes to read on-chain agent states, execute actions via operator-signed writes, and manage portable session memory anchored to IPFS. The plugin integrates with the hermes-agent-self-evolution optimizer to commit verifiable on-chain learning records and evolved skills directly to an agent's knowledge registry.",
@@ -1604,7 +1709,8 @@
     "generatedAt": "2026-05-19T07:47:26.358Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "pass",
+    "auditedAt": "2026-05-25T09:20:27.055Z"
   },
   "volcengine/OpenViking": {
     "summary": "OpenViking is an open-source context database designed to solve fragmented memory and high token costs in AI agents. It utilizes a file system paradigm to unify memories, resources, and skills into a structured hierarchy accessible via viking:// URIs. The system employs a tiered L0/L1/L2 loading mechanism and recursive directory retrieval to provide precise context while reducing data overhead. As the official memory provider for Hermes Agent, it enables observable context trajectories and automatic session management for long-term memory iteration.",
@@ -1613,11 +1719,13 @@
       "Tiered L0/L1/L2 loading to significantly reduce token consumption",
       "Recursive directory retrieval combining semantic search with structural positioning"
     ],
-    "readmeHash": "34bd9300066d8f98f2d2b5453b0fc6efa1467388d74f8ea80250babe334ea59e",
+    "readmeHash": "",
     "generatedAt": "2026-05-25T08:03:56.828Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:20:30.380Z",
+    "auditNotes": "The following claims in the summary are **NOT supported** by the provided README:\n\n1.  **\"accessible via viking:// URIs\"**: The README mentions a \"file system paradigm\" and \"directory recursive retrieval,\" but it never mentions a specific URI scheme or the `viking://` protocol.\n2.  **\"As the official memory provider for Hermes Agent\"**: There is no mention of \"Hermes Agent\" in the source text.\n\nAll other claims, including the highlights regarding the filesystem paradigm, L0/L1/L2 tiered loading,"
   },
   "supermemoryai/supermemory": {
     "summary": "Supermemory is a memory and context layer for AI agents that prevents information loss between conversations. It uses a custom vector graph engine to automatically extract facts, maintain user profiles, and handle knowledge updates or contradictions. The system combines long-term memory with RAG capabilities to deliver personalized context through a single API. It integrates with major tools like Claude, Cursor, and Hermes Agent to provide persistent memory across different AI interfaces.",
@@ -1626,11 +1734,13 @@
       "Hybrid search combining RAG knowledge bases with personalized conversation context.",
       "Native connectors for Google Drive, Gmail, Notion, GitHub, and OneDrive."
     ],
-    "readmeHash": "350f99ccb8d03305d142e46028478e74c616d7c91f12f9cb65a31372e393f7a1",
+    "readmeHash": "",
     "generatedAt": "2026-05-24T11:48:41.461Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:20:33.853Z",
+    "auditNotes": "Based on the README provided, here are the claims in the summary that are **NOT supported**:\n\n*   **\"custom vector graph engine\"**: While the README mentions a \"memory graph\" and \"single memory structure,\" it never uses the specific term \"vector graph engine.\"\n*   **\"prevents information loss\"**: The README states it \"fixes\" the issue of AI forgetting and \"extracts the important stuff,\" but it does not explicitly claim to \"prevent information loss\" (a technical distinction, as the system is desi"
   },
   "campfirein/byterover-cli": {
     "summary": "ByteRover CLI is a persistent memory provider for AI coding agents that structures project knowledge into a version-controlled context tree. It utilizes a 5-tier retrieval system and a Git-like workflow—including branching, committing, and merging—to manage markdown-based memory. The tool features an interactive REPL, supports over 20 LLM providers, and integrates with the Model Context Protocol (MCP). It allows developers to curate, sync, and share codebase context across teams and various AI editors like Cursor and Claude Code.",
@@ -1639,11 +1749,13 @@
       "Sub-100ms 5-tier retrieval system for long-term conversational memory",
       "Built-in agent tools for code execution, file operations, and search"
     ],
-    "readmeHash": "57ca305e6681f817d45b87db7ecacb1cdd9841b748782e3ff162624585343d17",
+    "readmeHash": "",
     "generatedAt": "2026-05-24T11:48:45.138Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:20:37.166Z",
+    "auditNotes": "The following claims in the summary are **NOT supported** by the provided README:\n\n1.  **\"5-tier retrieval system\"**: The README mentions high accuracy on benchmarks (LoCoMo and LongMemEval-S) and \"knowledge search,\" but it never mentions a \"5-tier\" retrieval architecture.\n2.  **\"Sub-100ms\"**: There are no latency or performance metrics (like \"sub-100ms\") specified in the README.\n3.  **\"markdown-based memory\"**: While the tool manages a \"context tree\" and \"knowledge storage,\" the README does not"
   },
   "yantrikos/yantrikdb-hermes-plugin": {
     "summary": "The yantrikdb-hermes-plugin is a self-maintaining memory provider for Hermes Agent that prevents context loss and constraint dropping in long-running sessions. It utilizes a temporal context graph and a maintenance pass to handle memory lifecycle tasks such as canonicalization, contradiction tracking, and recency-aware ranking. The plugin features explainable retrieval by tagging every recalled memory with a reason for its selection and includes an outcome ledger for agent-authored skills. It operates as an embedded, in-process backend by default, requiring no external server or GPU for local deployment.",
@@ -1652,11 +1764,13 @@
       "Tracks and resolves contradictions through native conflict and supersession primitives",
       "Supports agent-authored skills with a built-in outcome ledger and search"
     ],
-    "readmeHash": "487a7c643314617ed710b57aa4faa27febab23994b8bacf88324e672508bc7e6",
+    "readmeHash": "",
     "generatedAt": "2026-05-24T11:48:49.152Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:20:40.456Z",
+    "auditNotes": "The following claims are **NOT** supported by the provided README:\n\n*   **\"tagging every recalled memory with a reason\"**: The README mentions \"Explainable recall (`why_retrieved` per result)\" and a \"list of scoring reasons,\" but it does not state that these are implemented as **tags**.\n*   **\"resolves contradictions through native... supersession primitives\"**: While the README mentions \"supersession\" as a concept and \"contradiction tracking\" via `conflicts()` and `resolve_conflict()`, it does "
   },
   "Ladybug-Memory/hermes-memory-plugin": {
     "summary": "Hermes Ladybug Memory is a local-first memory provider plugin that enables Hermes agents to store and retrieve information without relying on cloud services or external APIs. It utilizes a columnar embedded graph database to manage typed memory entries, named relationships, and importance-weighted recall. The system prioritizes high-value information using a 1-10 importance scale and supports BM25 keyword search for precise retrieval. Users can also enable optional entity extraction via GLiNER2 to build structured knowledge graphs directly on their local machine.",
@@ -1669,7 +1783,8 @@
     "generatedAt": "2026-05-24T11:48:52.880Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "pass",
+    "auditedAt": "2026-05-25T09:20:43.157Z"
   },
   "MukundaKatta/hermes-agentmemory": {
     "summary": "hermes-agentmemory is a standalone episodic memory plugin for Hermes Agent that prioritizes data integrity and auditability. It utilizes a pull-model approach where memory injection and deletions are performed synchronously, ensuring that forgotten information is completely removed without leaving residual summaries. The plugin generates a detailed trace.jsonl audit log for every operation, allowing users to verify exactly which past events influenced the agent's prompt. By leveraging Claude models for on-demand summarization, it provides a transparent and reversible memory layer for users who require strict control over agent recall.",
@@ -1678,10 +1793,12 @@
       "Generates synchronous audit logs for every memory retrieval operation",
       "Integrates directly with Anthropic Claude for high-quality on-demand summarization"
     ],
-    "readmeHash": "be49221d828b94b1bab306354901846ea4601a8b540e196320208c2da8285e7d",
+    "readmeHash": "",
     "generatedAt": "2026-05-24T11:48:56.624Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass"
+    "audit": "flagged",
+    "auditedAt": "2026-05-25T09:20:47.644Z",
+    "auditNotes": "The following claims in the summary are **NOT supported** by the README:\n\n1.  **\"The plugin generates a detailed trace.jsonl audit log for every operation\"**: The README specifies that the trace log is generated for **prefetch** (retrieval) operations. It does not state that logs are generated for \"every operation\" (such as writes or deletes).\n2.  **\"Ensures immediate and complete deletion of episodic memory records\"**: While the README claims \"deletes are immediate and complete,\" it specifies t"
   }
 }
