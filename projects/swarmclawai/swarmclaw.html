@@ -35,7 +35,7 @@
   "@type": "SoftwareApplication",
   "@id": "https://hermesatlas.com/projects/swarmclawai/swarmclaw#software",
   "name": "swarmclaw",
-  "description": "SwarmClaw is a self-hosted AI agent runtime and multi-agent framework designed to orchestrate autonomous swarms. It utilizes a centralized dashboard to manage agent memory, runtime skills, and delegation across more than 23 LLM providers. The platform supports durable conversation history and a unique learning mechanism that converts reviewed interactions into reusable skills. Users can deploy it as a desktop application, via Docker, or as a global npm package to create complex organizational ch",
+  "description": "SwarmClaw is a self-hosted AI agent runtime and multi-agent framework designed to orchestrate autonomous swarms. It operates by managing agent heartbeats, delegation, and durable memory across more than 23 LLM providers, including Hermes, Ollama, and Anthropic. Users can build complex workflows using a visual protocol builder and conversation-to-skill learning. The platform also integrates with external CLI tools like Claude Code and supports MCP tools for extended functionality.",
   "url": "https://hermesatlas.com/projects/swarmclawai/swarmclaw",
   "codeRepository": "https://github.com/swarmclawai/swarmclaw",
   "applicationCategory": "DeveloperApplication",
@@ -47,13 +47,13 @@
     "name": "swarmclawai",
     "url": "https://github.com/swarmclawai"
   },
-  "dateModified": "2026-05-20T14:07:18.000Z",
+  "dateModified": "2026-05-26T13:53:45.000Z",
   "interactionStatistic": {
     "@type": "InteractionCounter",
     "interactionType": {
       "@type": "LikeAction"
     },
-    "userInteractionCount": 524
+    "userInteractionCount": 526
   },
   "isPartOf": {
     "@id": "https://hermesatlas.com/#website"
@@ -112,11 +112,11 @@
   <p class="project-desc">Open-source self-hosted AI agent runtime and multi-agent framework for autonomous agent swarms. Agent memory, MCP tools, schedules, delegation, and 23+ LLM providers (Claude, GPT, Gemini, OpenRouter, Ollama). A practical Claude Code and LangChain alternative.</p>
 
   <div class="meta-row">
-    <span class="stars">★ 524</span>
+    <span class="stars">★ 526</span>
     <span><span class="meta-label">lang</span>TypeScript</span>
     <span><span class="meta-label">license</span>MIT</span>
     
-    <span><span class="meta-label">updated</span>2026-05-20</span>
+    <span><span class="meta-label">updated</span>2026-05-26</span>
   </div>
 
   <div class="actions">
@@ -131,11 +131,11 @@
 <section class="project-summary">
   <div class="section-label">overview</div>
   <div>
-    <p class="summary-text">SwarmClaw is a self-hosted AI agent runtime and multi-agent framework designed to orchestrate autonomous swarms. It utilizes a centralized dashboard to manage agent memory, runtime skills, and delegation across more than 23 LLM providers. The platform supports durable conversation history and a unique learning mechanism that converts reviewed interactions into reusable skills. Users can deploy it as a desktop application, via Docker, or as a global npm package to create complex organizational charts of interacting agents.</p>
+    <p class="summary-text">SwarmClaw is a self-hosted AI agent runtime and multi-agent framework designed to orchestrate autonomous swarms. It operates by managing agent heartbeats, delegation, and durable memory across more than 23 LLM providers, including Hermes, Ollama, and Anthropic. Users can build complex workflows using a visual protocol builder and conversation-to-skill learning. The platform also integrates with external CLI tools like Claude Code and supports MCP tools for extended functionality.</p>
     <ul class="summary-highlights">
-      <li>Supports 23+ LLM providers including Ollama, OpenAI, and Anthropic.</li>
-      <li>Features durable agent memory and conversation-to-skill learning capabilities.</li>
-      <li>Orchestrates multi-agent swarms with delegation, heartbeats, and scheduling.</li>
+      <li>Orchestrates autonomous swarms with durable memory and delegation</li>
+      <li>Supports 23+ LLM providers including Hermes and local Ollama</li>
+      <li>Visual protocol builder for designing structured multi-agent workflows</li>
     </ul>
   </div>
 </section>
@@ -260,6 +260,13 @@ docker compose up -d --build
 <pre><code class="language-bash">openclaw skills install swarmclaw
 </code></pre>
 <p><a href="https://clawhub.ai/waydelyle/swarmclaw">Browse on ClawHub</a></p>
+<h3>v1.9.36 Highlights</h3>
+<p>Protocol builder visibility release for built-in Structured Sessions.</p>
+<ul>
+<li><strong>Built-in flow inspector.</strong> Built-in protocol templates now open in a full-size visual builder canvas with a read-only template step panel.</li>
+<li><strong>Canvas viewport repair.</strong> Builder routes now claim the full dashboard workspace and refit React Flow after async template loads.</li>
+<li><strong>Regression coverage.</strong> Browser smoke now verifies that the built-in facilitated discussion graph renders with visible flow nodes.</li>
+</ul>
 <h3>v1.9.35 Highlights</h3>
 <p>Installed package build fix for fresh npm-global installs and upgrades.</p>
 <ul>
@@ -572,6 +579,13 @@ OTEL_EXPORTER_OTLP_HEADERS=Authorization=Bearer your-token
 <p>If you need a trace-specific endpoint, set <code>OTEL_EXPORTER_OTLP_TRACES_ENDPOINT</code> directly instead.</p>
 <p>Operational docs: <a href="https://swarmclaw.ai/docs/observability">https://swarmclaw.ai/docs/observability</a></p>
 <h3>Releases</h3>
+<h4>v1.9.36 Highlights</h4>
+<p>Protocol builder visibility release for built-in Structured Sessions.</p>
+<ul>
+<li><strong>Built-in flow inspector.</strong> Built-in protocol templates now open in a full-size visual builder canvas with a read-only template step panel.</li>
+<li><strong>Canvas viewport repair.</strong> Builder routes now claim the full dashboard workspace and refit React Flow after async template loads.</li>
+<li><strong>Regression coverage.</strong> Browser smoke now verifies that the built-in facilitated discussion graph renders with visible flow nodes.</li>
+</ul>
 <h4>v1.9.35 Highlights</h4>
 <p>Installed package build fix for fresh npm-global installs and upgrades.</p>
 <ul>
@@ -776,16 +790,6 @@ OTEL_EXPORTER_OTLP_HEADERS=Authorization=Bearer your-token
 <ul>
 <li><strong>Schedule history ledger.</strong> Schedules now carry a bounded revision history for create, update, archive, restore, skipped, failed, and run-started events.</li>
 <li><strong>History console.</strong> The Schedule Console adds a searchable History tab with revision badges, actor labels, and before/after change summaries.</li>
-<li><strong>API and CLI access.</strong> <code>GET /api/schedules/:id/history</code> and <code>swarmclaw schedules history &lt;id&gt;</code> expose the same timeline for scripts and operator audits.</li>
-<li><strong>Runtime evidence.</strong> Manual runs and scheduler-fired runs append history entries, while storage normalization caps old entries and keeps legacy schedules compatible.</li>
-</ul>
-<h4>v1.9.8 Highlights</h4>
-<p>Bundled release-readiness release: a single operator report that combines eval gates, operations blockers, approvals, and runtime readiness.</p>
-<ul>
-<li><strong>Release readiness report.</strong> <code>/api/quality/release-readiness</code> returns a scored ready/warning/blocked report built from eval regression gates and Operations Pulse evidence.</li>
-<li><strong>Quality Center ship gate.</strong> The Quality overview now shows readiness score, blockers, warnings, checks, and next actions before operators cut a release.</li>
-<li><strong>CLI readiness checks.</strong> <code>swarmclaw operations readiness</code> exposes the same report for scripts and CI.</li>
-<li><strong>Browser coverage.</strong> The e2e smoke now verifies the release-readiness panel on</li>
 </ul>
 <hr>
 <p><em>README truncated. <a href="https://github.com/swarmclawai/swarmclaw#readme">Continue reading on GitHub</a></em></p>
@@ -805,7 +809,7 @@ OTEL_EXPORTER_OTLP_HEADERS=Authorization=Bearer your-token
         <div class="name"><span class="org">builderz-labs /</span> mission-control</div>
       </a>
       <a class="related-row" href="/projects/howdymary/hermes-agent-metaharness">
-        <div class="stars">★ 85</div>
+        <div class="stars">★ 86</div>
         <div class="name"><span class="org">howdymary /</span> hermes-agent-metaharness</div>
       </a>
       <a class="related-row" href="/projects/runtimenoteslabs/gladiator">
@@ -821,7 +825,7 @@ OTEL_EXPORTER_OTLP_HEADERS=Authorization=Bearer your-token
         <div class="name"><span class="org">supermodeltools /</span> bigiron</div>
       </a>
       <a class="related-row" href="/projects/Rainhoole/hermes-agent-acp-skill">
-        <div class="stars">★ 33</div>
+        <div class="stars">★ 34</div>
         <div class="name"><span class="org">Rainhoole /</span> hermes-agent-acp-skill</div>
       </a>
     </div>

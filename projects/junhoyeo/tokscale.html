@@ -35,7 +35,7 @@
   "@type": "SoftwareApplication",
   "@id": "https://hermesatlas.com/projects/junhoyeo/tokscale#software",
   "name": "tokscale",
-  "description": "Tokscale is a high-performance CLI tool and visualization dashboard designed to track token usage and financial costs across various AI coding agents. It works by scanning local data directories, databases, and session logs from supported clients to aggregate consumption metrics into a unified interface. The tool features a native Rust TUI for real-time monitoring and a web-based dashboard for long-term analysis. It supports a wide range of integrations including Hermes Agent, Claude Code, OpenC",
+  "description": "Tokscale is a high-performance CLI tool and visualization dashboard designed to monitor token consumption and costs across various AI coding agents. It functions by analyzing local data files, databases, and API caches from supported clients to aggregate usage statistics. The tool provides a native Rust TUI for cross-platform support and includes a 3D contributions graph for visual analysis. It integrates with a wide range of agents including Hermes Agent, Claude Code, and GitHub Copilot CLI.",
   "url": "https://hermesatlas.com/projects/junhoyeo/tokscale",
   "codeRepository": "https://github.com/junhoyeo/tokscale",
   "applicationCategory": "DeveloperApplication",
@@ -47,13 +47,13 @@
     "name": "junhoyeo",
     "url": "https://github.com/junhoyeo"
   },
-  "dateModified": "2026-05-26T04:32:36.000Z",
+  "dateModified": "2026-05-26T09:12:28.000Z",
   "interactionStatistic": {
     "@type": "InteractionCounter",
     "interactionType": {
       "@type": "LikeAction"
     },
-    "userInteractionCount": 3208
+    "userInteractionCount": 3240
   },
   "isPartOf": {
     "@id": "https://hermesatlas.com/#website"
@@ -131,11 +131,11 @@
 <section class="project-summary">
   <div class="section-label">overview</div>
   <div>
-    <p class="summary-text">Tokscale is a high-performance CLI tool and visualization dashboard designed to track token usage and financial costs across various AI coding agents. It works by scanning local data directories, databases, and session logs from supported clients to aggregate consumption metrics into a unified interface. The tool features a native Rust TUI for real-time monitoring and a web-based dashboard for long-term analysis. It supports a wide range of integrations including Hermes Agent, Claude Code, OpenClaw, and GitHub Copilot CLI.</p>
+    <p class="summary-text">Tokscale is a high-performance CLI tool and visualization dashboard designed to monitor token consumption and costs across various AI coding agents. It functions by analyzing local data files, databases, and API caches from supported clients to aggregate usage statistics. The tool provides a native Rust TUI for cross-platform support and includes a 3D contributions graph for visual analysis. It integrates with a wide range of agents including Hermes Agent, Claude Code, and GitHub Copilot CLI.</p>
     <ul class="summary-highlights">
-      <li>Tracks token consumption and costs across multiple AI coding agents</li>
-      <li>Features a native Rust TUI for cross-platform usage monitoring</li>
-      <li>Supports Hermes Agent, Claude Code, Gemini, and Cursor integrations</li>
+      <li>Tracks token usage and costs across multiple AI coding agents</li>
+      <li>Native Rust TUI with cross-platform support</li>
+      <li>Visualizes data via a 3D contributions graph and dashboard</li>
     </ul>
   </div>
 </section>
@@ -765,7 +765,8 @@ tokscale models --week --client claude --json
 tokscale monthly --month --benchmark
 </code></pre>
 <blockquote>
-<p><strong>Note</strong>: Date filters use your local timezone. Both <code>--since</code> and <code>--until</code> are inclusive.</p>
+<p><strong>Note</strong>: Date filters use your local timezone. Both <code>--since</code> and <code>--until</code> are inclusive.
+<strong>v2.2.0 note</strong>: Session active-time daily buckets also use your local timezone, so users outside UTC may see active-time dates align with local token/cost report days instead of UTC day boundaries.</p>
 </blockquote>
 <h4>Pricing Lookup</h4>
 <p>Look up real-time pricing for any model:</p>
@@ -1455,25 +1456,8 @@ cd packages/cli &amp;&amp; bun src/index.ts
 cd packages/cli &amp;&amp; bun src/index.ts --light
 </code></pre>
 <details>
-<summary>Advanced Development</summary>
+<summary>Adva
 
-<h4>Project Scripts</h4>
-<table>
-<thead>
-<tr>
-<th>Script</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>bun run cli</code></td>
-<td>Run CLI in development mode (TUI with Bun)</td>
-</tr>
-<tr>
-<td><code>bun run build:core</code></td>
-<td>Build native R</td>
-</tr>
-</tbody></table>
 <hr>
 <p><em>README truncated. <a href="https://github.com/junhoyeo/tokscale#readme">Continue reading on GitHub</a></em></p>
 
@@ -1488,15 +1472,15 @@ cd packages/cli &amp;&amp; bun src/index.ts --light
   <div>
     <div class="related-list">
       <a class="related-row" href="/projects/joeynyc/hermes-skins">
-        <div class="stars">★ 396</div>
+        <div class="stars">★ 401</div>
         <div class="name"><span class="org">joeynyc /</span> hermes-skins</div>
       </a>
       <a class="related-row" href="/projects/AlexAI-MCP/hermes-CCC">
-        <div class="stars">★ 108</div>
+        <div class="stars">★ 109</div>
         <div class="name"><span class="org">AlexAI-MCP /</span> hermes-CCC</div>
       </a>
       <a class="related-row" href="/projects/unmodeled-tyler/vessel-browser">
-        <div class="stars">★ 81</div>
+        <div class="stars">★ 82</div>
         <div class="name"><span class="org">unmodeled-tyler /</span> vessel-browser</div>
       </a>
       <a class="related-row" href="/projects/Abruptive/Ankh.md">

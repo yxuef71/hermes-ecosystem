@@ -35,7 +35,7 @@
   "@type": "SoftwareApplication",
   "@id": "https://hermesatlas.com/projects/nesquena/hermes-webui#software",
   "name": "hermes-webui",
-  "description": "Hermes WebUI provides a browser-based interface for the Hermes Agent, offering a graphical alternative to the standard terminal and messaging app interactions. Built with Python and vanilla JavaScript, the application requires no build steps or frameworks and maintains full feature parity with the CLI. The interface features a three-panel layout for session management, chat, and workspace file browsing, including a context ring for monitoring token usage. It allows users to manage persistent mem",
+  "description": "Hermes WebUI provides a lightweight, browser-based interface for the Hermes Agent, offering a graphical alternative to the standard command-line environment. Built with Python and vanilla JavaScript, it maintains full feature parity with the CLI without requiring complex build steps or frameworks. The interface features a three-panel layout for managing chat sessions, workspace files, and agent controls while displaying real-time token usage. It allows users to securely access their self-hosted ",
   "url": "https://hermesatlas.com/projects/nesquena/hermes-webui",
   "codeRepository": "https://github.com/nesquena/hermes-webui",
   "applicationCategory": "DesktopEnhancementApplication",
@@ -47,13 +47,13 @@
     "name": "nesquena",
     "url": "https://github.com/nesquena"
   },
-  "dateModified": "2026-05-25T17:56:11.000Z",
+  "dateModified": "2026-05-27T05:14:02.000Z",
   "interactionStatistic": {
     "@type": "InteractionCounter",
     "interactionType": {
       "@type": "LikeAction"
     },
-    "userInteractionCount": 8724
+    "userInteractionCount": 8886
   },
   "isPartOf": {
     "@id": "https://hermesatlas.com/#website"
@@ -112,11 +112,11 @@
   <p class="project-desc">Hermes WebUI: The best way to use Hermes Agent from the web or from your phone!</p>
 
   <div class="meta-row">
-    <span class="stars">★ 8.7K</span>
+    <span class="stars">★ 8.9K</span>
     <span><span class="meta-label">lang</span>Python</span>
     <span><span class="meta-label">license</span>MIT</span>
     
-    <span><span class="meta-label">updated</span>2026-05-25</span>
+    <span><span class="meta-label">updated</span>2026-05-27</span>
   </div>
 
   <div class="actions">
@@ -131,11 +131,11 @@
 <section class="project-summary">
   <div class="section-label">overview</div>
   <div>
-    <p class="summary-text">Hermes WebUI provides a browser-based interface for the Hermes Agent, offering a graphical alternative to the standard terminal and messaging app interactions. Built with Python and vanilla JavaScript, the application requires no build steps or frameworks and maintains full feature parity with the CLI. The interface features a three-panel layout for session management, chat, and workspace file browsing, including a context ring for monitoring token usage. It allows users to manage persistent memory, scheduled jobs, and agent skills through a centralized control center.</p>
+    <p class="summary-text">Hermes WebUI provides a lightweight, browser-based interface for the Hermes Agent, offering a graphical alternative to the standard command-line environment. Built with Python and vanilla JavaScript, it maintains full feature parity with the CLI without requiring complex build steps or frameworks. The interface features a three-panel layout for managing chat sessions, workspace files, and agent controls while displaying real-time token usage. It allows users to securely access their self-hosted agent's persistent memory, skills, and scheduled jobs from any device.</p>
     <ul class="summary-highlights">
       <li>Three-panel layout for chat, sessions, and workspace file browsing</li>
-      <li>Full feature parity with Hermes CLI using vanilla JavaScript</li>
-      <li>Integrated context ring for real-time token usage monitoring</li>
+      <li>Zero-build architecture using only Python and vanilla JavaScript</li>
+      <li>Full parity with Hermes CLI features and persistent memory</li>
     </ul>
   </div>
 </section>
@@ -306,6 +306,34 @@ python3 bootstrap.py
 ./ctl.sh stop
 </code></pre>
 <p><code>ctl.sh start</code> runs the bootstrap in foreground/no-browser mode behind the daemon wrapper, writes logs to <code>~/.hermes/webui.log</code>, and respects <code>.env</code> plus inline overrides such as <code>HERMES_WEBUI_HOST=0.0.0.0 ./ctl.sh start</code>.</p>
+<h4>Optional session recall prefill</h4>
+<p>WebUI can attach ephemeral prefill messages to new browser-originated
+agent turns. This is useful when a deployment already has a local recall or
+router script for Joplin, Obsidian, Notion, llm-wiki, or another third-party
+notes source and wants browser chat to know where durable context lives.</p>
+<p>Prefer a compact router-style prefill (for example, &quot;Joplin has the durable
+project context; use the available notes/search tools before answering
+detail-dependent questions&quot;) instead of dumping the full note corpus into every
+new browser session. The prefill should point the agent toward retrieval; the
+notes/search tools should provide the specific facts on demand.</p>
+<p>Static JSON remains supported through <code>prefill_messages_file</code> or
+<code>HERMES_PREFILL_MESSAGES_FILE</code>. For dynamic recall, opt in explicitly with a
+WebUI-specific script hook:</p>
+<pre><code class="language-yaml">webui_prefill_messages_script:
+  - python3
+  - /path/to/notes_recall.py
+webui_prefill_messages_script_timeout: 5
+</code></pre>
+<p>or:</p>
+<pre><code class="language-bash">HERMES_WEBUI_PREFILL_MESSAGES_SCRIPT=&quot;python3 /path/to/notes_recall.py&quot; \
+HERMES_WEBUI_PREFILL_MESSAGES_SCRIPT_TIMEOUT=5 \
+./ctl.sh restart
+</code></pre>
+<p>The script may print either an OpenAI-style JSON message list, a JSON object with
+a <code>messages</code> list, or plain text; plain text is wrapped as one <code>system</code> prefill
+message. Script output is capped at 256 KiB before parsing. The browser only
+receives a compact status event (<code>source</code>, <code>label</code>, message count, and redacted
+errors), never the prefill message bodies.</p>
 <p>The bootstrap will:</p>
 <ol>
 <li>Detect Hermes Agent and, if missing, attempt the official installer (<code>curl -fsSL https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh | bash</code>).</li>
@@ -668,6 +696,7 @@ Production data and real cron jobs are never touched. Current snapshot:
 <li>Directory tree with expand/collapse (single-click toggles, double-click navigates)</li>
 <li>Breadcrumb navigation with clickable path segments</li>
 <li>Preview text, code, Markdown (rendered), and images inline</li>
+<li>Chat links using <code>workspace://path/to/file</code> open files in the right-side preview pane</li>
 <li>Edit, create, delete, and rename files; create folders</li>
 <li>Binary file download (auto-detected from server)</li>
 <li>File preview auto-closes on directory navigation (with unsaved-edit guard)</li>
@@ -968,7 +997,7 @@ Configurable assistant display name, thinking/reasoning block display, and a log
         <div class="name"><span class="org">outsourc-e /</span> hermes-workspace</div>
       </a>
       <a class="related-row" href="/projects/fathah/hermes-desktop">
-        <div class="stars">★ 7.3K</div>
+        <div class="stars">★ 7.9K</div>
         <div class="name"><span class="org">fathah /</span> hermes-desktop</div>
       </a>
       <a class="related-row" href="/projects/sanchomuzax/hermes-webui">
@@ -976,11 +1005,11 @@ Configurable assistant display name, thinking/reasoning block display, and a log
         <div class="name"><span class="org">sanchomuzax /</span> hermes-webui</div>
       </a>
       <a class="related-row" href="/projects/Euraika-Labs/pan-ui">
-        <div class="stars">★ 68</div>
+        <div class="stars">★ 70</div>
         <div class="name"><span class="org">Euraika-Labs /</span> pan-ui</div>
       </a>
       <a class="related-row" href="/projects/xaspx/hermes-control-interface">
-        <div class="stars">★ 704</div>
+        <div class="stars">★ 707</div>
         <div class="name"><span class="org">xaspx /</span> hermes-control-interface</div>
       </a>
       <a class="related-row" href="/projects/dodo-reach/hermes-desktop">

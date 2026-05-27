@@ -35,7 +35,7 @@
   "@type": "SoftwareApplication",
   "@id": "https://hermesatlas.com/projects/AMAP-ML/SkillClaw#software",
   "name": "SkillClaw",
-  "description": "SkillClaw is an agentic skill management system that enables AI agents to evolve their capabilities through real-world interactions. It operates as a background process that automatically deduplicates, merges, and improves skill libraries based on session logs across multiple agents and devices. The system creates a unified evolution loop where experience from different environments—such as home, school, or work—compounds into a single shared library. It natively integrates with Hermes, Claude C",
+  "description": "SkillClaw is a skill management framework that enables AI agents to evolve their capabilities through real-world interactions. It functions by running a background evolution loop that automatically deduplicates, improves, and merges skills across different sessions and devices. The system creates a unified skill library that synchronizes experience between multiple agents and users, ensuring that improvements made by one instance are available to all others. It natively integrates with the Herme",
   "url": "https://hermesatlas.com/projects/AMAP-ML/SkillClaw",
   "codeRepository": "https://github.com/AMAP-ML/SkillClaw",
   "applicationCategory": "DeveloperApplication",
@@ -47,13 +47,13 @@
     "name": "AMAP-ML",
     "url": "https://github.com/AMAP-ML"
   },
-  "dateModified": "2026-05-22T09:01:58.000Z",
+  "dateModified": "2026-05-26T11:31:05.000Z",
   "interactionStatistic": {
     "@type": "InteractionCounter",
     "interactionType": {
       "@type": "LikeAction"
     },
-    "userInteractionCount": 1482
+    "userInteractionCount": 1504
   },
   "isPartOf": {
     "@id": "https://hermesatlas.com/#website"
@@ -116,7 +116,7 @@
     <span><span class="meta-label">lang</span>Python</span>
     <span><span class="meta-label">license</span>MIT</span>
     
-    <span><span class="meta-label">updated</span>2026-05-22</span>
+    <span><span class="meta-label">updated</span>2026-05-26</span>
   </div>
 
   <div class="actions">
@@ -131,11 +131,11 @@
 <section class="project-summary">
   <div class="section-label">overview</div>
   <div>
-    <p class="summary-text">SkillClaw is an agentic skill management system that enables AI agents to evolve their capabilities through real-world interactions. It operates as a background process that automatically deduplicates, merges, and improves skill libraries based on session logs across multiple agents and devices. The system creates a unified evolution loop where experience from different environments—such as home, school, or work—compounds into a single shared library. It natively integrates with Hermes, Claude Code, and various OpenAI-compatible agents to facilitate collective skill growth within teams.</p>
+    <p class="summary-text">SkillClaw is a skill management framework that enables AI agents to evolve their capabilities through real-world interactions. It functions by running a background evolution loop that automatically deduplicates, improves, and merges skills across different sessions and devices. The system creates a unified skill library that synchronizes experience between multiple agents and users, ensuring that improvements made by one instance are available to all others. It natively integrates with the Hermes Agent ecosystem and supports various other platforms including OpenClaw, QwenPaw, and OpenAI-compatible APIs.</p>
     <ul class="summary-highlights">
-      <li>Automates skill deduplication and quality improvement from interaction logs</li>
-      <li>Unifies skill libraries across multiple agents, devices, and users</li>
-      <li>Natively integrates with Hermes, Claude Code, and OpenAI-compatible APIs</li>
+      <li>Automates skill deduplication and quality improvement through background evolution loops</li>
+      <li>Unifies skill libraries across multiple agents, devices, and user teams</li>
+      <li>Natively integrates with Hermes, OpenClaw, and OpenAI-compatible APIs</li>
     </ul>
   </div>
 </section>
@@ -383,6 +383,13 @@ skillclaw start --daemon
 skillclaw skills pull
 </code></pre>
 <p>If your team uses a mounted local shared directory instead of OSS/S3, use <code>sharing.backend local</code> plus <code>sharing.local_root /path/to/shared/root</code> instead of the remote storage keys.</p>
+<p>To store skill assets in Nacos while keeping session and validation artifacts in the existing shared storage, set a
+skill backend override:</p>
+<pre><code class="language-bash">skillclaw config sharing.backend oss
+skillclaw config sharing.skill_backend nacos
+skillclaw config sharing.nacos_server http://nacos.example.com
+</code></pre>
+<p>When <code>sharing.skill_backend</code> is empty, SkillClaw keeps the legacy behavior and uses <code>sharing.backend</code> for skill assets.</p>
 <p>When you join a shared group:</p>
 <ul>
 <li>you still run only the local client proxy on your machine</li>
@@ -568,7 +575,7 @@ skillclaw skills list-remote   # browse shared skills
   <div>
     <div class="related-list">
       <a class="related-row" href="/projects/mukul975/Anthropic-Cybersecurity-Skills">
-        <div class="stars">★ 9.5K</div>
+        <div class="stars">★ 10.4K</div>
         <div class="name"><span class="org">mukul975 /</span> Anthropic-Cybersecurity-Skills</div>
       </a>
       <a class="related-row" href="/projects/conorbronsdon/avoid-ai-writing">
@@ -580,7 +587,7 @@ skillclaw skills list-remote   # browse shared skills
         <div class="name"><span class="org">wondelai /</span> skills</div>
       </a>
       <a class="related-row" href="/projects/DougTrajano/pydantic-ai-skills">
-        <div class="stars">★ 299</div>
+        <div class="stars">★ 300</div>
         <div class="name"><span class="org">DougTrajano /</span> pydantic-ai-skills</div>
       </a>
       <a class="related-row" href="/projects/Agents365-ai/drawio-skill">
@@ -592,7 +599,7 @@ skillclaw skills list-remote   # browse shared skills
         <div class="name"><span class="org">smartcontractkit /</span> chainlink-agent-skills</div>
       </a>
       <a class="related-row" href="/projects/tlehman/litprog-skill">
-        <div class="stars">★ 155</div>
+        <div class="stars">★ 156</div>
         <div class="name"><span class="org">tlehman /</span> litprog-skill</div>
       </a>
       <a class="related-row" href="/projects/esaradev/icarus-plugin">
