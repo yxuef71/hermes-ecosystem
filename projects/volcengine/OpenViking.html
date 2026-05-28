@@ -35,7 +35,7 @@
   "@type": "SoftwareApplication",
   "@id": "https://hermesatlas.com/projects/volcengine/OpenViking#software",
   "name": "OpenViking",
-  "description": "OpenViking is an open-source context database designed to manage the fragmented memories, resources, and skills of AI agents. It replaces traditional flat vector storage with a file system paradigm that organizes agent context into a structured directory. This architecture utilizes a tiered L0/L1/L2 loading system to provide on-demand context retrieval while reducing token consumption. The system also features visualized retrieval trajectories and automatic session management to improve the obse",
+  "description": "OpenViking is an open-source context database designed to manage fragmented memories, resources, and skills for AI agents. It utilizes a filesystem paradigm with viking:// URIs and a tiered L0/L1/L2 loading structure to provide on-demand context retrieval. The system features directory recursive retrieval and automated session management to extract long-term memory from interactions. Benchmarks show it significantly reduces token consumption and latency while improving task accuracy for agents l",
   "url": "https://hermesatlas.com/projects/volcengine/OpenViking",
   "codeRepository": "https://github.com/volcengine/OpenViking",
   "applicationCategory": "UtilitiesApplication",
@@ -47,13 +47,13 @@
     "name": "volcengine",
     "url": "https://github.com/volcengine"
   },
-  "dateModified": "2026-05-27T12:27:01.000Z",
+  "dateModified": "2026-05-28T06:07:18.000Z",
   "interactionStatistic": {
     "@type": "InteractionCounter",
     "interactionType": {
       "@type": "LikeAction"
     },
-    "userInteractionCount": 24773
+    "userInteractionCount": 24803
   },
   "isPartOf": {
     "@id": "https://hermesatlas.com/#website"
@@ -116,7 +116,7 @@
     <span><span class="meta-label">lang</span>Python</span>
     <span><span class="meta-label">license</span>AGPL-3.0</span>
     
-    <span><span class="meta-label">updated</span>2026-05-27</span>
+    <span><span class="meta-label">updated</span>2026-05-28</span>
   </div>
 
   <div class="actions">
@@ -131,11 +131,11 @@
 <section class="project-summary">
   <div class="section-label">overview</div>
   <div>
-    <p class="summary-text">OpenViking is an open-source context database designed to manage the fragmented memories, resources, and skills of AI agents. It replaces traditional flat vector storage with a file system paradigm that organizes agent context into a structured directory. This architecture utilizes a tiered L0/L1/L2 loading system to provide on-demand context retrieval while reducing token consumption. The system also features visualized retrieval trajectories and automatic session management to improve the observability and iteration of agent memory.</p>
+    <p class="summary-text">OpenViking is an open-source context database designed to manage fragmented memories, resources, and skills for AI agents. It utilizes a filesystem paradigm with viking:// URIs and a tiered L0/L1/L2 loading structure to provide on-demand context retrieval. The system features directory recursive retrieval and automated session management to extract long-term memory from interactions. Benchmarks show it significantly reduces token consumption and latency while improving task accuracy for agents like Hermes and Claude Code.</p>
     <ul class="summary-highlights">
-      <li>Unifies agent memory and skills using a file system paradigm</li>
-      <li>Reduces token costs via tiered L0/L1/L2 context loading</li>
-      <li>Enables recursive directory retrieval combined with semantic search</li>
+      <li>Unified context management using a hierarchical filesystem paradigm</li>
+      <li>Tiered L0/L1/L2 loading reduces token usage by up to 91%</li>
+      <li>Visualized retrieval trajectories for debugging agent memory chains</li>
     </ul>
   </div>
 </section>
@@ -188,6 +188,224 @@
 <li><strong>Automatic Session Management</strong> → <strong>Context Self-Iteration</strong>: Automatically compresses content, resource references, tool calls, etc., in conversations, extracting long-term memory, making the Agent smarter with use.</li>
 </ul>
 <hr>
+<h3>Evaluation Highlights</h3>
+<p>OpenViking 1.0 has been evaluated across three scenarios: long-conversation user memory, agent experience memory, and knowledge-base QA.</p>
+<h4>1. User Memory on LoCoMo</h4>
+<p>On the LoCoMo benchmark, OpenViking improves long-context QA accuracy while reducing both latency and token usage across multiple agent integrations:</p>
+<table>
+<thead>
+<tr>
+<th>Integration</th>
+<th>Accuracy</th>
+<th>Avg. Query Time</th>
+<th>Total Input Tokens</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>OpenClaw + native memory</td>
+<td>24.20%</td>
+<td>95.14s</td>
+<td>392,559,404</td>
+</tr>
+<tr>
+<td>OpenClaw + OpenViking</td>
+<td><strong>82.08%</strong></td>
+<td>38.8s</td>
+<td>37,423,456</td>
+</tr>
+<tr>
+<td>Hermes native memory</td>
+<td>33.38%</td>
+<td>82.4s</td>
+<td>79,228,398</td>
+</tr>
+<tr>
+<td>Hermes + OpenViking</td>
+<td><strong>82.86%</strong></td>
+<td><strong>27.9s</strong></td>
+<td>52,026,755</td>
+</tr>
+<tr>
+<td>Claude Code auto-memory</td>
+<td>57.21%</td>
+<td>49.1s</td>
+<td>353,306,422</td>
+</tr>
+<tr>
+<td>Claude Code + OpenViking</td>
+<td><strong>80.32%</strong></td>
+<td><strong>20.4s</strong></td>
+<td>129,968,899</td>
+</tr>
+</tbody></table>
+<h4>1.2 Key Efficiency Improvements</h4>
+<table>
+<thead>
+<tr>
+<th>Agent</th>
+<th>Accuracy Improvement</th>
+<th>Latency Reduction</th>
+<th>Token Reduction</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>OpenClaw</td>
+<td>24.20% → 82.08% (+3.39×)</td>
+<td>-59.22%</td>
+<td><strong>-91.0%</strong></td>
+</tr>
+<tr>
+<td>Hermes</td>
+<td>33.38% → 82.86% (+2.48×)</td>
+<td>-66.10%</td>
+<td>-34.3%</td>
+</tr>
+<tr>
+<td>Claude Code</td>
+<td>57.21% → 80.32% (+1.40×)</td>
+<td>-58.45%</td>
+<td>-63.2%</td>
+</tr>
+</tbody></table>
+<h4>2. Agent Experience Memory on tau2-bench</h4>
+<p>For multi-turn agent tasks on tau2-bench, OpenViking&#39;s experience memory improves task success in both retail and airline domains:</p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Retail Accuracy</th>
+<th>Airline Accuracy</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>LLM without memory</td>
+<td>70.94%</td>
+<td>54.38%</td>
+</tr>
+<tr>
+<td>LLM + OpenViking experience memory</td>
+<td><strong>77.81%</strong> (+6.87pp)</td>
+<td><strong>66.25%</strong> (+11.87pp)</td>
+</tr>
+</tbody></table>
+<h4>3. Knowledge Base QA on HotpotQA</h4>
+<p>On multi-hop RAG tasks from HotpotQA, increasing OpenViking retrieval from top-5 to top-20 delivers the highest accuracy in this comparison while keeping retrieval latency low:</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Retrieval Pattern</th>
+<th>Accuracy</th>
+<th>Tokens / QA</th>
+<th>Latency / QA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Naive RAG</td>
+<td>Vector retrieval</td>
+<td>62.50%</td>
+<td>1,290</td>
+<td><strong>0.11s</strong></td>
+</tr>
+<tr>
+<td>HippoRAG 2</td>
+<td>Vector + knowledge graph</td>
+<td>61.00%</td>
+<td>726</td>
+<td>20s</td>
+</tr>
+<tr>
+<td>LightRAG</td>
+<td>Vector + knowledge graph</td>
+<td>89.00%</td>
+<td>28,443</td>
+<td>75s</td>
+</tr>
+<tr>
+<td>LangChain SQL (Agent)</td>
+<td>SQL agent</td>
+<td>78.00%</td>
+<td>4,776</td>
+<td>132s</td>
+</tr>
+<tr>
+<td>OpenViking (top-5)</td>
+<td>Vector retrieval</td>
+<td>72.75%</td>
+<td>3,154</td>
+<td>0.22s</td>
+</tr>
+<tr>
+<td>OpenViking (top-20)</td>
+<td>Vector retrieval</td>
+<td><strong>91.00%</strong></td>
+<td>12,533</td>
+<td>0.23s</td>
+</tr>
+<tr>
+<td>Nanobot + OpenViking (Agent)</td>
+<td>Vector retrieval + Agent</td>
+<td>87.00%</td>
+<td>71,300</td>
+<td>61.6s</td>
+</tr>
+</tbody></table>
+<h4>3.2 Single-turn RAG Across 5 Open-source Datasets</h4>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Retrieval Pattern</th>
+<th>Average Accuracy</th>
+<th>Indexing Tokens</th>
+<th>Tokens / QA</th>
+<th>Retrieval Latency</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Naive RAG</td>
+<td>Vector retrieval</td>
+<td>53.93%</td>
+<td>2,755,356</td>
+<td>1,435</td>
+<td><strong>0.13s</strong></td>
+</tr>
+<tr>
+<td>PageIndex</td>
+<td>Vector + tree structure</td>
+<td>36.75%</td>
+<td>5,609,206</td>
+<td>710,480</td>
+<td>84.60s</td>
+</tr>
+<tr>
+<td>HippoRAG 2</td>
+<td>Vector + knowledge graph</td>
+<td>44.50%</td>
+<td>124,963,618</td>
+<td><strong>637</strong></td>
+<td>18.83s</td>
+</tr>
+<tr>
+<td>LightRAG</td>
+<td>Vector + knowledge graph</td>
+<td><strong>76.00%</strong></td>
+<td>62,705,469</td>
+<td>27,035</td>
+<td>9.19s</td>
+</tr>
+<tr>
+<td><strong>OpenViking</strong></td>
+<td><strong>Vector retrieval</strong></td>
+<td><strong>66.87%</strong></td>
+<td><strong>8,671,538</strong></td>
+<td><strong>3,060</strong></td>
+<td><strong>0.19s</strong></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Datasets: FinanceBench, NaturalQuestions, ClapNQ, Qasper, and SyllabusQA. OpenViking reaches 66.87% average accuracy with very low retrieval latency (0.19s), while indexing cost is only 13.8% of LightRAG.</p>
+</blockquote>
 <h3>Quick Start</h3>
 <h4>Prerequisites</h4>
 <p>Before starting with OpenViking, please ensure your environment meets the following requirements:</p>
@@ -650,56 +868,6 @@ ov chat
 <p>🚀 <strong>Deploy OpenViking on Cloud</strong>:
 To ensure optimal storage performance and data security, we recommend deploying on <strong>Volcengine Elastic Compute Service (ECS)</strong> using the <strong>veLinux</strong> operating system. We have prepared a detailed step-by-step guide to get you started quickly.</p>
 <p>👉 <strong><a href="https://github.com/volcengine/OpenViking/blob/main/docs/en/getting-started/03-quickstart-server.md">View: Server Deployment &amp; ECS Setup Guide</a></strong></p>
-<h3>OpenClaw Context Plugin Details</h3>
-<ul>
-<li>Test Dataset: Effect testing based on LoCoMo10 (<a href="https://github.com/snap-research/locomo">https://github.com/snap-research/locomo</a>) long-range dialogues (1,540 cases in total after removing category5 without ground truth)</li>
-<li>Experimental Groups: Since users may not disable OpenClaw&#39;s native memory when using OpenViking, we added experimental groups with native memory enabled or disabled</li>
-<li>OpenViking Version: 0.1.18</li>
-<li>Model: seed-2.0-code</li>
-<li>Evaluation Script: <a href="https://github.com/ZaynJarvis/openclaw-eval/tree/main">https://github.com/ZaynJarvis/openclaw-eval/tree/main</a></li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>Experimental Group</th>
-<th>Task Completion Rate</th>
-<th>Cost: Input Tokens (Total)</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>OpenClaw(memory-core)</td>
-<td>35.65%</td>
-<td>24,611,530</td>
-</tr>
-<tr>
-<td>OpenClaw + LanceDB (-memory-core)</td>
-<td>44.55%</td>
-<td>51,574,530</td>
-</tr>
-<tr>
-<td>OpenClaw + OpenViking Plugin (-memory-core)</td>
-<td>52.08%</td>
-<td>4,264,396</td>
-</tr>
-<tr>
-<td>OpenClaw + OpenViking Plugin (+memory-core)</td>
-<td>51.23%</td>
-<td>2,099,622</td>
-</tr>
-</tbody></table>
-<ul>
-<li>Experimental Conclusions:
-After integrating OpenViking:</li>
-</ul>
-<ul>
-<li>With native memory enabled: 43% improvement over original OpenClaw with 91% reduction in input token cost; 15% improvement over LanceDB with 96% reduction in input token cost.</li>
-<li>With native memory disabled: 49% improvement over original OpenClaw with 83% reduction in input token cost; 17% improvement over LanceDB with 92% reduction in input token cost.</li>
-</ul>
-<p>👉 <strong><a href="https://github.com/volcengine/OpenViking/blob/main/examples/openclaw-plugin/README.md">View: OpenClaw Context Plugin</a></strong></p>
-<p>👉 <strong><a href="https://github.com/volcengine/OpenViking/blob/main/examples/opencode-memory-plugin/README.md">View: OpenCode Memory Plugin Example</a></strong></p>
-<p>👉 <strong><a href="https://github.com/volcengine/OpenViking/blob/main/examples/claude-code-memory-plugin/README.md">View: Claude Code Memory Plugin Example</a></strong></p>
-<p>👉 <strong><a href="https://github.com/volcengine/OpenViking/blob/main/docs/en/agent-integrations/07-langchain-langgraph.md">View: LangChain / LangGraph Integration</a></strong></p>
-<p>--</p>
 <h3>Core Concepts</h3>
 <p>After running the first example, let&#39;s dive into the design philosophy of OpenViking. These five core concepts correspond one-to-one with the solutions mentioned earlier, together building a complete context management system:</p>
 <h4>1. Filesystem Management Paradigm → Solves Fragmentation</h4>
@@ -821,7 +989,7 @@ For vulnerability reporting and supported versions, see <a href="https://github.
         <div class="name"><span class="org">mem0ai /</span> mem0</div>
       </a>
       <a class="related-row" href="/projects/vectorize-io/hindsight">
-        <div class="stars">★ 14.8K</div>
+        <div class="stars">★ 14.9K</div>
         <div class="name"><span class="org">vectorize-io /</span> hindsight</div>
       </a>
       <a class="related-row" href="/projects/greyhaven-ai/autocontext">
@@ -829,7 +997,7 @@ For vulnerability reporting and supported versions, see <a href="https://github.
         <div class="name"><span class="org">greyhaven-ai /</span> autocontext</div>
       </a>
       <a class="related-row" href="/projects/elkimek/honcho-self-hosted">
-        <div class="stars">★ 267</div>
+        <div class="stars">★ 268</div>
         <div class="name"><span class="org">elkimek /</span> honcho-self-hosted</div>
       </a>
       <a class="related-row" href="/projects/yoloshii/ClawMem">
@@ -845,7 +1013,7 @@ For vulnerability reporting and supported versions, see <a href="https://github.
         <div class="name"><span class="org">plur-ai /</span> plur</div>
       </a>
       <a class="related-row" href="/projects/amanning3390/flowstate-qmd">
-        <div class="stars">★ 27</div>
+        <div class="stars">★ 28</div>
         <div class="name"><span class="org">amanning3390 /</span> flowstate-qmd</div>
       </a>
     </div>

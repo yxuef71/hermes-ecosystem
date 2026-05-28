@@ -147,18 +147,17 @@
     "audit": "pass"
   },
   "conorbronsdon/avoid-ai-writing": {
-    "summary": "Avoid-ai-writing is a portable skill for AI agents designed to audit and rewrite text to eliminate detectable machine-generated patterns. It utilizes a structured two-pass process that identifies 42 specific pattern categories and applies a 109-entry word replacement table across three severity tiers. Users can choose between a full rewrite mode that fixes issues or a detection-only mode for auditing content without altering the source. The project is compatible with Hermes, Claude Code, and OpenClaw, providing a standardized way to improve text naturalness across different agentic platforms.",
+    "summary": "avoid-ai-writing is a portable writing skill designed to audit and remove detectable AI writing patterns from content. It utilizes a structured two-pass detection system and a 109-entry tiered word replacement table to identify and fix \"AI-isms.\" The tool supports both a rewrite mode for active editing and a detect-only mode for auditing. It is compatible with agentskills.io-compatible agents, including Hermes, Claude Code, and OpenClaw.",
     "highlights": [
-      "Identifies 42 distinct AI writing patterns and structural tells",
-      "Uses a 109-entry tiered word replacement table for plain language",
-      "Performs a second-pass audit to catch lingering machine-generated patterns"
+      "Two-pass audit to catch lingering AI patterns after rewriting",
+      "Tiered vocabulary table and 42 distinct pattern categories",
+      "Supports both rewrite and detection-only operational modes"
     ],
-    "readmeHash": "578e0b7127014993395425613a1a24c5d62b5acb9aefea4f4a5f072fba8aea0e",
-    "generatedAt": "2026-05-21T07:47:25.302Z",
+    "readmeHash": "bb9f695aa9fe96b4b5840532cbccc859d82f6530b992614d8ff49e9320f2b300",
+    "generatedAt": "2026-05-28T07:48:31.782Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
-    "audit": "pass",
-    "auditedAt": "2026-05-25T09:14:19.228Z"
+    "audit": "pass"
   },
   "wondelai/skills": {
     "summary": "Wondel.ai Skills is a cross-platform library of agent capabilities designed for Claude Code and agentskills.io-compatible environments. It provides pre-configured skill collections based on established industry frameworks, such as Jobs to Be Done, Clean Code, and Lean Startup methodology. Users can install these skills via the Claude Code marketplace or a dedicated CLI to equip AI agents with specialized knowledge in software architecture, UX design, and product strategy. The project bridges the gap between raw LLM capabilities and structured professional methodologies through modular, installable plugins.",
@@ -1201,14 +1200,14 @@
     "auditedAt": "2026-05-25T09:18:33.485Z"
   },
   "nesquena/hermes-webui": {
-    "summary": "Hermes WebUI provides a lightweight, browser-based interface for the Hermes Agent, offering a graphical alternative to the standard command-line environment. Built with Python and vanilla JavaScript, it maintains full feature parity with the CLI without requiring complex build steps or frameworks. The interface features a three-panel layout for managing chat sessions, workspace files, and agent controls while displaying real-time token usage. It allows users to securely access their self-hosted agent's persistent memory, skills, and scheduled jobs from any device.",
+    "summary": "Hermes WebUI is a lightweight, browser-based interface for the Hermes Agent that provides a graphical alternative to the standard terminal experience. Built with Python and vanilla JavaScript, it maintains full parity with CLI features without requiring complex build steps or frameworks. The interface features a three-panel layout for managing sessions, chat interactions, and workspace files while displaying real-time token usage via a context ring. It allows users to access their agent's persistent memory, skills, and scheduled jobs through a secure web environment.",
     "highlights": [
-      "Three-panel layout for chat, sessions, and workspace file browsing",
-      "Zero-build architecture using only Python and vanilla JavaScript",
-      "Full parity with Hermes CLI features and persistent memory"
+      "Three-panel layout for sessions, chat, and workspace file browsing",
+      "Full parity with Hermes CLI features using existing models",
+      "Lightweight architecture with no build steps or external frameworks"
     ],
-    "readmeHash": "0bb20a009e19036aa25f3f2324da111717d1fc4d2a4094ffadd5bfaf09d5b568",
-    "generatedAt": "2026-05-27T07:52:18.796Z",
+    "readmeHash": "25cfec704731675dc545c8f088c2783cb8a2c054295edb78fcf6132d08e70665",
+    "generatedAt": "2026-05-28T07:48:52.139Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass"
@@ -1267,14 +1266,14 @@
     "audit": "pass"
   },
   "stephenschoettler/hermes-lcm": {
-    "summary": "Hermes-LCM is a context management plugin for the Hermes Agent that prevents information loss during long-running conversations. It replaces standard flat summarization with a hierarchical Directed Acyclic Graph (DAG) that preserves raw message history in a local SQLite store. This architecture allows the agent to use specialized tools to drill back into specific details or expand compacted summaries without flooding the active context window. The system includes granular controls for sensitive data redaction, large payload externalization, and session-specific storage rules.",
+    "summary": "Hermes-LCM is a context management plugin for the Hermes Agent that prevents information loss during long-running conversations. It replaces standard lossy compression with a hierarchical summary Directed Acyclic Graph (DAG) backed by a SQLite message store. This architecture allows the agent to maintain a bounded active context while using specialized tools to drill back into specific historical details. The system includes features for sensitive data redaction, large payload externalization, and source-aware retrieval to ensure high-quality memory recall without flooding the prompt.",
     "highlights": [
-      "Uses a hierarchical DAG to compact context without losing details",
-      "Provides agent tools for grepping and expanding historical conversation nodes",
-      "Preserves raw messages in a local SQLite database for precise recovery"
+      "Uses a hierarchical summary DAG for depth-aware context compaction",
+      "Provides agent tools like lcm_grep and lcm_expand for precise recall",
+      "Persists raw message history in a local SQLite database"
     ],
-    "readmeHash": "a335c6f4910e0082b83eed6325940edeceb67cad46d83dbc97873383273e4179",
-    "generatedAt": "2026-05-27T19:15:50.985Z",
+    "readmeHash": "b3d5012d3f43519e0d63de889f2a88a172bf3a491614f1785fb5e2b6d3e4d4b5",
+    "generatedAt": "2026-05-28T07:48:56.710Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass"
@@ -1320,14 +1319,14 @@
     "audit": "pass"
   },
   "EKKOLearnAI/hermes-web-ui": {
-    "summary": "Hermes Web UI is a full-featured dashboard designed to manage and monitor Hermes Agent instances through a responsive web interface. It facilitates real-time AI chat streaming via Socket.IO and provides a unified configuration hub for eight communication platforms, including Telegram, Discord, and WhatsApp. The system includes local SQLite session management, usage analytics for cost tracking, and a multi-profile architecture for isolated agent configurations. Users can also manage scheduled cron jobs, browse remote files, and access an integrated web terminal for direct system interaction.",
+    "summary": "Hermes Web UI is a comprehensive management dashboard for the Hermes Agent ecosystem that provides a graphical interface for AI interaction and system administration. It facilitates real-time chat streaming via Socket.IO and manages multi-platform integrations for services like Telegram, Discord, and Slack through a unified configuration panel. The platform includes specialized modules for monitoring token usage, scheduling cron jobs, and managing remote files across Docker, SSH, and local backends. Users can also configure multi-agent group chats, browse installed skills, and access an integrated web terminal for direct system control.",
     "highlights": [
-      "Unified configuration for Telegram, Discord, Slack, and WhatsApp channels",
-      "Real-time chat streaming with multi-session management and Markdown support",
-      "Usage analytics for tracking token consumption and estimated costs"
+      "Unified configuration for eight messaging platforms including Discord and WhatsApp",
+      "Real-time chat streaming with markdown support and tool call inspection",
+      "Usage analytics for tracking token consumption, costs, and model distribution"
     ],
-    "readmeHash": "0440873c2342aef5e302c1dd33b3060e0539d32134dd3317138c6a4e33365e19",
-    "generatedAt": "2026-05-25T09:24:00.818Z",
+    "readmeHash": "dd5480b165780f0a572d54845ed219ac4c95286feb435b6c07ef535b8461b4de",
+    "generatedAt": "2026-05-28T07:49:01.172Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass"
@@ -1589,14 +1588,14 @@
     "audit": "pass"
   },
   "alias8818/hermes-tool-slimmer": {
-    "summary": "Hermes Tool Slimmer is a context optimization plugin that reduces prompt overhead by dynamically selecting the most relevant tools for each agent turn. It builds an indexable corpus from tool schemas and uses BM25 ranking with optional keyword boosting to filter large toolsets down to a concise, relevant subset. This approach significantly lowers token consumption in environments with dozens of native or MCP tools while maintaining access to essential safety and file-system utilities. The project includes a dashboard for monitoring estimated token savings and provides a fail-open mechanism to ensure agent reliability if selection errors occur.",
+    "summary": "Hermes Tool Slimmer is a schema-selection optimization tool that reduces prompt token overhead in large Hermes Agent installations. It minimizes the tool set for each turn by building an indexable corpus and ranking candidate tools using local BM25 with explicit boosts. This approach allows users to maintain a large catalog of native and MCP tools while only sending the most relevant schemas to the model. The project includes a dashboard plugin to track estimated token savings and a CLI for indexing and benchmarking.",
     "highlights": [
-      "Reduces schema overhead using BM25 ranking and keyword-based tool selection",
-      "Supports native Hermes tools and Model Context Protocol (MCP) integrations",
-      "Provides a dashboard plugin for tracking estimated prompt token savings"
+      "Reduces tool-schema overhead using BM25 ranking and keyword selection.",
+      "Supports native and MCP tools with configurable inclusion/exclusion lists.",
+      "Includes a dashboard plugin for monitoring estimated token savings."
     ],
-    "readmeHash": "dc5c1ec3c717b83bc36df95162628938b38b0404a59faca7ac7110b97a010a2d",
-    "generatedAt": "2026-05-25T09:24:43.422Z",
+    "readmeHash": "aac7f6db44d1febfd56af39a0d4c2187b7c217063258dbe906de586b4abe7ada",
+    "generatedAt": "2026-05-28T07:49:11.662Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass"
@@ -1616,14 +1615,14 @@
     "auditedAt": "2026-05-25T09:20:27.055Z"
   },
   "volcengine/OpenViking": {
-    "summary": "OpenViking is an open-source context database designed to manage the fragmented memories, resources, and skills of AI agents. It replaces traditional flat vector storage with a file system paradigm that organizes agent context into a structured directory. This architecture utilizes a tiered L0/L1/L2 loading system to provide on-demand context retrieval while reducing token consumption. The system also features visualized retrieval trajectories and automatic session management to improve the observability and iteration of agent memory.",
+    "summary": "OpenViking is an open-source context database designed to manage fragmented memories, resources, and skills for AI agents. It utilizes a filesystem paradigm with viking:// URIs and a tiered L0/L1/L2 loading structure to provide on-demand context retrieval. The system features directory recursive retrieval and automated session management to extract long-term memory from interactions. Benchmarks show it significantly reduces token consumption and latency while improving task accuracy for agents like Hermes and Claude Code.",
     "highlights": [
-      "Unifies agent memory and skills using a file system paradigm",
-      "Reduces token costs via tiered L0/L1/L2 context loading",
-      "Enables recursive directory retrieval combined with semantic search"
+      "Unified context management using a hierarchical filesystem paradigm",
+      "Tiered L0/L1/L2 loading reduces token usage by up to 91%",
+      "Visualized retrieval trajectories for debugging agent memory chains"
     ],
-    "readmeHash": "7e9dbdc3e47306c4431313ce45beee462436a520b1475d3f8035ea265ef18732",
-    "generatedAt": "2026-05-27T07:52:44.412Z",
+    "readmeHash": "3aff20ef0e35e093dd650a90c2c8a6ed307c94e54842cd2b011eb10bf326a1bc",
+    "generatedAt": "2026-05-28T07:49:15.151Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass"

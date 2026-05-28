@@ -35,7 +35,7 @@
   "@type": "SoftwareApplication",
   "@id": "https://hermesatlas.com/projects/nesquena/hermes-webui#software",
   "name": "hermes-webui",
-  "description": "Hermes WebUI provides a lightweight, browser-based interface for the Hermes Agent, offering a graphical alternative to the standard command-line environment. Built with Python and vanilla JavaScript, it maintains full feature parity with the CLI without requiring complex build steps or frameworks. The interface features a three-panel layout for managing chat sessions, workspace files, and agent controls while displaying real-time token usage. It allows users to securely access their self-hosted ",
+  "description": "Hermes WebUI is a lightweight, browser-based interface for the Hermes Agent that provides a graphical alternative to the standard terminal experience. Built with Python and vanilla JavaScript, it maintains full parity with CLI features without requiring complex build steps or frameworks. The interface features a three-panel layout for managing sessions, chat interactions, and workspace files while displaying real-time token usage via a context ring. It allows users to access their agent's persis",
   "url": "https://hermesatlas.com/projects/nesquena/hermes-webui",
   "codeRepository": "https://github.com/nesquena/hermes-webui",
   "applicationCategory": "DesktopEnhancementApplication",
@@ -47,13 +47,13 @@
     "name": "nesquena",
     "url": "https://github.com/nesquena"
   },
-  "dateModified": "2026-05-27T05:14:02.000Z",
+  "dateModified": "2026-05-28T03:40:48.000Z",
   "interactionStatistic": {
     "@type": "InteractionCounter",
     "interactionType": {
       "@type": "LikeAction"
     },
-    "userInteractionCount": 8950
+    "userInteractionCount": 9007
   },
   "isPartOf": {
     "@id": "https://hermesatlas.com/#website"
@@ -112,11 +112,11 @@
   <p class="project-desc">Hermes WebUI: The best way to use Hermes Agent from the web or from your phone!</p>
 
   <div class="meta-row">
-    <span class="stars">★ 8.9K</span>
+    <span class="stars">★ 9.0K</span>
     <span><span class="meta-label">lang</span>Python</span>
     <span><span class="meta-label">license</span>MIT</span>
     
-    <span><span class="meta-label">updated</span>2026-05-27</span>
+    <span><span class="meta-label">updated</span>2026-05-28</span>
   </div>
 
   <div class="actions">
@@ -131,11 +131,11 @@
 <section class="project-summary">
   <div class="section-label">overview</div>
   <div>
-    <p class="summary-text">Hermes WebUI provides a lightweight, browser-based interface for the Hermes Agent, offering a graphical alternative to the standard command-line environment. Built with Python and vanilla JavaScript, it maintains full feature parity with the CLI without requiring complex build steps or frameworks. The interface features a three-panel layout for managing chat sessions, workspace files, and agent controls while displaying real-time token usage. It allows users to securely access their self-hosted agent's persistent memory, skills, and scheduled jobs from any device.</p>
+    <p class="summary-text">Hermes WebUI is a lightweight, browser-based interface for the Hermes Agent that provides a graphical alternative to the standard terminal experience. Built with Python and vanilla JavaScript, it maintains full parity with CLI features without requiring complex build steps or frameworks. The interface features a three-panel layout for managing sessions, chat interactions, and workspace files while displaying real-time token usage via a context ring. It allows users to access their agent's persistent memory, skills, and scheduled jobs through a secure web environment.</p>
     <ul class="summary-highlights">
-      <li>Three-panel layout for chat, sessions, and workspace file browsing</li>
-      <li>Zero-build architecture using only Python and vanilla JavaScript</li>
-      <li>Full parity with Hermes CLI features and persistent memory</li>
+      <li>Three-panel layout for sessions, chat, and workspace file browsing</li>
+      <li>Full parity with Hermes CLI features using existing models</li>
+      <li>Lightweight architecture with no build steps or external frameworks</li>
     </ul>
   </div>
 </section>
@@ -330,10 +330,33 @@ HERMES_WEBUI_PREFILL_MESSAGES_SCRIPT_TIMEOUT=5 \
 ./ctl.sh restart
 </code></pre>
 <p>The script may print either an OpenAI-style JSON message list, a JSON object with
-a <code>messages</code> list, or plain text; plain text is wrapped as one <code>system</code> prefill
-message. Script output is capped at 256 KiB before parsing. The browser only
-receives a compact status event (<code>source</code>, <code>label</code>, message count, and redacted
-errors), never the prefill message bodies.</p>
+a <code>messages</code> list, or plain text; plain text is wrapped as one <code>user</code> prefill
+message so dynamic recall text becomes ordinary context instead of an extra
+system instruction. If the hook must provide system-level guidance, emit JSON
+messages with an explicit <code>role: &quot;system&quot;</code> entry instead. Script output is capped
+at 256 KiB before parsing. The browser only receives a compact status event
+(<code>source</code>, <code>label</code>, message count, and redacted errors), never the prefill
+message bodies.</p>
+<h4>Optional Gateway-backed browser chat</h4>
+<p>By default, browser chat runs through WebUI&#39;s in-process legacy runtime. Advanced
+self-hosted deployments can opt into routing new browser turns through a running
+Hermes Gateway API server while preserving the existing WebUI <code>/api/chat/start</code>
+and <code>/api/chat/stream</code> browser contract:</p>
+<pre><code class="language-bash">HERMES_WEBUI_CHAT_BACKEND=gateway \
+HERMES_WEBUI_GATEWAY_BASE_URL=http://127.0.0.1:8642 \
+HERMES_WEBUI_GATEWAY_API_KEY=... \
+./ctl.sh restart
+</code></pre>
+<p><code>HERMES_WEBUI_CHAT_BACKEND</code> is intentionally strict: only <code>gateway</code>,
+<code>api_server</code>, or <code>api-server</code> enable the bridge. Generic truthy values such as
+<code>1</code> or <code>true</code> are ignored so existing deployments do not change execution
+ownership accidentally. If <code>HERMES_WEBUI_GATEWAY_API_KEY</code> is omitted, WebUI falls
+back to <code>API_SERVER_KEY</code> when present.</p>
+<p>The bridge is best used by operators who already run Hermes Gateway/API Server
+locally and want browser-originated chat to use the same runtime/tool path as
+messaging surfaces. Attachments, cancellation, approvals, and clarify prompts
+still follow WebUI&#39;s current compatibility path and may not match every messaging
+surface until the runtime-adapter migration is complete.</p>
 <p>The bootstrap will:</p>
 <ol>
 <li>Detect Hermes Agent and, if missing, attempt the official installer (<code>curl -fsSL https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh | bash</code>).</li>
@@ -997,11 +1020,11 @@ Configurable assistant display name, thinking/reasoning block display, and a log
         <div class="name"><span class="org">outsourc-e /</span> hermes-workspace</div>
       </a>
       <a class="related-row" href="/projects/fathah/hermes-desktop">
-        <div class="stars">★ 8.1K</div>
+        <div class="stars">★ 8.2K</div>
         <div class="name"><span class="org">fathah /</span> hermes-desktop</div>
       </a>
       <a class="related-row" href="/projects/sanchomuzax/hermes-webui">
-        <div class="stars">★ 99</div>
+        <div class="stars">★ 100</div>
         <div class="name"><span class="org">sanchomuzax /</span> hermes-webui</div>
       </a>
       <a class="related-row" href="/projects/Euraika-Labs/pan-ui">
@@ -1009,7 +1032,7 @@ Configurable assistant display name, thinking/reasoning block display, and a log
         <div class="name"><span class="org">Euraika-Labs /</span> pan-ui</div>
       </a>
       <a class="related-row" href="/projects/xaspx/hermes-control-interface">
-        <div class="stars">★ 708</div>
+        <div class="stars">★ 710</div>
         <div class="name"><span class="org">xaspx /</span> hermes-control-interface</div>
       </a>
       <a class="related-row" href="/projects/dodo-reach/hermes-desktop">
@@ -1017,7 +1040,7 @@ Configurable assistant display name, thinking/reasoning block display, and a log
         <div class="name"><span class="org">dodo-reach /</span> hermes-desktop</div>
       </a>
       <a class="related-row" href="/projects/pyrate-llama/hermes-ui">
-        <div class="stars">★ 143</div>
+        <div class="stars">★ 145</div>
         <div class="name"><span class="org">pyrate-llama /</span> hermes-ui</div>
       </a>
       <a class="related-row" href="/projects/clawvader-tech/hermes-telegram-miniapp">

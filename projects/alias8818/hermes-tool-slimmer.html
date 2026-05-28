@@ -35,7 +35,7 @@
   "@type": "SoftwareApplication",
   "@id": "https://hermesatlas.com/projects/alias8818/hermes-tool-slimmer#software",
   "name": "hermes-tool-slimmer",
-  "description": "Hermes Tool Slimmer is a context optimization plugin that reduces prompt overhead by dynamically selecting the most relevant tools for each agent turn. It builds an indexable corpus from tool schemas and uses BM25 ranking with optional keyword boosting to filter large toolsets down to a concise, relevant subset. This approach significantly lowers token consumption in environments with dozens of native or MCP tools while maintaining access to essential safety and file-system utilities. The projec",
+  "description": "Hermes Tool Slimmer is a schema-selection optimization tool that reduces prompt token overhead in large Hermes Agent installations. It minimizes the tool set for each turn by building an indexable corpus and ranking candidate tools using local BM25 with explicit boosts. This approach allows users to maintain a large catalog of native and MCP tools while only sending the most relevant schemas to the model. The project includes a dashboard plugin to track estimated token savings and a CLI for inde",
   "url": "https://hermesatlas.com/projects/alias8818/hermes-tool-slimmer",
   "codeRepository": "https://github.com/alias8818/hermes-tool-slimmer",
   "applicationCategory": "UtilitiesApplication",
@@ -47,7 +47,7 @@
     "name": "alias8818",
     "url": "https://github.com/alias8818"
   },
-  "dateModified": "2026-05-20T11:07:11.000Z",
+  "dateModified": "2026-05-27T21:31:06.000Z",
   "interactionStatistic": {
     "@type": "InteractionCounter",
     "interactionType": {
@@ -116,7 +116,7 @@
     <span><span class="meta-label">lang</span>Python</span>
     <span><span class="meta-label">license</span>MIT</span>
     
-    <span><span class="meta-label">updated</span>2026-05-20</span>
+    <span><span class="meta-label">updated</span>2026-05-27</span>
   </div>
 
   <div class="actions">
@@ -131,11 +131,11 @@
 <section class="project-summary">
   <div class="section-label">overview</div>
   <div>
-    <p class="summary-text">Hermes Tool Slimmer is a context optimization plugin that reduces prompt overhead by dynamically selecting the most relevant tools for each agent turn. It builds an indexable corpus from tool schemas and uses BM25 ranking with optional keyword boosting to filter large toolsets down to a concise, relevant subset. This approach significantly lowers token consumption in environments with dozens of native or MCP tools while maintaining access to essential safety and file-system utilities. The project includes a dashboard for monitoring estimated token savings and provides a fail-open mechanism to ensure agent reliability if selection errors occur.</p>
+    <p class="summary-text">Hermes Tool Slimmer is a schema-selection optimization tool that reduces prompt token overhead in large Hermes Agent installations. It minimizes the tool set for each turn by building an indexable corpus and ranking candidate tools using local BM25 with explicit boosts. This approach allows users to maintain a large catalog of native and MCP tools while only sending the most relevant schemas to the model. The project includes a dashboard plugin to track estimated token savings and a CLI for indexing and benchmarking.</p>
     <ul class="summary-highlights">
-      <li>Reduces schema overhead using BM25 ranking and keyword-based tool selection</li>
-      <li>Supports native Hermes tools and Model Context Protocol (MCP) integrations</li>
-      <li>Provides a dashboard plugin for tracking estimated prompt token savings</li>
+      <li>Reduces tool-schema overhead using BM25 ranking and keyword selection.</li>
+      <li>Supports native and MCP tools with configurable inclusion/exclusion lists.</li>
+      <li>Includes a dashboard plugin for monitoring estimated token savings.</li>
     </ul>
   </div>
 </section>
@@ -192,8 +192,8 @@ If the environment asks for approval to run that script, request approval for th
 Then verify with:
 $HOME/.hermes/hermes-agent/venv/bin/hermes tool-slimmer doctor
 </code></pre>
-<p>For a guided setup, see <a href="https://github.com/alias8818/hermes-tool-slimmer/blob/main/docs/quickstart.md"><code>docs/quickstart.md</code></a>. For the Hermes dashboard page, see <a href="https://github.com/alias8818/hermes-tool-slimmer/blob/main/docs/dashboard-plugin.md"><code>docs/dashboard-plugin.md</code></a>.</p>
-<p>The dashboard includes a <strong>Tool Index</strong> panel with a one-click <strong>Rebuild From Hermes Tools</strong> action, indexed-tool preview, path, checksum, and last-updated time. The persisted index is for inspection and troubleshooting; live slimming ranks the current request&#39;s Hermes schemas in memory.</p>
+<p>For a guided setup, see <a href="https://github.com/alias8818/hermes-tool-slimmer/blob/main/docs/guided-setup.md"><code>docs/guided-setup.md</code></a> and <a href="https://github.com/alias8818/hermes-tool-slimmer/blob/main/docs/quickstart.md"><code>docs/quickstart.md</code></a>. For the Hermes dashboard page, see <a href="https://github.com/alias8818/hermes-tool-slimmer/blob/main/docs/dashboard-plugin.md"><code>docs/dashboard-plugin.md</code></a>.</p>
+<p>The dashboard includes a <strong>Guided Setup</strong> card, <strong>Tool Index</strong> panel, one-click <strong>Rebuild From Hermes Tools</strong> action, <strong>Apply Recommended Config</strong> button with backup creation, indexed-tool preview, path, checksum, and last-updated time. The persisted index is for inspection and troubleshooting; live slimming ranks the current request&#39;s Hermes schemas in memory.</p>
 <p>For a plain-English health report:</p>
 <pre><code class="language-bash">scripts/troubleshoot-hermes-tool-slimmer.sh
 </code></pre>
@@ -217,14 +217,27 @@ tool_slimmer:
   mode: keyword        # eager | keyword | hybrid | anthropic_tool_search
   top_k: 8             # selected after always_include
   always_include: [terminal, read_file, write_file, patch, search_files]
+  always_exclude: []   # alias for disabled_tools; useful for noisy tools in text-only deployments
   never_defer: [terminal, read_file]
   include_mcp_tools: true
   include_native_tools: true
   log_decisions: true
   min_total_tools: 0
   min_estimated_reduction_percent: 5.0
+  min_score: 0.25
   aliases:
     browse: [browser, navigate, url, website]
+  profiles:
+    telegram:
+      top_k: 4
+      always_include: [memory, tool_slimmer_request_full_tools]
+      always_exclude: [terminal, cronjob]
+    slack:
+      top_k: 6
+      always_include: [memory, read_file, search_files, tool_slimmer_request_full_tools]
+      always_exclude: [cronjob]
+    cli:
+      top_k: 8
   fail_open: true      # selector errors preserve the original full schema list
   dry_run: false       # true logs/injects diagnostics but does not alter schemas
 </code></pre>
@@ -238,6 +251,9 @@ hermes tool-slimmer benchmark --prompts examples/prompts.yaml --schemas examples
 hermes tool-slimmer eval --prompts examples/prompts.yaml --schemas examples/tools.yaml
 hermes tool-slimmer eval --prompts examples/prompts.yaml --schemas examples/tools.yaml --markdown
 hermes tool-slimmer analyze-config
+hermes tool-slimmer advisor
+hermes tool-slimmer advisor --apply
+hermes tool-slimmer advisor --rollback ~/.hermes/tool-slimmer/backups/config-YYYYmmdd-HHMMSS.yaml
 hermes tool-slimmer privacy
 hermes tool-slimmer recommend-config
 </code></pre>
@@ -280,9 +296,13 @@ hermes tool-slimmer recommend-config
 <h3>Safety model</h3>
 <ul>
 <li><code>always_include</code> tools are selected first when present and not already disabled by Hermes.</li>
+<li><code>always_exclude</code> is a user-facing alias for <code>disabled_tools</code>. Use it when a tool is too noisy for a deployment and should only appear through Hermes outside Tool Slimmer&#39;s ranked set.</li>
 <li><code>tool_slimmer_request_full_tools</code> is always kept available when Hermes has registered it. If a skill or task needs a hidden tool, the model can call it to make the next provider request use the full schema list instead of inventing a substitute workflow.</li>
 <li><code>top_k</code> applies after <code>always_include</code>; always-included tools do not count against the <code>top_k</code> budget. <code>top_k: 0</code> is treated as an explicit request to select no ranked tools, so it does not fail open to the full catalog.</li>
 <li><code>disabled_tools</code>, <code>disabled_toolsets</code>, <code>include_mcp_tools</code>, and <code>include_native_tools</code> are respected before ranking.</li>
+<li><code>profiles</code> let Slack, Telegram, CLI, cron, and webhook entry points use different <code>top_k</code>, include, and exclude lists without making every user interface share the same tradeoff.</li>
+<li>Low-information messages such as <code>hello</code>, <code>ping</code>, <code>thanks</code>, or numeric retry nudges do not rank task tools. They keep only <code>always_include</code> plus the full-tool fallback.</li>
+<li><code>min_score</code> prevents tiny positive keyword matches from filling every <code>top_k</code> slot.</li>
 <li><code>min_total_tools</code> skips catalogs with fewer than that many tools before ranking; equality is allowed to slim. The default is <code>0</code> so subagents and restricted toolsets still get ranked.</li>
 <li><code>min_estimated_reduction_percent</code> fails open after ranking if the estimated schema reduction is too small to justify altering the request. In <code>anthropic_tool_search</code> mode, this guardrail is measured against the hot tool set because deferred tools are discoverable rather than eagerly loaded.</li>
 <li><code>fail_open: true</code> sends the original schema list on selector errors.</li>
@@ -291,6 +311,7 @@ hermes tool-slimmer recommend-config
 <ul>
 <li><code>aliases</code> extends keyword query expansion deterministically; aliases affect ranking and score details but do not rewrite stored tool schemas.</li>
 <li><code>hybrid</code> mode keeps BM25 ranking and adds a deterministic fuzzy-token boost for close spelling/wording misses.</li>
+<li>For most installs, start with <code>mode: keyword</code> and <code>top_k: 8</code>. Lower values such as <code>top_k: 4</code> can work for narrow Telegram/webhook deployments, but they raise tool-miss risk unless paired with explicit <code>always_include</code> and <code>always_exclude</code> choices.</li>
 <li>The standalone <code>tool_slimmer_select</code> tool uses provided schemas first, live Hermes tool definitions second, and the persisted index as a final fallback.</li>
 <li><code>dry_run: true</code> logs decisions and returns <code>None</code> to preserve original behavior.</li>
 <li>Anthropic Tool Search helpers never defer every tool.</li>
@@ -331,7 +352,7 @@ python -m build
         <div class="name"><span class="org">mem0ai /</span> mem0</div>
       </a>
       <a class="related-row" href="/projects/vectorize-io/hindsight">
-        <div class="stars">★ 14.8K</div>
+        <div class="stars">★ 14.9K</div>
         <div class="name"><span class="org">vectorize-io /</span> hindsight</div>
       </a>
       <a class="related-row" href="/projects/greyhaven-ai/autocontext">
@@ -339,7 +360,7 @@ python -m build
         <div class="name"><span class="org">greyhaven-ai /</span> autocontext</div>
       </a>
       <a class="related-row" href="/projects/elkimek/honcho-self-hosted">
-        <div class="stars">★ 267</div>
+        <div class="stars">★ 268</div>
         <div class="name"><span class="org">elkimek /</span> honcho-self-hosted</div>
       </a>
       <a class="related-row" href="/projects/yoloshii/ClawMem">
@@ -355,7 +376,7 @@ python -m build
         <div class="name"><span class="org">plur-ai /</span> plur</div>
       </a>
       <a class="related-row" href="/projects/amanning3390/flowstate-qmd">
-        <div class="stars">★ 27</div>
+        <div class="stars">★ 28</div>
         <div class="name"><span class="org">amanning3390 /</span> flowstate-qmd</div>
       </a>
     </div>
