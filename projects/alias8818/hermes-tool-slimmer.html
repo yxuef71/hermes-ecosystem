@@ -35,7 +35,7 @@
   "@type": "SoftwareApplication",
   "@id": "https://hermesatlas.com/projects/alias8818/hermes-tool-slimmer#software",
   "name": "hermes-tool-slimmer",
-  "description": "Hermes Tool Slimmer is a schema-selection optimization tool that reduces prompt token overhead in large Hermes Agent installations. It minimizes the tool set for each turn by building an indexable corpus and ranking candidate tools using local BM25 with explicit boosts. This approach allows users to maintain a large catalog of native and MCP tools while only sending the most relevant schemas to the model. The project includes a dashboard plugin to track estimated token savings and a CLI for inde",
+  "description": "Hermes Tool Slimmer is a context-optimization plugin designed to reduce prompt overhead by filtering the tool-schema catalog sent to the LLM. It uses a local BM25 ranking algorithm and keyword selection to identify and include only the most relevant tools for a specific conversation turn. This approach significantly lowers token consumption in large installations that expose dozens of native or MCP tools. The system includes a fail-open mechanism to ensure original schemas are preserved if selec",
   "url": "https://hermesatlas.com/projects/alias8818/hermes-tool-slimmer",
   "codeRepository": "https://github.com/alias8818/hermes-tool-slimmer",
   "applicationCategory": "UtilitiesApplication",
@@ -47,13 +47,13 @@
     "name": "alias8818",
     "url": "https://github.com/alias8818"
   },
-  "dateModified": "2026-05-27T21:31:06.000Z",
+  "dateModified": "2026-05-28T11:31:54.000Z",
   "interactionStatistic": {
     "@type": "InteractionCounter",
     "interactionType": {
       "@type": "LikeAction"
     },
-    "userInteractionCount": 14
+    "userInteractionCount": 15
   },
   "isPartOf": {
     "@id": "https://hermesatlas.com/#website"
@@ -82,7 +82,7 @@
   <a href="/" class="brand" aria-label="Hermes Atlas — home">hermes atlas</a>
   <div class="mast-meta" aria-label="Site metadata">
     <span>apr·2026</span>
-    <span id="meta-count">124·repos</span>
+    <span id="meta-count">155·repos</span>
     <span id="meta-version">hermes·v0.10.0</span>
     <a class="mast-star" id="meta-atlas" href="https://github.com/ksimback/hermes-ecosystem" target="_blank" rel="noopener" aria-label="Star Hermes Atlas on GitHub">★ star this repo</a>
   </div>
@@ -112,11 +112,11 @@
   <p class="project-desc">Reduce Hermes Agent tool-schema overhead with keyword selection and Tool Search support</p>
 
   <div class="meta-row">
-    <span class="stars">★ 14</span>
+    <span class="stars">★ 15</span>
     <span><span class="meta-label">lang</span>Python</span>
     <span><span class="meta-label">license</span>MIT</span>
     
-    <span><span class="meta-label">updated</span>2026-05-27</span>
+    <span><span class="meta-label">updated</span>2026-05-28</span>
   </div>
 
   <div class="actions">
@@ -131,11 +131,11 @@
 <section class="project-summary">
   <div class="section-label">overview</div>
   <div>
-    <p class="summary-text">Hermes Tool Slimmer is a schema-selection optimization tool that reduces prompt token overhead in large Hermes Agent installations. It minimizes the tool set for each turn by building an indexable corpus and ranking candidate tools using local BM25 with explicit boosts. This approach allows users to maintain a large catalog of native and MCP tools while only sending the most relevant schemas to the model. The project includes a dashboard plugin to track estimated token savings and a CLI for indexing and benchmarking.</p>
+    <p class="summary-text">Hermes Tool Slimmer is a context-optimization plugin designed to reduce prompt overhead by filtering the tool-schema catalog sent to the LLM. It uses a local BM25 ranking algorithm and keyword selection to identify and include only the most relevant tools for a specific conversation turn. This approach significantly lowers token consumption in large installations that expose dozens of native or MCP tools. The system includes a fail-open mechanism to ensure original schemas are preserved if selection errors occur, maintaining agent reliability.</p>
     <ul class="summary-highlights">
-      <li>Reduces tool-schema overhead using BM25 ranking and keyword selection.</li>
-      <li>Supports native and MCP tools with configurable inclusion/exclusion lists.</li>
-      <li>Includes a dashboard plugin for monitoring estimated token savings.</li>
+      <li>Reduces schema token overhead using BM25 ranking and keyword selection</li>
+      <li>Supports native Hermes tools and Model Context Protocol integrations</li>
+      <li>Provides a dashboard plugin for monitoring estimated token savings</li>
     </ul>
   </div>
 </section>
@@ -149,7 +149,7 @@
 <img src="https://img.shields.io/badge/lint-ruff-46a2f1" alt="Ruff">
 <img src="https://img.shields.io/badge/license-MIT-green" alt="License">
 <img src="https://img.shields.io/badge/Hermes-dashboard%20plugin-111827" alt="Hermes"></p>
-<p><img src="https://raw.githubusercontent.com/alias8818/hermes-tool-slimmer/main/docs/assets/tool-slimmer-hero.png" alt="Hermes Tool Slimmer dashboard hero"></p>
+<p><img src="https://raw.githubusercontent.com/alias8818/hermes-tool-slimmer/main/docs/assets/tool-slimmer-dashboard.png" alt="Hermes Tool Slimmer dashboard"></p>
 <p>Hermes Tool Slimmer reduces repeated tool-schema overhead by selecting the smallest useful tool set for a turn. It builds an indexable corpus from Hermes tool schemas, ranks candidate tools with local BM25 plus explicit boosts, and fails open to the original schema list when anything goes wrong.</p>
 <h3>Why</h3>
 <p>Large Hermes installations can expose dozens of native and MCP tools. A 57-tool schema catalog can serialize to roughly 73 KB, or about 18K approximate prompt tokens using the documented <code>bytes / 4</code> estimate. Selecting 8-12 relevant tools for a repository-search turn can reduce that to about 15 KB / 3.7K approximate tokens while keeping configured safety tools hot.</p>
@@ -348,11 +348,11 @@ python -m build
   <div>
     <div class="related-list">
       <a class="related-row" href="/projects/mem0ai/mem0">
-        <div class="stars">★ 56.9K</div>
+        <div class="stars">★ 57.0K</div>
         <div class="name"><span class="org">mem0ai /</span> mem0</div>
       </a>
       <a class="related-row" href="/projects/vectorize-io/hindsight">
-        <div class="stars">★ 14.9K</div>
+        <div class="stars">★ 15.0K</div>
         <div class="name"><span class="org">vectorize-io /</span> hindsight</div>
       </a>
       <a class="related-row" href="/projects/greyhaven-ai/autocontext">
@@ -368,7 +368,7 @@ python -m build
         <div class="name"><span class="org">yoloshii /</span> ClawMem</div>
       </a>
       <a class="related-row" href="/projects/Signet-AI/signetai">
-        <div class="stars">★ 174</div>
+        <div class="stars">★ 176</div>
         <div class="name"><span class="org">Signet-AI /</span> signetai</div>
       </a>
       <a class="related-row" href="/projects/plur-ai/plur">
