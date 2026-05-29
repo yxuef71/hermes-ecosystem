@@ -1200,27 +1200,27 @@
     "auditedAt": "2026-05-25T09:18:33.485Z"
   },
   "nesquena/hermes-webui": {
-    "summary": "Hermes WebUI is a lightweight, browser-based interface for the Hermes Agent that provides a graphical alternative to the standard terminal experience. Built with Python and vanilla JavaScript, it maintains full parity with CLI features without requiring complex build steps or frameworks. The interface features a three-panel layout for managing sessions, chat interactions, and workspace files while displaying real-time token usage via a context ring. It allows users to access their agent's persistent memory, skills, and scheduled jobs through a secure web environment.",
+    "summary": "Hermes WebUI is a lightweight, self-hosted browser interface for the Hermes Agent that provides a graphical alternative to the CLI. It is built using Python and vanilla JavaScript without the need for a build step or framework. The interface features a three-panel layout for session management, chatting, and file browsing, offering full parity with the agent's terminal capabilities. Users can securely access their existing agent and models via an SSH tunnel with minimal configuration.",
     "highlights": [
-      "Three-panel layout for sessions, chat, and workspace file browsing",
-      "Full parity with Hermes CLI features using existing models",
-      "Lightweight architecture with no build steps or external frameworks"
+      "Three-panel layout with session, chat, and file browsing",
+      "Full feature parity with the Hermes CLI experience",
+      "No-build setup using only Python and vanilla JavaScript"
     ],
-    "readmeHash": "25cfec704731675dc545c8f088c2783cb8a2c054295edb78fcf6132d08e70665",
-    "generatedAt": "2026-05-28T07:48:52.139Z",
+    "readmeHash": "1a5d5cc2fd815bdba91342a4a8d5f8517bc39fef7b3b4a7f6dd425b14127d380",
+    "generatedAt": "2026-05-29T07:48:49.037Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass"
   },
   "garrytan/gbrain": {
-    "summary": "GBrain is a memory and synthesis layer designed to provide AI agents with structured institutional knowledge. It combines a self-wiring knowledge graph for entity relationship extraction with a synthesis engine that generates cited prose and gap analysis. The system automates background tasks like memory consolidation and data enrichment from sources such as meetings, emails, and tweets. It supports multi-user environments with scoped access controls and integrates directly with Hermes and OpenClaw via MCP.",
+    "summary": "GBrain is a memory and context layer for AI agents that transforms raw page search into synthesized answers. It utilizes a self-wiring knowledge graph to create typed edges between entities without LLM calls, combined with a synthesis layer for cited prose and gap analysis. The system can be deployed as a personal knowledge base or a scoped company brain with permission-based data access. It integrates with agents like OpenClaw and Hermes and exposes over 30 tools via the Model Context Protocol (MCP).",
     "highlights": [
-      "Self-wiring knowledge graph extracts entity relationships without LLM calls",
-      "Synthesis layer provides cited answers and explicit gap analysis",
-      "Exposes over 30 tools via MCP for agentic integration"
+      "Synthesizes cited answers with explicit gap analysis of missing information",
+      "Self-wiring knowledge graph for complex entity relationship traversal",
+      "MCP support for integration with Claude Code, Cursor, and Windsurf"
     ],
-    "readmeHash": "da16481ec325480ca49e23a27b0cc2d843c23ef8f3d391a02d768a802e0b502d",
-    "generatedAt": "2026-05-27T19:15:44.845Z",
+    "readmeHash": "61125a482504c540dc46074fc37bd0d2494546a9dd25893995fa4e21d679ac0f",
+    "generatedAt": "2026-05-29T07:49:00.683Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass"
@@ -1346,14 +1346,14 @@
     "auditedAt": "2026-04-27T08:50:53.111Z"
   },
   "AxDSan/mnemosyne": {
-    "summary": "Mnemosyne is a local-first memory layer for AI agents that provides persistent storage without cloud dependencies. It utilizes a SQLite-backed architecture to manage working memory, episodic long-term storage, and a temporal knowledge graph. The system achieves sub-millisecond performance by using binary vector compression and hybrid search directly within the database. It integrates natively with Hermes, Cursor, and Claude Code via the Model Context Protocol (MCP).",
+    "summary": "Mnemosyne is a universal memory layer that provides AI agents with a local, persistent storage system for long-term context. It utilizes a Bilevel Episodic-Associative Memory (BEAM) architecture backed by a single SQLite database for hybrid vector and full-text search. The system supports various integration methods including an MCP server, a Python SDK, and native plugins for tools like Cursor and OpenWebUI. This approach allows agents to maintain private, offline memory with minimal resource overhead.",
     "highlights": [
-      "SQLite-backed storage with zero external cloud dependencies",
-      "Hybrid search combining vector similarity, FTS5, and importance scoring",
-      "Native MCP support for Cursor, Claude Code, and Hermes"
+      "Local-first storage using SQLite with sqlite-vec and FTS5",
+      "BEAM architecture featuring working, episodic, and triple-store memory",
+      "Broad compatibility via MCP, Python SDK, and native plugins"
     ],
-    "readmeHash": "1701f0bd504b0271bb2cf6c640cfa11c8d0396d535d0761c23c7ee1ed3d8672c",
-    "generatedAt": "2026-05-27T07:52:32.817Z",
+    "readmeHash": "f6acea97c7be9f5df2bfc60b4fff174df62a6e2cc0c9332ebc823f19e53a34fa",
+    "generatedAt": "2026-05-29T07:49:06.736Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass"
@@ -1588,14 +1588,14 @@
     "audit": "pass"
   },
   "alias8818/hermes-tool-slimmer": {
-    "summary": "Hermes Tool Slimmer is a context-optimization plugin designed to reduce prompt overhead by filtering the tool-schema catalog sent to the LLM. It uses a local BM25 ranking algorithm and keyword selection to identify and include only the most relevant tools for a specific conversation turn. This approach significantly lowers token consumption in large installations that expose dozens of native or MCP tools. The system includes a fail-open mechanism to ensure original schemas are preserved if selection errors occur, maintaining agent reliability.",
+    "summary": "Hermes Tool Slimmer is a schema-selection optimization that reduces the prompt token overhead caused by large tool catalogs in Hermes Agent. It creates an indexable corpus of tool schemas and uses local BM25 ranking with explicit boosts to select only the most relevant tools for each turn. This process minimizes the repeated payload sent to the model while maintaining essential safety tools. The project includes a dashboard for monitoring estimated token savings and supports custom profiles for different deployment environments like Slack or Telegram.",
     "highlights": [
-      "Reduces schema token overhead using BM25 ranking and keyword selection",
-      "Supports native Hermes tools and Model Context Protocol integrations",
-      "Provides a dashboard plugin for monitoring estimated token savings"
+      "Ranks tools using BM25 and keyword selection for efficiency",
+      "Provides a dashboard to track estimated schema token savings",
+      "Supports custom tool profiles and always-include/exclude lists"
     ],
-    "readmeHash": "96545cd86e41fe87dcf386f836e8e9a53e3007482169ac100b0b921678c28233",
-    "generatedAt": "2026-05-28T12:14:38.164Z",
+    "readmeHash": "c1d7e7b0c20b52da3018cb45dfd83a399b50811883e7c1fa4d5ae6e9db8b6791",
+    "generatedAt": "2026-05-29T07:49:21.468Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass"
@@ -1615,14 +1615,14 @@
     "auditedAt": "2026-05-25T09:20:27.055Z"
   },
   "volcengine/OpenViking": {
-    "summary": "OpenViking is an open-source context database designed to manage fragmented memories, resources, and skills for AI agents. It utilizes a filesystem paradigm with viking:// URIs and a tiered L0/L1/L2 loading structure to provide on-demand context retrieval. The system features directory recursive retrieval and automated session management to extract long-term memory from interactions. Benchmarks show it significantly reduces token consumption and latency while improving task accuracy for agents like Hermes and Claude Code.",
+    "summary": "OpenViking is an open-source context database designed to solve the problem of fragmented memory and inefficient context management in AI agents. It replaces traditional flat vector storage with a filesystem paradigm to unify the organization of memories, resources, and skills. The system utilizes tiered loading and recursive directory retrieval to reduce token consumption and improve retrieval precision. It integrates with agents like Hermes and OpenClaw to enhance long-context QA accuracy and task success rates.",
     "highlights": [
-      "Unified context management using a hierarchical filesystem paradigm",
-      "Tiered L0/L1/L2 loading reduces token usage by up to 91%",
-      "Visualized retrieval trajectories for debugging agent memory chains"
+      "Filesystem paradigm for unified memory and resource management",
+      "L0/L1/L2 tiered context loading to reduce token costs",
+      "Visualized retrieval trajectories for observable context debugging"
     ],
-    "readmeHash": "3aff20ef0e35e093dd650a90c2c8a6ed307c94e54842cd2b011eb10bf326a1bc",
-    "generatedAt": "2026-05-28T07:49:15.151Z",
+    "readmeHash": "3062da40d9145107aeca07ed6bfcc2ad7b1cc6c1bd6a272da804fe7aeb698949",
+    "generatedAt": "2026-05-29T07:49:25.321Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass"
@@ -1654,14 +1654,14 @@
     "audit": "pass"
   },
   "yantrikos/yantrikdb-hermes-plugin": {
-    "summary": "yantrikdb-hermes-plugin is a self-maintaining memory provider for Hermes Agent that prevents context loss during long sessions. It utilizes a temporal context graph to manage memory lifecycles through canonicalization, contradiction tracking, and recency-aware ranking. The plugin features explainable retrieval by attaching a why_retrieved tag to every recalled memory and includes a native outcome ledger for agent-authored skills. It operates in an embedded, in-process mode by default, requiring no external server or GPU for deployment.",
+    "summary": "yantrikdb-hermes-plugin is a memory provider for Hermes Agent that prevents the loss of important constraints during long sessions. It utilizes a temporal context graph and a maintenance pass to manage memory lifecycles through promotion, demotion, and supersession. The plugin provides explainable recall with scoring reasons and supports DB-native agent-authored skills with an outcome ledger. It is available as a drop-in plugin with an embedded in-process backend by default.",
     "highlights": [
-      "Surfaces contradictions and canonicalizes duplicate memories automatically.",
-      "Provides explainable recall with why_retrieved tags for every result.",
-      "Supports agent-authored skills with a native outcome ledger."
+      "Explainable recall with why_retrieved tags for every result",
+      "Contradiction tracking via conflicts() and resolve_conflict() primitives",
+      "Embedded in-process backend requiring no separate server or GPU"
     ],
-    "readmeHash": "487a7c643314617ed710b57aa4faa27febab23994b8bacf88324e672508bc7e6",
-    "generatedAt": "2026-05-25T09:24:59.208Z",
+    "readmeHash": "c1017fee5817c40d33a14ffbdd785dc1e67fae53a5c7248690eab46c2294fac0",
+    "generatedAt": "2026-05-29T07:49:30.046Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass"
@@ -1785,14 +1785,14 @@
     "audit": "pass"
   },
   "colbymchenry/codegraph": {
-    "summary": "CodeGraph is a local, pre-indexed knowledge graph designed to provide semantic code intelligence to AI coding agents like Hermes Agent and Claude Code. It works by indexing symbol relationships, call graphs, and code structures into a local database, allowing agents to query the graph directly instead of performing expensive file-scanning operations. This approach significantly reduces token consumption and tool calls by providing instant context on entry points and symbol impact. The tool integrates via an MCP server and supports multiple languages including TypeScript, Python, Rust, and Go.",
+    "summary": "CodeGraph is a local pre-indexed code knowledge graph designed to reduce token consumption and tool call frequency for coding agents. It replaces expensive file scanning and grep operations by providing agents with instant access to symbol relationships, call graphs, and code structure. This approach allows agents to answer architectural questions more efficiently, often reducing tool calls by an average of 57%. It integrates with various agents including Hermes Agent, Claude Code, Cursor, and Gemini.",
     "highlights": [
-      "Reduces token usage and tool calls through pre-indexed code intelligence",
-      "Provides local semantic search and symbol relationship mapping",
-      "Integrates with Hermes Agent, Claude Code, Cursor, and Gemini"
+      "Provides local semantic intelligence via pre-indexed knowledge graphs",
+      "Reduces average tool calls by 57% and costs by 18%",
+      "Supports Hermes Agent, Cursor, Claude Code, and other coding agents"
     ],
-    "readmeHash": "9e2b1265d5bae7c5996d23144b7ab34d4c2ec881af0e755e12202de42279d421",
-    "generatedAt": "2026-05-28T12:12:45.150Z",
+    "readmeHash": "e1d47060614b0c93e910a3954513311ee9ffc4711bca26ed9c8dcac5eed54547",
+    "generatedAt": "2026-05-29T07:48:11.051Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass"
@@ -1863,14 +1863,14 @@
     "audit": "pass"
   },
   "jazzyalex/agent-sessions": {
-    "summary": "Agent Sessions is a local-first macOS application that provides a unified interface for browsing and managing AI coding agent histories. It indexes session data from various CLI and desktop tools, allowing users to search across transcripts, view tool outputs, and track usage analytics. The app enables users to resume past workflows by launching sessions directly into terminals like iTerm2 or Warp or by copying specific resume commands. It prioritizes privacy by operating entirely offline without telemetry, reading only from local agent directories.",
+    "summary": "Agent Sessions is a local-first macOS application that provides a unified interface for managing and searching history from various AI coding agents. It works by indexing local session folders and databases to allow users to inspect transcripts and browse visual outputs without uploading data to the cloud. The tool supports a wide range of integrations including Hermes, Claude, Cursor, and Codex, and features an Agent Cockpit for monitoring active iTerm2 sessions. Users can recover saved sessions and launch resume commands directly into Terminal, iTerm2, or Warp.",
     "highlights": [
-      "Unified search and browsing for Hermes, Claude, and Codex sessions",
-      "Local-only indexing with no telemetry or remote data uploads",
-      "Direct session resumption in Terminal, iTerm2, Warp, and WarpPreview"
+      "Unified search and browsing for multiple AI agent histories",
+      "Local-only indexing with no telemetry or remote logging",
+      "Agent Cockpit for live monitoring of active iTerm2 sessions"
     ],
-    "readmeHash": "635990338b59f840d0f146206cab21daeede9918dc5b8bbb966ef48c97b59f50",
-    "generatedAt": "2026-05-28T12:13:07.912Z",
+    "readmeHash": "b7ddfdcf4f75d71b8f2f4191671e546026a9831682edc6c7f53cf4a509fd0a15",
+    "generatedAt": "2026-05-29T07:48:18.075Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass"
@@ -2058,40 +2058,40 @@
     "audit": "pass"
   },
   "agent-of-empires/agent-of-empires": {
-    "summary": "Agent of Empires is a session manager for Linux and macOS designed to orchestrate multiple AI coding agents simultaneously. It utilizes tmux to run agents in persistent, isolated sessions that can be managed through a terminal UI, a web dashboard, or a mobile-friendly interface. The system automates the setup of git worktrees and Docker sandboxes, allowing users to run different agents across multiple branches or repositories without manual configuration. It supports a wide range of agents including Hermes, Claude Code, and OpenCode, providing unified status monitoring and remote access capabilities.",
+    "summary": "Agent of Empires is a session manager for AI coding agents on Linux and macOS that simplifies the management of multiple parallel agent workflows. It utilizes tmux to ensure sessions persist across terminal crashes or reboots, providing a TUI and web dashboard for monitoring agent status. The tool supports isolated environments via Docker sandboxing and git worktrees to allow agents to operate on different codebase branches simultaneously. It integrates with a wide range of agents, including Hermes, Claude Code, and Gemini, and offers remote access via Tailscale Funnel or Cloudflare Tunnel.",
     "highlights": [
-      "Manages parallel agent sessions using tmux for persistence and recovery.",
-      "Automates git worktrees and Docker sandboxing for isolated code environments.",
-      "Provides TUI, web dashboard, and mobile-first native state rendering."
+      "TUI and web dashboards for multi-agent session monitoring",
+      "Docker, Podman, and Apple Containers for agent sandboxing",
+      "Parallel execution across git worktrees and multi-repo workspaces"
     ],
-    "readmeHash": "e6724c3c9efba5ceb34af099a0c43e83fdaea1b488504296fe41aaa59487c8f6",
-    "generatedAt": "2026-05-28T12:14:05.052Z",
+    "readmeHash": "4557727a094e5760a234191c3a7595d650a86db89e06d1d918b134d8998a0fd6",
+    "generatedAt": "2026-05-29T07:48:28.458Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass"
   },
   "nexu-io/open-design": {
-    "summary": "Open Design is a local-first, open-source prototyping system designed to replace proprietary cloud-based design tools. It functions by auto-detecting and orchestrating existing coding-agent CLIs on a user's machine to generate design artifacts through a skill-driven workflow. The system integrates 132 composable skills and 150 design systems to produce high-fidelity layouts, pitch decks, and web components. It supports a wide range of agents including Hermes, Claude Code, and DeepSeek TUI via a local daemon and web-deployable interface.",
+    "summary": "Open Design is an open-source, local-first design and prototyping system that serves as an alternative to Claude Design. It functions by wiring existing coding-agent CLIs on the user's PATH into a skill-driven workflow via a local daemon and web app. This architecture allows users to maintain a Bring Your Own Key (BYOK) approach while leveraging a library of composable skills and design systems to generate design artifacts. The system supports web deployment to Vercel and provides a sandboxed iframe for live previews.",
     "highlights": [
-      "Orchestrates 16 coding-agent CLIs including Hermes and Claude Code",
-      "Features 132 composable skills and 150 brand-grade design systems",
-      "Provides sandboxed iframe previews with multi-format export capabilities"
+      "Auto-detects 16 coding-agent CLIs including Hermes Agent",
+      "Includes 137 composable skills and 150 design systems",
+      "Supports HTML, PDF, PPTX, ZIP, and Markdown exports"
     ],
-    "readmeHash": "249ad18d37fd8368f62bd9f08908cd686e233b714abeb5b04728d1ed313e895f",
-    "generatedAt": "2026-05-28T12:14:08.748Z",
+    "readmeHash": "7e94b6d5f9fa7ed22c95f429f66bb711589f3216f966c8a910499cac02ceb0f6",
+    "generatedAt": "2026-05-29T07:48:33.032Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass"
   },
   "farion1231/cc-switch": {
-    "summary": "CC Switch is a cross-platform desktop application that provides a centralized interface for managing multiple AI coding agents and command-line interfaces. Built with the Tauri framework, it allows users to configure and toggle between tools like Hermes Agent, Claude Code, and Gemini CLI from a single dashboard. The manager simplifies the setup process for developers using various open-source and proprietary AI assistants across Windows, macOS, and Linux. It also supports integration with multiple API relay services to facilitate stable model access and billing management.",
+    "summary": "CC Switch is a cross-platform manager designed to centralize the administration of multiple AI coding tools. It is built using the Tauri 2 framework to provide a unified interface for managing various CLI-based agents. The tool integrates support for Claude Code, Codex, OpenCode, OpenClaw, Gemini CLI, and Hermes Agent. This allows users to switch between different AI coding environments within a single application across Windows, macOS, and Linux.",
     "highlights": [
-      "Unified manager for Hermes Agent and multiple coding CLIs",
-      "Cross-platform support for Windows, macOS, and Linux",
-      "Built with Tauri 2 for lightweight desktop performance"
+      "Supports Claude Code, Codex, Gemini CLI, and Hermes Agent",
+      "Cross-platform compatibility for Windows, macOS, and Linux",
+      "Developed using the Tauri 2 framework"
     ],
-    "readmeHash": "c8c3fbca63287ab67da619788c58f9ef089b263db0f72e8d1bfe046f25c5f218",
-    "generatedAt": "2026-05-28T12:14:12.713Z",
+    "readmeHash": "d712146239be71e3f432e83401e39de64dcd0c8f6d87ddbff41e9da456482a91",
+    "generatedAt": "2026-05-29T07:48:36.988Z",
     "model": "google/gemma-4-31b-it:free",
     "version": 1,
     "audit": "pass"

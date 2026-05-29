@@ -35,7 +35,7 @@
   "@type": "SoftwareApplication",
   "@id": "https://hermesatlas.com/projects/nesquena/hermes-webui#software",
   "name": "hermes-webui",
-  "description": "Hermes WebUI is a lightweight, browser-based interface for the Hermes Agent that provides a graphical alternative to the standard terminal experience. Built with Python and vanilla JavaScript, it maintains full parity with CLI features without requiring complex build steps or frameworks. The interface features a three-panel layout for managing sessions, chat interactions, and workspace files while displaying real-time token usage via a context ring. It allows users to access their agent's persis",
+  "description": "Hermes WebUI is a lightweight, self-hosted browser interface for the Hermes Agent that provides a graphical alternative to the CLI. It is built using Python and vanilla JavaScript without the need for a build step or framework. The interface features a three-panel layout for session management, chatting, and file browsing, offering full parity with the agent's terminal capabilities. Users can securely access their existing agent and models via an SSH tunnel with minimal configuration.",
   "url": "https://hermesatlas.com/projects/nesquena/hermes-webui",
   "codeRepository": "https://github.com/nesquena/hermes-webui",
   "applicationCategory": "DesktopEnhancementApplication",
@@ -47,13 +47,13 @@
     "name": "nesquena",
     "url": "https://github.com/nesquena"
   },
-  "dateModified": "2026-05-28T03:40:48.000Z",
+  "dateModified": "2026-05-28T20:08:53.000Z",
   "interactionStatistic": {
     "@type": "InteractionCounter",
     "interactionType": {
       "@type": "LikeAction"
     },
-    "userInteractionCount": 9055
+    "userInteractionCount": 9131
   },
   "isPartOf": {
     "@id": "https://hermesatlas.com/#website"
@@ -131,11 +131,11 @@
 <section class="project-summary">
   <div class="section-label">overview</div>
   <div>
-    <p class="summary-text">Hermes WebUI is a lightweight, browser-based interface for the Hermes Agent that provides a graphical alternative to the standard terminal experience. Built with Python and vanilla JavaScript, it maintains full parity with CLI features without requiring complex build steps or frameworks. The interface features a three-panel layout for managing sessions, chat interactions, and workspace files while displaying real-time token usage via a context ring. It allows users to access their agent's persistent memory, skills, and scheduled jobs through a secure web environment.</p>
+    <p class="summary-text">Hermes WebUI is a lightweight, self-hosted browser interface for the Hermes Agent that provides a graphical alternative to the CLI. It is built using Python and vanilla JavaScript without the need for a build step or framework. The interface features a three-panel layout for session management, chatting, and file browsing, offering full parity with the agent's terminal capabilities. Users can securely access their existing agent and models via an SSH tunnel with minimal configuration.</p>
     <ul class="summary-highlights">
-      <li>Three-panel layout for sessions, chat, and workspace file browsing</li>
-      <li>Full parity with Hermes CLI features using existing models</li>
-      <li>Lightweight architecture with no build steps or external frameworks</li>
+      <li>Three-panel layout with session, chat, and file browsing</li>
+      <li>Full feature parity with the Hermes CLI experience</li>
+      <li>No-build setup using only Python and vanilla JavaScript</li>
     </ul>
   </div>
 </section>
@@ -351,7 +351,14 @@ HERMES_WEBUI_GATEWAY_API_KEY=... \
 <code>api_server</code>, or <code>api-server</code> enable the bridge. Generic truthy values such as
 <code>1</code> or <code>true</code> are ignored so existing deployments do not change execution
 ownership accidentally. If <code>HERMES_WEBUI_GATEWAY_API_KEY</code> is omitted, WebUI falls
-back to <code>API_SERVER_KEY</code> when present.</p>
+back to <code>API_SERVER_KEY</code> when present. When Gateway returns HTTP 401, WebUI
+reports a <code>gateway_auth_error</code> that points at this WebUI↔Gateway key mismatch
+rather than showing the Gateway&#39;s generic provider-style &quot;Invalid API key&quot; body.
+<code>/api/health/agent</code> also includes a redacted <code>gateway_chat</code> block so operators can
+see whether gateway mode, base URL, and API-key presence are configured without
+exposing the key value. That <code>gateway_chat</code> field is an operator diagnostic
+payload only; it is not currently rendered as a user-facing health banner in the
+browser UI.</p>
 <p>The bridge is best used by operators who already run Hermes Gateway/API Server
 locally and want browser-originated chat to use the same runtime/tool path as
 messaging surfaces. Attachments, cancellation, approvals, and clarify prompts
@@ -1020,7 +1027,7 @@ Configurable assistant display name, thinking/reasoning block display, and a log
         <div class="name"><span class="org">outsourc-e /</span> hermes-workspace</div>
       </a>
       <a class="related-row" href="/projects/fathah/hermes-desktop">
-        <div class="stars">★ 8.3K</div>
+        <div class="stars">★ 8.4K</div>
         <div class="name"><span class="org">fathah /</span> hermes-desktop</div>
       </a>
       <a class="related-row" href="/projects/sanchomuzax/hermes-webui">
@@ -1028,11 +1035,11 @@ Configurable assistant display name, thinking/reasoning block display, and a log
         <div class="name"><span class="org">sanchomuzax /</span> hermes-webui</div>
       </a>
       <a class="related-row" href="/projects/Euraika-Labs/pan-ui">
-        <div class="stars">★ 70</div>
+        <div class="stars">★ 71</div>
         <div class="name"><span class="org">Euraika-Labs /</span> pan-ui</div>
       </a>
       <a class="related-row" href="/projects/Eynzof/hermes-agent-cn-desktop">
-        <div class="stars">★ 199</div>
+        <div class="stars">★ 203</div>
         <div class="name"><span class="org">Eynzof /</span> hermes-agent-cn-desktop</div>
       </a>
       <a class="related-row" href="/projects/Felix-Forever/hermes-agent-desktop">
@@ -1040,11 +1047,11 @@ Configurable assistant display name, thinking/reasoning block display, and a log
         <div class="name"><span class="org">Felix-Forever /</span> hermes-agent-desktop</div>
       </a>
       <a class="related-row" href="/projects/jazzyalex/agent-sessions">
-        <div class="stars">★ 587</div>
+        <div class="stars">★ 588</div>
         <div class="name"><span class="org">jazzyalex /</span> agent-sessions</div>
       </a>
       <a class="related-row" href="/projects/nickvasilescu/hermes-desktop-os1">
-        <div class="stars">★ 447</div>
+        <div class="stars">★ 449</div>
         <div class="name"><span class="org">nickvasilescu /</span> hermes-desktop-os1</div>
       </a>
     </div>

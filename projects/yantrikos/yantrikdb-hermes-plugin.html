@@ -35,7 +35,7 @@
   "@type": "SoftwareApplication",
   "@id": "https://hermesatlas.com/projects/yantrikos/yantrikdb-hermes-plugin#software",
   "name": "yantrikdb-hermes-plugin",
-  "description": "yantrikdb-hermes-plugin is a self-maintaining memory provider for Hermes Agent that prevents context loss during long sessions. It utilizes a temporal context graph to manage memory lifecycles through canonicalization, contradiction tracking, and recency-aware ranking. The plugin features explainable retrieval by attaching a why_retrieved tag to every recalled memory and includes a native outcome ledger for agent-authored skills. It operates in an embedded, in-process mode by default, requiring ",
+  "description": "yantrikdb-hermes-plugin is a memory provider for Hermes Agent that prevents the loss of important constraints during long sessions. It utilizes a temporal context graph and a maintenance pass to manage memory lifecycles through promotion, demotion, and supersession. The plugin provides explainable recall with scoring reasons and supports DB-native agent-authored skills with an outcome ledger. It is available as a drop-in plugin with an embedded in-process backend by default.",
   "url": "https://hermesatlas.com/projects/yantrikos/yantrikdb-hermes-plugin",
   "codeRepository": "https://github.com/yantrikos/yantrikdb-hermes-plugin",
   "applicationCategory": "UtilitiesApplication",
@@ -47,7 +47,7 @@
     "name": "yantrikos",
     "url": "https://github.com/yantrikos"
   },
-  "dateModified": "2026-05-23T04:40:44.000Z",
+  "dateModified": "2026-05-29T05:38:30.000Z",
   "interactionStatistic": {
     "@type": "InteractionCounter",
     "interactionType": {
@@ -116,7 +116,7 @@
     <span><span class="meta-label">lang</span>Python</span>
     <span><span class="meta-label">license</span>MIT</span>
     
-    <span><span class="meta-label">updated</span>2026-05-23</span>
+    <span><span class="meta-label">updated</span>2026-05-29</span>
   </div>
 
   <div class="actions">
@@ -131,11 +131,11 @@
 <section class="project-summary">
   <div class="section-label">overview</div>
   <div>
-    <p class="summary-text">yantrikdb-hermes-plugin is a self-maintaining memory provider for Hermes Agent that prevents context loss during long sessions. It utilizes a temporal context graph to manage memory lifecycles through canonicalization, contradiction tracking, and recency-aware ranking. The plugin features explainable retrieval by attaching a why_retrieved tag to every recalled memory and includes a native outcome ledger for agent-authored skills. It operates in an embedded, in-process mode by default, requiring no external server or GPU for deployment.</p>
+    <p class="summary-text">yantrikdb-hermes-plugin is a memory provider for Hermes Agent that prevents the loss of important constraints during long sessions. It utilizes a temporal context graph and a maintenance pass to manage memory lifecycles through promotion, demotion, and supersession. The plugin provides explainable recall with scoring reasons and supports DB-native agent-authored skills with an outcome ledger. It is available as a drop-in plugin with an embedded in-process backend by default.</p>
     <ul class="summary-highlights">
-      <li>Surfaces contradictions and canonicalizes duplicate memories automatically.</li>
-      <li>Provides explainable recall with why_retrieved tags for every result.</li>
-      <li>Supports agent-authored skills with a native outcome ledger.</li>
+      <li>Explainable recall with why_retrieved tags for every result</li>
+      <li>Contradiction tracking via conflicts() and resolve_conflict() primitives</li>
+      <li>Embedded in-process backend requiring no separate server or GPU</li>
     </ul>
   </div>
 </section>
@@ -360,6 +360,18 @@ EOF
 </tr>
 </tbody></table>
 <p>Twelve tools exposed to the agent by default: <code>yantrikdb_remember</code>, <code>_recall</code>, <code>_forget</code>, <code>_think</code>, <code>_conflicts</code>, <code>_resolve_conflict</code>, <code>_relate</code>, <code>_stats</code>, plus the trigger-lifecycle consumers <code>_pending_triggers</code>, <code>_acknowledge_trigger</code>, <code>_dismiss_trigger</code>, <code>_act_on_trigger</code> (v0.4.13+). Three additional <strong>opt-in</strong> skill tools (v0.3.0+): <code>_skill_search</code>, <code>_skill_define</code>, <code>_skill_outcome</code> — see <a href="#skills-opt-in-v030">Skills</a> below.</p>
+<h4>Tool response envelope (v0.4.16+)</h4>
+<p>Every tool response carries the same four envelope fields so an LLM later asked &quot;what did I just do?&quot; can&#39;t confabulate success on a silent failure:</p>
+<pre><code class="language-json">{
+  &quot;status&quot;: &quot;ok&quot; | &quot;failed&quot;,
+  &quot;ok&quot;: true | false,
+  &quot;tool&quot;: &quot;yantrikdb_remember&quot;,
+  &quot;ts&quot;: 1748394801.42,
+  ...tool-specific keys preserved verbatim (rid, stored, results, ...)
+}
+</code></pre>
+<p>Failure responses additionally carry <code>error</code> (legacy key) and <code>reason</code> (alias). The envelope is purely additive — existing agent code that reads <code>rid</code> / <code>stored</code> / <code>results</code> / etc. continues working unchanged.</p>
+<p>Why this matters: tool failures used to be communicated as <code>{&quot;error&quot;: &quot;...&quot;}</code> only. When the agent&#39;s narrative LLM was later asked to summarize the session, it could confabulate plausible completion because the failure wasn&#39;t loudly present in machine-readable form. The new <code>status: &quot;failed&quot;</code> + <code>ok: false</code> are intentionally redundant — the word &quot;failed&quot; lands during narrative summarization, the boolean lands for programmatic consumers. Pattern documented by yantrikdb-agi after a real incident where the agent described a <code>telegram_send</code> that never happened.</p>
 <h4>Trigger lifecycle (v0.4.13+)</h4>
 <p><code>yantrikdb_think</code> flags redundancies, conflicts, and surprise cross-domain connections as <strong>triggers</strong> — substrate signals the agent can inspect and close out:</p>
 <ul>
@@ -664,7 +676,7 @@ YANTRIKDB_INTEGRATION_TOKEN=ydb_... \
         <div class="name"><span class="org">mem0ai /</span> mem0</div>
       </a>
       <a class="related-row" href="/projects/vectorize-io/hindsight">
-        <div class="stars">★ 15.0K</div>
+        <div class="stars">★ 15.1K</div>
         <div class="name"><span class="org">vectorize-io /</span> hindsight</div>
       </a>
       <a class="related-row" href="/projects/greyhaven-ai/autocontext">
@@ -672,7 +684,7 @@ YANTRIKDB_INTEGRATION_TOKEN=ydb_... \
         <div class="name"><span class="org">greyhaven-ai /</span> autocontext</div>
       </a>
       <a class="related-row" href="/projects/elkimek/honcho-self-hosted">
-        <div class="stars">★ 268</div>
+        <div class="stars">★ 269</div>
         <div class="name"><span class="org">elkimek /</span> honcho-self-hosted</div>
       </a>
       <a class="related-row" href="/projects/yoloshii/ClawMem">
@@ -684,11 +696,11 @@ YANTRIKDB_INTEGRATION_TOKEN=ydb_... \
         <div class="name"><span class="org">Signet-AI /</span> signetai</div>
       </a>
       <a class="related-row" href="/projects/plur-ai/plur">
-        <div class="stars">★ 142</div>
+        <div class="stars">★ 144</div>
         <div class="name"><span class="org">plur-ai /</span> plur</div>
       </a>
       <a class="related-row" href="/projects/amanning3390/flowstate-qmd">
-        <div class="stars">★ 28</div>
+        <div class="stars">★ 29</div>
         <div class="name"><span class="org">amanning3390 /</span> flowstate-qmd</div>
       </a>
     </div>
