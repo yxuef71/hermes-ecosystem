@@ -494,7 +494,7 @@ Direct HTTP(S) URL to a single-file `SKILL.md`. Name resolution: frontmatter →
 
 Direct GitHub repo/path installs and custom taps.
 
-`clawhub`, `lobehub`, `browse-sh`, `claude-marketplace`
+`clawhub`, `lobehub`, `browse-sh`
 
 Source-specific identifiers
 
@@ -506,7 +506,7 @@ Hermes currently integrates with these skills ecosystems and discovery sources:
 
 #### 1\. Official optional skills (`official`)
 
-These are maintained in the Hermes repository itself and install with builtin trust.
+These are maintained in the Hermes repository itself and install with built-in trust.
 
 -   Catalog: [Official Optional Skills Catalog](/docs/reference/optional-skills-catalog)
 -   Source in repo: `optional-skills/`
@@ -558,6 +558,8 @@ Default taps (browsable without any setup):
     
 -   [huggingface/skills](https://github.com/huggingface/skills)
     
+-   [NVIDIA/skills](https://github.com/NVIDIA/skills) — NVIDIA-verified skills (signed `skill.oms.sig` + governance `skill-card.md`)
+    
 -   [garrytan/gstack](https://github.com/garrytan/gstack)
     
 -   Example:
@@ -566,6 +568,18 @@ Default taps (browsable without any setup):
 ```
 hermes skills install openai/skills/k8s
 hermes skills tap add myorg/skills-repo
+```
+
+**Category groupings (`skills.sh.json`).** A GitHub tap may ship a `skills.sh.json` file at its repo root following the [skills.sh schema](https://skills.sh/schemas/skills.sh.schema.json). Its `groupings` (each with a `title` and a list of skill names) are read at index time and become the category labels shown in the [Skills Hub](https://hermes-agent.nousresearch.com/docs) page — instead of a tag-derived guess. This is generic: any tap that ships the file gets real categorization, no Hermes-side changes required.
+
+```
+{
+  "$schema": "https://skills.sh/schemas/skills.sh.schema.json",
+  "groupings": [
+    { "title": "Inference AI", "skills": ["dynamo-recipe-runner", "dynamo-router-sla"] },
+    { "title": "Decision Optimization", "skills": ["cuopt-developer", "cuopt-install"] }
+  ]
+}
 ```
 
 #### 5\. ClawHub (`clawhub`)
@@ -665,7 +679,7 @@ Important behavior:
 
 -   `--force` can override policy blocks for caution/warn-style findings.
 -   `--force` does **not** override a `dangerous` scan verdict.
--   Official optional skills (`official/...`) are treated as builtin trust and do not show the third-party warning panel.
+-   Official optional skills (`official/...`) are treated as built-in trust and do not show the third-party warning panel.
 
 ### Trust levels
 
@@ -685,11 +699,11 @@ Always trusted
 
 `optional-skills/` in the repo
 
-Builtin trust, no third-party warning
+Built-in trust, no third-party warning
 
 `trusted`
 
-Trusted registries/repos such as `openai/skills`, `anthropics/skills`, `huggingface/skills`
+Trusted registries/repos such as `openai/skills`, `anthropics/skills`, `huggingface/skills`, `NVIDIA/skills`
 
 More permissive policy than community sources
 

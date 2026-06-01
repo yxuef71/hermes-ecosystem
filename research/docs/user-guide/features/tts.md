@@ -235,6 +235,10 @@ KittenTTS
 
 2000
 
+Piper
+
+5000
+
 **ElevenLabs** picks a cap from the configured `model_id`:
 
 `model_id`

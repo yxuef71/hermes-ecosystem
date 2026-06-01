@@ -14,7 +14,7 @@ If you just want to use the dashboard, see [Web Dashboard](/docs/user-guide/feat
 
 How the pieces compose
 
-Themes and plugins are independent but synergistic. A theme can stand alone (just a YAML file). A plugin can stand alone (just a tab). Together they let you build a complete visual reskin with custom HUDs — the bundled `strike-freedom-cockpit` demo does exactly that. See [Combined theme + plugin demo](#combined-theme--plugin-demo).
+Themes and plugins are independent but synergistic. A theme can stand alone (just a YAML file). A plugin can stand alone (just a tab). Together they let you build a complete visual reskin with custom HUDs — the example `strike-freedom-cockpit` demo (lives in the `hermes-example-plugins` companion repo — see [Combined theme + plugin demo](#combined-theme--plugin-demo) for install steps) does exactly that.
 
 * * *
 

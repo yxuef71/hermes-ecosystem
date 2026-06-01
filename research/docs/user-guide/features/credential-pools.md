@@ -6,6 +6,10 @@ Credential pools let you register multiple API keys or OAuth tokens for the same
 
 This is different from [fallback providers](/docs/user-guide/features/fallback-providers), which switch to a _different_ provider entirely. Credential pools are same-provider rotation; fallback providers are cross-provider failover. Pools are tried first — if all pool keys are exhausted, _then_ the fallback provider activates.
 
+tip
+
+Credential pools are mainly for API-key providers (OpenRouter, Anthropic). A single [Nous Portal](/docs/integrations/nous-portal) OAuth covers 300+ models, so most users don't need a pool when on Portal.
+
 ## How It Works
 
 ```
@@ -13,8 +17,11 @@ Your request
   → Pick key from pool (round_robin / least_used / fill_first / random)
   → Send to provider
   → 429 rate limit?
-      → Retry same key once (transient blip)
-      → Second 429 → rotate to next pool key
+      → Plan/usage limit reached (e.g. ChatGPT/Codex "usage limit reached")?
+          → Rotate to next pool key immediately (no retry — the cap won't clear on retry)
+      → Generic / transient 429?
+          → Retry same key once (transient blip)
+          → Second 429 → rotate to next pool key
       → All keys exhausted → fallback_model (different provider)
   → 402 billing error?
       → Immediately rotate to next pool key (24h cooldown)

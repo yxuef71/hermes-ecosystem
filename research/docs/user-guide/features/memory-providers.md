@@ -72,9 +72,9 @@ Honcho pricing (cloud) / free (self-hosted)
 hermes memory setup        # select "honcho" — runs the Honcho-specific post-setup
 ```
 
-The legacy `hermes honcho setup` command still works (it now redirects to `hermes memory setup`), but is only registered after Honcho is selected as the active memory provider.
+On a fresh install, configure Honcho directly with `hermes memory setup honcho`. The legacy `hermes honcho setup` command still works (it now redirects to `hermes memory setup`), but is only registered after Honcho is selected as the active memory provider.
 
-**Config:** `$HERMES_HOME/honcho.json` (profile-local) or `~/.honcho/config.json` (global). Resolution order: `$HERMES_HOME/honcho.json` > `~/.hermes/honcho.json` > `~/.honcho/config.json`. See the [config reference](https://github.com/hermes-ai/hermes-agent/blob/main/plugins/memory/honcho/README.md) and the [Honcho integration guide](https://docs.honcho.dev/v3/guides/integrations/hermes).
+**Config:** `$HERMES_HOME/honcho.json` (profile-local) or `~/.honcho/config.json` (global). Resolution order: `$HERMES_HOME/honcho.json` > `~/.hermes/honcho.json` > `~/.honcho/config.json`. See the [config reference](https://github.com/NousResearch/hermes-agent/blob/main/plugins/memory/honcho/README.md) and the [Honcho integration guide](https://docs.honcho.dev/v3/guides/integrations/hermes).
 
 Full config reference
 
@@ -372,7 +372,7 @@ Full honcho.json example (multi-profile)
 }
 ```
 
-See the [config reference](https://github.com/hermes-ai/hermes-agent/blob/main/plugins/memory/honcho/README.md) and [Honcho integration guide](https://docs.honcho.dev/v3/guides/integrations/hermes).
+See the [config reference](https://github.com/NousResearch/hermes-agent/blob/main/plugins/memory/honcho/README.md) and [Honcho integration guide](https://docs.honcho.dev/v3/guides/integrations/hermes).
 
 * * *
 
@@ -849,6 +849,37 @@ Multi-container example
 
 **Support:** [Discord](https://supermemory.link/discord) · [support@supermemory.com](mailto:support@supermemory.com)
 
+### Memori
+
+Structured long-term memory using Memori Cloud, with background completed-turn capture, tool-aware turn context, and explicit recall tools for facts, summaries, quota, signup, and feedback.
+
+**Best for**
+
+Agent-controlled recall with structured project and session attribution
+
+**Requires**
+
+`pip install hermes-memori` + `hermes-memori install` + [Memori API key](https://app.memorilabs.ai/signup)
+
+**Data storage**
+
+Memori Cloud
+
+**Cost**
+
+Memori pricing
+
+**Tools:** `memori_recall` (search long-term memory), `memori_recall_summary` (summarized context), `memori_quota` (usage/quota), `memori_signup` (request signup email), `memori_feedback` (send integration feedback)
+
+**Setup:**
+
+```
+pip install hermes-memori
+hermes-memori install
+hermes config set memory.provider memori
+hermes memory setup
+```
+
 * * *
 
 ## Provider Comparison
@@ -960,6 +991,18 @@ Paid
 `supermemory`
 
 Context fencing + session graph ingest + multi-container
+
+**Memori**
+
+Cloud
+
+Free/Paid
+
+5
+
+`hermes-memori`
+
+Tool-aware memory + structured recall
 
 ## Profile Isolation
 

@@ -4,6 +4,10 @@
 
 Hermes Agent connects to external systems for AI inference, tool servers, IDE workflows, programmatic access, and more. These integrations extend what Hermes can do and where it can run.
 
+Start here
+
+If you only have time to set up one integration, set up [Nous Portal](/docs/integrations/nous-portal) — a single OAuth login covers 300+ models plus the four Tool Gateway tools (web search, image generation, TTS, and browser automation).
+
 ## AI Providers & Routing
 
 Hermes supports multiple AI inference providers out of the box. Use `hermes model` to configure interactively, or set them in `config.yaml`.
@@ -134,6 +138,14 @@ Paid
 
 `MINIMAX_API_KEY`
 
+**xAI TTS**
+
+Good
+
+Paid
+
+`XAI_API_KEY`
+
 **NeuTTS**
 
 Good
@@ -159,9 +171,9 @@ Speech-to-text supports six providers: local faster-whisper (free, runs on-devic
 
 ## Messaging Platforms
 
-Hermes runs as a gateway bot on 19+ messaging platforms, all configured through the same `gateway` subsystem:
+Hermes runs as a gateway bot on 27+ messaging platforms, all configured through the same `gateway` subsystem:
 
--   **[Telegram](/docs/user-guide/messaging/telegram)**, **[Discord](/docs/user-guide/messaging/discord)**, **[Slack](/docs/user-guide/messaging/slack)**, **[WhatsApp](/docs/user-guide/messaging/whatsapp)**, **[Signal](/docs/user-guide/messaging/signal)**, **[Matrix](/docs/user-guide/messaging/matrix)**, **[Mattermost](/docs/user-guide/messaging/mattermost)**, **[Email](/docs/user-guide/messaging/email)**, **[SMS](/docs/user-guide/messaging/sms)**, **[DingTalk](/docs/user-guide/messaging/dingtalk)**, **[Feishu/Lark](/docs/user-guide/messaging/feishu)**, **[WeCom](/docs/user-guide/messaging/wecom)**, **[WeCom Callback](/docs/user-guide/messaging/wecom-callback)**, **[Weixin](/docs/user-guide/messaging/weixin)**, **[BlueBubbles](/docs/user-guide/messaging/bluebubbles)**, **[QQ Bot](/docs/user-guide/messaging/qqbot)**, **[Yuanbao](/docs/user-guide/messaging/yuanbao)**, **[Home Assistant](/docs/user-guide/messaging/homeassistant)**, **[Microsoft Teams](/docs/user-guide/messaging/teams)**, **[Webhooks](/docs/user-guide/messaging/webhooks)**
+-   **[Telegram](/docs/user-guide/messaging/telegram)**, **[Discord](/docs/user-guide/messaging/discord)**, **[Slack](/docs/user-guide/messaging/slack)**, **[WhatsApp](/docs/user-guide/messaging/whatsapp)**, **[Signal](/docs/user-guide/messaging/signal)**, **[Matrix](/docs/user-guide/messaging/matrix)**, **[Mattermost](/docs/user-guide/messaging/mattermost)**, **[Email](/docs/user-guide/messaging/email)**, **[SMS](/docs/user-guide/messaging/sms)**, **[DingTalk](/docs/user-guide/messaging/dingtalk)**, **[Feishu/Lark](/docs/user-guide/messaging/feishu)**, **[WeCom](/docs/user-guide/messaging/wecom)**, **[WeCom Callback](/docs/user-guide/messaging/wecom-callback)**, **[Weixin](/docs/user-guide/messaging/weixin)**, **[BlueBubbles](/docs/user-guide/messaging/bluebubbles)**, **[QQ Bot](/docs/user-guide/messaging/qqbot)**, **[Yuanbao](/docs/user-guide/messaging/yuanbao)**, **[Home Assistant](/docs/user-guide/messaging/homeassistant)**, **[Microsoft Teams](/docs/user-guide/messaging/teams)**, **[Microsoft Teams Meetings](/docs/user-guide/messaging/teams-meetings)**, **[Microsoft Graph Webhook](/docs/user-guide/messaging/msgraph-webhook)**, **[Google Chat](/docs/user-guide/messaging/google_chat)**, **[LINE](/docs/user-guide/messaging/line)**, **[ntfy](/docs/user-guide/messaging/ntfy)**, **[SimpleX](/docs/user-guide/messaging/simplex)**, **[Open WebUI](/docs/user-guide/messaging/open-webui)**, **[Webhooks](/docs/user-guide/messaging/webhooks)**
 
 See the [Messaging Gateway overview](/docs/user-guide/messaging) for the platform comparison table and setup guide.
 

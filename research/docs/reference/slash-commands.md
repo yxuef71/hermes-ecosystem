@@ -62,9 +62,9 @@ Remove the last user/assistant exchange
 
 Set a title for the current session (usage: /title My Session Name)
 
-`/compress [focus topic]`
+`/compress [here [N] | focus topic]`
 
-Manually compress conversation context (flush memories + summarize). Optional focus topic narrows what the summary preserves.
+Manually compress conversation context (flush memories + summarize). `/compress here [N]` summarizes everything except the most recent N exchanges (default 2), kept verbatim — pick your own compression boundary. A focus topic narrows what a full summary preserves.
 
 `/rollback`
 
@@ -209,6 +209,10 @@ Manage a local Chromium-family CDP connection. `connect` attaches browser tools 
 `/skills`
 
 Search, install, inspect, or manage skills from online registries
+
+`/bundles`
+
+List configured skill bundles — `/<name>` slash aliases that preload several skills at once. Configure under `bundles:` in `~/.hermes/config.yaml`. See [Skill Bundles](/docs/user-guide/features/skills#skill-bundles).
 
 `/cron`
 
@@ -383,6 +387,10 @@ Command
 
 Description
 
+`/start`
+
+Platform-protocol command. Many chat platforms (Telegram, Discord, …) send `/start` automatically the first time a user opens a bot conversation. Hermes acknowledges the ping silently — no agent reply, no session burn — so first-contact handshakes don't waste a turn. You can also send it explicitly to confirm the gateway is reachable.
+
 `/new`
 
 Start a new conversation.
@@ -427,9 +435,9 @@ Remove the last exchange.
 
 Mark the current chat as the platform home channel for deliveries.
 
-`/compress [focus topic]`
+`/compress [here [N] | focus topic]`
 
-Manually compress conversation context. Optional focus topic narrows what the summary preserves.
+Manually compress conversation context. `/compress here [N]` keeps the most recent N exchanges (default 2) verbatim and summarizes the rest. A focus topic narrows what a full summary preserves.
 
 `/topic [off|help|session-id]`
 

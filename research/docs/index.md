@@ -14,7 +14,7 @@ The self-improving AI agent built by [Nous Research](https://nousresearch.com). 
 curl -fsSL https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh | bash
 ```
 
-**Windows (native, PowerShell)** — _early beta, [details →](/docs/user-guide/windows-native)_
+**Windows (native, PowerShell)** — _[details →](/docs/user-guide/windows-native)_
 
 ```
 iex (irm https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.ps1)
@@ -24,6 +24,10 @@ iex (irm https://raw.githubusercontent.com/NousResearch/hermes-agent/main/script
 
 See the full **[Installation Guide](/docs/getting-started/installation)** for what the installer does, the per-user vs root layout, and Windows-specific notes.
 
+Fastest path to a working agent
+
+After installing, run `hermes setup --portal` — one OAuth covers a model plus all four Tool Gateway tools (web search, image generation, TTS, browser). See [Nous Portal](/docs/integrations/nous-portal).
+
 ## What is Hermes Agent?
 
 It's not a coding copilot tethered to an IDE or a chatbot wrapper around a single API. It's an **autonomous agent** that gets more capable the longer it runs. It lives wherever you put it — a $5 VPS, a GPU cluster, or serverless infrastructure (Daytona, Modal) that costs nearly nothing when idle. Talk to it from Telegram while it works on a cloud VM you never SSH into yourself. It's not tied to your laptop.
@@ -32,7 +36,7 @@ It's not a coding copilot tethered to an IDE or a chatbot wrapper around a singl
 
 🚀 **[Installation](/docs/getting-started/installation)**
 
-Install in 60 seconds on Linux, macOS, WSL2, or native Windows (early beta)
+Install in 60 seconds on Linux, macOS, WSL2, or native Windows
 
 📖 **[Quickstart Tutorial](/docs/getting-started/quickstart)**
 
@@ -52,7 +56,7 @@ Set up Telegram, Discord, Slack, WhatsApp, Teams, or more
 
 🔧 **[Tools & Toolsets](/docs/user-guide/features/tools)**
 
-70+ built-in tools and how to configure them
+60+ built-in tools and how to configure them
 
 🧠 **[Memory System](/docs/user-guide/features/memory)**
 
@@ -111,7 +115,7 @@ Common questions and solutions
 -   **Scheduled automations** — Built-in cron with delivery to any platform
 -   **Delegates & parallelizes** — Spawn isolated subagents for parallel workstreams. Programmatic Tool Calling via `execute_code` collapses multi-step pipelines into single inference calls
 -   **Open standard skills** — Compatible with [agentskills.io](https://agentskills.io). Skills are portable, shareable, and community-contributed via the Skills Hub
--   **Full web control** — Search, extract, browse, vision, image generation, TTS
+-   **Full web control** — Search, extract, browse, vision, image generation, TTS — one subscription via [Nous Portal](/docs/integrations/nous-portal) bundles all of them
 -   **MCP support** — Connect to any MCP server for extended tool capabilities
 -   **Research-ready** — Batch processing, trajectory export, RL training with Atropos. Built by [Nous Research](https://nousresearch.com) — the lab behind Hermes, Nomos, and Psyche models
 
@@ -119,7 +123,7 @@ Common questions and solutions
 
 Machine-readable entry points to this documentation:
 
--   **[`/llms.txt`](/docs/assets/files/llms-bcf65f79b33e57e6c0cce5b9627945d4.txt)** — curated index of every doc page with short descriptions. ~17 KB, safe to load into an LLM context.
--   **[`/llms-full.txt`](/docs/assets/files/llms-full-1a9fc8671bab03c652f97c9c9d1f07d7.txt)** — every doc page concatenated into a single markdown file for one-shot ingestion. ~1.8 MB.
+-   **[`/llms.txt`](/docs/assets/files/llms-d4972c57170916efd83766ae50c3bb3d.txt)** — curated index of every doc page with short descriptions. ~17 KB, safe to load into an LLM context.
+-   **[`/llms-full.txt`](/docs/assets/files/llms-full-af425d591bd91e3f5ffafaf5345bd21d.txt)** — every doc page concatenated into a single markdown file for one-shot ingestion. ~1.8 MB.
 
 Both files also resolve at `/docs/llms.txt` and `/docs/llms-full.txt`. Generated fresh on every deploy.

@@ -708,7 +708,7 @@ Host                                    Container
   │   ├── state.db, sessions/, memories/   (runtime state)
   │   └── mcp-tokens/                      (OAuth tokens for MCP servers)
   ├── home/                                ──►  /home/hermes    (rw)
-  └── workspace/                           (MESSAGING_CWD)
+  └── workspace/                           (agent working directory)
       ├── SOUL.md                          (from documents option)
       └── (agent-created files)
 
@@ -1161,7 +1161,7 @@ State directory (`HERMES_HOME` parent)
 
 `"${stateDir}/workspace"`
 
-Agent working directory (`MESSAGING_CWD`)
+Agent working directory
 
 `addToSystemPackages`
 
@@ -1509,7 +1509,7 @@ Interactive users who get a `~/.hermes` symlink to the service stateDir and are 
 │   ├── cron/
 │   └── logs/
 ├── home/                            # Agent HOME
-└── workspace/                       # MESSAGING_CWD
+└── workspace/                       # Agent working directory
     ├── SOUL.md                      # From documents option
     └── (agent-created files)
 ```

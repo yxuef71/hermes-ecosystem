@@ -664,7 +664,7 @@ Max lifetime for terminal sessions in seconds
 
 `TERMINAL_CWD`
 
-Working directory for terminal sessions (gateway/cron only; CLI uses launch dir)
+Deprecated direct override for gateway/cron terminal sessions. Prefer `terminal.cwd` in `config.yaml`; CLI still uses the launch directory.
 
 `SUDO_PASSWORD`
 
@@ -1462,7 +1462,7 @@ Bearer token for authenticating with the remote API server in proxy mode. Must m
 
 `MESSAGING_CWD`
 
-Working directory for terminal commands in messaging mode (default: `~`)
+Deprecated compatibility fallback for gateway working directory. Prefer `terminal.cwd` in `config.yaml`.
 
 `GATEWAY_ALLOWED_USERS`
 
@@ -1757,6 +1757,10 @@ Default gateway busy-input behavior: `queue`, `steer`, or `interrupt`. Can be ov
 `HERMES_GATEWAY_BUSY_ACK_ENABLED`
 
 Whether the gateway sends an acknowledgment message (⚡/⏳/⏩) when a user sends input while the agent is busy (default: `true`). Set to `false` to suppress these messages entirely — the input is still queued/steered/interrupts as normal, only the chat reply is silenced. Bridged from `display.busy_ack_enabled` in `config.yaml`.
+
+`HERMES_GATEWAY_NO_SUPERVISE`
+
+Inside the s6-overlay Docker image, opt out of auto-supervision when running `hermes gateway run` and use pre-s6 foreground semantics (no auto-restart, gateway is the container's main process). Truthy values: `1`, `true`, `yes`. Equivalent to the `--no-supervise` CLI flag. No-op outside the s6 image.
 
 `HERMES_FILE_MUTATION_VERIFIER`
 

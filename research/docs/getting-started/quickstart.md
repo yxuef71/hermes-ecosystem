@@ -6,7 +6,7 @@ This guide gets you from zero to a working Hermes setup that survives real use. 
 
 ## Prefer to watch?
 
-**Onchain AI Garage** put together a Masterclass walkthrough of installation, setup, and basic commands — a good companion to this page if you'd rather follow along on video. For more, see the full [Hermes Agent Tutorials & Use Cases](https://www.youtube.com/channel/UCqB1bhMwGsW-yefBxYwFCCg) playlist.
+**Onchain AI Garage** put together a Masterclass walkthrough of installation, setup, and basic commands — a good companion to this page if you'd rather follow along on video. For more, see the full [Hermes Agent Tutorials & Use Cases](https://www.youtube.com/playlist?list=PLmpUb_PWAkDxewld5ZYyKifuHxgIbiq2d) playlist.
 
 ## Who this is for
 
@@ -147,7 +147,7 @@ Enter your API key
 
 GLM / Zhipu-hosted models
 
-Set `GLM_API_KEY` / `ZAI_API_KEY`
+Set `GLM_API_KEY` / `ZAI_API_KEY` (also accepts `Z_AI_API_KEY`)
 
 **Kimi / Moonshot**
 
@@ -175,7 +175,7 @@ Set `GMI_API_KEY`
 
 **MiniMax (OAuth)**
 
-MiniMax-M2.7 via browser OAuth — no API key needed
+MiniMax frontier model via browser OAuth — no API key needed (model name in `hermes_cli/models.py` may change between releases)
 
 `hermes model` → MiniMax (OAuth)
 
@@ -195,7 +195,7 @@ Set `MINIMAX_CN_API_KEY`
 
 Qwen models via DashScope
 
-Set `DASHSCOPE_API_KEY`
+Set `DASHSCOPE_API_KEY` (Qwen Coding Plan also accepts `ALIBABA_CODING_PLAN_API_KEY`)
 
 **Hugging Face**
 
@@ -208,6 +208,78 @@ Set `HF_TOKEN`
 Claude, Nova, Llama, DeepSeek via native Converse API
 
 IAM role or `aws configure` ([guide](/docs/guides/aws-bedrock))
+
+**Azure Foundry**
+
+Azure AI Foundry-hosted models
+
+Set `AZURE_FOUNDRY_API_KEY` + `AZURE_FOUNDRY_BASE_URL`
+
+**Google AI Studio**
+
+Gemini models via direct API
+
+Set `GOOGLE_API_KEY` / `GEMINI_API_KEY`
+
+**Google Gemini (OAuth)**
+
+Gemini via the `google-gemini-cli` OAuth flow — no key needed
+
+`hermes model` → Google Gemini (OAuth)
+
+**xAI**
+
+Grok models via direct API
+
+Set `XAI_API_KEY`
+
+**xAI Grok OAuth**
+
+SuperGrok / Premium+ subscription, no API key needed
+
+`hermes model` → xAI Grok OAuth
+
+**NovitaAI**
+
+Multi-model API gateway
+
+Set `NOVITA_API_KEY`
+
+**StepFun**
+
+Step Plan models
+
+Set `STEPFUN_API_KEY`
+
+**Xiaomi MiMo**
+
+Xiaomi-hosted models
+
+Set `XIAOMI_API_KEY`
+
+**Tencent TokenHub**
+
+Tencent-hosted models
+
+Set `TOKENHUB_API_KEY`
+
+**Ollama Cloud**
+
+Managed Ollama-hosted models
+
+Set `OLLAMA_API_KEY`
+
+**LM Studio**
+
+Local desktop app exposing an OpenAI-compatible API
+
+Set `LM_API_KEY` (and `LM_BASE_URL` if non-default)
+
+**Qwen OAuth**
+
+Qwen Portal browser OAuth — no API key needed
+
+`hermes model` → Qwen OAuth
 
 **Kilo Code**
 

@@ -4,6 +4,8 @@
 
 Connect Hermes Agent to Google Chat as a bot. The integration uses Cloud Pub/Sub pull subscriptions for inbound events and the Chat REST API for outbound messages. Equivalent ergonomics to Slack Socket Mode or Telegram long-polling: your Hermes process does not need a public URL, a tunnel, or a TLS certificate. It connects, authenticates, and listens on a subscription — the same way a Telegram bot listens on a token.
 
+> Run `hermes gateway setup` and pick **Google Chat** for a guided walk-through.
+
 Workspace edition
 
 Google Chat is part of Google Workspace. You can use this integration with a personal Workspace (`@yourdomain.com` registered through Google) or a work Workspace where you have the Admin rights to publish an app. Gmail-only accounts cannot host Chat apps.
@@ -221,7 +223,7 @@ There's no IAM role or scope that fixes this. The endpoint only accepts user cre
 4.  On the host, register the client with Hermes:
 
 ```
-python -m gateway.platforms.google_chat_user_oauth \
+python -m plugins.platforms.google_chat.oauth \
     --client-secret /path/to/client_secret.json
 ```
 
@@ -281,7 +283,7 @@ The asker has no per-user OAuth token and there's no legacy fallback. Run `/setu
 The one-time host setup wasn't done. From a terminal on the host that runs Hermes:
 
 ```
-python -m gateway.platforms.google_chat_user_oauth \
+python -m plugins.platforms.google_chat.oauth \
     --client-secret /path/to/client_secret.json
 ```
 
