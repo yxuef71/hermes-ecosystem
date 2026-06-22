@@ -110,7 +110,7 @@ Slack helpers (currently: generate the app manifest with every command as a nati
 
 `hermes auth`
 
-Manage credentials — add, list, remove, reset, set strategy. Handles OAuth flows for Codex/Nous/Anthropic.
+Manage credentials — add, list, remove, reset, status, logout. Handles OAuth flows for Codex/Nous/Anthropic.
 
 `hermes login` / `logout`
 
@@ -294,7 +294,7 @@ Enable a comma-separated set of toolsets.
 
 `--provider <provider>`
 
-Force a provider: `auto`, `openrouter`, `nous`, `openai-codex`, `copilot-acp`, `copilot`, `anthropic`, `gemini`, `google-gemini-cli`, `huggingface`, `novita` (aliases `novita-ai`, `novitaai`), `openai-api`, `zai`, `kimi-coding`, `kimi-coding-cn`, `minimax`, `minimax-cn`, `minimax-oauth`, `kilocode`, `xiaomi`, `arcee`, `gmi`, `alibaba`, `alibaba-coding-plan` (alias `alibaba_coding`), `deepseek`, `nvidia`, `ollama-cloud`, `xai` (alias `grok`), `xai-oauth` (alias `grok-oauth`), `qwen-oauth`, `bedrock`, `opencode-zen`, `opencode-go`, `azure-foundry`, `lmstudio`, `stepfun`, `tencent-tokenhub` (alias `tencent`, `tokenhub`).
+Force a provider: `auto`, `openrouter`, `nous`, `openai-codex`, `copilot-acp`, `copilot`, `anthropic`, `gemini`, `huggingface`, `novita` (aliases `novita-ai`, `novitaai`), `openai-api`, `zai`, `kimi-coding`, `kimi-coding-cn`, `minimax`, `minimax-cn`, `minimax-oauth`, `kilocode`, `xiaomi`, `arcee`, `gmi`, `alibaba`, `alibaba-coding-plan` (alias `alibaba_coding`), `deepseek`, `nvidia`, `ollama-cloud`, `xai` (alias `grok`), `xai-oauth` (alias `grok-oauth`), `qwen-oauth`, `bedrock`, `opencode-zen`, `opencode-go`, `azure-foundry`, `lmstudio`, `stepfun`, `tencent-tokenhub` (alias `tencent`, `tokenhub`).
 
 `-s`, `--skills <name>`
 
@@ -504,6 +504,10 @@ Remove the installed service.
 
 Interactive messaging-platform setup.
 
+`enroll`
+
+Experimental: enroll this gateway with a relay connector and save relay credentials for connector-backed platforms.
+
 Options:
 
 Option
@@ -517,6 +521,8 @@ On `start` / `restart` / `stop`: act on **every profile's** gateway, not just th
 `--no-supervise`
 
 On `run`: inside the s6-overlay Docker image, opt out of auto-supervision and use pre-s6 foreground semantics — gateway runs as the container's main process with no auto-restart. No-op outside the s6 image. Equivalent to setting `HERMES_GATEWAY_NO_SUPERVISE=1`.
+
+`hermes gateway enroll` accepts `--token`, `--connector-url`, and `--gateway-id`. It exchanges the enrollment token with the connector and writes the resulting `GATEWAY_RELAY_ID`, `GATEWAY_RELAY_SECRET`, `GATEWAY_RELAY_DELIVERY_KEY`, and optional `GATEWAY_RELAY_URL` values to the active profile's `.env`.
 
 WSL users
 
@@ -1006,6 +1012,8 @@ Check whether the cron scheduler is running.
 
 Run due jobs once and exit.
 
+The cron **trigger** is pluggable via the `cron.provider` config key. Empty (the default) uses the built-in in-process ticker. Set it to `chronos` (the NAS-managed provider for scale-to-zero hosted gateways) — configured via the `cron.chronos.*` keys (`portal_url`, `callback_url`, `expected_audience`, `nas_jwks_url`) — or name a custom provider under `plugins/cron/<name>/` or `$HERMES_HOME/plugins/<name>/`. An unknown or unavailable provider falls back to the built-in, so cron is never left without a trigger. See the [cron internals](/docs/developer-guide/cron-internals#gateway-integration) doc.
+
 ## `hermes kanban`
 
 ```
@@ -1377,7 +1385,7 @@ Paste expiry in days (default: 7).
 
 Print the report locally instead of uploading.
 
-The report includes system info (OS, Python version, Hermes version), recent agent and gateway logs (512 KB limit per file), and redacted API key status. Keys are always redacted — no secrets are uploaded.
+The report includes system info (OS, Python version, Hermes version), recent agent, gateway, GUI/dashboard, and desktop logs (512 KB limit per file), and redacted API key status. Keys are always redacted — no secrets are uploaded.
 
 Paste services tried in order: paste.rs, dpaste.com.
 
