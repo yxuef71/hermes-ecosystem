@@ -261,7 +261,11 @@ This mirrors the gateway's behavior — without it, cron agents would fail on ra
 
 ## Delivery Model
 
-Cron job results can be delivered to any supported platform:
+Cron job results can be delivered to any supported platform.
+
+A bare platform name (`slack`, `telegram`, …) delivers to that platform's configured **home channel**. To target a **specific** destination instead, append a target after a colon: `platform:<target>`. The target is resolved at fire time (not when the job is created), so a job can name a destination on a platform that isn't connected yet and start delivering once it comes online.
+
+Most platforms also accept an optional thread/topic as a third segment: `platform:<chat_id>:<thread_id>`.
 
 Target
 
@@ -283,101 +287,105 @@ Save to `~/.hermes/cron/output/`
 
 Telegram
 
-`telegram` or `telegram:<chat_id>`
+`telegram`, `telegram:<chat_id>`, `telegram:<chat_id>:<thread_id>`, `telegram:@username`
 
-`telegram:-1001234567890`
+`telegram:-1001234567890:17585`
 
 Discord
 
-`discord` or `discord:#channel`
+`discord`, `discord:#channel`, `discord:<channel_id>`, `discord:<channel_id>:<thread_id>`
 
 `discord:#engineering`
 
 Slack
 
-`slack`
+`slack`, `slack:#channel`, `slack:<channel_id>`, `slack:<channel_id>:<thread_ts>`
 
-Deliver to Slack home channel
-
-WhatsApp
-
-`whatsapp`
-
-Deliver to WhatsApp home
-
-Signal
-
-`signal`
-
-Deliver to Signal
+`slack:#engineering`
 
 Matrix
 
-`matrix`
+`matrix`, `matrix:<!room_id:server>`, `matrix:<@user:server>`
 
-Deliver to Matrix home room
-
-Mattermost
-
-`mattermost`
-
-Deliver to Mattermost home
-
-Email
-
-`email`
-
-Deliver via email
-
-SMS
-
-`sms`
-
-Deliver via SMS
-
-Home Assistant
-
-`homeassistant`
-
-Deliver to HA conversation
-
-DingTalk
-
-`dingtalk`
-
-Deliver to DingTalk
+`matrix:!abc123:example.org`
 
 Feishu
 
-`feishu`
+`feishu`, `feishu:<chat_id>`, `feishu:<chat_id>:<thread_id>`
 
-Deliver to Feishu
+`feishu:oc_abc123def`
 
-WeCom
+WhatsApp
 
-`wecom`
+`whatsapp`, `whatsapp:<jid>`, `whatsapp:+<E.164>`
 
-Deliver to WeCom
+`whatsapp:123456@g.us`
+
+Signal
+
+`signal`, `signal:group:<id>`, `signal:+<E.164>`
+
+`signal:group:aBcD==`
+
+SMS
+
+`sms`, `sms:+<E.164>`
+
+`sms:+<E.164 number>`
+
+Email
+
+`email`, `email:<address>`
+
+`email:alerts@example.com`
 
 Weixin
 
-`weixin`
+`weixin`, `weixin:<wxid>`
 
-Deliver to Weixin (WeChat)
+`weixin:wxid_abc123`
+
+Mattermost
+
+`mattermost` or `mattermost:<channel_id>`
+
+Bare name delivers to Mattermost home
+
+Home Assistant
+
+`homeassistant` or `homeassistant:<conversation>`
+
+Bare name delivers to HA conversation
+
+DingTalk
+
+`dingtalk` or `dingtalk:<chat_id>`
+
+Bare name delivers to DingTalk
+
+WeCom
+
+`wecom` or `wecom:<chat_id>`
+
+Bare name delivers to WeCom
 
 BlueBubbles
 
-`bluebubbles`
+`bluebubbles` or `bluebubbles:<chat_guid>`
 
-Deliver to iMessage via BlueBubbles
+Bare name delivers to iMessage via BlueBubbles
 
 QQ Bot
 
-`qqbot`
+`qqbot` or `qqbot:<chat_id>`
 
-Deliver to QQ (Tencent) via Official API v2
+Bare name delivers to QQ (Tencent) via Official API v2
 
-For Telegram topics, use the format `telegram:<chat_id>:<thread_id>` (e.g., `telegram:-1001234567890:17585`).
+Platforms in the first group have explicit, validated target syntax — named channels (`#channel`), topics/threads, room/user IDs, group IDs, or phone numbers. The remaining platforms accept the generic `platform:<chat_id>` form (the value after the colon is used verbatim as the destination ID); a bare platform name always delivers to the home channel.
+
+**Named channels** (`slack:#engineering`, `discord:#engineering`, or a friendly name like `slack:engineering`) are resolved against the channel directory the gateway builds from connected adapters, so the gateway must have discovered the channel for name resolution to succeed; raw IDs (`slack:C0123ABCD45`) always work.
+
+For **Telegram topics**, use `telegram:<chat_id>:<thread_id>` (e.g., `telegram:-1001234567890:17585`). For **Slack threads**, the third segment is the parent message's `thread_ts` (e.g., `slack:C0123ABCD45:1700000000.000100`), so it only applies when replying under an existing message.
 
 ### Response Wrapping
 
