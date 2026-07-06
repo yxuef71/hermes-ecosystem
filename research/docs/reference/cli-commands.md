@@ -1461,13 +1461,21 @@ Number of log lines to include per log file (default: 200).
 
 Paste expiry in days (default: 7).
 
+`--nous`
+
+Upload to Nous-internal diagnostics storage instead of a public paste service. Use this when Nous support asks for a private diagnostic bundle.
+
 `--local`
 
 Print the report locally instead of uploading.
 
-The report includes system info (OS, Python version, Hermes version), recent agent, gateway, GUI/dashboard, and desktop logs (512 KB limit per file), and redacted API key status. Keys are always redacted — no secrets are uploaded.
+`--no-redact`
 
-Paste services tried in order: paste.rs, dpaste.com.
+Disable upload-time secret redaction. By default, uploads are redacted.
+
+The report includes system info (OS, Python version, Hermes version), recent agent, gateway, GUI/dashboard, and desktop logs (512 KB limit per file), and redacted API key status. By default, uploads are redacted so secrets are not included.
+
+Default uploads use public paste services tried in order: paste.rs, dpaste.com. `--nous` uploads the same debug bundle to private Nous diagnostics storage instead; the returned viewer link is for the Nous team and auto-deletes after 14 days.
 
 ### Examples
 
@@ -1475,6 +1483,7 @@ Paste services tried in order: paste.rs, dpaste.com.
 hermes debug share              # Upload debug report, print URL
 hermes debug share --lines 500  # Include more log lines
 hermes debug share --expire 30  # Keep paste for 30 days
+hermes debug share --nous       # Upload a private diagnostics bundle for Nous support
 hermes debug share --local      # Print report to terminal (no upload)
 ```
 
@@ -2440,7 +2449,11 @@ Delete one session.
 
 `prune`
 
-Delete old sessions.
+Delete sessions matching filters: time bounds `--older-than`/`--newer-than`/`--before`/`--after` (durations like `5h`/`2d`, bare days, or ISO timestamps); attributes `--source`, `--title`, `--model`, `--provider`, `--branch`, `--end-reason`, `--user`, `--chat-id`, `--chat-type`, `--cwd`; numeric bounds `--min/--max-messages`, `--min/--max-tokens`, `--min/--max-cost`, `--min/--max-tool-calls`; plus `--include-archived`, `--dry-run`, `--yes`. Default: older than 90 days.
+
+`archive`
+
+Bulk-archive (soft-hide, no deletion) sessions matching the same filters as `prune`. Requires at least one filter.
 
 `stats`
 
