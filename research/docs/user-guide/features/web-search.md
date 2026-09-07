@@ -23,13 +23,13 @@ Free tier
 
 **Firecrawl** (default)
 
-`FIRECRAWL_API_KEY`
+`FIRECRAWL_API_KEY` (optional — keyless when selected)
 
 ✔
 
 ✔
 
-500 credits/mo
+500 credits/mo · keyless cloud when selected
 
 **SearXNG**
 
@@ -61,35 +61,55 @@ Free tier
 
 ✔ Free
 
-**Tavily**
-
-`TAVILY_API_KEY`
-
-✔
-
-✔
-
-1 000 searches/mo
-
 **Exa**
 
-`EXA_API_KEY`
+`EXA_API_KEY` (optional)
 
 ✔
 
 ✔
 
-1 000 searches/mo
+✔ Keyless ring member · 1 000 searches/mo with key
 
 **Parallel**
 
-`PARALLEL_API_KEY`
+`PARALLEL_API_KEY` (optional)
 
 ✔
 
 ✔
 
-Paid
+✔ Keyless ring member · paid with key
+
+**Tavily**
+
+`TAVILY_API_KEY` (optional)
+
+✔
+
+✔
+
+✔ Opt-in keyless when selected
+
+**Perplexity**
+
+`PERPLEXITY_API_KEY`
+
+✔
+
+✔ (query-relevant snippets)
+
+Paid (per-request Search API pricing)
+
+**Keenable**
+
+`KEENABLE_API_KEY` (optional)
+
+✔
+
+✔
+
+✔ Keyless ring member · paid with key
 
 **xAI (Grok)**
 
@@ -101,9 +121,15 @@ Paid
 
 Paid (SuperGrok or per-token)
 
-Brave Search, DDGS, and xAI are **search-only** — pair any of them with Firecrawl/Tavily/Exa/Parallel when you also need `web_extract`. DDGS uses the [`ddgs` Python package](https://pypi.org/project/ddgs/) under the hood; if it isn't already installed, run `pip install ddgs` (or let Hermes lazy-install it on first use). xAI runs Grok's server-side `web_search` tool on the Responses API — results are LLM-generated rather than index-backed, so titles, descriptions, and URL choice are all model output (see the [trust-model caveat](#xai-grok) below).
+Brave Search, DDGS, and xAI are **search-only** — pair any of them with Firecrawl/Tavily/Perplexity/Keenable/Exa/Parallel when you also need `web_extract`. DDGS uses the [`ddgs` Python package](https://pypi.org/project/ddgs/) under the hood; if it isn't already installed, run `pip install ddgs` (or let Hermes lazy-install it on first use). xAI runs Grok's server-side `web_search` tool on the Responses API — results are LLM-generated rather than index-backed, so titles, descriptions, and URL choice are all model output (see the [trust-model caveat](#xai-grok) below).
 
 **Per-capability split:** you can use different providers for search and extract independently — for example SearXNG (free) for search and Firecrawl for extract. See [Per-capability configuration](#per-capability-configuration) below.
+
+Works out of the box — keyless free-tier rotation
+
+A fresh install with **no web credentials at all** gets working `web_search` and `web_extract` out of the box: requests rotate round-robin across the ring vendors' public free tiers — **Exa, Parallel, Firecrawl, and Keenable** — spreading load evenly, and a rate-limited request automatically retries on the next vendor in the ring (multi-hop, until one serves or all are throttled). No signup, no key. This tier is strictly last-resort — any configured backend or present API key always wins — and requests carry no user identifiers (only a random per-process session id, rotated on restart). For guaranteed, unthrottled service, set up a keyed provider. Disable the keyless tier entirely with `web.keyless_fallback: false`.
+
+**Choosing free vs paid explicitly:** in `hermes tools`, Exa, Parallel, and Keenable each appear as two rows — **Free (keyless)** and **Paid (API key)**. Picking Free pins that vendor's anonymous endpoint (even if you later add a key); picking Paid pins the keyed path (a missing key then errors instead of silently downgrading to the free tier). The selection is stored as `web.provider_tier.<name>: free|paid`; leave it unset for auto (key present → paid, otherwise the keyless ring).
 
 Nous Subscribers
 
@@ -136,6 +162,55 @@ The per-page budget is configurable via `web.extract_char_limit` in `config.yaml
 ### When truncation gets in the way
 
 If you specifically need the live DOM rather than extracted markdown — for example, a JS-heavy page where extraction returns little content — use `browser_navigate` + `browser_snapshot` instead. The browser tool returns the live accessibility tree (subject to its own snapshot cap on huge pages).
+
+* * *
+
+## Result caching
+
+Repeat web calls within a short window are served from cache instead of the paid backend — this saves credits and latency in the two patterns where duplicates are common: subagent fan-outs (several delegated agents researching the same topic) and the agent re-checking a page it read minutes ago.
+
+Call
+
+Cache
+
+Scope
+
+`web_search` — same query (case/whitespace-insensitive), same provider
+
+In-memory memo
+
+Per process
+
+`web_extract` — same URL, same format, same provider
+
+Full text stored under `~/.hermes/cache/web/`
+
+Shared across CLI, gateway, cron, and subagent processes
+
+Concurrent identical searches (a parallel subagent fan-out firing the same query at once) are **coalesced into a single backend request** — the first caller pays; the rest share the response. Requested search limits are bucketed up to 10/20/50/100 so near-identical requests (`limit=5` vs `limit=8`) share one entry, with each caller receiving its requested count.
+
+Only successful responses are cached. Failures always retry the backend, responses served by the one-shot keyless rescue are never cached (the next call attempts your chosen backend again), and URLs matched by your `security.website_blocklist` are never served from cache. Cached extracts re-run the normal truncation pipeline, so a different `char_limit` on the second call works off the same stored scrape.
+
+**Local development URLs are never cached.** Anything on `localhost`, `127.0.0.1`, `*.local`, single-label LAN hostnames, or private/link-local IP ranges (`192.168.*`, `10.*`, `172.16-31.*`) bypasses the extract cache entirely — dev servers, hot-reload builds, and chat-GUI artifact previews change on every save, and a cached copy would show you a stale build. Every fetch of a local page is live. (These URLs are only reachable at all when `security.allow_private_urls` is enabled.)
+
+**Testing over the public internet?** Staging deploys and tunnel URLs are public DNS, so the local-dev rule can't catch them — list them in `web.cache_exempt_hosts` and they're always fetched live too. Entries match exactly, as a `*.` wildcard, or as a domain suffix (`mysite.dev` also covers `preview.mysite.dev`):
+
+```
+# ~/.hermes/config.yaml
+web:
+  cache_exempt_hosts:
+    - mysite.vercel.app
+    - "*.ngrok-free.app"
+```
+
+```
+# ~/.hermes/config.yaml
+web:
+  cache_enabled: true      # default; set false to disable both caches
+  cache_ttl_minutes: 20    # freshness window, clamped 1–1440
+```
+
+If you're researching genuinely live data (scores, prices, breaking news) and need every call fresh, lower the TTL or set `web.cache_enabled: false`.
 
 * * *
 
@@ -306,7 +381,7 @@ SearXNG handles search; you need a separate provider for `web_extract`. Use the 
 # ~/.hermes/config.yaml
 web:
   search_backend: "searxng"
-  extract_backend: "firecrawl"   # or tavily, exa, parallel
+  extract_backend: "firecrawl"   # or tavily, perplexity, keenable, exa, parallel
 ```
 
 With this config, Hermes uses SearXNG for all search queries and Firecrawl for URL extraction — combining free search with high-quality extraction.
@@ -315,14 +390,28 @@ With this config, Hermes uses SearXNG for all search queries and Firecrawl for U
 
 ### Tavily
 
-AI-optimised search and extract with a generous free tier.
+AI-optimised search and extract. Select Tavily in `hermes tools` (or set `web.backend: tavily`) to use it **keyless** with no account (rate-limited). Set an API key when you want higher limits.
 
 ```
+# optional — skip this for keyless access after selecting Tavily
 # ~/.hermes/.env
 TAVILY_API_KEY=tvly-your-key-here
 ```
 
-Get a key at [app.tavily.com](https://app.tavily.com/home). The free tier includes 1 000 searches/month.
+Get a key at [app.tavily.com](https://app.tavily.com/home). See [Tavily keyless](https://docs.tavily.com/documentation/keyless).
+
+* * *
+
+### Perplexity
+
+[Perplexity's Search API](https://docs.perplexity.ai/docs/search/quickstart) returns ranked, date-stamped results from Perplexity's own index (`web_search`). For `web_extract` it uses the same query-relevant _snippets_ route as the official `pplx` CLI: you get the passages of each page that matter, with elisions marked `…`, rather than a verbatim full-page dump — pick Firecrawl / Exa / Parallel as `web.extract_backend` when you need the whole page. Keyed only; there is no anonymous tier.
+
+```
+# ~/.hermes/.env
+PERPLEXITY_API_KEY=pplx-your-key-here
+```
+
+Get a key at [perplexity.ai/account/api](https://www.perplexity.ai/account/api). Set `PERPLEXITY_BASE_URL` to route through a proxy.
 
 * * *
 
@@ -391,7 +480,7 @@ web:
     timeout: 90                  # seconds (default)
 ```
 
-**Search-only** — pair with Firecrawl / Tavily / Exa / Parallel if you also need `web_extract`. On 401 the provider performs a single forced OAuth-token refresh and retries (covers mid-window revocation and opaque tokens the proactive expiry check can't decode); env-var credentials skip the retry.
+**Search-only** — pair with Firecrawl / Tavily / Keenable / Exa / Parallel if you also need `web_extract`. On 401 the provider performs a single forced OAuth-token refresh and retries (covers mid-window revocation and opaque tokens the proactive expiry check can't decode); env-var credentials skip the retry.
 
 Trust model
 
@@ -408,7 +497,7 @@ Set one provider for all web capabilities:
 ```
 # ~/.hermes/config.yaml
 web:
-  backend: "searxng"   # firecrawl | searxng | brave-free | ddgs | tavily | exa | parallel | xai
+  backend: "searxng"   # firecrawl | searxng | brave-free | ddgs | tavily | perplexity | keenable | exa | parallel | xai
 ```
 
 ### Per-capability configuration
@@ -422,17 +511,17 @@ web:
   extract_backend: "firecrawl"  # used by web_extract
 ```
 
-When per-capability keys are empty, both fall through to `web.backend`. When `web.backend` is also empty, the backend is auto-detected from whichever API key/URL is present.
+When per-capability keys are empty, both fall through to `web.backend`. Only when no web selection has ever been written is the backend auto-detected from whichever API key/URL is present — once a selection exists, the runtime always uses it, and adding a key to `.env` does not reroute web traffic.
 
 **Priority order (per capability):**
 
 1.  `web.search_backend` / `web.extract_backend` (explicit per-capability)
-2.  `web.backend` (shared fallback)
-3.  Auto-detect from environment variables
+2.  `web.backend` (shared fallback; `nous` = managed Tool Gateway)
+3.  Auto-detect from environment variables (never-configured setups only)
 
 ### Auto-detection
 
-If no backend is explicitly configured, Hermes picks the first available one based on which credentials are set:
+If no backend has **ever** been selected (no `web.backend` / per-capability key written by you or `hermes tools`), Hermes picks the first available one based on which credentials are set:
 
 Credential present
 
@@ -441,6 +530,10 @@ Auto-selected backend
 `TAVILY_API_KEY`
 
 tavily
+
+`PERPLEXITY_API_KEY`
+
+perplexity
 
 `EXA_API_KEY`
 
@@ -465,6 +558,14 @@ brave-free
 `ddgs` package importable
 
 ddgs
+
+_(nothing set at all)_
+
+keyless ring: exa / parallel / firecrawl / keenable (round-robin)
+
+**Keyless free-tier ring:** when _no_ credential above is present, requests rotate across the ring vendors' public free tiers (Exa, Parallel, Firecrawl, Keenable) so web tools work on a fresh install with zero setup — and a rate-limited request fails over to the next vendor in the ring automatically. Pin one vendor in `hermes tools` to stop the rotation (the ring is then only used as failover succession on throttles). All free tiers are vendor-rate-limited under burst load; sustained normal usage goes through fine. Set `web.keyless_fallback: false` to turn the tier off — with it off and no credentials, web tools are unavailable until a provider is configured.
+
+**One-shot keyless rescue for keyed backends:** when your chosen/keyed backend fails a call (bad key, outage, upstream 5xx), that single call automatically retries on the keyless free-tier ring instead of erroring — the result notes which vendor served it and why (`rescued_from` / `backend_error`). The failover is never sticky: the very next `web_search`/`web_extract` call attempts your chosen backend again. Disable with `web.keyless_rescue: false` (also off whenever `keyless_fallback` is off).
 
 xAI Web Search is **not** in the auto-detection chain — having `XAI_API_KEY` set (or being signed in via xAI Grok OAuth) does not automatically route web traffic through xAI, since those credentials are also used for inference / TTS / image gen and the user may want a different backend for web. Opt in explicitly with `web.backend: "xai"`.
 
@@ -510,7 +611,7 @@ SearXNG cannot extract URL content. Set `web.extract_backend` to a provider that
 ```
 web:
   search_backend: "searxng"
-  extract_backend: "firecrawl"  # or tavily / exa / parallel
+  extract_backend: "firecrawl"  # or tavily / perplexity / keenable / exa / parallel
 ```
 
 ### SearXNG returns 0 results

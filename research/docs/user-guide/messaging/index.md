@@ -637,9 +637,13 @@ Control messaging voice replies and Discord voice-channel behavior
 
 List or restore filesystem checkpoints
 
-`/background <prompt>`
+`/bg <prompt>`
 
 Run a prompt in a separate background session
+
+`/btw <question>`
+
+Ask a side question about the current conversation without interrupting it
 
 `/reload-mcp`
 
@@ -665,7 +669,7 @@ Sessions persist across messages until they reset. The agent remembers your conv
 
 ### Finding Past Sessions (`/sessions`)
 
-`/sessions` lists your previous sessions for the current chat, and `/sessions <name>` resumes one (shorthand for `/resume`). When the list grows long, `/sessions search <query>` (alias `find`) filters by title or session-id match, ordered by most recently active. Cross-origin listing with `/sessions all` is admin-only — regular users only ever see sessions from their own chat origin.
+`/sessions` lists your previous sessions for the current chat — including the one you're in now, marked `(current)` — and `/sessions <name>` resumes one (shorthand for `/resume`). When the list grows long, `/sessions search <query>` (alias `find`) filters by title or session-id match, ordered by most recently active. Cross-origin listing with `/sessions all` is admin-only — regular users get a notice explaining the list stayed chat-scoped, and only ever see sessions from their own chat origin.
 
 ### Persistent `/model` Overrides
 
@@ -840,7 +844,7 @@ Send a message while the agent is working to correct the active turn:
 
 ### Queue vs interrupt vs steer (busy-input mode)
 
-By default, messaging a busy agent redirects its active turn. Two other modes are available:
+By default, messaging a busy agent redirects its active turn (a running foreground terminal command is moved to the background rather than killed, so your message is read immediately). Two other modes are available:
 
 -   `queue` — follow-up messages wait and run as the next turn after the current task finishes.
 -   `steer` — follow-up messages are injected into the current run via `/steer`, arriving at the agent after the next tool call. No interrupt, no new turn. Falls back to `queue` behavior if the agent hasn't started yet.
@@ -925,7 +929,7 @@ When enabled, the bot sends status messages as it works:
 Run a prompt in a separate background session so the agent works on it independently while your main chat stays responsive:
 
 ```
-/background Check all servers in the cluster and report any that are down
+/bg Check all servers in the cluster and report any that are down
 ```
 
 Hermes confirms immediately:
@@ -937,7 +941,7 @@ Hermes confirms immediately:
 
 ### How It Works
 
-Each `/background` prompt spawns a **separate agent instance** that runs asynchronously:
+Each `/bg` prompt spawns a **separate agent instance** that runs asynchronously:
 
 -   **Isolated session** — the background agent has its own session with its own conversation history. It has no knowledge of your current chat context and receives only the prompt you provide.
 -   **Same configuration** — inherits your model, provider, toolsets, reasoning settings, and provider routing from the current gateway setup.
@@ -985,10 +989,10 @@ HERMES_BACKGROUND_NOTIFICATIONS=result
 
 ### Use Cases
 
--   **Server monitoring** — "/background Check the health of all services and alert me if anything is down"
--   **Long builds** — "/background Build and deploy the staging environment" while you continue chatting
--   **Research tasks** — "/background Research competitor pricing and summarize in a table"
--   **File operations** — "/background Organize the photos in ~/Downloads by date into folders"
+-   **Server monitoring** — "/bg Check the health of all services and alert me if anything is down"
+-   **Long builds** — "/bg Build and deploy the staging environment" while you continue chatting
+-   **Research tasks** — "/bg Research competitor pricing and summarize in a table"
+-   **File operations** — "/bg Organize the photos in ~/Downloads by date into folders"
 
 tip
 
@@ -1245,6 +1249,42 @@ Once the gateway is running, use the `/platform` slash command from any connecte
 `/platform list` shows whether each adapter is `running`, `paused` (manually), or `paused-by-breaker` (see below). Pausing keeps the adapter loaded and its background loops alive — incoming messages are dropped on the floor, but the connection itself stays open so resume is instant.
 
 See also the broader status summary command [`/platforms`](/docs/reference/slash-commands#info).
+
+### Disabling a platform whose credentials are still in `.env`
+
+`platforms.<name>.enabled: false` in `~/.hermes/config.yaml` is authoritative. Credentials for that platform left in the environment (`TELEGRAM_BOT_TOKEN`, `WEIXIN_TOKEN`, `HASS_TOKEN`, `EMAIL_*`, `TWILIO_ACCOUNT_SID`, ...) are still wired into the platform's config so send-only tooling keeps working, but they no longer start the adapter:
+
+~/.hermes/config.yaml
+
+```
+platforms:
+  weixin:
+    enabled: false   # wins over WEIXIN_TOKEN in .env
+```
+
+Earlier releases let the mere presence of credentials re-enable twelve platforms (Weixin, WhatsApp Cloud, Home Assistant, Email, SMS, DingTalk, Feishu, WeCom, WeCom callback, BlueBubbles, QQ Bot, Yuanbao) regardless of that key. If you relied on that, the gateway now logs one WARNING per affected platform at startup so it does not just go dark:
+
+```
+Platform 'weixin' is explicitly disabled by platforms.weixin.enabled: false in config.yaml,
+so the credentials found in the environment (WEIXIN_TOKEN, WEIXIN_ACCOUNT_ID) will NOT start
+its adapter. Environment credentials no longer override an explicit disable. Remove the key
+or set platforms.weixin.enabled: true to turn it back on.
+```
+
+Omitting the `enabled` key entirely keeps the env-only behaviour: credentials present → adapter starts.
+
+### Ignoring an inherited proxy (`gateway.trust_env`)
+
+By default every platform adapter honors `HTTP_PROXY` / `HTTPS_PROXY` / `NO_PROXY` (and `SSL_CERT_FILE`) from the gateway's environment, and auto-detects the macOS system proxy. A gateway started by a Windows Scheduled Task or a service manager can inherit a proxy the interactive shell never sees — a local Clash/V2Ray listener that isn't running yet — and log `Cannot connect to host 127.0.0.1:7890` on every poll. Turn the inherited proxy off for all adapters at once:
+
+~/.hermes/config.yaml
+
+```
+gateway:
+  trust_env: false
+```
+
+Explicit per-platform proxy variables (`DISCORD_PROXY`, `TELEGRAM_PROXY`, `MATRIX_PROXY`, ...) are still honored. Restart the gateway after changing it.
 
 ### Automatic circuit breaker
 

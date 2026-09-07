@@ -198,6 +198,14 @@ Tencent TokenHub API key ([tokenhub.tencentmaas.com](https://tokenhub.tencentmaa
 
 Override Tencent TokenHub base URL (default: `https://tokenhub.tencentmaas.com/v1`)
 
+`TOKENPLAN_API_KEY`
+
+Tencent TokenPlan API key (LKEAP; Anthropic Messages endpoint)
+
+`TOKENPLAN_BASE_URL`
+
+Override Tencent TokenPlan base URL (default: `https://api.lkeap.cloud.tencent.com/plan/anthropic`)
+
 `AZURE_FOUNDRY_API_KEY`
 
 Microsoft Foundry / Azure OpenAI API key ([ai.azure.com](https://ai.azure.com/)). Not needed when `model.auth_mode: entra_id`
@@ -282,13 +290,41 @@ Qwen Cloud (Alibaba DashScope) API key for Qwen models ([modelstudio.console.ali
 
 Custom DashScope base URL (default: `https://dashscope-intl.aliyuncs.com/compatible-mode/v1`; use `https://dashscope.aliyuncs.com/compatible-mode/v1` for mainland-China region)
 
+`DASHSCOPE_CN_BASE_URL`
+
+Override the `alibaba-cn` mainland-China DashScope base URL
+
 `ALIBABA_CODING_PLAN_API_KEY`
 
-Qwen Coding Plan API key (`alibaba-coding-plan` provider)
+Qwen Coding Plan API key (`alibaba-coding-plan`; also a fallback for `alibaba-coding-plan-cn`)
+
+`ALIBABA_CODING_PLAN_CN_API_KEY`
+
+Qwen Coding Plan API key for the mainland-China `alibaba-coding-plan-cn` provider (checked before the shared key, so only the CN row lights up)
 
 `ALIBABA_CODING_PLAN_BASE_URL`
 
-Override the Qwen Coding Plan base URL
+Override the Qwen Coding Plan base URL (international)
+
+`ALIBABA_CODING_PLAN_CN_BASE_URL`
+
+Override the Qwen Coding Plan base URL (mainland China)
+
+`ALIBABA_TOKEN_PLAN_API_KEY`
+
+Alibaba Model Studio Token Plan API key (`alibaba-token-plan`; also a fallback for `alibaba-token-plan-cn`)
+
+`ALIBABA_TOKEN_PLAN_CN_API_KEY`
+
+Token Plan API key for the mainland-China `alibaba-token-plan-cn` provider (checked before the shared key)
+
+`ALIBABA_TOKEN_PLAN_BASE_URL`
+
+Override the Token Plan base URL (international)
+
+`ALIBABA_TOKEN_PLAN_CN_BASE_URL`
+
+Override the Token Plan base URL (mainland China)
 
 `DEEPSEEK_API_KEY`
 
@@ -313,6 +349,22 @@ NovitaAI API key — AI-native cloud for Model API, Agent Sandbox, and GPU Cloud
 `NOVITA_BASE_URL`
 
 Override NovitaAI base URL (default: `https://api.novita.ai/openai/v1`)
+
+`RAMP_ROUTER_API_KEY`
+
+Ramp Router API key ([app.router.com/keys](https://app.router.com/keys)); alias `ROUTER_API_KEY` also accepted
+
+`RAMP_ROUTER_BASE_URL`
+
+Override Ramp Router base URL (default: `https://api.router.com/v1`)
+
+`NEBIUS_API_KEY`
+
+Nebius Token Factory API key ([tokenfactory.nebius.com](https://tokenfactory.nebius.com/)); `NEBIUS_TOKEN_FACTORY_API_KEY` also accepted
+
+`NEBIUS_BASE_URL`
+
+Override Nebius Token Factory base URL (default: `https://api.tokenfactory.nebius.com/v1`)
 
 `NVIDIA_API_KEY`
 
@@ -490,15 +542,23 @@ Custom Firecrawl API endpoint for self-hosted instances (optional)
 
 `TAVILY_API_KEY`
 
-Tavily API key for AI-native web search, extract, and crawl ([app.tavily.com](https://app.tavily.com/home))
-
-`SEARXNG_URL`
-
-SearXNG instance URL for free self-hosted web search — no API key required ([searxng.github.io](https://searxng.github.io/searxng/))
+Optional Tavily API key for higher search/extract limits. After selecting Tavily as the web backend, keyless access works without it ([app.tavily.com](https://app.tavily.com/home), [keyless docs](https://docs.tavily.com/documentation/keyless))
 
 `TAVILY_BASE_URL`
 
 Override the Tavily API endpoint. Useful for corporate proxies and self-hosted Tavily-compatible search backends. Same pattern as `GROQ_BASE_URL`.
+
+`PERPLEXITY_API_KEY`
+
+Perplexity Search API key for the `perplexity` web backend — ranked search results plus query-relevant page snippets for extract ([perplexity.ai/account/api](https://www.perplexity.ai/account/api))
+
+`PERPLEXITY_BASE_URL`
+
+Override the Perplexity API endpoint (default `https://api.perplexity.ai`) for proxies (optional)
+
+`SEARXNG_URL`
+
+SearXNG instance URL for free self-hosted web search — no API key required ([searxng.github.io](https://searxng.github.io/searxng/))
 
 `EXA_API_KEY`
 
@@ -530,7 +590,7 @@ Chrome DevTools Protocol URL for local browser (set via `/browser connect`, e.g.
 
 `CAMOFOX_URL`
 
-Camofox local anti-detection browser URL (default: `http://localhost:9377`)
+Camofox local anti-detection browser server address (default: `http://localhost:9377`). Address only — it does not select Camofox as the backend; pick Camofox in `hermes tools` (`browser.cloud_provider: camofox`)
 
 `CAMOFOX_API_KEY`
 
@@ -558,7 +618,7 @@ Extra Chromium launch flags (comma- or newline-separated). Hermes auto-injects `
 
 `AGENT_BROWSER_ENGINE`
 
-Browser engine for local mode: `auto` (default — Chromium-family via CDP), or a specific engine override.
+Local browser engine: `auto` (default — Chromium-family via CDP), `lightpanda` (Browser Use mode spawns `lightpanda serve`; the built-in tools pass `--engine lightpanda` to agent-browser), or `chrome`. Same as `browser.engine` in config.yaml.
 
 `FAL_KEY`
 
@@ -1948,7 +2008,7 @@ OAuth client id (`agent:{instance_id}`) for the gated/public dashboard, activati
 
 `HERMES_DASHBOARD_PUBLIC_URL`
 
-Complete public URL the dashboard is reached at, for OAuth callback construction behind reverse proxies. Overrides `dashboard.public_url`.
+Complete public URL the dashboard is reached at behind a reverse proxy. It controls OAuth callback construction, adds its exact hostname to the HTTP Host/WebSocket Origin guard, and requires the auth gate for non-loopback public hosts even when the backend binds to loopback. Overrides `dashboard.public_url`.
 
 `HERMES_DASHBOARD_OIDC_ISSUER`
 
@@ -2328,6 +2388,10 @@ Send agent replies as markdown — iMessage renders it natively, other Spectrum 
 
 Tapback 👀/👍/👎 on messages as processing status and route tapbacks on bot messages to the agent (`true`/`false`, default `false`).
 
+`PHOTON_READ_RECEIPTS`
+
+Mark inbound iMessages read after forwarding to Hermes (`true`/`false`, default `true`).
+
 `PHOTON_TELEMETRY`
 
 Enable Spectrum SDK telemetry in the sidecar (`true`/`false`, default `false`; toggle with \`hermes photon telemetry on
@@ -2554,7 +2618,7 @@ Per-platform connect timeout during gateway startup and reconnect (seconds; `0`/
 
 `HERMES_GATEWAY_BUSY_INPUT_MODE`
 
-Default gateway busy-input behavior: `queue`, `steer`, or `interrupt`. Can be overridden per chat with `/busy`.
+Default gateway busy-input behavior: `queue`, `steer`, or `interrupt`. Can be overridden for the active profile with `/busy`.
 
 `HERMES_GATEWAY_BUSY_ACK_ENABLED`
 
@@ -2616,9 +2680,23 @@ Inactivity timeout for cron job agent runs in seconds (default: `600`). The agen
 
 Timeout for pre-run scripts attached to cron jobs in seconds (default: `3600`). Bounds the script only — skill/agent jobs use the separate `HERMES_CRON_TIMEOUT` inactivity budget. Also configurable via `cron.script_timeout_seconds` in `config.yaml`.
 
+`HERMES_CRON_MEDIA_SEND_TIMEOUT`
+
+Timeout for each media attachment send during cron delivery via a live gateway adapter, in seconds (default: `300`). Raise it if large attachments (long TTS audio, big exports) time out during upload. Also configurable via `cron.media_send_timeout_seconds` in `config.yaml`.
+
 `HERMES_CRON_MAX_PARALLEL`
 
 Max cron jobs run in parallel per tick (default: `4`).
+
+## NeMo Relay
+
+Variable
+
+Description
+
+`HERMES_NEMO_RELAY_PLUGINS_TOML`
+
+Explicit path to the standard NeMo Relay `plugins.toml` loaded process-wide by Hermes core. When unset, Hermes does not initialize Relay middleware, dynamic plugins, or exporters. The removed `HERMES_NEMO_RELAY_ATOF_*` and `HERMES_NEMO_RELAY_ATIF_*` variables are ignored; configure those outputs in the selected file instead. See [NeMo Relay observability configuration](https://docs.nvidia.com/nemo/relay/configure-plugins/observability/about).
 
 ## Agent Behavior
 
@@ -2928,21 +3006,9 @@ Direct OpenAI-compatible endpoint for vision tasks
 
 API key paired with `AUXILIARY_VISION_BASE_URL`
 
-`AUXILIARY_WEB_EXTRACT_PROVIDER`
+note
 
-Override provider for web extraction/summarization
-
-`AUXILIARY_WEB_EXTRACT_MODEL`
-
-Override model for web extraction/summarization
-
-`AUXILIARY_WEB_EXTRACT_BASE_URL`
-
-Direct OpenAI-compatible endpoint for web extraction/summarization
-
-`AUXILIARY_WEB_EXTRACT_API_KEY`
-
-API key paired with `AUXILIARY_WEB_EXTRACT_BASE_URL`
+`AUXILIARY_WEB_EXTRACT_*` variables are obsolete: `web_extract` and browser snapshots no longer use an auxiliary LLM. Long pages and snapshots are truncated deterministically with the full text stored on disk for `read_file` paging.
 
 For task-specific direct endpoints, Hermes uses the task's configured API key or `OPENAI_API_KEY`. It does not reuse `OPENROUTER_API_KEY` for those custom endpoints.
 

@@ -16,7 +16,7 @@ Path
 
 Version
 
-`1.1.0`
+`1.2.0`
 
 Author
 
@@ -36,7 +36,7 @@ Tags
 
 Related skills
 
-[`research-paper-writing`](/docs/user-guide/skills/bundled/research/research-research-paper-writing), [`arxiv`](/docs/user-guide/skills/bundled/research/research-arxiv), [`ocr-and-documents`](/docs/user-guide/skills/bundled/productivity/productivity-ocr-and-documents)
+[`arxiv`](/docs/user-guide/skills/bundled/research/research-arxiv), [`pdf`](/docs/user-guide/skills/bundled/productivity/productivity-pdf), [`reddit-reading`](/docs/user-guide/skills/bundled/social-media/social-media-reddit-reading), [`rss-feeds`](/docs/user-guide/skills/bundled/research/research-rss-feeds), [`youtube-content`](/docs/user-guide/skills/bundled/media/media-youtube-content)
 
 ## Reference: full SKILL.md
 
@@ -50,7 +50,7 @@ Every claim taken from an outside source gets an inline numbered citation and a 
 
 For high-stakes work the same ledger doubles as a fact-checking chain: verbatim quotes are attached to each source (rejected unless they literally appear in the fetched page text), claims from model knowledge are flagged `[unverified]`, and `verify --evidence` fails any draft whose cited sources carry no evidence.
 
-This skill covers answers in chat, written documents (markdown, PDF, docx, slides), and research reports. It does not cover academic BibTeX pipelines — for conference papers use the `research-paper-writing` skill, which this skill feeds (see `references/citation-formats.md`).
+This skill covers answers in chat, written documents (markdown, PDF, docx, slides), and research reports. It does not cover academic BibTeX pipelines — for conference papers use the `arxiv` skill, which this skill feeds (see `references/citation-formats.md`).
 
 ## When to Use
 
@@ -154,6 +154,54 @@ Ice floats because it is less dense than liquid water.[1][2]
 ⑤ **Verify before delivering** — `sources.py verify <draft>` exits non-zero on unknown ids, on a Sources block that disagrees with the ledger, or (with `--min-coverage`) on prose that is too thinly cited. Fix and re-run.
 
 ⑥ **Chat answers** follow the same steps with the draft in your reply: register sources, cite inline, end with the rendered `Sources:` list. For a short answer you may render the block from `sources.py render --only <ids>` instead of writing to a file.
+
+## Multi-Platform Sweeps
+
+"What are people saying about X" / "research X across the web" is not one `web_search`. Fan out across source types, collect in parallel, then synthesise with every claim attributed to the platform it came from:
+
+Source type
+
+Route
+
+What it adds
+
+Open web
+
+`web_search` → `web_extract`
+
+official docs, articles, announcements
+
+Community discussion
+
+`reddit-reading` (`search`, `thread`)
+
+real user experience, complaints, workarounds
+
+Blogs / releases / changelogs
+
+`rss-feeds` (`read`, `discover`)
+
+dated primary posts, version history
+
+Video
+
+`youtube-content`
+
+walkthroughs, demos, talks
+
+Code
+
+`terminal` with `gh search repos` / `gh search issues`
+
+implementations, open bugs
+
+X/Twitter
+
+`xurl` (needs API access)
+
+announcements, developer chatter
+
+Register every URL from every route in the ledger as it arrives (step ②). Keep opinion and measurement apart: a Reddit thread is evidence that users _report_ something, not that it is true; pair it with a primary source or label it as sentiment. Report per-platform coverage gaps ("Reddit search returned nothing newer than March") rather than silently narrowing to what worked.
 
 ## Fact-Checking Mode
 

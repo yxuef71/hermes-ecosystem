@@ -74,16 +74,6 @@ _(none)_
 
 —
 
-**Tavily**
-
-`TAVILY_API_KEY`
-
-✔
-
-✔
-
-✔
-
 **Exa**
 
 `EXA_API_KEY`
@@ -118,7 +108,7 @@ Quick setup example:
 
 ```
 web:
-  backend: firecrawl    # firecrawl | searxng | brave-free | ddgs | tavily | exa | parallel | xai
+  backend: firecrawl    # firecrawl | searxng | brave-free | ddgs | tavily | perplexity | keenable | exa | parallel | xai
 ```
 
 If `web.backend` is not set, the backend is auto-detected from whichever API key is available. Self-hosted Firecrawl is also supported via `FIRECRAWL_API_URL`.
@@ -127,8 +117,8 @@ If `web.backend` is not set, the backend is auto-detected from whichever API key
 
 Hermes includes full browser automation with multiple backend options for navigating websites, filling forms, and extracting information:
 
--   **Browserbase** — Managed cloud browsers with anti-bot tooling, CAPTCHA solving, and residential proxies
--   **Browser Use** — Alternative cloud browser provider
+-   **Browser Use Cloud** — Managed Chromium with stealth, residential proxies, CAPTCHA solving, and reusable browser profiles
+-   **Browserbase** — Alternative cloud browser provider with managed browsers, anti-bot tooling, CAPTCHA solving, and residential proxies
 -   **Local Chromium-family CDP** — Connect to your running Chrome, Brave, Chromium, or Edge browser using `/browser connect`
 -   **Local Chromium** — Headless local browser via the `agent-browser` CLI
 

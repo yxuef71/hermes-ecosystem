@@ -18,6 +18,12 @@ Project instructions (highest priority)
 
 Walks to git root
 
+**AGENTS.override.md**
+
+Personal, per-directory override of AGENTS.md (typically gitignored)
+
+CWD at startup + subdirectories progressively
+
 **AGENTS.md**
 
 Project instructions, conventions, architecture
@@ -50,7 +56,9 @@ CWD only
 
 Priority system
 
-Only **one** project context type is loaded per session (first match wins): `.hermes.md` → `AGENTS.md` → `CLAUDE.md` → `.cursorrules`. **SOUL.md** is always loaded independently as the agent identity (slot #1).
+Only **one** project context type is loaded per session (first match wins): `.hermes.md` → `AGENTS.override.md` → `AGENTS.md` → `CLAUDE.md` → `.cursorrules`. **SOUL.md** is always loaded independently as the agent identity (slot #1).
+
+If an `AGENTS.override.md` exists next to an `AGENTS.md`, the override is loaded **instead of** the committed file — keep a personal (usually gitignored) `AGENTS.override.md` when you want different instructions than the ones checked into the repo, without editing the tracked `AGENTS.md`.
 
 ## AGENTS.md
 
@@ -221,6 +229,10 @@ Value
 Max chars per file
 
 `context_file_max_chars` when set; otherwise dynamic (scales with model context window, floor 20,000, ceiling 500,000)
+
+Read timeout per file
+
+`context_file_read_timeout` (default 5 seconds); a file that takes longer to read — e.g. on iCloud Drive, OneDrive or NFS — is skipped with a warning
 
 Head truncation ratio
 

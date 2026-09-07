@@ -6,7 +6,7 @@ Hermes Agent has three layers of resilience that keep your sessions running when
 
 1.  **[Credential pools](/docs/user-guide/features/credential-pools)** — rotate across multiple API keys for the _same_ provider (tried first)
 2.  **Primary model fallback** — automatically switches to a _different_ provider:model when your main model fails
-3.  **Auxiliary task fallback** — independent provider resolution for side tasks like vision, compression, and web extraction
+3.  **Auxiliary task fallback** — independent provider resolution for side tasks like vision and compression
 
 Credential pools handle same-provider rotation (e.g., multiple OpenRouter keys). This page covers cross-provider fallback. Both are optional and work independently.
 
@@ -190,17 +190,35 @@ OpenCode Zen
 
 `OPENCODE_ZEN_API_KEY`
 
+CommandCode
+
+`commandcode` (alias `commandcode-chat`; Claude via `commandcode-anthropic`)
+
+`COMMANDCODE_API_KEY`
+
 OpenCode Go
 
 `opencode-go`
 
 `OPENCODE_GO_API_KEY`
 
+OpenCode Free
+
+`opencode-free`
+
+— (keyless, no credential)
+
 Kilo Code
 
 `kilocode`
 
 `KILOCODE_API_KEY`
+
+Ramp Router
+
+`router`
+
+`RAMP_ROUTER_API_KEY`
 
 Xiaomi MiMo
 
@@ -219,6 +237,12 @@ GMI Cloud
 `gmi`
 
 `GMI_API_KEY`
+
+Nebius Token Factory
+
+`nebius-token-factory`
+
+`NEBIUS_API_KEY`
 
 Alibaba / DashScope
 
@@ -249,6 +273,12 @@ Tencent TokenHub
 `tencent-tokenhub`
 
 `TOKENHUB_API_KEY`
+
+Tencent TokenPlan
+
+`tencent-tokenplan`
+
+`TOKENPLAN_API_KEY`
 
 Microsoft Foundry
 
@@ -409,12 +439,6 @@ Image analysis, browser screenshots
 
 `auxiliary.vision`
 
-Web Extract
-
-Web page summarization
-
-`auxiliary.web_extract`
-
 Compression
 
 Context compression summaries
@@ -444,6 +468,12 @@ Title Generation
 Session title summaries
 
 `auxiliary.title_generation`
+
+Review
+
+`/review` reviewer subagent (full agent, not a single LLM call)
+
+`auxiliary.review`
 
 Triage Specifier
 
@@ -489,10 +519,6 @@ auxiliary:
     model: ""                     # e.g. "openai/gpt-4o"
     base_url: ""                  # direct endpoint (takes precedence over provider)
     api_key: ""                   # API key for base_url
-
-  web_extract:
-    provider: "auto"
-    model: ""
 
   compression:
     provider: "auto"
@@ -731,12 +757,6 @@ Vision
 Layered (see above) + internal OpenRouter retry
 
 `auxiliary.vision`
-
-Web extraction
-
-Layered (see above) + internal OpenRouter retry
-
-`auxiliary.web_extract`
 
 Context compression
 
