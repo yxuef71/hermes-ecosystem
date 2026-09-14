@@ -60,11 +60,15 @@ hermes -w -z "Fix issue #123"     # Single query in worktree
 
 ```
 hermes worktree list              # audit: age, size, verdict, reason per tree
+hermes worktree list --json       # machine-readable audit (trees, external trees, branches)
 hermes worktree prune             # remove safe trees + delete merged branches
 hermes worktree prune --dry-run   # show the plan without changing anything
+hermes worktree prune --older-than 7   # only reap trees idle for 7+ days
 hermes worktree prune --trees-only     # leave local branches alone
 hermes worktree prune --branches-only  # leave worktrees alone
 ```
+
+Worktrees registered **outside** `.worktrees/` (created by hand or by another tool) are reported read-only in `list` output and are never removed. The one exception is metadata: registrations whose directory no longer exists are dropped via `git worktree prune` (no files are touched). `--older-than DAYS` only ever narrows what gets reaped — a tree carrying real work is kept at any age regardless of the flag.
 
 Inside a session, `/worktree prune [--dry-run]` does the same (and never touches the tree the session is running in).
 
@@ -109,7 +113,7 @@ The welcome banner shows your model, terminal backend, working directory, availa
 A persistent status bar sits above the input area, updating in real time:
 
 ```
- ⚕ claude-sonnet-4-20250514 │ 12.4K/200K │ [██████░░░░] 6% │ $0.06 │ 15m
+ ☤ claude-sonnet-4-20250514 │ 12.4K/200K │ [██████░░░░] 6% │ $0.06 │ 15m
 ```
 
 Element
@@ -122,7 +126,7 @@ Current model (truncated if longer than 26 chars)
 
 Token count
 
-Context tokens used / max context window
+Context tokens used / max context window; `~` marks an estimate
 
 Context bar
 
@@ -151,6 +155,8 @@ Once the session has a title, it appears as a gold badge pinned to the far-right
 ⚠ YOLO
 
 **YOLO mode warning** — shown whenever `HERMES_YOLO_MODE` is on (either `hermes --yolo` at launch or `/yolo` toggled mid-session). Mirrors the banner-line warning so you can't forget you're in auto-approve mode.
+
+A `~` before a context count or percentage means it includes a local estimate. This also applies to gateway `/status` and `/context`, the TUI, and the Desktop context gauge. An unchanged provider-usage reading has no `~`; a provider anchor plus unpriced new messages does. `/context` reports the selected source. Category, free-space, skill, and toolset breakdowns are always local estimates, even when the overall occupancy comes from provider usage. These display labels do not change compaction decisions or make extra provider requests.
 
 The bar adapts to terminal width — full layout at ≥ 76 columns, compact at 52–75, minimal (model + duration, plus the YOLO badge when active) below 52.
 
@@ -236,6 +242,14 @@ Emacs-style alternate binding for the external editor (same behavior as `Ctrl+G`
 
 Interrupt agent (double-press within 2s to force exit)
 
+`Ctrl+T` / `F6`
+
+Open the full-screen live subagent monitor without losing the composer draft. The live dock appears automatically above the status bar; arrows select a worker, `Enter` shows its recent log, `s` steers, and `x` requests stop with confirmation. See [Monitoring subagents](/docs/user-guide/features/delegation#monitoring-running-subagents-agents).
+
+`F7`
+
+Toggle the live subagent dock between its multi-row preview and a single summary line without moving composer focus.
+
 `Ctrl+D`
 
 Exit
@@ -261,7 +275,7 @@ Start a line with `!` to run it as a shell command instead of sending it to the 
 ```
 > !git status
 > !ls -la
-> !pytest -x tests/cli
+> !pytest -x tests/hermes_cli
 ```
 
 -   **Zero cost.** The model is never invoked — no API call, no tokens, no latency.
@@ -441,6 +455,8 @@ display:
 info
 
 Pasting multi-line text is supported — use any of the newline keys above, or simply paste content directly.
+
+In terminals using the Kitty keyboard protocol, `Alt+Enter` on the numeric keypad also inserts a newline, including next to a collapsed paste. Modified keypad navigation keys follow their non-keypad equivalents.
 
 ### Shift+Enter compatibility
 
@@ -654,7 +670,7 @@ Each `/bg` prompt spawns a **completely separate agent session** in a daemon thr
 When a background task finishes, the result appears as a panel in your terminal:
 
 ```
-╭─ ⚕ Hermes (background #1) ──────────────────────────────────╮
+╭─ ☤ Hermes (background #1) ──────────────────────────────────╮
 │ Found 3 errors in syslog from today:                         │
 │ 1. OOM killer invoked at 03:22 — killed process nginx        │
 │ 2. Disk I/O error on /dev/sda1 at 07:15                      │
