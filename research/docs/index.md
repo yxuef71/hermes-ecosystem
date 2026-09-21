@@ -74,7 +74,7 @@ Find the right docs for your experience level
 
 Config file, providers, models, and options
 
-💬 **[Messaging Gateway](/docs/user-guide/messaging)**
+💬 **[Messaging Gateway](/docs/user-guide/messaging/)**
 
 Set up Telegram, Discord, Slack, WhatsApp, Teams, or more
 
@@ -152,7 +152,7 @@ Common questions and solutions
 
 Machine-readable entry points to this documentation:
 
--   **[`/llms.txt`](/docs/assets/files/llms-dffc5b193656db49af48829a9dbaa0b5.txt)** — curated index of every doc page with short descriptions. ~17 KB, safe to load into an LLM context.
--   **[`/llms-full.txt`](/docs/assets/files/llms-full-5c16e7ded56830670b5f207afd842edd.txt)** — every doc page concatenated into a single markdown file for one-shot ingestion. ~1.8 MB.
+-   **[`/llms.txt`](/docs/assets/files/llms-e0fe80d14e8d4e55c5d48b683f0f4bbf.txt)** — curated index of every doc page with short descriptions. ~17 KB, safe to load into an LLM context.
+-   **[`/llms-full.txt`](/docs/assets/files/llms-full-2e09a68e8f361b69d51513ebf5712324.txt)** — every doc page concatenated into a single markdown file for one-shot ingestion. ~1.8 MB.
 
 Both files also resolve at `/docs/llms.txt` and `/docs/llms-full.txt`. Generated fresh on every deploy.

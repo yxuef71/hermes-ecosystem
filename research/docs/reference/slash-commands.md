@@ -7,7 +7,7 @@ Hermes has two slash-command surfaces, both driven by a central `COMMAND_REGISTR
 -   **Interactive CLI slash commands** — dispatched by `cli.py`, with autocomplete from the registry
 -   **Messaging slash commands** — dispatched by `gateway/run.py`, with help text and platform menus generated from the registry
 
-Installed skills are also exposed as dynamic slash commands on both surfaces. (`/plan` used to be one of these; it is now a built-in command — see the Session table below.)
+Installed skills are also exposed as dynamic slash commands on both surfaces. (`/plan` used to be one of these; it is now a built-in command — see the Session table below.) A skill whose name matches a built-in command (or one of its aliases) never gets its own `/<name>` — the built-in wins and the skill stays loadable via `/skill <name>`; `/skills list`, `/help skills` and the command palette mark such a skill with `slash command /<name> unavailable — name taken by built-in; use /skill <name>`.
 
 ## Permissions and admin/user split
 
@@ -124,7 +124,7 @@ Run a single prompt through the default [Mixture of Agents](/docs/user-guide/fea
 
 `/resume [name]`
 
-Resume a previously-named session
+Resume a previously-named session. Bare `/resume` lists this chat's named sessions ranked by most recent activity (a long-running conversation that compression has rotated several times counts as one entry, shown at its live tip). In the classic CLI this (and `/sessions <id>`) is refused while a turn is running — the CLI shares one agent across sessions, so switching mid-turn would file the rest of the running turn under the other session.
 
 `/sessions` (TUI alias: `/switch`)
 
@@ -144,7 +144,7 @@ Show session info — model, provider, profile, session ID, working directory, t
 
 `/context [all]` (alias: `/ctx`)
 
-Visual context-window breakdown. On the CLI/TUI: a 5×20 glyph block grid (each cell ≈ 1% of the model window) plus an estimated per-category table — system prompt, tool definitions, rules, skills index, MCP, subagents, memory, conversation — versus free space. On messaging platforms: a usage gauge with auto-compression threshold/headroom, compression stats, cumulative throughput, and the same category table in plain text. `/context all` appends per-skill and per-toolset cost listings (index cost vs SKILL.md load cost; schema tokens per toolset). Read-only and computed locally — no LLM call, no prompt-cache impact.
+Visual context-window breakdown. On the CLI/TUI: a 5×20 glyph block grid (each cell ≈ 1% of the model window) plus an estimated per-category table — system prompt, tool definitions, rules, skills index, MCP, subagents, memory, conversation — versus free space. On messaging platforms: a usage gauge with auto-compression threshold/headroom, compression stats, cumulative throughput, and the same category table in plain text. On the CLI, messaging platforms, and TUI/Desktop sessions on a compute host, the output ends with a per-file **Context files** listing (.hermes.md, AGENTS.md chain, CLAUDE.md, .cursorrules + .cursor/rules/\*.mdc, SOUL.md) showing each file's token estimate and whether it was loaded, truncated over `context_file_max_chars`, shadowed by a higher-priority context type, blocked by the injection scan, empty/unreadable, or suppressed by the install-tree guard — the answer to "why is my CLAUDE.md ignored?". `/context all` appends per-skill and per-toolset cost listings (index cost vs SKILL.md load cost; schema tokens per toolset). Read-only and computed locally — no LLM call, no prompt-cache impact.
 
 `/agents` (alias: `/tasks`)
 
@@ -158,9 +158,9 @@ Run a prompt in a separate background session. The agent processes your prompt i
 
 Ask a quick side question **about the current conversation** without interrupting it. A one-shot auxiliary LLM call answers from a read-only snapshot of the transcript — the live session's history and prompt cache are untouched, and the current turn keeps running. For independent work with a fresh context, use `/bg`.
 
-`/branch [name]` (alias: `/fork`)
+`/branch [--here] [name]` (alias: `/fork`)
 
-Branch the current session (explore a different path)
+Branch the current session into an independent copy (explore a different path). On Discord, Telegram, Slack and Matrix the branch opens in a **new sibling thread** and the current chat stays on the original session; `--here` switches the current chat onto the branch instead (the pre-#66023 behaviour). The CLI and platforms without threads always branch in place. Classic CLI: refused mid-turn like `/handoff` — wait for the current response to finish, then retry.
 
 `/worktree [new [name]|list]`
 
@@ -168,7 +168,7 @@ Branch the current session (explore a different path)
 
 `/handoff <platform>`
 
-**CLI only.** Hand the current session off to a messaging platform (Telegram, Discord, Slack, WhatsApp, Signal, Matrix). The gateway picks it up immediately, creates a fresh thread on platforms that support threads (Telegram topics, Discord text-channel threads, Slack message-anchored threads), re-binds the destination to your CLI session\_id so the full role-aware transcript replays, and forges a synthetic user turn so the agent confirms it's working in the new place. Your CLI exits cleanly on success with a `/resume` hint; resume locally any time with `/resume <title>`. Refused mid-turn. Requires the gateway to be running and a home channel configured for the target platform (`/sethome` from the destination chat). See [Cross-Platform Handoff](/docs/user-guide/sessions#cross-platform-handoff).
+**CLI only.** Hand the current session off to a messaging platform (Telegram, Discord, Slack, WhatsApp, Signal, Matrix). The gateway picks it up immediately, creates a fresh thread on platforms that support threads (Telegram topics, Discord text-channel threads, Slack and Matrix message-anchored threads), re-binds the destination to your CLI session\_id so the full role-aware transcript replays, and forges a synthetic user turn so the agent confirms it's working in the new place. Your CLI exits cleanly on success with a `/resume` hint; resume locally any time with `/resume <title>`. Refused mid-turn. Requires the gateway to be running and a home channel configured for the target platform (`/sethome` from the destination chat). See [Cross-Platform Handoff](/docs/user-guide/sessions#cross-platform-handoff).
 
 `/journey [list|delete <id>|edit <id>]` (aliases: `/learning`, `/memory-graph`)
 
@@ -190,7 +190,7 @@ Show or change the current model. Supports: `/model claude-sonnet-4`, `/model pr
 
 `/codex-runtime [auto|codex_app_server|on|off]`
 
-Toggle the optional [Codex app-server runtime](/docs/user-guide/features/codex-app-server-runtime) for OpenAI/Codex models. `auto` (default) uses Hermes' standard chat completions; `codex_app_server` hands turns to a `codex app-server` subprocess for native shell, apply\_patch, ChatGPT subscription auth, and migrated Codex plugins. Effective on next session.
+Toggle the optional [Codex app-server runtime](/docs/user-guide/features/codex-app-server-runtime) for OpenAI/Codex models and named custom providers that are also defined in `~/.codex/config.toml`. `auto` (default) uses Hermes' standard chat completions; `codex_app_server` hands eligible turns to a `codex app-server` subprocess for native shell, apply\_patch, ChatGPT subscription auth, and migrated Codex plugins. Effective on next session.
 
 `/personality`
 
@@ -546,7 +546,7 @@ Kill all running background processes and interrupt the running agent.
 
 `/model [provider:model]`
 
-Show or change the model. Supports provider switches (`/model zai:glm-5`), custom endpoints (`/model custom:model`), named custom providers (`/model custom:local:qwen`), auto-detect (`/model custom`), OpenRouter account presets (`/model @preset/<slug>` — account-scoped, skips the public model-listing check), and user-defined aliases (`/model fav`, `/model grok` — see [Custom model aliases](#custom-model-aliases)). Use `--global` to persist the change to config.yaml. **Note:** `/model` can only switch between already-configured providers. To add a new provider or set up API keys, use `hermes model` from your terminal (outside the chat session). **Cost note:** a mid-session model switch resets the prompt cache (the cache key includes the model), so the next message re-reads the whole conversation at full input price.
+Show or change the model. Supports provider switches (`/model zai:glm-5`), custom endpoints (`/model custom:model`), named custom providers (`/model custom:local:qwen`), auto-detect (`/model custom`), OpenRouter account presets (`/model @preset/<slug>` — account-scoped, skips the public model-listing check), and user-defined aliases (`/model fav`, `/model grok` — see [Custom model aliases](#custom-model-aliases)). Use `--global` to persist the change to config.yaml; a successful `--global` pick (typed or picker) also drops this chat's session-only override, so config.yaml alone decides the model after a gateway restart (a chat with a `channel_overrides` model keeps the override, since the channel setting would otherwise outrank config.yaml; the CLI/TUI deliberately keep their per-session pin so resume restores the model that chat used). **Note:** `/model` can only switch between already-configured providers. To add a new provider or set up API keys, use `hermes model` from your terminal (outside the chat session). **Cost note:** a mid-session model switch resets the prompt cache (the cache key includes the model), so the next message re-reads the whole conversation at full input price.
 
 `/codex-runtime [auto|codex_app_server|on|off]`
 
@@ -672,9 +672,9 @@ Spawn an independent reviewer subagent for the work just discussed (PR, code, do
 
 Run one prompt through the default [Mixture of Agents](/docs/user-guide/features/mixture-of-agents) preset, then restore the session model.
 
-`/branch [name]` (alias: `/fork`)
+`/branch [--here] [name]` (alias: `/fork`)
 
-Branch the current session (explore a different path).
+Branch the current session. Thread-capable platforms (Discord, Telegram, Slack, Matrix) open the branch in a new sibling thread and keep this chat on the original; `--here` switches this chat onto the branch.
 
 `/agents` (alias: `/tasks`)
 
