@@ -32,7 +32,9 @@ To easily install the command-line and desktop applications, [download the Herme
 
 For a command-line only install without Hermes Desktop, run:
 
-#### Linux / macOS / WSL2 / Android (Termux)
+For aarch64 Android devices, use the separate [Termux APT guide](/docs/getting-started/termux).
+
+#### Linux / macOS / WSL2
 
 ```
 curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash
@@ -46,7 +48,7 @@ Run in powershell:
 iex (irm https://hermes-agent.nousresearch.com/install.ps1)
 ```
 
-See the full **[Installation Guide](/docs/getting-started/installation)** for what the installer does, the per-user vs root layout, and Windows-specific notes. For the complete platform support matrix, see **[Platform Support](/docs/getting-started/platform-support)**.
+See the full **[Installation Guide](/docs/getting-started/installation)** for what the installer does, installation ownership and data locations, and Windows-specific notes. For the complete platform support matrix, see **[Platform Support](/docs/getting-started/platform-support)**.
 
 Fastest path to a working agent
 
@@ -152,7 +154,7 @@ Common questions and solutions
 
 Machine-readable entry points to this documentation:
 
--   **[`/llms.txt`](/docs/assets/files/llms-e0fe80d14e8d4e55c5d48b683f0f4bbf.txt)** — curated index of every doc page with short descriptions. ~17 KB, safe to load into an LLM context.
--   **[`/llms-full.txt`](/docs/assets/files/llms-full-2e09a68e8f361b69d51513ebf5712324.txt)** — every doc page concatenated into a single markdown file for one-shot ingestion. ~1.8 MB.
+-   **[`/llms.txt`](/docs/assets/files/llms-03a18e5ef7e6d835df0d6d036d109142.txt)** — curated index of every doc page with short descriptions. ~17 KB, safe to load into an LLM context.
+-   **[`/llms-full.txt`](/docs/assets/files/llms-full-d526c1ba64270aa2832eec2370b4371c.txt)** — every doc page concatenated into a single markdown file for one-shot ingestion. ~1.8 MB.
 
 Both files also resolve at `/docs/llms.txt` and `/docs/llms-full.txt`. Generated fresh on every deploy.
