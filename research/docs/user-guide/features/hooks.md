@@ -806,6 +806,16 @@ Incoming non-internal message before auth/pairing/dispatch; first valid `skip`, 
 
 Extremely privileged in-process objects expose inbound user/routing data and host handles.
 
+`post_gateway_admission`
+
+Directive/control (fail-open)
+
+Admitted non-internal message after auth, pause/drain, pending-reply, running-session and slash-command lanes, inside the claimed session slot and the routed profile's scope; first `handled` result skips the agent turn, anything else (including a raise or timeout) runs it.
+
+`session_key`, `platform`, `source` (dict snapshot), `message_id`, `text`
+
+Inbound text is untrusted user data; no runner or session-store handles are passed.
+
 `gateway_platform_event`
 
 Observer
@@ -845,6 +855,26 @@ After a decision, timeout, or gateway notification failure; return ignored.
 `command`, `description`, `pattern_key`, `pattern_keys`, `session_key`, `surface`, `turn_id`, `tool_call_id`, `choice`; smart path may add `decided_by`
 
 Same command sensitivity plus decision metadata.
+
+`on_human_input_request`
+
+Observer
+
+The agent is about to block on a person — sudo password prompt, `clarify` question, or dangerous-command approval — on CLI, Ink TUI/Desktop, ACP and gateway platforms; return ignored.
+
+`kind` (`"sudo"` | `"clarify"` | `"approval"`), `request_id`, `session_id`, `session_key`, `platform`, `prompt`
+
+`prompt` is always force-redacted; the typed password or answer is never passed.
+
+`on_human_input_resolved`
+
+Observer
+
+Exactly once per `on_human_input_request`, when the wait ends (answered, skipped, timed out, withdrawn, or failed); return ignored.
+
+Same as the request plus `outcome`
+
+Outcome only — never the answer itself.
 
 `on_room_member_activity`
 
@@ -1725,7 +1755,7 @@ The outgoing session ID. May be `None` if no active session existed.
 
 `"cli"` or the messaging platform name (`"telegram"`, `"discord"`, etc.).
 
-**Fires:** In CLI/TUI teardown and in gateway reset or shutdown paths. Gateway shutdown can finalize without a matching `on_session_reset`.
+**Fires:** In CLI/TUI teardown (including the end of a `hermes -z` one-shot run, success or failure) and in gateway reset or shutdown paths. Gateway shutdown can finalize without a matching `on_session_reset`.
 
 **Return value:** Ignored.
 
@@ -2124,6 +2154,27 @@ def register(ctx):
 
 * * *
 
+### `post_gateway_admission`
+
+Fires **once per admitted, non-internal message** in the gateway, after authorization, bot admission, pause/drain, pending-reply intercepts (clarify, confirmations), the running-session lane (steering, busy commands) and idle slash-command dispatch. Rejected, ignored, internal and control traffic never reaches it. It runs inside the claimed session slot, so concurrent messages for the same chat queue behind it, and under the message's **routed profile** scope: only that profile's plugins run.
+
+Return `{"action": "handled", "reply": "..."}` to consume the message: the agent turn is skipped and `reply` (when a non-empty string) is delivered through the normal route. Omit `reply` to consume silently. Any other return value runs the ordinary agent turn.
+
+```
+def consume(session_key, platform, source, message_id, text, **kwargs):
+    if not text.startswith("follow up:"):
+        return None                       # ordinary agent turn
+    enqueue_follow_up(source, text)       # commit your own durable state first
+    return {"action": "handled", "reply": "Got it - queued."}
+
+def register(ctx):
+    ctx.register_hook("post_gateway_admission", consume)
+```
+
+**Fail-open.** A callback that raises, times out (`plugins.hook_callback_timeout`) or returns something else is logged and the message proceeds to the agent, so one buggy plugin cannot block a profile's traffic. A plugin that needs fail-closed behaviour catches its own errors and returns `handled` with its own failure reply. The payload is a snapshot (`source` is `SessionSource.to_dict()`); do not send through adapters directly, return `reply` instead. Dedupe and durable acceptance are the plugin's responsibility.
+
+* * *
+
 ### `gateway_platform_event`
 
 Fires for supported platform-native events only **after** the gateway's normal, profile-scoped authorization check succeeds. The callback receives plain dictionaries; raw SDK objects, adapter handles, bot clients, and callback contexts are never part of this stable contract.
@@ -2213,7 +2264,7 @@ This hook is observer-only: it does **not** add raw-event access or adapter acce
 
 ### `pre_approval_request`
 
-Fires before an approval decision is requested. It covers prompted surfaces—interactive CLI, Ink TUI, gateway platforms, and ACP clients—and `approvals.mode=smart` decisions made without a human prompt (`surface="smart"`). In smart mode, the hook runs before the auxiliary LLM is called.
+Fires before an approval decision is requested. It covers prompted surfaces—interactive CLI, Ink TUI, gateway platforms, and ACP clients—including protected agent-instruction write prompts and MCP/vault consent prompts, plus `approvals.mode=smart` decisions made without a human prompt (`surface="smart"`). In smart mode, the hook runs before the auxiliary LLM is called.
 
 This is the right place to wire a custom notifier — for example, a macOS menu-bar app that pops an allow/deny notification, or an audit log that records every approval request with context.
 
@@ -2271,7 +2322,7 @@ Session identifier, useful for scoping notifications per-chat
 
 `str`
 
-`"cli"` for interactive CLI/TUI prompts, `"gateway"` for async platform approvals, or `"smart"` for auxiliary-LLM auto approve/deny decisions
+`"cli"` for classic interactive-CLI prompts (dangerous commands, protected agent-instruction writes, consent prompts), `"gateway"` for async platform approvals (the Ink TUI and Desktop app also report `"gateway"` today), `"smart"` for auxiliary-LLM auto approve/deny decisions, or the caller's consent surface for MCP/vault prompts (`"mcp-elicitation/<server>"`, `"mcp-trust/<server>"`, `"vault-payment"`)
 
 **Return value:** ignored. Hooks here are observer-only; they cannot veto or pre-answer the approval. Use [`pre_tool_call`](#pre_tool_call) to block a tool before it reaches the approval system.
 
@@ -2345,6 +2396,131 @@ def log_decision(command, choice, session_key, **kwargs):
 
 def register(ctx):
     ctx.register_hook("post_approval_response", log_decision)
+```
+
+* * *
+
+### `on_human_input_request`
+
+Fires right before Hermes blocks waiting for a person to type or click something, whatever the prompt is and wherever it shows up. One hook pair covers every blocking prompt, so a notifier ("Hermes is waiting on you") does not have to subscribe to a separate hook per prompt type or pattern-match tool arguments:
+
+`kind`
+
+Prompt
+
+Surfaces
+
+`"sudo"`
+
+Masked sudo password prompt before a `sudo` command runs
+
+Interactive CLI, Ink TUI / Desktop (`sudo.request` card), `/dev/tty` fallback
+
+`"clarify"`
+
+A `clarify` tool question
+
+CLI, Ink TUI / Desktop, gateway platforms
+
+`"approval"`
+
+Dangerous-command / write approval, MCP elicitation consent, plugin approval transports
+
+CLI, Ink TUI / Desktop, ACP, gateway platforms, `ctx.register_approval_transport` plugins
+
+`approvals.mode=smart` decisions made by the auxiliary LLM do not fire it, because no person is asked; neither do gateway approvals that join an identical prompt already pending (the person sees one prompt, and the pair fires once for it). New kinds can be added later, so ignore kinds you don't handle.
+
+**Callback signature:**
+
+```
+def my_callback(kind: str, request_id: str, session_id: str, session_key: str,
+                platform: str, prompt: str, **kwargs):
+```
+
+Parameter
+
+Type
+
+Description
+
+`kind`
+
+`str`
+
+`"sudo"`, `"clarify"` or `"approval"`
+
+`request_id`
+
+`str`
+
+Unique per prompt; the matching `on_human_input_resolved` carries the same value
+
+`session_id`
+
+`str`
+
+Hermes session id when known, else `""`
+
+`session_key`
+
+`str`
+
+Session/chat routing key, useful for scoping notifications per chat
+
+`platform`
+
+`str`
+
+Gateway platform (`"telegram"`, `"discord"`, ...) or local source (`"cli"`, `"tui"`, `"desktop"`, ...)
+
+`prompt`
+
+`str`
+
+What the person is asked about: the command for `sudo`/`approval`, the question text for `clarify`. Always redacted with the secret redactor, even when `security.redact_secrets` is off
+
+The sudo password and clarify answers are **never** passed to either hook. **Return value:** ignored; a raising callback is logged and the prompt proceeds. Callbacks run on the thread that is about to block, so keep them fast — hand network calls (push services, webhooks) to a background thread.
+
+### `on_human_input_resolved`
+
+Fires exactly once for every `on_human_input_request`, after the wait ends. Same kwargs plus `outcome`:
+
+`kind`
+
+`outcome` values
+
+`"sudo"`
+
+`"provided"`, `"skipped"` (empty answer), `"timeout"`, `"cancelled"`, `"error"`
+
+`"clarify"`
+
+The surface's outcome: `"submitted"`, `"timed_out"`, `"cancelled"`, `"undelivered"`, `"terminated"`, or `"error"`
+
+`"approval"`
+
+`"once"`, `"session"`, `"always"`, `"deny"`, `"timeout"`, `"cancelled"`, `"notify_failed"`, or `"transport_<failure>"` for a failed plugin transport
+
+```
+import threading
+
+def push_notification(text):
+    ...  # call your push service here
+
+def register(ctx):
+    pending = {}
+
+    def on_request(kind, request_id, prompt, session_key, **kwargs):
+        pending[request_id] = threading.Timer(30, push_notification, (f"Hermes needs you ({kind}): {prompt[:80]}",))
+        pending[request_id].start()  # only page if nobody answers within 30s
+
+    def on_resolved(request_id, **kwargs):
+        timer = pending.pop(request_id, None)
+        if timer:
+            timer.cancel()
+
+    ctx.register_hook("on_human_input_request", on_request)
+    ctx.register_hook("on_human_input_resolved", on_resolved)
 ```
 
 * * *
@@ -2891,7 +3067,7 @@ Each time the event fires, Hermes spawns a subprocess for every matching hook (m
 // Silent no-op — any empty / non-matching output is fine:
 ```
 
-Malformed JSON, non-zero exit codes, and timeouts log a warning but never abort the agent loop.
+Except for `pre_tool_call` exit code 2 described below, malformed JSON, ordinary non-zero exit codes, and timeouts fail open by default: they log a warning but do not abort the agent loop. A `fail_closed` hook changes the behavior as described below.
 
 ### Exit code 2 = block (Claude Code / Cursor compatible)
 
@@ -2941,6 +3117,12 @@ warn, proceed
 **block**
 
 Timeout
+
+warn, proceed
+
+**block**
+
+Non-zero exit with no recognized directive
 
 warn, proceed
 
