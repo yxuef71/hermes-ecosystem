@@ -238,7 +238,7 @@ This key is found in the **Event Subscriptions** section of your Feishu app conf
 SHA256(timestamp + nonce + encrypt_key + body)
 ```
 
-The computed hash is compared against the `x-lark-signature` header using timing-safe comparison. Requests with invalid or missing signatures are rejected with HTTP 401.
+The computed hash is compared against the `x-lark-signature` header using timing-safe comparison, and the signed `x-lark-request-timestamp` must be within 5 minutes of the gateway's clock, so a captured request cannot be replayed later. Requests with invalid or missing signatures, or a stale timestamp, are rejected with HTTP 401.
 
 tip
 
@@ -343,6 +343,10 @@ When users click buttons or interact with interactive cards sent by the bot, the
 Gateway-driven update prompts use a native Feishu `Yes` / `No` card instead of falling back to plain text replies. When `hermes update --gateway` needs confirmation, the adapter records the selected answer in Hermes's `.update_response` file and replaces the card inline with a resolved state.
 
 Card action events are dispatched with `MessageType.COMMAND`, so they flow through the normal command processing pipeline.
+
+**Clarify questions** use cards too: when the agent asks a multiple-choice question with the `clarify` tool, the card shows the options with one numbered button each plus "✏️ Other (type answer)". A tap answers at once and the card updates in place for everyone in the chat; "Other" switches to text capture, so your next message is the answer. Typing a number or the option text instead of tapping also works. Open-ended questions arrive as plain text. The same authorization as approval buttons applies: only an allowed user can answer.
+
+**Finite-choice slash commands** (`/reasoning`, `/fast`) send a card picker: one tap applies the setting, the card settles with the selection, and the command's confirmation follows in the chat.
 
 This is also how **command approval** works — when the agent needs to run a dangerous command, it sends an interactive card with Allow Once / Session / Always / Deny buttons. The user clicks a button, and the card action callback delivers the approval decision back to the agent.
 
@@ -588,6 +592,8 @@ In webhook mode, the adapter enforces per-IP rate limiting to protect against ab
 -   **Tracking cap:** Up to 4096 unique keys tracked (prevents unbounded memory growth)
 
 Requests that exceed the limit receive HTTP 429 (Too Many Requests).
+
+Only requests that pass the verification-token and signature checks count toward the limit, so forged traffic can't use up the window for real Feishu callbacks. An unsigned `url_verification` challenge counts only when a verification token authenticated it.
 
 ### Webhook Anomaly Tracking
 
@@ -931,7 +937,7 @@ Ensure `FEISHU_VERIFICATION_TOKEN` matches the token in your Feishu app's Event 
 
 `Webhook rejected: invalid signature`
 
-Ensure `FEISHU_ENCRYPT_KEY` matches the encrypt key in your Feishu app config
+Ensure `FEISHU_ENCRYPT_KEY` matches the encrypt key in your Feishu app config, and that the gateway host's clock is in sync (a timestamp more than 5 minutes off is refused as a replay)
 
 Post messages show as plain text
 
@@ -963,7 +969,7 @@ Webhook mode: Feishu cannot connect to / resolve the callback request URL. Fix t
 
 `Webhook rate limit exceeded`
 
-More than 120 requests/minute from the same IP. This is usually a misconfiguration or loop.
+More than 120 authenticated requests/minute from the same IP. This is usually a misconfiguration or loop.
 
 ## Toolset
 

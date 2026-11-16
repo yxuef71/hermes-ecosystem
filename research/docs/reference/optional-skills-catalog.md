@@ -49,9 +49,9 @@ Plan-in-code fan-outs, adversarial verification, waves.
 
 Delegate coding to xAI Grok Build CLI (features, PRs).
 
-[**honcho**](/docs/user-guide/skills/optional/autonomous-ai-agents/autonomous-ai-agents-honcho)
+[**opencode**](/docs/user-guide/skills/optional/autonomous-ai-agents/autonomous-ai-agents-opencode)
 
-Configure and troubleshoot Honcho memory for Hermes.
+Delegate coding to OpenCode CLI (features, PR review).
 
 [**openhands**](/docs/user-guide/skills/optional/autonomous-ai-agents/autonomous-ai-agents-openhands)
 
@@ -107,10 +107,6 @@ Validated interactive HTML diagrams, upstream-maintained.
 
 ASCII art: pyfiglet, cowsay, boxes, image-to-ascii.
 
-[**audiocraft-audio-generation**](/docs/user-guide/skills/optional/creative/creative-audiocraft-audio-generation)
-
-AudioCraft: MusicGen text-to-music, AudioGen text-to-sound.
-
 [**auteur**](/docs/user-guide/skills/optional/creative/creative-auteur)
 
 Design and build cinematic, award-level web pages.
@@ -142,6 +138,10 @@ Generate flat, minimal educational SVG visuals as HTML.
 [**creative-ideation**](/docs/user-guide/skills/optional/creative/creative-creative-ideation)
 
 Generate ideas via named methods from creative practice.
+
+[**design-md**](/docs/user-guide/skills/optional/creative/creative-design-md)
+
+Author/validate/export Google's DESIGN.md token spec files.
 
 [**draw-your-font**](/docs/user-guide/skills/optional/creative/creative-draw-your-font)
 
@@ -367,15 +367,19 @@ Manual OAuth for remote MCP servers on headless gateways.
 
 List, auth, and call MCP servers/tools from the terminal.
 
-## migration
+## media
 
 Skill
 
 Description
 
-[**openclaw-migration**](/docs/user-guide/skills/optional/migration/migration-openclaw-migration)
+[**gif-search**](/docs/user-guide/skills/optional/media/media-gif-search)
 
-Import an OpenClaw setup (memories, skills) into Hermes.
+Search/download GIFs from Tenor via curl + jq.
+
+[**songsee**](/docs/user-guide/skills/optional/media/media-songsee)
+
+Audio spectrograms/features (mel, chroma, MFCC) via CLI.
 
 ## mlops
 
@@ -395,10 +399,6 @@ Axolotl: YAML LLM fine-tuning (LoRA, DPO, GRPO).
 
 Embedding database for RAG and semantic search.
 
-[**clip**](/docs/user-guide/skills/optional/mlops/mlops-clip)
-
-Zero-shot image classification and image-text search.
-
 [**dspy**](/docs/user-guide/skills/optional/mlops/mlops-research-dspy)
 
 DSPy: declarative LM programs, auto-optimize prompts, RAG.
@@ -415,22 +415,6 @@ Fast vector similarity search at billion scale.
 
 Speed up long-sequence transformer training and inference.
 
-[**guidance**](/docs/user-guide/skills/optional/mlops/mlops-guidance)
-
-Constrain LLM output with grammars; guarantee valid JSON.
-
-[**huggingface-hub**](/docs/user-guide/skills/optional/mlops/mlops-models-huggingface-hub)
-
-HuggingFace hf CLI: search/download/upload models, datasets.
-
-[**huggingface-tokenizers**](/docs/user-guide/skills/optional/mlops/mlops-huggingface-tokenizers)
-
-Fast BPE/WordPiece tokenization and custom vocab training.
-
-[**instructor**](/docs/user-guide/skills/optional/mlops/mlops-instructor)
-
-Structured LLM outputs validated with Pydantic.
-
 [**lambda-labs**](/docs/user-guide/skills/optional/mlops/mlops-lambda-labs)
 
 On-demand GPU cloud instances for ML training.
@@ -438,10 +422,6 @@ On-demand GPU cloud instances for ML training.
 [**llama-cpp**](/docs/user-guide/skills/optional/mlops/mlops-inference-llama-cpp)
 
 llama.cpp local GGUF inference + HF Hub model discovery.
-
-[**llava**](/docs/user-guide/skills/optional/mlops/mlops-llava)
-
-Vision-language chat: VQA, captioning, image dialogue.
 
 [**modal**](/docs/user-guide/skills/optional/mlops/mlops-modal)
 
@@ -455,17 +435,9 @@ Curate LLM training data: dedupe, filter, PII redaction.
 
 OBLITERATUS: abliterate LLM refusals (diff-in-means).
 
-[**outlines**](/docs/user-guide/skills/optional/mlops/mlops-inference-outlines)
-
-Outlines: structured JSON/regex/Pydantic LLM generation.
-
 [**peft**](/docs/user-guide/skills/optional/mlops/mlops-peft)
 
 Fine-tune large LLMs with LoRA on limited GPU memory.
-
-[**pinecone**](/docs/user-guide/skills/optional/mlops/mlops-pinecone)
-
-Managed vector DB for production RAG and search.
 
 [**pytorch-fsdp**](/docs/user-guide/skills/optional/mlops/mlops-pytorch-fsdp)
 
@@ -474,10 +446,6 @@ Fully sharded data-parallel training for large models.
 [**pytorch-lightning**](/docs/user-guide/skills/optional/mlops/mlops-pytorch-lightning)
 
 Clean training loops with built-in distributed support.
-
-[**qdrant**](/docs/user-guide/skills/optional/mlops/mlops-qdrant)
-
-Vector search engine for production RAG systems.
 
 [**saelens**](/docs/user-guide/skills/optional/mlops/mlops-saelens)
 
@@ -499,10 +467,6 @@ Reference-free preference alignment, simpler than DPO.
 
 RL post-training for LLMs with Megatron and SGLang.
 
-[**stable-diffusion**](/docs/user-guide/skills/optional/mlops/mlops-stable-diffusion)
-
-Text-to-image generation, inpainting, and img2img.
-
 [**tensorrt-llm**](/docs/user-guide/skills/optional/mlops/mlops-tensorrt-llm)
 
 High-throughput LLM inference on NVIDIA GPUs.
@@ -511,31 +475,15 @@ High-throughput LLM inference on NVIDIA GPUs.
 
 Pretrain LLMs at scale with PyTorch 4D parallelism.
 
-[**trl-fine-tuning**](/docs/user-guide/skills/optional/mlops/mlops-training-trl-fine-tuning)
-
-TRL: SFT, DPO, GRPO, RLOO reward modeling for LLM RLHF.
-
 [**unsloth**](/docs/user-guide/skills/optional/mlops/mlops-training-unsloth)
 
 Unsloth: 2-5x faster LoRA/QLoRA fine-tuning, less VRAM.
-
-[**weights-and-biases**](/docs/user-guide/skills/optional/mlops/mlops-evaluation-weights-and-biases)
-
-W&B: log ML experiments, sweeps, model registry, dashboards.
-
-[**whisper**](/docs/user-guide/skills/optional/mlops/mlops-whisper)
-
-Transcribe and translate speech in 99 languages.
 
 ## payments
 
 Skill
 
 Description
-
-[**mpp-agent**](/docs/user-guide/skills/optional/payments/payments-mpp-agent)
-
-Pay HTTP 402 APIs via Machine Payments Protocol (MPP).
 
 [**stripe-link-cli**](/docs/user-guide/skills/optional/payments/payments-stripe-link-cli)
 
@@ -550,6 +498,10 @@ Provision SaaS services + sync creds via Stripe Projects.
 Skill
 
 Description
+
+[**box**](/docs/user-guide/skills/optional/productivity/productivity-box)
+
+Box manages cloud files, sharing, search, and metadata.
 
 [**canvas**](/docs/user-guide/skills/optional/productivity/productivity-canvas)
 
@@ -578,10 +530,6 @@ Present property and rental listings as desktop cards.
 [**shop**](/docs/user-guide/skills/optional/productivity/productivity-shop)
 
 Shop catalog search, checkout, order tracking, returns.
-
-[**shopify**](/docs/user-guide/skills/optional/productivity/productivity-shopify)
-
-Query Shopify Admin/Storefront GraphQL APIs via curl.
 
 [**siyuan**](/docs/user-guide/skills/optional/productivity/productivity-siyuan)
 
@@ -617,13 +565,13 @@ Passive recon of subdomains, SSL certs, WHOIS, and DNS.
 
 Drug discovery: ChEMBL search, drug-likeness, interactions.
 
-[**duckduckgo-search**](/docs/user-guide/skills/optional/research/research-duckduckgo-search)
-
-Free keyless web, news, and image search via ddgs.
-
 [**gitnexus-explorer**](/docs/user-guide/skills/optional/research/research-gitnexus-explorer)
 
 Serve an interactive codebase knowledge graph web UI.
+
+[**llm-wiki**](/docs/user-guide/skills/optional/research/research-llm-wiki)
+
+Karpathy's LLM Wiki: build/query interlinked markdown KB.
 
 [**osint-investigation**](/docs/user-guide/skills/optional/research/research-osint-investigation)
 
@@ -632,10 +580,6 @@ Follow the money via public records and sanctions data.
 [**parallel-cli**](/docs/user-guide/skills/optional/research/research-parallel-cli)
 
 Agent-native web search, deep research, and enrichment.
-
-[**pinecone-research**](/docs/user-guide/skills/optional/research/research-pinecone-research)
-
-Agent RAG and long-term memory with Pinecone.
 
 [**qmd**](/docs/user-guide/skills/optional/research/research-qmd)
 
@@ -652,10 +596,6 @@ Read RSS, Atom, JSON feeds; discover feeds behind a page.
 [**scrapling**](/docs/user-guide/skills/optional/research/research-scrapling)
 
 Scrape sites with stealth browsing and Cloudflare bypass.
-
-[**searxng-search**](/docs/user-guide/skills/optional/research/research-searxng-search)
-
-Free keyless meta-search aggregating 70+ engines.
 
 ## security
 
@@ -681,7 +621,7 @@ Find accounts for a username across 400+ platforms.
 
 [**unbroker**](/docs/user-guide/skills/optional/security/security-unbroker)
 
-Autonomously remove your info from data-broker sites.
+Remove your info from data-broker sites, by name or phone.
 
 [**web-pentest**](/docs/user-guide/skills/optional/security/security-web-pentest)
 
@@ -725,9 +665,25 @@ Generate wiki docs + Mermaid diagrams for any codebase.
 
 Adversarial plan interview before implementation.
 
+[**hermes-agent-skill-authoring**](/docs/user-guide/skills/optional/software-development/software-development-hermes-agent-skill-authoring)
+
+Author in-repo SKILL.md files: frontmatter and structure.
+
+[**inspecting-hermes-desktop-dom**](/docs/user-guide/skills/optional/software-development/software-development-inspecting-hermes-desktop-dom)
+
+Read the live Hermes desktop DOM/CSS over CDP.
+
+[**node-inspect-debugger**](/docs/user-guide/skills/optional/software-development/software-development-node-inspect-debugger)
+
+Debug Node.js via --inspect + Chrome DevTools Protocol CLI.
+
 [**pr-lens**](/docs/user-guide/skills/optional/software-development/software-development-pr-lens)
 
 Draw code changes as animated architecture/data-flow SVGs.
+
+[**python-debugpy**](/docs/user-guide/skills/optional/software-development/software-development-python-debugpy)
+
+Debug Python: pdb REPL + debugpy remote (DAP).
 
 [**rest-graphql-debug**](/docs/user-guide/skills/optional/software-development/software-development-rest-graphql-debug)
 
@@ -762,16 +718,6 @@ Versioned site deploys to GitHub/Cloudflare/Netlify Pages.
 [**scrollcraft**](/docs/user-guide/skills/optional/web-development/web-development-scrollcraft)
 
 Premium scroll-driven landing pages; scroll = timeline.
-
-## yuanbao
-
-Skill
-
-Description
-
-[**yuanbao**](/docs/user-guide/skills/optional/yuanbao/yuanbao-yuanbao)
-
-Yuanbao (元宝) groups: @mention users, query info/members.
 
 * * *
 

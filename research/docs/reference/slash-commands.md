@@ -46,9 +46,9 @@ Clear screen and start a new session
 
 Show conversation history (respects `/timestamps`)
 
-`/save`
+`/save <json|md|html> [filename] [redact]`
 
-Save the current conversation
+Export the current session as a JSON snapshot, a Markdown transcript, or a standalone HTML page (`markdown` and `snapshot` are accepted aliases). `redact` scrubs API keys, tokens, and credentials before writing and always comes last, after the optional filename: `/save md notes.md redact`. The file is written on your machine, even when the session runs on a remote gateway (an older gateway without `session.export` can only save default-named JSON on its own host). CLI and TUI: `filename` resolves against the current directory, otherwise the file is auto-named under `~/.hermes/sessions/saved/`. Desktop opens a save dialog (pre-filled with `filename` when given). A bare `/save` prints usage in the classic CLI and saves JSON in the TUI and Desktop.
 
 `/prompt` (alias: `/compose`)
 
@@ -61,6 +61,10 @@ Retry the last message (resend to agent)
 `/undo`
 
 Remove the last user/assistant exchange
+
+`/rewind [N | fork N]`
+
+**Backtrack** (classic CLI; also `Esc`, `Esc` on an idle, empty prompt: the first shows `esc again to edit previous message`). Opens a transcript browser of your prompts and replies with the latest prompt selected in reverse video: `←`/`→` (`h`/`l`) pick a prompt, `↑`/`↓` (`k`/`j`) and `PgUp`/`PgDn` scroll. `Enter` puts it back in the composer for editing: sending the edit cuts the session back to just before that prompt (the later messages are archived, as with `/undo`) and sends the new text; cancelling with `Esc Esc`, `Ctrl+C` or an empty submit removes nothing. `f` forks instead: a new branched session holding only the history before that prompt, with the prompt prefilled (not sent); the original session is kept as it was. `Esc` or `q` closes. `/rewind N` edits prompt N directly and `/rewind fork N` forks before it.
 
 `/title`
 
@@ -80,7 +84,7 @@ Show git changes in the working directory. Default: unstaged changes plus untrac
 
 `/snapshot [create|restore <id>|prune]` (alias: `/snap`)
 
-Create or restore state snapshots of Hermes config/state. `create [label]` saves a snapshot, `restore <id>` reverts to it, `prune [N]` removes old snapshots, or list all with no args. Database restores write through SQLite's backup API so live processes (gateway, dashboard) see the restored data safely; if that path fails while another process still holds the database open, the restore refuses instead of risking corruption — stop the holder and retry.
+Create or restore state snapshots of Hermes config/state. `create [label]` saves a snapshot, `restore <id>` reverts to it, `prune [N]` removes old snapshots, or list all with no args. In classic `hermes chat`, restore closes the local readers and drains the local gateway before restoring offline, then reconnects with the restored history (or creates a new session if the snapshot predates it). A multiplexed secondary profile is stopped and re-served without restarting the other profiles; restoring the launch profile drains the whole gateway. Database restoration retains its exclusive-maintenance gate and SQLite backup safety checks: a holder that cannot be stopped still prevents restoration.
 
 `/stop`
 
@@ -88,7 +92,7 @@ Kill all running background processes
 
 `/queue <prompt>` (alias: `/q`)
 
-Queue a prompt for the next turn (doesn't interrupt the current agent response). In the CLI, `/queue` with no arguments lists the pending queue, and `/queue list`, `/queue edit N <new prompt>`, `/queue rm N`, `/queue move A B`, and `/queue clear` inspect and manage queued prompts before they are sent. Prompts that begin with a management word can be force-queued with `/queue add <prompt>`.
+Queue a prompt for the next turn (doesn't interrupt the current agent response). In the CLI, `/queue` with no arguments lists the pending queue, and `/queue list`, `/queue edit N <new prompt>`, `/queue rm N`, `/queue move A B`, and `/queue clear` inspect and manage queued prompts before they are sent. Prompts that begin with a management word can be force-queued with `/queue add <prompt>`. On the gateway's session, prompts queued mid-run live in the gateway's shared queue for the session: `list`/`rm`/`edit`/`clear` act on every prompt queued there (other windows' too), and `move` is refused for prompts the gateway holds, because it runs them in order.
 
 `/steer <prompt>`
 
@@ -144,7 +148,7 @@ Show session info — model, provider, profile, session ID, working directory, t
 
 `/context [all]` (alias: `/ctx`)
 
-Visual context-window breakdown. On the CLI/TUI: a 5×20 glyph block grid (each cell ≈ 1% of the model window) plus an estimated per-category table — system prompt, tool definitions, rules, skills index, MCP, subagents, memory, conversation — versus free space. On messaging platforms: a usage gauge with auto-compression threshold/headroom, compression stats, cumulative throughput, and the same category table in plain text. On the CLI, messaging platforms, and TUI/Desktop sessions on a compute host, the output ends with a per-file **Context files** listing (.hermes.md, AGENTS.md chain, CLAUDE.md, .cursorrules + .cursor/rules/\*.mdc, SOUL.md) showing each file's token estimate and whether it was loaded, truncated over `context_file_max_chars`, shadowed by a higher-priority context type, blocked by the injection scan, empty/unreadable, or suppressed by the install-tree guard — the answer to "why is my CLAUDE.md ignored?". `/context all` appends per-skill and per-toolset cost listings (index cost vs SKILL.md load cost; schema tokens per toolset). Read-only and computed locally — no LLM call, no prompt-cache impact.
+Visual context-window breakdown. On the CLI/TUI: a 5×20 glyph block grid (each cell ≈ 1% of the model window) plus an estimated per-category table — system prompt, tool definitions, rules, skills index, MCP, subagents, memory, conversation — versus free space. On messaging platforms: a usage gauge with auto-compression threshold/headroom, compression stats, cumulative throughput, and the same category table in plain text. On the CLI, messaging platforms, and TUI/Desktop sessions on a compute host, the output ends with a per-file **Context files** listing (.hermes.md, AGENTS.md chain, CLAUDE.md, .cursorrules + .cursor/rules/\*.mdc, SOUL.md) showing each file's token estimate and whether it was loaded, truncated over `context_file_max_chars`, shadowed by a higher-priority context type, blocked by the injection scan, empty/unreadable, skipped because it resolves outside the project (or to a protected file), or suppressed by the install-tree guard — the answer to "why is my CLAUDE.md ignored?". `/context all` appends per-skill and per-toolset cost listings (index cost vs SKILL.md load cost; schema tokens per toolset). Read-only and computed locally — no LLM call, no prompt-cache impact.
 
 `/agents` (alias: `/tasks`)
 
@@ -186,7 +190,7 @@ Show current configuration
 
 `/model [model-name]`
 
-Show or change the current model. Supports: `/model claude-sonnet-4`, `/model provider:model` (switch providers), `/model custom:model` (custom endpoint), `/model custom:name:model` (named custom provider), `/model custom` (auto-detect from endpoint), OpenRouter account presets (`/model @preset/<slug>` or `/model <model>@preset/<slug>` — presets are account-scoped, so they skip the public model-listing check), and user-defined aliases (`/model fav`, `/model grok` — see [Custom model aliases](#custom-model-aliases)). Flags: `--global` persists the change to config.yaml; `--session` forces session-only; `--once` applies to the next turn only; `--refresh` re-fetches the provider's model list; `--provider <name>` switches backend (session-only unless `--global`); `--reasoning <level>` sets the reasoning effort (`none`, `minimal` … `ultra`) in the same step and with the same scope as the pick. A plain `/model <name>` is session-only unless `model.persist_switch_by_default: true` is set — except when no `model.default`/`model.provider` is configured yet, in which case the first pick persists so the profile gets a real default. The same rule governs the desktop composer picker. **Interactive picker:** running `/model` with no arguments opens the provider→model picker; on the model list you can **type to fuzzy-filter** the models (e.g. type `grok` to narrow to matching models), Backspace to trim the filter, Esc to clear it (or close the picker). Selection always resolves to one concrete model — the filter only narrows the list, it never guesses. After the model, a third step offers the reasoning effort for that model (or **Keep current effort**); it is skipped when the catalog says the route has no reasoning control. **Note:** `/model` can only switch between already-configured providers. To add a new provider, exit the session and run `hermes model` from your terminal. **Cost note:** switching models mid-conversation resets the prompt cache — the cache key includes the model, so your next turn re-reads the entire conversation at full input price instead of the ~75%-discounted cached rate. Expected and unavoidable, but worth knowing on long sessions.
+Show or change the current model. Supports: `/model claude-sonnet-4`, `/model provider:model` (switch providers), `/model custom:model` (custom endpoint), `/model custom:name:model` (named custom provider), `/model custom` (auto-detect from endpoint), OpenRouter account presets (`/model @preset/<slug>` or `/model <model>@preset/<slug>` — presets are account-scoped, so they skip the public model-listing check), and user-defined aliases (`/model fav`, `/model grok` — see [Custom model aliases](#custom-model-aliases)). Flags: `--global` persists the change to config.yaml; `--session` forces session-only; `--once` applies to the next turn only; `--refresh` re-fetches the provider's model list; `--provider <name>` switches backend (session-only unless `--global`); `--reasoning <level>` sets the reasoning effort (`none`, `minimal` … `ultra`) in the same step and with the same scope as the pick. `/model reset` (no flags) drops this session's pick and goes back to `config.yaml`'s model without losing the conversation. A plain `/model <name>` is session-only unless `model.persist_switch_by_default: true` is set — except when no `model.default`/`model.provider` is configured yet, in which case the first pick persists so the profile gets a real default. The same rule governs the desktop composer picker. **Interactive picker:** running `/model` with no arguments opens the provider→model picker; on the model list you can **type to fuzzy-filter** the models (e.g. type `grok` to narrow to matching models), Backspace to trim the filter, Esc to clear it (or close the picker). Selection always resolves to one concrete model — the filter only narrows the list, it never guesses. After the model, a third step offers the reasoning effort for that model (or **Keep current effort**); it is skipped when the catalog says the route has no reasoning control. **Note:** `/model` can only switch between already-configured providers. To add a new provider, exit the session and run `hermes model` from your terminal. **Cost note:** switching models mid-conversation resets the prompt cache — the cache key includes the model, so your next turn re-reads the entire conversation at full input price instead of the ~75%-discounted cached rate. Expected and unavoidable, but worth knowing on long sessions.
 
 `/codex-runtime [auto|codex_app_server|on|off]`
 
@@ -346,9 +350,9 @@ Re-scan `~/.hermes/skills/` for newly installed or removed skills
 
 Reload `.env` variables into the running session (picks up new API keys without restarting)
 
-`/plugins`
+`/plugins [update|auto-update [on|off]]`
 
-List installed plugins and their status
+List installed plugins and their status; `update` updates every plugin that has an update, `auto-update` shows or sets unattended plugin updates
 
 `/pet [list|<slug>]`
 
@@ -420,9 +424,9 @@ Copy the last assistant response to clipboard (or the Nth-from-last with a numbe
 
 Attach a local image file for your next prompt.
 
-`/debug`
+`/debug [upload|nous upload|local]`
 
-Upload debug report (system info + logs) and get shareable links. Also available in messaging.
+Debug report. Bare `/debug` shows the privacy notice and uploads nothing; `/debug upload` uploads to a public paste and returns shareable links, `/debug nous upload` uploads to Nous-internal storage (classic CLI only: messaging, the TUI and the desktop app refuse it and point to `hermes debug share --nous` or Desktop's Send diagnostics), `/debug local` prints the report without uploading. Also available in messaging.
 
 `/update`
 
@@ -450,7 +454,7 @@ Description
 
 `/<skill-name>`
 
-Load any installed skill as an on-demand command. Example: `/gif-search`, `/github-pr-workflow`, `/excalidraw`.
+Load any installed skill as an on-demand command. Example: `/youtube-content`, `/github-pr-workflow`, `/excalidraw`.
 
 `/skills ...`
 
@@ -552,13 +556,17 @@ Show session info, followed by a local **Session recap** block (recent turn coun
 
 Kill all running background processes and interrupt the running agent.
 
+`/discard`
+
+Drop a turn Hermes lost in a restart so this chat's queued messages run again. The lost turn is not re-run (only you know whether to send it again); it is recorded as interrupted. Hermes offers this when it pauses a conversation on a lost turn. On Slack use `/hermes discard`.
+
 `/pause [reason | off]`
 
 Global emergency stop, the in-chat form of [`hermes pause`](/docs/reference/cli-commands): puts new cron, kanban and gateway work on hold until `/pause off`. In-flight work finishes normally, and slash commands keep working while paused, so a messaging-only operator can always lift it.
 
 `/model [provider:model]`
 
-Show or change the model. Supports provider switches (`/model zai:glm-5`), custom endpoints (`/model custom:model`), named custom providers (`/model custom:local:qwen`), auto-detect (`/model custom`), OpenRouter account presets (`/model @preset/<slug>` — account-scoped, skips the public model-listing check), and user-defined aliases (`/model fav`, `/model grok` — see [Custom model aliases](#custom-model-aliases)). Use `--global` to persist the change to config.yaml; a successful `--global` pick (typed or picker) also drops this chat's session-only override, so config.yaml alone decides the model after a gateway restart (a chat with a `channel_overrides` model keeps the override, since the channel setting would otherwise outrank config.yaml; the CLI/TUI deliberately keep their per-session pin so resume restores the model that chat used). **Note:** `/model` can only switch between already-configured providers. To add a new provider or set up API keys, use `hermes model` from your terminal (outside the chat session). **Cost note:** a mid-session model switch resets the prompt cache (the cache key includes the model), so the next message re-reads the whole conversation at full input price.
+Show or change the model. Supports provider switches (`/model zai:glm-5`), custom endpoints (`/model custom:model`), named custom providers (`/model custom:local:qwen`), auto-detect (`/model custom`), OpenRouter account presets (`/model @preset/<slug>` — account-scoped, skips the public model-listing check), and user-defined aliases (`/model fav`, `/model grok` — see [Custom model aliases](#custom-model-aliases)). `/model reset` clears this chat's session override (memory, the persisted copy, and any pending `--once` restore) so `channel_overrides` / config.yaml decide the model again, keeping the conversation. Use `--global` to persist the change to config.yaml; a successful `--global` pick (typed or picker) also drops this chat's session-only override, so config.yaml alone decides the model after a gateway restart (a chat with a `channel_overrides` model keeps the override, since the channel setting would otherwise outrank config.yaml; the CLI/TUI deliberately keep their per-session pin so resume restores the model that chat used). **Note:** `/model` can only switch between already-configured providers. To add a new provider or set up API keys, use `hermes model` from your terminal (outside the chat session). **Cost note:** a mid-session model switch resets the prompt cache (the cache key includes the model), so the next message re-reads the whole conversation at full input price.
 
 `/codex-runtime [auto|codex_app_server|on|off]`
 
@@ -591,6 +599,10 @@ Manually compress conversation context. `/compress here [N]` keeps the most rece
 `/topic [off|help|session-id]`
 
 **Telegram DM only.** Manage user-managed multi-session topic mode. `/topic` enables it or shows status; `/topic off` disables it and clears bindings; `/topic help` shows usage; `/topic <session-id>` inside a topic restores a previous session. See [Multi-session DM mode](/docs/user-guide/messaging/telegram#multi-session-dm-mode-topic).
+
+`/save <json|md|html> [filename] [redact]`
+
+Export the current session as JSON, Markdown, or HTML and send the file into the chat as a document. Bare `/save` shows usage; `redact` scrubs secrets first.
 
 `/title [name]`
 
@@ -674,7 +686,7 @@ Re-run a prompt on a recurring interval in this session. Subcommands: `status`, 
 
 `/refine [focus]`
 
-Run the memory/skill self-improvement review now, optionally with focus instructions. On Slack use `/hermes refine …`.
+Run the memory/skill self-improvement review now, optionally with focus instructions. Works on a chat left idle (no message needed first): it reviews the stored conversation and posts the result in the same chat. On Slack use `/hermes refine …`.
 
 `/review [instructions]`
 
@@ -698,7 +710,7 @@ Browse and resume previous sessions.
 
 `/context [all]` (alias: `/ctx`)
 
-Context-window usage gauge and category breakdown (messaging-friendly text form). `/context all` adds per-skill / per-toolset cost detail.
+Context-window usage gauge and category breakdown (messaging-friendly text form). `/context all` adds per-skill / per-toolset cost detail. A prompt-cache line says until when the cached prompt stays warm (with how sure Hermes is: proven, declared or assumed), how long ago it expired, or that it is unknown.
 
 `/egress [status]`
 
@@ -788,9 +800,9 @@ Update Hermes Agent to the latest version.
 
 Gracefully restart the gateway after draining active runs. When the gateway comes back online, it sends a confirmation to the requester's chat/thread.
 
-`/debug`
+`/debug [upload]`
 
-Upload debug report (system info + logs) and get shareable links.
+Bare `/debug` shows the privacy notice and uploads nothing; `/debug upload` uploads an allowlisted summary (versions, config key names, error counts; no log or message text) to a public paste and returns a shareable link; full logs go only to private storage via `hermes debug share --nous`.
 
 `/help`
 
@@ -802,11 +814,11 @@ Invoke any installed skill by name.
 
 ## Notes
 
--   `/skin`, `/snapshot`, `/export`, `/import`, `/reload`, `/tools`, `/toolsets`, `/browser`, `/config`, `/cron`, `/platforms`, `/paste`, `/image`, `/statusbar`, `/battery`, `/focus`, `/plugins`, `/indicator`, `/wake`, `/journey`, `/redraw`, `/clear`, `/history`, `/save`, `/copy`, `/handoff`, `/prompt`, `/pet`, `/hatch`, `/timestamps`, `/subscription`, and `/quit` are **CLI-only** commands.
+-   `/skin`, `/snapshot`, `/export`, `/import`, `/reload`, `/tools`, `/toolsets`, `/browser`, `/config`, `/cron`, `/platforms`, `/paste`, `/image`, `/statusbar`, `/battery`, `/focus`, `/plugins`, `/indicator`, `/wake`, `/journey`, `/redraw`, `/clear`, `/history`, `/copy`, `/handoff`, `/prompt`, `/pet`, `/hatch`, `/timestamps`, `/subscription`, and `/quit` are **CLI-only** commands.
 -   `/skills` is **CLI-only for search/browse/install**; its write-approval review subcommands (`pending`, `approve`, `reject`, `diff`, `approval`) also work on messaging platforms when `skills.write_approval` is on. `/memory` works on **both** surfaces.
 -   `/verbose` is **CLI-only by default**, but can be enabled for messaging platforms by setting `display.tool_progress_command: true` in `config.yaml`. When enabled, it cycles the `display.tool_progress` mode and saves to config.
 -   `/focus` and `/verbose` share one suppression path (`display.tool_progress`), so they can never contradict each other: `/focus on` pins tool progress to `off` and stashes your mode under `display.focus_saved_tool_progress`; `/focus off` restores it; cycling `/verbose` while focus is on takes the mode back and clears the focus badge. Focus view is display-only — it never changes conversation history, the system prompt, or anything sent to the model, so it has zero prompt-cache impact.
--   `/sethome`, `/restart`, `/approve`, `/deny`, `/topic`, `/platform`, `/pause`, and `/commands` are **messaging-only** commands.
+-   `/sethome`, `/restart`, `/approve`, `/deny`, `/topic`, `/platform`, `/pause`, `/discard`, and `/commands` are **messaging-only** commands.
 -   `/status`, `/egress`, `/version`, `/whoami`, `/bg`, `/btw`, `/queue`, `/steer`, `/voice`, `/reload-mcp`, `/reload-skills`, `/rollback`, `/diff`, `/debug`, `/fast`, `/approvals`, `/busy`, `/footer`, `/curator`, `/kanban`, `/topup`, `/login`, `/suggestions`, `/blueprint`, `/learn`, `/init`, `/sessions`, `/loop`, and `/yolo` work in **both** the CLI and the messaging gateway.
 -   `/voice join`, `/voice channel`, and `/voice leave` are only meaningful on Discord.
 -   `/connectors` is **TUI-only**.

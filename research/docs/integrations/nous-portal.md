@@ -2,7 +2,7 @@
 
 **Source:** https://hermes-agent.nousresearch.com/docs/integrations/nous-portal
 
-[Nous Portal](https://portal.nousresearch.com) is Nous Research's unified subscription gateway and **the recommended way to run Hermes Agent**. One OAuth login replaces the juggling act of separate accounts, API keys, and billing relationships across every model lab, search API, image generator, and browser provider you'd otherwise need to wire up by hand.
+[Nous Portal](https://portal.nousresearch.com) is Nous Research's unified subscription gateway and **the recommended way to run Hermes Agent**. One OAuth login replaces the juggling act of separate accounts, API keys, and billing relationships across every model lab, search API, image generator, and browser provider you'd otherwise need to wire up by hand. Comparing it with OpenRouter? [Nous Portal vs OpenRouter](https://portal.nousresearch.com/compare/openrouter) covers pricing, free models and plans with sources.
 
 If you only have time to set up one thing, set up this. The fastest path:
 
@@ -122,7 +122,7 @@ High-quality TTS without a separate OpenAI key. Enables [voice mode](/docs/user-
 
 Browser Use
 
-Headless Chromium sessions for `browser_navigate`, `browser_click`, `browser_type`, `browser_vision`. No Browserbase account needed.
+Headless cloud Chromium sessions that `browser_exec` drives over CDP. No Browserbase account needed.
 
 **Cloud terminal sandbox**
 

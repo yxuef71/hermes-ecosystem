@@ -2,7 +2,7 @@
 
 **Source:** https://hermes-agent.nousresearch.com/docs/reference/environment-variables
 
-Hermes reads environment variables from the process environment and, for user-managed secrets, from `~/.hermes/.env`. Keep API keys, bot tokens, OAuth secrets, and other credentials in `.env`; prefer `config.yaml` for non-secret behaviour settings when a config key exists. Some variables below are process-only overrides or internal bridge variables and should not be committed to `.env` just because they are documented here.
+Hermes reads environment variables from the process environment and, for user-managed secrets, from `~/.hermes/.env`. Keep API keys, bot tokens, OAuth secrets, and other credentials in `.env`; prefer `config.yaml` for non-secret behaviour settings when a config key exists. Some variables below are process-only overrides or internal bridge variables and should not be committed to `.env` just because they are documented here. Values written by the platform YAML bridge (and the Telegram/Signal mention fallbacks) are refreshed when that config changes, including across a daemon replacement. After a successful full YAML load, a removed key also retracts its unchanged bridge-owned value; failed loads do not trigger this cleanup. For a setting the platform YAML bridge copies into the environment (mention gating, reactions, allowlists and the other bridged platform keys), an explicit key in `config.yaml` replaces a value inherited from the process environment (a launcher, a service manager, a parent shell); a value set in your `.env`, the managed `.env` or an external secret source still takes precedence over `config.yaml`. A setting an adapter reads from its environment directly, outside the bridge (for example `WHATSAPP_REPLY_PREFIX`), still prefers the environment value. The bridge tracks what it wrote in `HERMES_BRIDGED_<NAME>` variables holding a SHA-256 digest of the value, never the value itself, and they are removed from every agent subprocess; a process export whose value happens to equal the bridge's own earlier write is treated as the bridge's and follows `config.yaml`.
 
 ## LLM Providers
 
@@ -66,37 +66,13 @@ API key for LM Studio (`lmstudio` provider). Often a placeholder for local serve
 
 LM Studio base URL (default: `http://localhost:1234/v1`)
 
-`COPILOT_GITHUB_TOKEN`
-
-GitHub token for Copilot API — first priority (OAuth `gho_*` or fine-grained PAT `github_pat_*`; classic PATs `ghp_*` are **not supported**)
-
 `GH_TOKEN`
 
-GitHub token — second priority for Copilot (also used by `gh` CLI)
+GitHub token (also used by the `gh` CLI); honoured wherever Hermes reads `GITHUB_TOKEN`
 
 `GITHUB_TOKEN`
 
-GitHub token — third priority for Copilot
-
-`HERMES_COPILOT_ACP_COMMAND`
-
-Override Copilot ACP CLI binary path (default: `copilot`)
-
-`COPILOT_CLI_PATH`
-
-Alias for `HERMES_COPILOT_ACP_COMMAND`
-
-`HERMES_COPILOT_ACP_ARGS`
-
-Override Copilot ACP arguments (default: `--acp --stdio`)
-
-`COPILOT_ACP_BASE_URL`
-
-Override Copilot ACP base URL
-
-`COPILOT_API_BASE_URL`
-
-Override the Copilot API base URL (`copilot` provider)
+GitHub token for GitHub API access (Skills Hub, git credentials, update checks; see the Skills Hub row below)
 
 `GLM_API_KEY`
 
@@ -456,11 +432,23 @@ Optional local speech-to-text command template. Supports `{input_path}`, `{outpu
 
 `HERMES_LOCAL_STT_LANGUAGE`
 
-Default language hint for STT. Used by the `local` (faster-whisper) provider, `HERMES_LOCAL_STT_COMMAND`, the local `whisper` CLI fallback (default: `en`), Groq, and xAI when no per-provider `language` is set in `config.yaml`
+Fallback STT language hint, used only when both the provider's own `language` and the global `stt.language` are empty. Command backends (`HERMES_LOCAL_STT_COMMAND`, the local `whisper` CLI) may apply their own default (`en`) when no hint resolves.
 
 `HERMES_HOME`
 
 Select the configuration and user-data home. A literal `~` or `$VAR` in the value is expanded (fish does not expand `~` inside `VAR=~/…`), so it never resolves relative to the current directory. Defaults to `~/.hermes` on POSIX and `%LOCALAPPDATA%\hermes` on Windows; the official Docker image uses `/opt/data`. Profile/runtime context can select a more specific home.
+
+`HERMES_CONFIG_BACKEND`
+
+Select where the profile's `config.yaml` user layer is read and written. `file` (the default) is the local `config.yaml`; `remote` is [Remote Config](/docs/user-guide/remote-config). Any other value, or a remote backend that cannot serve config, stops Hermes at startup with an error instead of falling back to defaults. An explicitly empty value in a `.env` resets a stale shell value to `file`. Read from the launch environment, the launch home's `.env` and the managed `.env`, never from `config.yaml`. See [Config backend](/docs/developer-guide/config-backend).
+
+`HERMES_CONFIG_REMOTE_URL`
+
+Base URL of the [Remote Config](/docs/user-guide/remote-config) plane (default `https://config-config.nousresearch.com`; `https://` only, plain `http://` only to loopback, no user info). An env var because it is needed before any config can be read: it says where config comes from.
+
+`HERMES_CONFIG_INSTANCE_ID`
+
+This agent's id in the [Remote Config](/docs/user-guide/remote-config) plane; required with `HERMES_CONFIG_BACKEND=remote`. An env var because the plane needs it to serve the first config read.
 
 `HERMES_DISABLE_WINDOWS_UTF8`
 
@@ -586,39 +574,19 @@ Firecrawl browser session TTL in seconds (default: 300)
 
 `BROWSER_CDP_URL`
 
-Chrome DevTools Protocol URL for local browser (set via `/browser connect`, e.g. `ws://localhost:9222`)
+Chrome DevTools Protocol endpoint the browser tools attach to instead of launching Chromium (set via `/browser connect`, e.g. `ws://localhost:9222`; same as `browser.cdp_url`)
 
-`CAMOFOX_URL`
+`CAMOFOX_*`
 
-Camofox local anti-detection browser server address (default: `http://localhost:9377`). Address only — it does not select Camofox as the backend; pick Camofox in `hermes tools` (`browser.cloud_provider: camofox`)
-
-`CAMOFOX_API_KEY`
-
-Optional bearer token sent as Authorization header to a remote/authenticated Camofox server
-
-`CAMOFOX_USER_ID`
-
-Optional externally managed Camofox user ID for shared visible sessions
-
-`CAMOFOX_SESSION_KEY`
-
-Optional Camofox session key used when creating tabs for `CAMOFOX_USER_ID`
-
-`CAMOFOX_ADOPT_EXISTING_TAB`
-
-Set to `true` to reuse an existing Camofox tab before creating a new one
+Read only by the Camofox plugin (`hermes plugins install camofox`); core Hermes ignores them.
 
 `BROWSER_INACTIVITY_TIMEOUT`
 
 Browser session inactivity timeout in seconds
 
-`AGENT_BROWSER_ARGS`
+`AGENT_BROWSER_*`
 
-Extra Chromium launch flags (comma- or newline-separated). Hermes auto-injects `--no-sandbox,--disable-dev-shm-usage` when running as root or on AppArmor-restricted unprivileged user namespaces (Ubuntu 23.10+, DGX Spark, many container images); set this manually only to override or add other flags.
-
-`AGENT_BROWSER_ENGINE`
-
-Local browser engine: `auto` (default — Chromium-family via CDP), `lightpanda` (Browser Use mode spawns `lightpanda serve`; the built-in tools pass `--engine lightpanda` to agent-browser), or `chrome`. Same as `browser.engine` in config.yaml.
+No longer read. On update, values in the profile's `.env` are copied into config when the key is unset (`browser.engine: auto` and `browser.headed: false` count as unset; a relative `AGENT_BROWSER_PROFILE` becomes an absolute path): `AGENT_BROWSER_EXECUTABLE_PATH` → `browser.executable_path`, `AGENT_BROWSER_PROFILE` → `browser.user_data_dir`, `AGENT_BROWSER_ARGS` → `browser.chromium_args`, `AGENT_BROWSER_HEADED` → `browser.headed`, `AGENT_BROWSER_ENGINE` → `browser.engine`.
 
 `FAL_KEY`
 
@@ -626,7 +594,7 @@ Image generation ([fal.ai](https://fal.ai/))
 
 `KREA_API_KEY`
 
-Krea API key for Krea 2 image generation ([krea.ai](https://krea.ai/))
+Krea API key for Krea 3 and Krea 2 image generation ([krea.ai](https://krea.ai/))
 
 `GROQ_API_KEY`
 
@@ -728,6 +696,10 @@ Semantic long-term memory with profile recall and session ingest ([supermemory.a
 
 Daytona cloud sandboxes ([daytona.io](https://daytona.io/))
 
+`SPRITES_TOKEN`
+
+Sprites cloud sandboxes, read by the [`sprites` plugin](https://github.com/NousResearch/hermes-plugin-sprites) ([fly.io/sprites](https://fly.io/sprites))
+
 `VERCEL_TOKEN`
 
 Vercel Sandbox access token ([vercel.com](https://vercel.com/))
@@ -756,21 +728,15 @@ Description
 
 `NOTION_API_KEY`
 
-`notion`
+Teams meeting pipeline
 
-Notion integration token.
+Notion integration token for the Notion sink.
 
 `LINEAR_API_KEY`
 
 `linear`
 
 Linear personal API key.
-
-`AIRTABLE_API_KEY`
-
-`airtable`
-
-Airtable personal access token.
 
 `TENOR_API_KEY`
 
@@ -862,7 +828,7 @@ Description
 
 `TERMINAL_ENV`
 
-Backend: `local`, `docker`, `ssh`, `singularity`, `modal`, `daytona`, `vercel_sandbox`
+Backend: `local`, `docker`, `ssh`, `modal`, `daytona`, `vercel_sandbox`, or a plugin backend (`singularity`, `sprites`)
 
 `HERMES_DOCKER_BINARY`
 
@@ -894,7 +860,7 @@ Advanced opt-in: mount the launch cwd into Docker `/workspace` (`true`/`false`, 
 
 `TERMINAL_SINGULARITY_IMAGE`
 
-Singularity image or `.sif` path
+Singularity image or `.sif` path (read by the [`singularity` plugin](https://github.com/NousResearch/hermes-official-plugins/tree/main/singularity))
 
 `TERMINAL_MODAL_IMAGE`
 
@@ -922,7 +888,7 @@ Deprecated direct override for gateway/cron terminal sessions. Prefer `terminal.
 
 `SUDO_PASSWORD`
 
-Enable sudo without interactive prompt
+Enable sudo without interactive prompt. Sent to the backend that runs the command; see [Sudo Support](/docs/user-guide/features/tools#sudo-support)
 
 For cloud sandbox backends, persistence is filesystem-oriented. `TERMINAL_LIFETIME_SECONDS` controls when Hermes cleans up an idle terminal session, and later resumes may recreate the sandbox rather than keep the same live processes running.
 
@@ -948,7 +914,7 @@ SSH port (default: 22)
 
 Path to private key
 
-## Container Resources (Docker, Singularity, Modal, Daytona)
+## Container Resources (Docker, Modal, Daytona, container plugin backends)
 
 Variable
 
@@ -1082,9 +1048,25 @@ Public HTTPS URL for webhook mode (enables webhook instead of polling)
 
 Local listen port for webhook server (default: `8443`)
 
+`TELEGRAM_WEBHOOK_HOST`
+
+Local bind host for the webhook server. Default: unset → dual-stack bind on all interfaces (IPv4+IPv6). Set explicitly on IPv6-only deployments (e.g. Fly.io 6PN). Equivalent to `platforms.telegram.extra.webhook_host`.
+
 `TELEGRAM_WEBHOOK_SECRET`
 
 Secret token Telegram echoes back in each update for verification. **Required whenever `TELEGRAM_WEBHOOK_URL` is set** — the gateway refuses to start without it (GHSA-3vpc-7q5r-276h). Generate with `openssl rand -hex 32`.
+
+`TELEGRAM_ALLOW_BOTS`
+
+Allow messages from other bots to be processed (`none` = reject all bot messages, `mentions` = allow only when the bot is @mentioned, `all` = allow all bot messages; default: `none`). Equivalent to `telegram.allow_bots`.
+
+`TELEGRAM_GUEST_MODE`
+
+Let non-allowlisted groups trigger the bot only by an explicit @mention, every turn (default: `false`). Equivalent to `telegram.guest_mode`.
+
+`TELEGRAM_OBSERVE_UNMENTIONED_GROUP_MESSAGES`
+
+Passively observe unmentioned group messages into shared session context, in allowlisted chats/topics only (default: `false`). Equivalent to `telegram.observe_unmentioned_group_messages`.
 
 `TELEGRAM_REACTIONS`
 
@@ -1113,6 +1095,18 @@ Reply-reference behavior: `off`, `first` (default), or `all`. Matches the Discor
 `TELEGRAM_IGNORED_THREADS`
 
 Comma-separated Telegram forum topic/thread IDs where the bot never responds
+
+`TELEGRAM_ALLOWED_TOPICS`
+
+Comma-separated Telegram forum topic/thread IDs the bot handles. When set, messages from any other group/forum topic are ignored (the first drop per chat/topic is logged at INFO). DMs are never filtered. Telegram's General topic is normalized to ID `1`. Applied before `TELEGRAM_IGNORED_THREADS`. Equivalent to `telegram.allowed_topics` in `config.yaml`.
+
+`TELEGRAM_FREE_RESPONSE_CHATS`
+
+Comma-separated chat IDs where `require_mention` is bypassed and Hermes responds to every group message. Equivalent to `telegram.free_response_chats`.
+
+`TELEGRAM_FREE_RESPONSE_TOPICS`
+
+Comma-separated `<chat_id>:<thread_id>` pairs where `require_mention` is bypassed for a single forum topic only. Telegram's General topic is normalized to thread ID `1`. Equivalent to `telegram.free_response_topics`.
 
 `TELEGRAM_PROXY`
 
@@ -1258,6 +1252,10 @@ Accept messages from other Slack bots: `none` (default), `mentions`, or `all`. T
 
 Require an explicit @mention for Slack thread replies while preserving top-level free-response channels
 
+`SLACK_THREAD_FOLLOWUP_SILENCE`
+
+Let a bare silence marker stand on unaddressed Slack channel-thread replies instead of posting the unexpected-silence notice (default `false`)
+
 `SLACK_HOME_CHANNEL`
 
 Default Slack channel for cron delivery
@@ -1357,6 +1355,10 @@ Display name for the WhatsApp home channel.
 `WHATSAPP_DEBUG`
 
 Log raw message events in the bridge for troubleshooting (`true`/`false`)
+
+`HERMES_WHATSAPP_BRIDGE_TOKEN`
+
+Set by the gateway on the bridge subprocess only (never in `.env`): the per-session secret from `platforms/whatsapp/session/.bridge-token` that every bridge HTTP route requires as a bearer token. A bridge started without it refuses to serve.
 
 `WHATSAPP_CLOUD_PHONE_NUMBER_ID`
 
@@ -2038,7 +2040,7 @@ scrypt password hash for the basic provider (preferred — no plaintext at rest)
 
 `HERMES_DASHBOARD_BASIC_AUTH_SECRET`
 
-HMAC key (32+ bytes, base64/hex/raw) signing the basic provider's stateless session tokens. Set explicitly so sessions survive restarts / span multiple workers; blank → random per-process (you'll be logged out on every restart). Overrides `dashboard.basic_auth.secret`.
+HMAC key (32+ bytes, base64/hex/raw) signing the basic provider's stateless session tokens. Set explicitly so sessions survive restarts / span multiple workers; blank → random per-process (you'll be logged out on every restart). A value that still holds unexpanded shell text such as `$(openssl rand -base64 32)` is ignored with an error and a random per-process key is used instead. Overrides `dashboard.basic_auth.secret`.
 
 `HERMES_DASHBOARD_BASIC_AUTH_TTL_SECONDS`
 
@@ -2094,11 +2096,11 @@ Absolute path to a Python interpreter for the backend, checked before Electron a
 
 `HERMES_DESKTOP_DEV_SERVER`
 
-Vite dev-server URL the Electron shell loads instead of the packaged bundle (e.g. `http://127.0.0.1:5174`). Set automatically by `npm run dev`; only relevant when hacking on the app.
+Vite dev-server URL the Electron shell loads instead of the packaged bundle (e.g. `http://127.0.0.1:5174`). Set automatically by `pnpm run dev`; only relevant when hacking on the app. A backend that inherits it also trusts that renderer's origin for CORS and WebSocket upgrades.
 
 `HERMES_DESKTOP_CDP_PORT`
 
-Overrides the Chrome DevTools Protocol port the renderer exposes on `127.0.0.1` for DOM/CSS inspection tooling (default `9222`). Dev-server runs (`npm run dev`, `hgui`) open it automatically; a packaged app never does, and no value here changes that. Set to `off` to disable it on a dev run. Anything that can reach the port can execute code in the renderer.
+Overrides the Chrome DevTools Protocol port the renderer exposes on `127.0.0.1` for DOM/CSS inspection tooling (default `9222`). Dev-server runs (`pnpm run dev`, `hgui`) open it automatically; a packaged app never does, and no value here changes that. Set to `off` to disable it on a dev run. Anything that can reach the port can execute code in the renderer.
 
 `HERMES_DESKTOP_NVIDIA_SWIFTSHADER`
 
@@ -2584,7 +2586,7 @@ Description
 
 `HERMES_TELEGRAM_TEXT_BATCH_DELAY_SECONDS`
 
-Grace window before flushing a queued Telegram text chunk (default: `0.6`).
+Grace window before flushing Telegram text over 1,024 characters (default: `1.5`). Shorter text keeps the adaptive 0.18/0.24-second fast paths.
 
 `HERMES_TELEGRAM_TEXT_BATCH_SPLIT_DELAY_SECONDS`
 
@@ -2600,7 +2602,7 @@ Grace window before flushing queued Telegram media (default: `0.6`).
 
 `HERMES_TELEGRAM_FOLLOWUP_GRACE_SECONDS`
 
-Delay before sending a follow-up after the agent finishes, to avoid racing the last stream chunk.
+Seconds after a turn starts during which a plain Telegram text or voice-note follow-up joins the queue instead of interrupting or redirecting that turn (default `3`; `0` disables the grace). Commands and other media are not held.
 
 `HERMES_TELEGRAM_HTTP_CONNECT_TIMEOUT` / `_READ_TIMEOUT` / `_WRITE_TIMEOUT` / `_POOL_TIMEOUT`
 
@@ -2664,7 +2666,7 @@ Max concurrent image **encode/resize** bursts across the whole process (override
 
 `HERMES_RESTART_DRAIN_TIMEOUT`
 
-Gateway: seconds to wait for active runs to drain on `/restart` before forcing the restart (default: `900`).
+Gateway: overrides `agent.restart_drain_timeout`, the seconds in-flight chat turns may keep running once the gateway stops or restarts before they are interrupted (default: `0`, interrupt at once). See [Gateway Restart Drain](/docs/user-guide/configuration#gateway-restart-drain).
 
 `HERMES_GATEWAY_PLATFORM_CONNECT_TIMEOUT`
 
@@ -3006,7 +3008,7 @@ Launch the [TUI](/docs/user-guide/tui) instead of the classic CLI when set to `1
 
 `HERMES_TUI_DIR`
 
-Path to a prebuilt `ui-tui/` directory (must contain `dist/entry.js` and populated `node_modules`). Used by distros and Nix to skip the first-launch `npm install`.
+Path to a prebuilt `ui-tui/` directory (must contain `dist/entry.js` and populated `node_modules`). Used by distros and Nix to skip the first-launch `pnpm install`.
 
 `HERMES_TUI_RESUME`
 
@@ -3080,9 +3082,9 @@ API key paired with `AUXILIARY_VISION_BASE_URL`
 
 note
 
-`AUXILIARY_WEB_EXTRACT_*` variables are obsolete: `web_extract` and browser snapshots no longer use an auxiliary LLM. Long pages and snapshots are truncated deterministically with the full text stored on disk for `read_file` paging.
+`AUXILIARY_WEB_EXTRACT_*` variables are obsolete: `web_extract` no longer uses an auxiliary LLM. Long pages are truncated deterministically with the full text stored on disk for `read_file` paging.
 
-For task-specific direct endpoints, Hermes uses the task's configured API key or `OPENAI_API_KEY`. It does not reuse `OPENROUTER_API_KEY` for those custom endpoints.
+For task-specific direct endpoints, Hermes uses the task's configured API key; without one, the main model's key on the main endpoint's exact origin, then `OPENAI_API_KEY` only for OpenAI hosts (`*.openai.com`, `*.openai.azure.com`) or the exact `OPENAI_BASE_URL` it is paired with. It does not reuse `OPENROUTER_API_KEY` for those custom endpoints.
 
 ## Fallback Providers (config.yaml only)
 

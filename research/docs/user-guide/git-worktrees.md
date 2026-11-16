@@ -244,6 +244,9 @@ worktrees:
   archive_max_file_mb: 50      # untracked files above this are not archived; their tree is kept
   archive_retention_days: 30   # 0 keeps archives forever
   max_total_gb: 0              # optional budget for idle trees; oldest are archived + removed first
+  install_state_retention_days: 14  # dependency state of a missing checkout outside .worktrees/ and
+                               # the data root, unused this long, is reclaimed; 0 keeps it forever.
+                               # Read from the root profile's config: its profiles share installs/
 ```
 
 There is no limit on how many trees may exist: hundreds of parallel subagents each keep their tree for as long as they work in it. `max_total_gb` only ever evicts idle trees past their tier.
@@ -264,4 +267,4 @@ This combination gives you:
 
 ## Developing the UI surfaces across worktrees
 
-The TypeScript surfaces (`ui-tui/`, `apps/desktop/`) each need a `node_modules`, which a fresh `npm ci` per worktree duplicates across every branch. If you hack on the TUI or desktop app from multiple worktrees, see [TUI & Desktop from Worktrees](/docs/developer-guide/worktree-ui-dev) for the `htui` / `hgui` helpers that share one install by symlink.
+The TypeScript surfaces (`ui-tui/`, `apps/desktop/`) each need a `node_modules`, which a fresh `pnpm install` per worktree repeats for every branch. If you hack on the TUI or desktop app from multiple worktrees, see [TUI & Desktop from Worktrees](/docs/developer-guide/worktree-ui-dev) for the `htui` / `hgui` helpers that share one install by symlink.

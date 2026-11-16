@@ -57,10 +57,10 @@ Every installed skill is automatically available as a slash command:
 
 ```
 # In the CLI or any messaging platform:
-/gif-search funny cats
+/excalidraw sketch the request flow for our API
 /axolotl help me fine-tune Llama 3 on my dataset
 /github-pr-workflow create a PR for the auth refactor
-/songsee analyze the frequency spread of this mix
+/youtube-content summarize https://youtu.be/dQw4w9WgXcQ
 
 # Just the skill name loads it and lets the agent ask what you need:
 /excalidraw
@@ -264,7 +264,7 @@ Skill is **hidden** when the listed toolsets are unavailable. Shown when they're
 
 Same, but checks individual tools.
 
-**Example:** The built-in `duckduckgo-search` skill uses `fallback_for_toolsets: [web]`. When you have `FIRECRAWL_API_KEY` set, the web toolset is available and the agent uses `web_search` — the DuckDuckGo skill stays hidden. If the API key is missing, the web toolset is unavailable and the DuckDuckGo skill automatically appears as a fallback.
+**Example:** a curl-based search skill declaring `fallback_for_toolsets: [web]` stays hidden while the web toolset is available and appears only when it is disabled, so the agent still has a search path.
 
 Skills without any conditional fields behave exactly as before — they're always shown.
 
@@ -632,7 +632,7 @@ skills:
   write_approval: false     # false = write freely (default) | true = require approval
 ```
 
-When `write_approval: true`, every `skill_manage` write (create / edit / patch / delete / write\_file / remove\_file) is **staged** instead of committed — a SKILL.md is too large to review inline, so staging applies regardless of whether the write came from a foreground turn or the background review. Staged writes survive restarts under `~/.hermes/pending/skills/` and are reviewed with the same familiar approve/deny flow as dangerous commands:
+When `write_approval: true`, every `skill_manage` write (create / edit / patch / delete / write\_file / remove\_file) is **staged** instead of committed — a SKILL.md is too large to review inline, so staging applies regardless of whether the write came from a foreground turn or the background review. It doesn't cover direct edits of skill files by the generic file tools or the terminal. Staged writes survive restarts under `~/.hermes/pending/skills/` and are reviewed with the same familiar approve/deny flow as dangerous commands:
 
 ```
 /skills pending             # list staged skill writes + a one-line gist each
@@ -643,6 +643,8 @@ When `write_approval: true`, every `skill_manage` write (create / edit / patch /
 ```
 
 The review surface works in the interactive CLI and on messaging platforms (diff output is truncated for chat bubbles — read the full diff on the CLI or in the pending JSON file). Memory writes have the same gate under `memory.write_approval` — see [Controlling memory writes](/docs/user-guide/features/memory#controlling-memory-writes-write_approval).
+
+To stop the agent from changing one _specific_ skill at all, lock it: `hermes curator lock <skill>` (or the lock switch in Desktop). A locked skill stays readable and auto-loadable, but `skill_manage`, `write_file`, `patch` and `terminal` all refuse to change it, in every kind of session; your own edits still work. See [Locking a skill](/docs/user-guide/features/curator#locking-a-skill).
 
 > The separate `skills.guard_agent_created` setting is a content scanner (dangerous-pattern heuristics), not an approval gate — the two are independent. See [Guard on agent-created skill writes](/docs/user-guide/configuration#guard-on-agent-created-skill-writes).
 
@@ -783,6 +785,8 @@ Default taps (browsable without any setup):
     
 -   [NVIDIA/skills](https://github.com/NVIDIA/skills) — NVIDIA-verified skills (signed `skill.oms.sig` + governance `skill-card.md`)
     
+-   [wandb/skills](https://github.com/wandb/skills), [qdrant/skills](https://github.com/qdrant/skills), [pinecone-io/skills](https://github.com/pinecone-io/skills), [makenotion/skills](https://github.com/makenotion/skills), [Airtable/skills](https://github.com/Airtable/skills), [Shopify/Shopify-AI-Toolkit](https://github.com/Shopify/Shopify-AI-Toolkit) — each vendor's own skills for its product
+    
 -   [garrytan/gstack](https://github.com/garrytan/gstack)
     
 -   [K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) and [synthetic-sciences/openscience](https://github.com/synthetic-sciences/openscience) — ~480 scientific research skills (bioinformatics, chemistry, physics, ML training, scholarly tooling), grouped under one `science` category. Community trust: every install is security-scanned. Many wrap third-party tools with their own licenses (some GPL; KEGG requires a commercial license for non-academic use) — check each skill's prerequisites.
@@ -917,7 +921,7 @@ Built-in trust, no third-party warning
 
 `trusted`
 
-Trusted registries/repos such as `openai/skills`, `anthropics/skills`, `huggingface/skills`, `NVIDIA/skills`
+Trusted registries/repos such as `openai/skills`, `anthropics/skills`, `huggingface/skills`, `NVIDIA/skills`, `wandb/skills`, `qdrant/skills`, `pinecone-io/skills`, `makenotion/skills`, `Airtable/skills`, `Shopify/Shopify-AI-Toolkit`
 
 More permissive policy than community sources
 
@@ -1119,4 +1123,4 @@ All the same commands work with `/skills`:
 /skills list
 ```
 
-Official optional skills still use identifiers like `official/security/1password` and `official/migration/openclaw-migration`.
+Official optional skills still use identifiers like `official/security/1password` and `official/mcp/fastmcp`.

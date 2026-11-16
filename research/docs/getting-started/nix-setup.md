@@ -104,7 +104,7 @@ The `default` package adds ~700 MB to the closure. If you only need messaging pl
 git clone https://github.com/NousResearch/hermes-agent.git
 cd hermes-agent
 nix develop
-hermes setup
+hermes-checkout setup
 ```
 
 * * *
@@ -438,11 +438,11 @@ Add MCP tool servers
 
 See [MCP Servers](#mcp-servers)
 
-Enable Discord/Telegram/Slack
+Add an optional extra the package does not ship
 
 `extraDependencyGroups`
 
-`[ "messaging" ]`
+`[ "google-meet" ]`
 
 Mount host directories into container
 
@@ -855,6 +855,26 @@ Binding to an address other than loopback
 
 The default address is `127.0.0.1`. Each other address starts the authentication gate of the dashboard. The server also refuses each request with a `Host` header that is different from the address that the server bound to. This is a defence against DNS rebinding. Bind to the name or the address that your client uses.
 
+### Running the Webapp
+
+The package ships the [Webapp](/docs/user-guide/desktop#use-the-desktop-workspace-from-a-browser) (Hermes Desktop in a browser) prebuilt, so nothing is built at run time; the store is read-only. The gateway serves it when its settings turn it on (see [Configuration → Webapp](/docs/user-guide/configuration#webapp)):
+
+```
+{
+  services.hermes-agent = {
+    enable = true;
+    gateway.enable = true;
+    settings.webapp = {
+      enabled = true;
+      host = "127.0.0.1";
+      port = 9120;
+    };
+  };
+}
+```
+
+Open it with `hermes webapp`. A non-loopback `host` or a `public_url` needs one of the [dashboard's sign-in providers](/docs/user-guide/features/web-dashboard#authentication-gated-mode), as for the dashboard. `nix build .#webapp` builds the bundle on its own. The wrapper points `HERMES_WEBAPP_DIST` at it, so `hermes webapp --force-build` has nothing to rebuild and says so.
+
 ### Verify It Works
 
 ```
@@ -1048,12 +1068,14 @@ The package's `site-packages` is added to PYTHONPATH in the hermes wrapper. `imp
 
 ### Optional Dependency Groups (`extraDependencyGroups`)
 
-For optional extras declared in hermes-agent's `pyproject.toml`, use `extraDependencyGroups` to include them in the sealed venv at build time. This is required for any extra not in the default `[all]` set — on Nix, runtime installation into the read-only store is not possible.
+For optional extras declared in hermes-agent's `pyproject.toml`, use `extraDependencyGroups` to include them in the sealed venv at build time. This is required for any extra the selected package does not already ship — on Nix, runtime installation into the read-only store is not possible.
 
 ```
-# Enable Discord, Telegram, Slack
-services.hermes-agent.extraDependencyGroups = [ "messaging" ];
+# Add Google Meet support on top of what the package ships
+services.hermes-agent.extraDependencyGroups = [ "google-meet" ];
 ```
+
+`extraDependencyGroups` and `extraPythonPackages` **add to** the groups the selected package ships; they never replace them. The `default` package already ships `messaging`, `voice`, `exa` and the other groups in the table below, so naming one of those changes nothing. The same holds for `pkgs.hermes-agent.override { extraDependencyGroups = [ ... ]; }`. For a smaller build, start from a smaller package: `package = inputs.hermes-agent.packages.${system}.minimal;` (or `#messaging`), or `.override { defaultDependencyGroups = [ ]; }` to drop the shipped groups and list only the ones you want.
 
 These groups join the core dependency resolution at build time. Conflicting requirements can still fail that resolution. The table lists common groups; `pyproject.toml` is authoritative for the complete list and platform markers.
 
@@ -1170,7 +1192,9 @@ External flakes can override the package directly:
     nixpkgs.overlays = [ hermes-agent.overlays.default ];
     # Then:
     #   pkgs.hermes-agent.override { extraPythonPackages = [...]; }
-    #   pkgs.hermes-agent.override { extraDependencyGroups = [ "voice" ]; }
+    #   pkgs.hermes-agent.override { extraDependencyGroups = [ "google-meet" ]; }
+    # Both add to the groups the default package ships. To drop those:
+    #   pkgs.hermes-agent.override { defaultDependencyGroups = [ ]; }
   };
 }
 ```
@@ -1196,14 +1220,16 @@ A build-time collision check prevents plugin packages from shadowing core hermes
 
 ### Dev Shell
 
-The flake provides an editable Python environment with the lock-derived interpreter and the `dev` dependency group. `HERMES_PYTHON` points to its interpreter. It does not install Python dependencies into a repository-local `.venv`. The shell also provides Node.js and runtime tools. Its npm hook refreshes JS workspaces when their inputs change.
+The flake provides an editable Python venv with the `dev` dependency group, running on the interpreter `pm/lock.json` pins. `HERMES_PYTHON` and `VIRTUAL_ENV` point at it, and it needs no `PYTHONPATH`. It does not install Python dependencies into a repository-local `.venv`. The shell also provides Node.js and runtime tools. Its pnpm hook refreshes JS workspaces when their inputs change.
+
+The shell does not change which `hermes` runs. `hermes` stays your installed Hermes, so you can keep using it while you work on the checkout. `hermes-checkout` runs this checkout's code and takes the same arguments. Give it a separate `HERMES_HOME` when a change touches stored state, because both commands read the same one by default.
 
 ```
 cd hermes-agent
 nix develop
 "$HERMES_PYTHON" -c "import sys; print(sys.executable); print(sys.version)"
-hermes setup
-hermes chat
+hermes-checkout --version
+HERMES_HOME="$PWD/.scratch/home" hermes-checkout chat
 ```
 
 ### direnv (Recommended)
@@ -1213,8 +1239,18 @@ The included `.envrc` activates the dev shell automatically:
 ```
 cd hermes-agent
 direnv allow    # one-time
-# Nix reuses its built Python environment; the npm hook checks JS inputs.
+# Nix reuses its built Python environment; the pnpm hook checks JS inputs.
 ```
+
+### Updating the pnpm Lockfile
+
+The flake builds every JavaScript surface from one fixed-output pnpm store whose hash is in `nix/pnpm-deps-hash`. A `pnpm-lock.yaml` change that adds, removes or re-resolves a package changes that hash, and every frontend build fails with a hash mismatch until it is updated. `hermes pm update --pnpm`, a plain `pnpm install` and the `nix develop` shell hook rewrite the lockfile but not the hash. From the checkout, run:
+
+```
+nix run .#update-pnpm-lockfile
+```
+
+It brings `pnpm-lock.yaml` up to date with the manifests, rebuilds `.#pnpm-deps` to take the new hash, writes `nix/pnpm-deps-hash`, and builds `.#tui`, `.#web`, `.#webapp` and `.#desktop`. Without Nix, copy the hash the `nix` CI workflow's `pnpm-deps-hash` job prints.
 
 ### Flake Checks
 
@@ -1589,7 +1625,7 @@ Python packages added to PYTHONPATH for entry-point plugin discovery. Use the se
 
 `[]`
 
-pyproject.toml optional extras to include in the sealed venv (e.g. `["voice"]`). Resolved by uv — no collisions
+pyproject.toml optional extras added to the groups `package` already ships (e.g. `["google-meet"]`). Resolved by uv — no collisions
 
 `restart`
 

@@ -32,6 +32,10 @@ Here is a complete plugin that adds a `hello_world` tool and logs every tool cal
 name: hello-world
 version: "1.0"
 description: A minimal example plugin
+provides_tools:
+  - hello_world
+provides_hooks:
+  - post_tool_call
 ```
 
 **`~/.hermes/plugins/hello-world/__init__.py`**
@@ -72,7 +76,7 @@ def register(ctx):
     )
 
     # --- Hook: log every tool call ---
-    def on_tool_call(tool_name, params, result):
+    def on_tool_call(tool_name, args, result, **kwargs):
         print(f"[hello-world] tool called: {tool_name}")
 
     ctx.register_hook("post_tool_call", on_tool_call)
@@ -148,6 +152,10 @@ Register an image-generation backend
 
 `ctx.register_image_gen_provider(provider)` — see [Image Generation Provider Plugins](/docs/developer-guide/image-gen-provider-plugin)
 
+Register a delegation strategy (how each `delegate_task` subagent is routed)
+
+`ctx.register_delegation_provider(provider)` — see [Delegation Provider Plugins](/docs/developer-guide/delegation-provider-plugin)
+
 Register a video-generation backend
 
 `ctx.register_video_gen_provider(provider)` — see [Video Generation Provider Plugins](/docs/developer-guide/video-gen-provider-plugin)
@@ -190,7 +198,7 @@ A `/command` registered with `ctx.register_command()` runs in the gateway proces
 
 -   **Return its text** instead of calling `print()`. Printed output goes to the gateway's stdout, not to the user's chat.
 -   **Read the session's working directory with `agent.runtime_cwd.resolve_agent_cwd()`**, not `os.getcwd()`, which is the gateway's own directory. The gateway pins the session's directory while the handler runs.
--   **Take the calling session as handler keywords**: declare `session_id`, `session_key`, `platform` or `source` (the sender's `SessionSource`) and Hermes passes them; one-argument handlers keep working unchanged. The same values are bound as `HERMES_SESSION_*` around the handler (`gateway.session_context.get_session_env`, never `os.environ`), so a background job the handler starts records the session as its parent.
+-   **Take the calling session as handler keywords**: declare `session_id`, `session_key`, `platform` or `source` (the sender's `SessionSource`) and Hermes passes them; one-argument handlers keep working unchanged. The same values are bound as `HERMES_SESSION_*` around the handler (read them with `from gateway.session_context import get_session_env`, never `os.environ`), so a background job the handler starts records the session as its parent.
 
 The classic CLI waits for the reply for as long as the handler runs. Ctrl+C stops the wait, not the handler: the handler finishes in the gateway and its reply is not shown. The command runs over its own connection to the gateway, so the session's prompts, interrupts and other commands are not held up while it runs.
 
@@ -261,6 +269,12 @@ Gateway channel adapters (`ctx.register_platform()`)
 `plugins/image_gen/<name>/`
 
 Image-generation backends (`ctx.register_image_gen_provider()`)
+
+`PluginManager` (kind: `backend`, one level deeper)
+
+`plugins/delegation/<name>/`
+
+Delegation strategies (`ctx.register_delegation_provider()`); `default` is today's routing
 
 `PluginManager` (kind: `backend`, one level deeper)
 
@@ -448,7 +462,7 @@ Shipped hooks
 
 **Observer**
 
-`post_tool_call`, `post_llm_call`, `pre_api_request`, `post_api_request`, `api_request_error`, `pre_auxiliary_call`, `post_auxiliary_call`, `on_stream_start`, `on_stream_delta`, `on_stream_end`, `on_interim_message`, `on_session_start`, `on_session_end`, `on_session_finalize`, `on_session_reset`, `post_compaction`, `on_session_delete`, `agent_loop_stopped`, `on_skill_lifecycle`, `subagent_start`, `subagent_stop`, `pre_approval_request`, `post_approval_response`, `on_human_input_request`, `on_human_input_resolved`, `pre_command`, `kanban_task_claimed`, `kanban_task_completed`, `kanban_task_blocked`
+`post_tool_call`, `post_llm_call`, `pre_api_request`, `post_api_request`, `api_request_error`, `pre_auxiliary_call`, `post_auxiliary_call`, `on_stream_start`, `on_stream_delta`, `on_stream_end`, `on_interim_message`, `on_session_start`, `on_session_end`, `on_session_finalize`, `on_session_reset`, `post_compaction`, `post_curator_run`, `on_session_delete`, `agent_loop_stopped`, `on_skill_lifecycle`, `subagent_start`, `subagent_stop`, `pre_approval_request`, `post_approval_response`, `on_human_input_request`, `on_human_input_resolved`, `pre_command`, `kanban_task_claimed`, `kanban_task_completed`, `kanban_task_blocked`
 
 These categories describe current behavior rather than defining future naming rules. Plugin middleware remains a separate registry/surface.
 
@@ -568,6 +582,12 @@ Backend plugin — `ctx.register_image_gen_provider()`
 
 [Image Generation Provider Plugins](/docs/developer-guide/image-gen-provider-plugin)
 
+A **delegation strategy** (a profile or named model per subagent)
+
+Backend plugin — `ctx.register_delegation_provider()`, selected by `delegation.backend`
+
+[Delegation Provider Plugins](/docs/developer-guide/delegation-provider-plugin)
+
 A **video-generation backend** (Veo, Kling, Pixverse, Grok-Imagine, Runway, …)
 
 Backend plugin — `ctx.register_video_gen_provider()`
@@ -649,12 +669,17 @@ hermes plugins install user/repo             # install from Git, then prompt Ena
 hermes plugins install user/repo --enable    # request enable; dependency consent still applies
 hermes plugins install user/repo --no-enable # install but leave disabled (no prompt)
 hermes plugins update my-plugin              # pull latest (local edits are autostashed and re-applied)
+hermes plugins update my-plugin --force      # same, accepting a caution security-scan verdict without the question
+hermes plugins update                        # list every plugin with an update, then "Update all N? [Y/n]"
+hermes plugins update --yes                  # same, without the question (scripts, cron; required without a terminal)
 hermes plugins remove my-plugin              # uninstall; also drops it from plugins.enabled/disabled/entries
                                              # and resets memory.provider when it was the live provider
 hermes plugins enable my-plugin              # add to allow-list
 hermes plugins disable my-plugin             # remove from allow-list + add to disabled (bundled platforms:
                                              # either spelling works, e.g. photon-platform or platforms/photon)
 hermes plugins capabilities [my-plugin]      # declared vs granted capabilities
+hermes plugins idle-tasks [my-plugin]        # background idle jobs plugins registered: last run, next run
+hermes plugins idle-tasks my-plugin --pause suggest   # stop one until --resume
 hermes plugins check-updates                 # read-only: is any installed plugin outdated?
 hermes plugins adopt my-plugin               # track a self-cloned plugin dir (read its git origin)
 hermes plugins trust-update-url my-plugin    # confirm a changed update_url after review
@@ -662,11 +687,49 @@ hermes plugins trust-update-url my-plugin    # confirm a changed update_url afte
 
 ### Update checks and provenance
 
-Hermes records Git install source and revision in `.install-metadata.json`. Unpinned tracked installs compare the saved source's remote HEAD, or a matching saved `update_url` feed. Pinned installs remain pinned. Self-cloned directories need `hermes plugins adopt NAME` before they become tracked installations. Manually copied or provenance-drifted directories receive diagnostic guidance. Pip entry-point plugins can report an owning distribution's available version; that check does not turn them into Git-managed installs.
+Hermes records Git install source and revision in `.install-metadata.json`. Unpinned tracked installs compare the saved source's remote HEAD, or a matching saved `update_url` feed. Pinned installs remain pinned. Self-cloned directories need `hermes plugins adopt NAME` before they become tracked installations. A plugin directory that is a link to a checkout somewhere else is never tracked, because Hermes does not change files outside the plugins directory: pull updates in that checkout, and delete the link to remove the plugin. Manually copied or provenance-drifted directories receive diagnostic guidance. Pip entry-point plugins can report an owning distribution's available version; that check does not turn them into Git-managed installs.
 
 `hermes plugins check-updates` leaves plugin files unchanged. A scheduled gateway check runs when `plugins.auto_update_check_hours` is due: default 24 hours, `0` disables it. Its receipt is available through `hermes pm status` and the desktop sync-status view. This is not a hard once-per-day limit if you configure a different interval.
 
-By default, updates require `hermes plugins update NAME`. Setting `plugins.auto_apply: true` opts tracked Git plugins into unattended updates. Both routes use the update security scan. Auto-apply does not manage pinned, manual, drifted, or pip-distribution rows.
+`hermes plugins update` with no name runs the same check and lists the plugins it can move: catalog installs (re-pinned to the reviewed catalog commit) and tracked Git installs (pulled). It names every plugin it skips and why: pinned, held with `--ref`, needs fixing, status unknown, or a pip distribution Hermes does not upgrade. In a terminal it asks once, then updates each plugin through the same path as `hermes plugins update NAME`, so new capabilities, a widened catalog pin and scan findings still prompt per plugin. One failure does not stop the rest; the summary lists what updated, what was already current and what failed with its reason (exit code 1 if any failed). Without a terminal it prints the list and updates nothing unless you pass `--yes`; with `--yes`, consent prompts fail closed as in any non-interactive update (new capabilities stay ungranted, a widened catalog pin is not applied).
+
+By default, plugins only update when you run `hermes plugins update`. Turning on auto-update (`plugins.auto_apply: true`) lets the gateway's scheduled check apply the same catalog re-pins and tracked Git pulls on its own. Both routes use the update security scan, and an unattended update never accepts a widened catalog pin or Git update (new tools, hooks, capabilities), new capabilities or a caution scan verdict on a Git update: those wait for you to run the update yourself. (A catalog re-pin accepts a caution verdict, because a reviewer read that pin when it was admitted to the catalog.) Auto-update does not manage pinned, manual, drifted, or pip-distribution rows, nor a catalog plugin you installed with `--ref` at a commit other than its catalog pin: that stays on the commit you chose until you name it (`hermes plugins update <name>`); every Update all, `hermes plugins update` with no name included, skips it. A `--ref` equal to the catalog pin is recorded as an ordinary catalog install, so auto-update moves it with the catalog. It runs on the gateway's housekeeping thread, so it never delays starting a session, and an offline check costs one warning. Code the scheduled check updates loads in new sessions; a running session keeps the code it already imported. The setting is per profile.
+
+The same switch and an "Update all" action are on every surface:
+
+Surface
+
+Update all
+
+Auto-update
+
+CLI
+
+`hermes plugins update`
+
+`hermes plugins auto-update [on|off]`
+
+Chat (classic CLI and TUI)
+
+`/plugins update`
+
+`/plugins auto-update [on|off]`
+
+Desktop app
+
+Plugins tab, **Update all**
+
+Plugins tab, **Auto-update** switch
+
+Web dashboard
+
+Plugins page, **Update all**
+
+Plugins page, **Auto-update** switch
+
+`/plugins update`, Desktop and the dashboard update without asking per plugin, so a plugin that needs a review (widened pin or Git update, caution scan of a Git update) is listed as "needs review" with nothing changed; update it by name to review it. Each plugin they update is reloaded right away, as an update from the plugin's own Update action is: its MCP servers and skills reach open chats now, its Python tools load in new sessions. Two updates of the same plugin never run at once: the second one is refused and changes nothing.
+
+`hermes update` can move catalog pins. Installed catalog plugins stay on their old pin until updated, so the update names them for every profile and asks that profile's gateway to check again on its next tick (which applies them when auto-update is on).
 
 If a manifest changes or introduces `update_url`, Hermes refuses the new address until you approve it with `hermes plugins trust-update-url NAME`. This is a feed-source check, not a sandbox against already trusted plugin code.
 
@@ -696,7 +759,7 @@ The `catalog=<name>` form is what the **Open in Hermes Desktop** button on every
 
 For a `repo=` link, clicking one opens Hermes and shows a **confirmation dialog** — the repo id, a "Before you install" note, and GitHub browse + clone links — then shallow-clones the repo to detect what it ships (an **agent plugin** — backend Python, a **desktop plugin** — app UI, or both). You pick the components with checkboxes and confirm. Nothing is installed until you do; deep links never auto-install, and agent-plugin installs go through the same [install-time security scanning](#install-time-security-scanning) as `hermes plugins install`.
 
-Hybrid repos (agent + desktop halves in one repo) use one link and one dialog. The same modal is reachable without a link via **Capabilities → Plugins → Install from Git**. Legacy `hermes://plugin-agent/…` and `hermes://plugin-desktop/…` URLs route into the same dialog. In dev builds (`npm run dev`) the scheme is `hermes-dev://`.
+Hybrid repos (agent + desktop halves in one repo) use one link and one dialog. The same modal is reachable without a link via **Capabilities → Plugins → Install from Git**. Legacy `hermes://plugin-agent/…` and `hermes://plugin-desktop/…` URLs route into the same dialog. In dev builds (`pnpm run dev`) the scheme is `hermes-dev://`.
 
 Websites need no SDK — a normal anchor works:
 
@@ -719,7 +782,7 @@ capabilities:
 
 When a plugin declares capabilities, `hermes plugins install` (and `hermes plugins enable`) shows the list with one-line risk descriptions and asks once. Consenting records the grant under `plugins.entries.<id>.granted_capabilities` together with a consent hash and timestamp. Declining leaves the plugin enabled with those capabilities off — a well-behaved plugin probes with `ctx.has_capability()` and degrades gracefully.
 
-**Update re-consent:** if a plugin update declares capabilities you haven't granted, `hermes plugins update` surfaces the additions and asks again. New capabilities stay off until you consent — a plugin update can never silently widen its access. Catalog re-pins go one step further: when the new pin adds tools, hooks, Python dependencies, host capabilities, a provider sign-in (`requires_auth`) or a Desktop UI half the installed version did not have, the CLI shows the delta and asks `y/N` before anything moves, and the Desktop / dashboard **Update** button opens the same confirmation. Declining (or a non-interactive session) leaves the plugin at the old pin.
+**Update re-consent:** if a plugin update declares capabilities you haven't granted, `hermes plugins update` surfaces the additions and asks again. New capabilities stay off until you consent — a plugin update can never silently widen its access. Catalog re-pins go one step further: when the new pin adds tools, hooks, Python dependencies, host capabilities, a provider sign-in (`requires_auth`), a new or changed OAuth client (`oauth:`) or a Desktop UI half the installed version did not have, the CLI shows the delta and asks `y/N` before anything moves, and the Desktop / dashboard **Update** button opens the same confirmation. Declining (or a non-interactive session) leaves the plugin at the old pin.
 
 **Non-interactive sessions fail closed:** installing or updating without a TTY completes the install, but declared capabilities are _not_ granted. Run `hermes plugins enable <id>` interactively to grant them later.
 
@@ -764,7 +827,7 @@ Legacy key (`plugins.entries.<id>.…`)
 
 `allow_platform_actions`
 
-A gate is open when _either_ the capability is granted _or_ the legacy key is set — existing configs keep working unchanged.
+A gate is open when _either_ the capability is granted _or_ the legacy key is set — existing configs keep working unchanged. `llm.side_question` and `llm.session_fork` have no legacy key: each is open only when declared and granted through the consent flow.
 
 Not a sandbox
 
@@ -881,6 +944,10 @@ Findings are shown; you confirm `Install anyway? [y/N]` (or pass `--force`)
 
 Blocked. `--force` does **not** override
 
+`hermes plugins update` scans the new code with the same rules before it replaces the installed copy, so a plugin that picks up risky code in an update is flagged before it runs. A caution verdict on a Git update asks `Update anyway? [y/N]`, and `hermes plugins update NAME --force` accepts it without the question. Hermes Desktop shows the same findings in a dialog with an **Update anyway** button. Catalog updates move to a reviewed pin, so a caution verdict there does not ask. In every case nothing changes until the update is accepted.
+
+Hermes Desktop shows an **Update** button on a Git-installed plugin when the last update check found a newer commit. The gateway runs that check every `plugins.auto_update_check_hours` (default 24), and `hermes plugins check-updates` runs it on demand.
+
 On `hermes plugins update`, a dangerous verdict on the updated tree disables the plugin until you review the findings and re-enable it. A dangerous block names the critical findings that caused it (e.g. `1 critical of 42 findings (destructive_root_rm)`), so a single blocking line is not hidden behind the total.
 
 Text that cannot run on the host at install time is scored as **context**, not as the plugin's behaviour, so it can lower a finding but never delete it — every finding stays in the report with file and line:
@@ -910,7 +977,7 @@ plugins:
     launcher: []         # optional argv prefix for the host, e.g. a sandbox runner
 ```
 
-Plugins do not change. They receive the same `ctx` and register tools, hooks, slash commands, skills and provider objects (image/video generation, web search, browser, TTS/STT, memory, context engines, model-provider profiles) exactly as before; Hermes registers matching entries on its side that call into the host. Dashboard plugin APIs are served by the host too. Bundled plugins keep running in-process. In-process dashboard API handlers share the gateway's event loop, so they must not block it (see [Don't block the event loop](/docs/user-guide/features/extending-the-dashboard#dont-block-the-event-loop)).
+Plugins do not change. They receive the same `ctx` and register tools, hooks, slash commands, skills and provider objects (image/video generation, web search, browser, TTS/STT, memory, context engines, secret sources, `@` context references, model-provider profiles) exactly as before; Hermes registers matching entries on its side that call into the host, and values cross as the types the provider base class declares (a secret source's `fetch()` gets a `Path` and returns a `FetchResult`). Dashboard plugin APIs are served by the host too. Bundled plugins keep running in-process. In-process dashboard API handlers share the gateway's event loop, so they must not block it (see [Don't block the event loop](/docs/user-guide/features/extending-the-dashboard#dont-block-the-event-loop)).
 
 On a gateway serving several profiles, every profile other than the one the gateway started with runs its own dashboard plugins (installed under its own `plugins/` folder or the root `~/.hermes/plugins/`, the profile's own copy winning a same-name conflict, and enabled in its own config) in its own plugin host, whatever its `plugins.isolation` says: another profile's plugin code never runs inside the gateway. The host does not carry websockets yet, so such a plugin's websocket routes are refused (HTTP 501) for that profile; its HTTP routes work. A slow hosted handler holds only its own profile's plugin requests, and a request the host has not answered after 60 s gets HTTP 504. Such a host starts on the profile's first dashboard plugin request and runs until the gateway exits: one extra Python process for each profile that has used a dashboard plugin.
 
@@ -918,7 +985,8 @@ What changes in `host` mode:
 
 -   **No shared interpreter.** A plugin's module never enters the Hermes process, so it cannot read another profile's data from memory or patch Hermes internals. Under the multiplex gateway every profile gets its own host, started with only that profile's environment and secrets.
 -   **Crashes stay contained.** A plugin that crashes or exits kills its host, not Hermes; the call in flight returns a tool error and Hermes restarts the host and reloads its plugins (bounded retries).
--   **A few surfaces need in-process code** and fail that plugin with a clear reason instead of loading: gateway platform adapters (`register_platform`), approval transports, Telegram/platform handlers, model-provider profiles that build their own SDK client (`create_client`), streaming and websocket dashboard endpoints, and plugins that monkeypatch Hermes modules. Run those with `isolation: in_process`.
+-   **A few surfaces need in-process code** and fail that plugin with a clear reason instead of loading: gateway platform adapters (`register_platform`), approval transports, Telegram/platform handlers, model-provider profiles that build their own SDK client (`create_client`), terminal backends (the backend's commands fail with this reason; the `singularity` plugin is one), streaming and websocket dashboard endpoints, and plugins that monkeypatch Hermes modules. Run those with `isolation: in_process`.
+-   **No cookies.** A hosted plugin's API answers are served from the gateway's own address, so Hermes drops any `Set-Cookie` header they carry (logging it once per plugin) rather than let a plugin set or overwrite the dashboard's cookies. This also applies to another profile's plugins, which always run in a host.
 
 **Locking it for a shared deployment.** `plugins.isolation` is ordinary profile config, so whoever can edit a profile's `config.yaml` can turn it off. When the profiles belong to people you are isolating from each other, pin it in the [managed scope](/docs/user-guide/managed-scope) instead; the managed value wins over every profile's own config and `hermes config set` refuses to change it:
 
@@ -1091,12 +1159,12 @@ ctx.inject_message(
 
 **Signature:** `ctx.inject_message(content: str, role: str = "user", *, session_key: str | None = None, origin: Mapping[str, Any] | None = None) -> bool`
 
-When the classic CLI runs plugins in its own process (no gateway session):
+Plugins run in the gateway on every local surface (classic CLI, TUI and Desktop), so an injected message never cancels work in progress:
 
--   If the agent is **idle** (waiting for user input), the message is queued as the next input and starts a new turn.
--   If the agent is **mid-turn** (actively running), the message interrupts the current operation — the same as a user typing a new message and pressing Enter.
+-   If the target session is **idle**, the message starts a new turn.
+-   If it is **mid-turn**, the message waits in that session's queue and runs as the next turn after the current one finishes; the running tool is not interrupted.
 -   For non-`"user"` roles, the content is prefixed with `[role]` (e.g. `[system] ...`).
--   Returns `True` if the message was queued successfully.
+-   Returns `True` when a host accepted the message (see the per-host rules below).
 
 Without a session key (`session_key` and `origin` both omitted), when the plugin runs in the gateway (or its plugin host) — which is where plugins run for classic CLI, TUI and Desktop sessions — the gateway picks the chat:
 
@@ -1155,10 +1223,109 @@ Hooks, tools and injected turns of every chat and every local session (CLI, TUI,
 
 -   `os.getcwd()` is the gateway's own directory, shared by every session; Hermes never changes it. Use `ctx.session_cwd()` for the working directory of the session the hook or tool runs for: the workspace a CLI/TUI/Desktop session was started in, or the profile's terminal cwd for a chat (`""` when there is none). Pass it as `cwd=` to subprocesses. It reads the session from the running turn, so it works in code that runs for a session: turn hooks, tool handlers and approval hooks. Ingress hooks such as `pre_gateway_dispatch` run before the message is admitted to any session; there it returns the profile's terminal cwd, or `""` when none is configured.
 -   `ctx.session_surface()` names the calling session's client: `"cli"`, `"tui"`, `"desktop"`, `"acp"`, or the messaging platform (`"telegram"`, …); `""` outside a session.
+-   `hermes_cli.plugin_session.session_client()` returns the client that created the calling local session, as it named itself on `session.create` (`{"name": "my-client", "version": "1.2.0"}`; `version` only when sent), or `None`: outside a session, for a messaging chat, and for a client that sent no name (the TUI, Desktop, the classic CLI and ACP send none today). Under `plugins.isolation: host` the plugin's process has no session context, so read `info["client"]` in a system prompt section instead. The name is a label the client chose, not an authentication: never grant anything, or skip a check, because of it.
 -   `print()` output goes to the gateway's `gateway-stdio.log`, not to your terminal. Use `logging` instead.
 -   `input()` gets end-of-file: the gateway has no terminal. Ask through a tool result or a slash command.
 
 In the classic CLI process itself (for example a plugin slash command), `ctx.session_cwd()` is the launch directory and `ctx.session_surface()` is `"cli"`.
+
+## A plugin with its own chat client
+
+A plugin can add a command (`hermes <name>`, through `ctx.register_cli_command`) that starts its own chat frontend. The frontend attaches to the profile's shared gateway with `hermes gateway attach --json` (see [Programmatic integration](/docs/developer-guide/programmatic-integration)).
+
+The command exists only when the plugin runs inside the Hermes process (`plugins.isolation: in_process`, the default). With `plugins.isolation: host`, Hermes skips `ctx.register_cli_command`, and `hermes <name>` is not a command.
+
+Three imports do what the Hermes terminal client's launcher does around its own client:
+
+-   `hermes_cli.gateway_chat.shell_client_env()` returns the allowlisted variables of the shell that ran your command, as a dict. Call it in the launcher, before you change the environment, and send the dict as `client_env` on `session.create`. The session's commands then run with the user's `PATH`, virtual environment and toolchain variables. Names that look like credentials are left out, and the gateway filters the dict again by its own rules.
+-   `hermes_cli.chat_launch.hermes_command(args)` returns the argv that runs this Hermes install with `args`. It needs no `PYTHONPATH`; the child serves the profile named by the inherited `HERMES_HOME`. Give it to your frontend for `hermes gateway attach`, instead of `hermes` from `PATH` (which may be another install) or `sys.executable` (which an update may replace).
+-   `hermes_cli.chat_launch.print_exit_summary(session_id, command=...)` prints the lines Hermes shows when a chat ends: how to resume the session, its id, title, message count and tokens. Call it after your frontend exits, with your own command name. It prints nothing for a session with no messages. The lines name two ways to resume, `--resume <id>` (a short id) and `-c "<title>"`, so your command must accept both.
+
+```
+import json
+import os
+import subprocess
+import tempfile
+
+
+def _arguments(parser):
+    # The exit summary prints `hermes my-client --resume <id>` and `hermes my-client -c "<title>"`.
+    parser.add_argument("--resume", "-r", metavar="ID")
+    parser.add_argument("--continue", "-c", dest="title", metavar="TITLE")
+
+
+def _session_to_resume(args):
+    wanted = args.resume or args.title
+    if not wanted:
+        return None  # a new chat: a new profile has no session store to open yet
+    from hermes_constants import get_hermes_home
+    from hermes_state import SessionDB
+
+    db = SessionDB(db_path=get_hermes_home() / "state.db", read_only=True)
+    try:
+        # The summary prints a short id: resolve_session_id takes a unique prefix.
+        found = db.resolve_session_id(args.resume) if args.resume else db.resolve_session_by_title(args.title)
+    finally:
+        db.close()
+    if not found:
+        raise SystemExit(f"hermes my-client: no session matches {wanted!r}")
+    return found
+
+
+def _run_chat(args):
+    from hermes_cli.chat_launch import hermes_command, print_exit_summary
+    from hermes_cli.gateway_chat import shell_client_env
+
+    env = dict(os.environ)
+    env["MY_CLIENT_ENV"] = json.dumps(shell_client_env())
+    env["MY_ATTACH_COMMAND"] = json.dumps(hermes_command(["gateway", "attach", "--json", "--start"]))
+    env["MY_RESUME"] = _session_to_resume(args) or ""  # the frontend sends it with session.resume
+    # One file for this launch: the frontend writes {"session_id": ...} there for the session it shows.
+    fd, session_file = tempfile.mkstemp(prefix="my-client-", suffix=".json")
+    os.close(fd)
+    env["MY_SESSION_FILE"] = session_file
+    try:
+        subprocess.run(["my-client"], env=env)
+        with open(session_file, encoding="utf-8") as f:
+            shown = f.read()
+    finally:
+        os.unlink(session_file)
+    if shown:  # empty when the client left before it opened a session
+        print_exit_summary(json.loads(shown)["session_id"], command="hermes my-client")
+
+
+def register(ctx):
+    ctx.register_cli_command("my-client", "Chat in my client", _arguments, _run_chat)
+```
+
+### `-w`: run the session in a fresh worktree
+
+The same launcher can offer `-w` the way `hermes --tui -w` does. It calls three functions from `hermes_cli.session_worktree`:
+
+-   `create()` before the client starts. It makes a new git worktree of the repository the user is in, under `<repo>/.worktrees/`, on its own `hermes/` branch. It returns `{"path", "branch", "repo_root", "base"}`, or `None` when no tree could be made (it has already printed why). Send `path` as the `cwd` of `session.create`.
+-   `restore(session_id)` before the client attaches to a resumed session. Pass the full session id. When that session ran in a `-w` tree that an earlier quit removed, it makes the tree again at the same path and returns the path. Otherwise it returns `None`. Without it, the gateway refuses every turn of that session with `workspace_unavailable`.
+-   `finish(info, session_id, ask=...)` after the client exits, in a `finally` block, so a client that fails to start does not leave the tree behind. Pass `ask=True` after a clean exit: a tree with uncommitted or unpushed work then gets a keep / archive / discard question on the terminal. Call it only after your client has given the terminal back. A clean tree that nothing still uses is removed with its branch. A kept tree is handed to `session_id`, so Hermes keeps it while that session can be resumed.
+
+Do not make the tree yourself with `git worktree add`. Hermes regularly removes old idle trees under `.worktrees/`. It keeps a locked tree only when the lock reason is one Hermes wrote, so it can remove your tree while a stored session still runs in it.
+
+```
+import os
+
+from hermes_cli.session_worktree import create, finish, restore
+
+resume = _session_to_resume(args)  # the full session id, from the launcher above
+info = create() if args.worktree else None
+if args.worktree and info is None:
+    raise SystemExit(1)
+if resume and not args.worktree:
+    restore(resume)
+code, session_id = None, resume
+try:
+    code, session_id = run_my_client(cwd=info["path"] if info else os.getcwd(), resume=resume)
+finally:
+    if info:  # also when the client did not start, or Ctrl+C reached the launcher
+        finish(info, session_id, ask=code == 0)
+```
 
 ## Calling MCP servers from plugins
 

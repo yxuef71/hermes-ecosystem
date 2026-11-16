@@ -20,7 +20,7 @@ Anthropic SDK (`AnthropicBedrock`)
 
 Prompt caching, thinking budgets, adaptive thinking — features not exposed via Converse
 
-OpenAI GPT-6 (Astra, Sol, Luna), GPT-6.1 Sol, GPT-5.6 (Sol, Terra, Luna), GPT-5.5 with a bare `openai.*` ID
+OpenAI GPT-6 (Astra, Sol, Luna), GPT-6.1 (Sol, Terra), GPT-5.6 (Sol, Terra, Luna), GPT-5.5, GPT-5.4 with a bare `openai.*` ID
 
 Bedrock Mantle **OpenAI Responses** endpoint (`bedrock-mantle.<region>.api.aws/openai/v1`)
 
@@ -95,6 +95,29 @@ Set the AWS region in any of these ways (highest priority first):
 3.  `AWS_DEFAULT_REGION` environment variable
 4.  Default: `us-east-1`
 
+### Ultrafast on Mantle
+
+For **GPT-6.1 Sol on Mantle in `us-east-1`**, the CLI and messaging gateway turn builders support the existing `agent.service_tier: ultrafast` setting:
+
+```
+model:
+  provider: bedrock
+  default: openai.gpt-6.1-sol
+bedrock:
+  region: us-east-1
+agent:
+  service_tier: ultrafast
+```
+
+This sends `service_tier: "ultrafast"` through the existing Responses route at `https://bedrock-mantle.us-east-1.api.aws/openai/v1`. The CLI also accepts `/fast ultrafast` on this resolved route. Set `agent.service_tier: normal` (or omit it) for the default tier. Existing bearer-token and IAM signing paths are unchanged. Ultrafast is a paid opt-in, not the meaning of plain `/fast fast`.
+
+-   **Exact scope:** only `openai.gpt-6.1-sol` on this Mantle endpoint is enabled. Priority, Flex, Reserved, and auto/cold fast windows are not enabled for it.
+-   **Runtime profiles:** AWS also documents Ultrafast over Responses for `us.openai.gpt-6.1-sol` and `global.openai.gpt-6.1-sol`. Hermes still routes those IDs through Converse. This setting does not enable their Ultrafast path, switch their API, or translate Ultrafast to Converse `serviceTier`.
+-   **Other entrypoints:** this does not add Bedrock Ultrafast to speed pickers or the gateway `/fast` command. Constructors that set only `service_tier` without building `request_overrides` retain their existing limitation.
+-   **Service behavior:** the requested tier is not proof of the served tier or account access. Check the provider response. No live AWS inference was used to validate this integration.
+
+See the [AWS Sol service-tier documentation](https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-openai-gpt-6-1-sol.html#model-card-openai-gpt-6-1-sol-tiers) for pricing and availability. Mantle Responses does not apply Guardrails. Do not switch a guardrail-dependent workload from Converse just to request a tier.
+
 ### Guardrails
 
 To apply [Amazon Bedrock Guardrails](https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails.html) to all model invocations:
@@ -133,7 +156,9 @@ Hermes automatically applies prompt caching on the Bedrock **Converse API** path
 
 For models whose context window isn't in Hermes' static table, Hermes can probe the real limit by sending oversized requests at fixed tiers (~1.3M and ~2.2M tokens) and parsing the `maximum` reported in Bedrock's length-validation error. Probed values feed the same metadata cache as the static table; stale cached entries that under-report a model's window (e.g. entries seeded before a model's 1M window went GA) are dropped automatically in favor of the larger known value.
 
-When neither the probe nor the static table knows a model, Hermes uses a 128,000-token fallback and logs a WARNING naming the model. Set `model.context_length` in `config.yaml` to the model's real window.
+When the static table has no row for a model from Anthropic, OpenAI or xAI, Hermes uses that model family's window from its general model catalog (`agent/model_metadata.py`). This is how a new tier gets its real window before the Bedrock table is updated. Other vendors' catalog rows are vendor-direct windows that can exceed what Bedrock serves (Llama 3 8B is 8K on Bedrock), so those models do not borrow them.
+
+When nothing knows a model, Hermes uses a 128,000-token fallback and logs a WARNING naming the model. The banner, status bar, `/usage`, `/model` and the gateway session line mark that window `fallback` so it is not mistaken for a detected limit. Set `model.context_length` (or `model_overrides.bedrock.<model id>.context_window`) in `config.yaml` to the model's real window.
 
 **Application inference profiles.** An ARN such as `arn:aws:bedrock:us-west-2:123456789012:application-inference-profile/abcdef123456` names no model, so neither the probe nor the static table can size it. Hermes calls `bedrock:GetInferenceProfile` in the ARN's region and sizes the window from the model the profile wraps (1M for a profile wrapping Claude Sonnet 4.6). Without that permission the 128,000-token default applies and a WARNING names the profile; set `model.context_length` explicitly to override either way.
 
@@ -177,6 +202,12 @@ OpenAI GPT-6.1 Sol
 
 1M-token window. Mantle in-Region access is `us-east-1` only
 
+OpenAI GPT-6.1 Terra
+
+`openai.gpt-6.1-terra`
+
+Balanced Terra tier, 1,050,000-token window
+
 OpenAI GPT-6 Sol
 
 `openai.gpt-6-sol`
@@ -212,6 +243,12 @@ OpenAI GPT-5.5
 `openai.gpt-5.5`
 
 Mantle only, no inference profiles
+
+OpenAI GPT-5.4
+
+`openai.gpt-5.4`
+
+1,050,000-token window
 
 Amazon Nova Pro
 
