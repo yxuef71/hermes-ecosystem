@@ -503,7 +503,7 @@ Chat Completions endpoint documents `prompt_cache_key`
 
 `prompt_cache_max_ttl`
 
-Longest prompt-cache tier the route really keeps (`"5m"`/`"1h"`); Hermes never asks for, or believes, more. Config `prompt_caching.route_ttl_ceilings` overrides it
+Longest prompt-cache tier the route really keeps (`"5m"`/`"1h"`); Hermes never asks for, or believes, more, and the cache clock declares the tier sent up to it (`None` leaves a `1h` ask on an Anthropic-wire gateway unproven, so it is never warmed or compacted on). Config `prompt_caching.route_ttl_ceilings` overrides it
 
 `None`
 
@@ -1482,12 +1482,15 @@ for p in list_providers():
 
 ## Testing your plugin
 
-Point `HERMES_HOME` at a temp directory so you don't pollute your real config:
+Point `HERMES_HOME` at a throwaway directory so you don't pollute your real config, then write `$HERMES_HOME/plugins/model-providers/my-provider/__init__.py` (an agent uses `write_file`, which creates the directory):
 
 ```
-export HERMES_HOME=$HOME/.hermes/cache/scratch/hermes-plugin-test
-mkdir -p $HERMES_HOME/plugins/model-providers/my-provider
-cat > $HERMES_HOME/plugins/model-providers/my-provider/__init__.py <<'EOF'
+export HERMES_HOME=$HOME/hermes-plugin-test
+```
+
+Keep that directory out of `~/.hermes/cache/scratch` and other temp directories that are cleaned by age: a running Hermes imports your plugin from a copy under the Hermes root's `runtime/provider-plugins/` (`$HERMES_HOME` itself, or the root above `profiles/` for a named profile), and a cleaner that deletes it makes the plugin's later imports fail until the process restarts.
+
+```
 from providers import register_provider
 from providers.base import ProviderProfile
 register_provider(ProviderProfile(
@@ -1496,8 +1499,9 @@ register_provider(ProviderProfile(
     base_url="https://api.my-provider.example.com/v1",
     auth_type="api_key",
 ))
-EOF
+```
 
+```
 export MY_API_KEY=your-test-key
 hermes -z "hello" --provider my-provider -m some-model
 ```

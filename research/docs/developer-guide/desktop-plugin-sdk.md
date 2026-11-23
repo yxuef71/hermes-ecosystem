@@ -1741,7 +1741,7 @@ async def action(body: dict):
     return {"ok": True, "received": body}
 ```
 
-Routes mount under `/api/plugins/<id>/` (`GET /api/plugins/<id>/board`, …). Backend code runs inside the gateway process, so it can import from the hermes-agent codebase directly (`hermes_state`, `hermes_cli.config`, …). See [Extending the Dashboard → Backend API routes](/docs/user-guide/features/extending-the-dashboard#backend-api-routes) for the full backend reference — the mount is identical.
+Routes mount under `/api/plugins/<id>/` (`GET /api/plugins/<id>/board`, …). Backend code runs inside the gateway process, so it can import from the hermes-agent codebase directly (`persistence_assembly`, `hermes_cli.config`, …). See [Extending the Dashboard → Backend API routes](/docs/user-guide/features/extending-the-dashboard#backend-api-routes) for the full backend reference — the mount is identical.
 
 The Python backend is gated separately
 
@@ -1902,7 +1902,7 @@ UI kit
 
 Helpers
 
-`cn`, `icons`, `haptic`, `useI18n`, `profileColor`, `profileColorSoft`, `relativeTime`, `fmtDateTime`, `fmtDayTime`, `coarseElapsed`, `evaluateRuntimeReadiness`, `catalogProviderMatches`
+`cn`, `icons`, `haptic`, `useI18n`, `profileColor`, `profileColorSoft`, `relativeTime`, `fmtDateTime`, `fmtDayTime`, `coarseElapsed`, `evaluateRuntimeReadiness`, `catalogProviderMatches`, `PROFILE_ID_ARG_RE` (the profile-id grammar)
 
 The canonical, always-current export list is `apps/desktop/src/sdk/index.ts`.
 
